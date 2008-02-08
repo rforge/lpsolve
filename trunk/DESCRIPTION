@@ -1,0 +1,11 @@
+Package: lpSolve
+Version: 5.5.0.11
+Date: 2008-03-02
+Title: lpSolve
+Author: Kjell Konis <kjell.konis@epfl.ch>,
+        lp_solve <http://lpsolve.sourceforge.net/>.
+Maintainer: Kjell Konis <kjell.konis@epfl.ch>
+Depends: R (>= 2.6.1)
+Description: R interface to lp_solve library.
+License: LGPL
+
