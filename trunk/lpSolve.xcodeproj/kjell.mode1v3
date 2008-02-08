@@ -231,6 +231,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -261,16 +263,12 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 							<array>
 								<string>0E3F54630D536C6800617C9D</string>
-								<string>1C37FABC05509CD000000102</string>
-								<string>E2644B35053B69B200211256</string>
+								<string>0EABBD6A0D59CD4500CF7B0C</string>
+								<string>0EABBD6B0D59CD5000CF7B0C</string>
+								<string>0E3F54710D536C9400617C9D</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
-							<array>
-								<array>
-									<integer>1</integer>
-									<integer>0</integer>
-								</array>
-							</array>
+							<array/>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
 							<string>{{0, 0}, {186, 663}}</string>
 						</dict>
@@ -291,7 +289,7 @@
 							<real>186</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>116 96 1057 722 0 0 1280 832 </string>
+						<string>91 99 1057 722 0 0 1280 832 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -302,14 +300,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>DESCRIPTION</string>
+								<string>RlpSolveLink.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -317,36 +313,36 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>DESCRIPTION</string>
+										<string>RlpSolveLink.h</string>
 										<key>_historyCapacity</key>
 										<integer>10</integer>
 										<key>bookmark</key>
-										<string>0EF13F4B0D5C929100F77D3C</string>
+										<string>0EF13FC10D5CAD8300F77D3C</string>
 										<key>history</key>
 										<array>
-											<string>0E8B36250D5BA04D000DEDC9</string>
-											<string>0E8B36260D5BA04D000DEDC9</string>
-											<string>0E8B36270D5BA04D000DEDC9</string>
-											<string>0E8B36280D5BA04D000DEDC9</string>
-											<string>0E8B36290D5BA04D000DEDC9</string>
-											<string>0E8B362A0D5BA04D000DEDC9</string>
-											<string>0EF13F370D5C91C900F77D3C</string>
-											<string>0EF13F460D5C929100F77D3C</string>
-											<string>0EF13F470D5C929100F77D3C</string>
-											<string>0EF13F480D5C929100F77D3C</string>
+											<string>0EF13FAD0D5CAD8300F77D3C</string>
+											<string>0EF13FAE0D5CAD8300F77D3C</string>
+											<string>0EF13FAF0D5CAD8300F77D3C</string>
+											<string>0EF13FB00D5CAD8300F77D3C</string>
+											<string>0EF13FB10D5CAD8300F77D3C</string>
+											<string>0EF13FB20D5CAD8300F77D3C</string>
+											<string>0EF13FB30D5CAD8300F77D3C</string>
+											<string>0EF13FB40D5CAD8300F77D3C</string>
+											<string>0EF13FB50D5CAD8300F77D3C</string>
+											<string>0EF13FB60D5CAD8300F77D3C</string>
 										</array>
 										<key>prevStack</key>
 										<array>
-											<string>0E8B362E0D5BA04D000DEDC9</string>
-											<string>0E8B36300D5BA04D000DEDC9</string>
-											<string>0E8B36310D5BA04D000DEDC9</string>
-											<string>0E8B36320D5BA04D000DEDC9</string>
-											<string>0E8B36330D5BA04D000DEDC9</string>
-											<string>0E8B36340D5BA04D000DEDC9</string>
-											<string>0E8B36350D5BA04D000DEDC9</string>
-											<string>0E8B363C0D5BA04D000DEDC9</string>
-											<string>0EF13F490D5C929100F77D3C</string>
-											<string>0EF13F4A0D5C929100F77D3C</string>
+											<string>0EF13FB70D5CAD8300F77D3C</string>
+											<string>0EF13FB80D5CAD8300F77D3C</string>
+											<string>0EF13FB90D5CAD8300F77D3C</string>
+											<string>0EF13FBA0D5CAD8300F77D3C</string>
+											<string>0EF13FBB0D5CAD8300F77D3C</string>
+											<string>0EF13FBC0D5CAD8300F77D3C</string>
+											<string>0EF13FBD0D5CAD8300F77D3C</string>
+											<string>0EF13FBE0D5CAD8300F77D3C</string>
+											<string>0EF13FBF0D5CAD8300F77D3C</string>
+											<string>0EF13FC00D5CAD8300F77D3C</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -360,7 +356,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {849, 676}}</string>
 								<key>RubberWindowFrame</key>
-								<string>116 96 1057 722 0 0 1280 832 </string>
+								<string>91 99 1057 722 0 0 1280 832 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -380,7 +376,7 @@
 								<key>Frame</key>
 								<string>{{0, 681}, {849, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>116 96 1057 722 0 0 1280 832 </string>
+								<string>91 99 1057 722 0 0 1280 832 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -404,9 +400,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>0EF13F440D5C91EE00F77D3C</string>
+				<string>0EF13F520D5C9AFF00F77D3C</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>0EF13F450D5C91EE00F77D3C</string>
+				<string>0EF13F530D5C9AFF00F77D3C</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -540,10 +536,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>1C530D57069F1CE1000CFCEE</string>
 		<string>/Users/kjell/Documents/Projects/lpSolve/lpSolve.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>116 96 1057 722 0 0 1280 832 </string>
+	<string>91 99 1057 722 0 0 1280 832 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -778,7 +775,7 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CDD528C0622207200134675</string>
 										<key>PBXProjectModuleLabel</key>
-										<string></string>
+										<string>lp_lib.h</string>
 										<key>StatusBarVisibility</key>
 										<true/>
 									</dict>
@@ -836,8 +833,8 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D57069F1CE1000CFCEE</string>
-				<string>0EF13F350D5C91BF00F77D3C</string>
-				<string>0EF13F360D5C91BF00F77D3C</string>
+				<string>0EF13F670D5CA38C00F77D3C</string>
+				<string>0EF13F680D5CA38C00F77D3C</string>
 				<string>1CDD528C0622207200134675</string>
 				<string>1CD0528E0623707200166675</string>
 			</array>
