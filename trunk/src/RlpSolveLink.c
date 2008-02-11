@@ -664,18 +664,119 @@ SEXP RlpSolve_get_upbo(SEXP Slp, SEXP Scolumns)
   * Solver settings
 *******************************/
 
-/*default_basis*/
+SEXP RlpSolve_default_basis(SEXP Slp)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  default_basis(lp);
+  return R_NilValue;
+}
+
+
 /*read_basis*/
-/*reset_basis*/
+
+SEXP RlpSolve_reset_basis(SEXP Slp)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  reset_basis(lp);
+  return R_NilValue;
+}
+
+
 /*write_basis*/
-/*guess_basis*/
+
+SEXP RlpSolve_guess_basis(SEXP Slp, SEXP Sguessvector)
+{
+  SEXP ret = R_NilValue;
+  unsigned char status = FALSE;
+  int mn1 = 0;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  mn1 = 1 + get_Nrows(lp) + get_Ncolumns(lp);
+  PROTECT(ret = allocVector(INTSXP, mn1));
+  status = guess_basis(lp, REAL(Sguessvector), INTEGER(ret));
+
+  if(status)
+    INTEGER(ret)[0] <- 1;
+  else
+    INTEGER(ret)[0] <- -1;
+
+  UNPROTECT(1);
+  return ret;
+}
+
+
 /*read_params*/
 /*write_params*/
-/*reset_params*/
-/*set_anti_degen*/
-/*is_anti_degen*/
-/*set_basis*/
-/*get_basis*/
+
+SEXP RlpSolve_reset_params(SEXP Slp)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  reset_params(lp);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_set_anti_degen(SEXP Slp, SEXP Santi_degen)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_anti_degen(lp, INTEGER(Santi_degen)[0]);
+  return R_NilValue;
+}  
+
+
+SEXP RlpSolve_is_anti_degen(SEXP Slp, SEXP Stestmask)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  int nmask = LENGTH(Stestmask), i = 0;
+
+  PROTECT(ret = allocVector(LGLSXP, nmask));
+  for(i = 0; i < nmask; i++)
+    LOGICAL(ret)[i] = (int) is_anti_degen(lp, INTEGER(Stestmask)[i]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_basis(SEXP Slp, SEXP Sbascolumn, SEXP Snonbasic)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) set_basis(lp, INTEGER(Sbascolumn), (unsigned char) LOGICAL(Snonbasic)[0]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_basis(SEXP Slp, SEXP Snonbasic)
+{
+  SEXP ret = R_NilValue;
+  unsigned char status = FALSE;
+  int mn1 = 0;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  if(LOGICAL(Snonbasic)[0])
+    mn1 = 1 + get_Nrows(lp) + get_Ncolumns(lp);
+  else
+    mn1 = 1 + get_Nrows(lp);
+
+  PROTECT(ret = allocVector(INTSXP, mn1));
+  status = get_basis(lp, INTEGER(ret), (unsigned char) LOGICAL(Snonbasic)[0]);
+
+  if(status)
+    INTEGER(ret)[0] <- 1;
+  else
+    INTEGER(ret)[0] <- -1;
+
+  UNPROTECT(1);
+  return ret;
+}
+
 /*set_basiscrash*/
 /*get_basiscrash*/
 /*set_bb_depthlimit*/

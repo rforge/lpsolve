@@ -102,6 +102,20 @@ SEXP RlpSolve_get_upbo(SEXP Slp, SEXP Scolumns);
   * Solver settings
 *******************************/
 
+SEXP RlpSolve_default_basis(SEXP Slp);
+/*read_basis*/
+SEXP RlpSolve_reset_basis(SEXP Slp);
+/*write_basis*/
+SEXP RlpSolve_guess_basis(SEXP SLP, SEXP Sguessvector);
+/*read_params*/
+/*write_params*/
+SEXP RlpSolve_reset_params(SEXP Slp);
+SEXP RlpSolve_set_anti_degen(SEXP Slp, SEXP Santi_degen);
+SEXP RlpSolve_is_anti_degen(SEXP Slp, SEXP Stestmask);
+SEXP RlpSolve_set_basis(SEXP Slp, SEXP Sbascolumn, SEXP Snonbasic);
+SEXP RlpSolve_get_basis(SEXP Slp, SEXP Snonbasic);
+
+
 
 
 /*******************************
