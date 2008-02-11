@@ -9,8 +9,9 @@ extern SEXP RlpSolve_lprec_tag;
   * The lp_solve API 
 ************************************************************************************/
 
-
-/* Create/destroy model */
+/*******************************
+  * Create/destroy model
+*******************************/
 
 SEXP RlpSolve_make_lp(SEXP Srows, SEXP Scolumns)
 {
@@ -63,7 +64,9 @@ SEXP RlpSolve_delete_lp(SEXP Slp)
 /*free_lp*/
 
 
-/* Build model */
+/*******************************
+  * Build model
+*******************************/
 
 /*add_column*/
 
@@ -657,19 +660,149 @@ SEXP RlpSolve_get_upbo(SEXP Slp, SEXP Scolumns)
 /*set_var_weights*/
 
 
-/* Solver settings */
+/*******************************
+  * Solver settings
+*******************************/
+
+/*default_basis*/
+/*read_basis*/
+/*reset_basis*/
+/*write_basis*/
+/*guess_basis*/
+/*read_params*/
+/*write_params*/
+/*reset_params*/
+/*set_anti_degen*/
+/*is_anti_degen*/
+/*set_basis*/
+/*get_basis*/
+/*set_basiscrash*/
+/*get_basiscrash*/
+/*set_bb_depthlimit*/
+/*get_bb_depthlimit*/
+/*set_bb_floorfirst*/
+/*get_bb_floorfirst*/
+/*set_bb_rule*/
+/*get_bb_rule*/
+/*set_BFP*/
+/*has_BFP*/
+/*is_nativeBFP*/
+/*set_break_at_first*/
+/*is_break_at_first*/
+/*set_break_at_value*/
+/*get_break_at_value*/
+/*set_epsb*/
+/*get_epsb*/
+/*set_epsd*/
+/*get_epsd*/
+/*set_epsel*/
+/*get_epsel*/
+/*set_epsint*/
+/*get_epsint*/
+/*set_epsperturb*/
+/*get_epsperturb*/
+/*set_epspivot*/
+/*get_epspivot*/
+/*set_epslevel*/
+/*set_improve*/
+/*get_improve*/
+/*set_maxim*/
+/*is_maxim*/
+/*set_maxpivot*/
+/*get_maxpivot*/
+/*set_minim*/
+/*set_mip_gap*/
+/*get_mip_gap*/
+/*set_negrange*/
+/*get_negrange*/
+/*set_obj_in_basis*/
+/*is_obj_in_basis*/
+/*set_pivoting*/
+/*get_pivoting*/
+/*is_piv_mode*/
+/*is_piv_rule*/
+/*set_preferdual*/
+/*set_presolve*/
+/*get_presolve*/
+/*get_presolveloops*/
+/*is_presolve*/
+/*set_scalelimit*/
+/*get_scalelimit*/
+/*set_scaling*/
+/*get_scaling*/
+/*is_integerscaling*/
+/*is_scalemode*/
+/*is_scaletype*/
+/*set_sense*/
+/*set_simplextype*/
+/*get_simplextype*/
+/*set_solutionlimit*/
+/*get_solutionlimit*/
+/*set_timeout*/
+/*get_timeout*/
+/*set_use_names*/
+/*is_use_names*/
+/*unscale*/
 
 
-/* Solve */
+/*******************************
+  * Solve
+*******************************/
+
+/*solve*/
+/*lag_solve*/
 
 
-/* Solution */
+/*******************************
+  * Solution
+*******************************/
+
+/*get_constraints*/
+/*get_ptr_constraints*/
+/*get_constr_value*/
+/*get_objective*/
+/*get_primal_solution*/
+/*get_ptr_primal_solution*/
+/*get_var_primalresult*/
+/*get_sensitivity_obj*/
+/*get_ptr_sensitivity_obj*/
+/*get_sensitivity_objex*/
+/*get_ptr_sensitivity_objex*/
+/*get_sensitivity_rhs*/
+/*get_ptr_sensitivity_rhs*/
+/*get_dual_solution*/
+/*get_ptr_dual_solution*/
+/*get_var_dualresult*/
+/*get_solutioncount*/
+/*get_total_iter*/
+/*get_total_nodes*/
+/*get_variables*/
+/*get_ptr_variables*/
+/*get_working_objective*/
+/*is_feasible*/
 
 
-/* Debug/print settings */
+/*******************************
+  * Debug/print settings
+*******************************/
+
+/*set_debug/*
+/*is_debug/*
+/*set_lag_trace/*
+/*is_lag_trace/*
+/*set_outputstream/*
+/*set_outputfile/*
+/*set_print_sol/*
+/*get_print_sol/*
+/*set_trace/*
+/*is_trace/*
+/*set_verbose/*
+/*get_verbose/*
 
 
-/* Debug/print */
+/*******************************
+  * Debug/print
+*******************************/
 
 /*print_constraints*/
 /*print_debugdump*/
@@ -697,10 +830,27 @@ SEXP RlpSolve_print_tableau(SEXP Slp)
 
 
 
-/* Write model to file */
+/*******************************
+  * Write model to file
+*******************************/
+
+/*write_lp*/
+/*write_LP*/
+/*write_lpex*/
+/*write_mps*/
+/*write_freemps*/
+/*write_MPS*/
+/*write_freeMPS*/
+/*MPS_writefileex*/
+/*write_XLI*/
+/*set_XLI*/
+/*has_XLI*/
+/*is_nativeXLI*/
 
 
-/* Miscellaneous routines */
+/*******************************
+  * Miscellaneous routines
+*******************************/
 
 
 /*column_in_lp*/

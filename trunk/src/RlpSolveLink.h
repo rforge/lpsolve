@@ -4,7 +4,9 @@
   * The lp_solve API 
 ************************************************************************************/
 
-/* Create/destroy model */
+/*******************************
+  * Create/destroy model
+*******************************/
 
 SEXP RlpSolve_make_lp(SEXP Srows, SEXP Scolumns);
 SEXP RlpSolve_copy_lp(SEXP Slp);
