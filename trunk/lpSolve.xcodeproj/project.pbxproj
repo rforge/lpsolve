@@ -25,12 +25,10 @@
 		0EABBD7F0D59E82A00CF7B0C /* get.bounds.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.bounds.q; sourceTree = "<group>"; };
 		0EABBD800D59E82A00CF7B0C /* get.mat.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.mat.q; sourceTree = "<group>"; };
 		0EABBD810D59E82A00CF7B0C /* get.rhs.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.rhs.q; sourceTree = "<group>"; };
-		0EABBD850D59E82A00CF7B0C /* is.infinite.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = is.infinite.q; sourceTree = "<group>"; };
 		0EABBD890D59E82A00CF7B0C /* print.lpExtPtr.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = print.lpExtPtr.q; sourceTree = "<group>"; };
 		0EABBD8A0D59E82A00CF7B0C /* resize.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = resize.lp.q; sourceTree = "<group>"; };
 		0EABBD8C0D59E82A00CF7B0C /* set.bounds.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.bounds.q; sourceTree = "<group>"; };
 		0EABBD8D0D59E82A00CF7B0C /* set.constr.types.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.constr.types.q; sourceTree = "<group>"; };
-		0EABBD8E0D59E82A00CF7B0C /* set.infinite.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.infinite.q; sourceTree = "<group>"; };
 		0EABBD910D59E82A00CF7B0C /* set.mat.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.mat.q; sourceTree = "<group>"; };
 		0EABBD920D59E82A00CF7B0C /* set.objfn.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.objfn.q; sourceTree = "<group>"; };
 		0EABBD930D59E82A00CF7B0C /* set.rhs.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.rhs.q; sourceTree = "<group>"; };
@@ -38,6 +36,8 @@
 		0EABBD980D59E8A100CF7B0C /* set.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.column.q; sourceTree = "<group>"; };
 		0EABBD990D59FD8000CF7B0C /* add.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = add.column.q; sourceTree = "<group>"; };
 		0EABBD9A0D5A104700CF7B0C /* dim.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dim.lp.q; sourceTree = "<group>"; };
+		0EC5CD3A0D60584D00958B10 /* lpslink55.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpslink55.c; path = src/lpslink55.c; sourceTree = SOURCE_ROOT; };
+		0EC5CD3D0D6073BA00958B10 /* lpSolve.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolve.Rd; path = man/lpSolve.Rd; sourceTree = SOURCE_ROOT; };
 		0ED0C43F0D5B59950013E074 /* set.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.type.q; sourceTree = "<group>"; };
 		0ED0C4400D5B65700013E074 /* get.types.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.types.q; sourceTree = "<group>"; };
 		0EF13EF20D5C918A00F77D3C /* colamd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = colamd.c; path = src/colamd.c; sourceTree = SOURCE_ROOT; };
@@ -208,6 +208,7 @@
 			children = (
 				0EF13F2D0D5C918A00F77D3C /* Makevars */,
 				0E3F54B60D536CB300617C9D /* Makevars.win */,
+				0EC5CD3A0D60584D00958B10 /* lpslink55.c */,
 				0EF13F5A0D5C9F9100F77D3C /* lpSolve.c */,
 				0E3F54C50D536DB400617C9D /* RlpSolve.c */,
 				0E3F54C60D536DB400617C9D /* RlpSolve.h */,
@@ -224,8 +225,8 @@
 				0EF13F980D5CAA3B00F77D3C /* lp.assign.q */,
 				0EF13F990D5CAA3B00F77D3C /* lp.q */,
 				0EF13F9A0D5CAA3B00F77D3C /* lp.transport.q */,
-				0EF13F5B0D5C9FA600F77D3C /* lpSolve.q */,
 				0EF13F9B0D5CAA3B00F77D3C /* print.lp.q */,
+				0EF13F5B0D5C9FA600F77D3C /* lpSolve.q */,
 				0EF13F550D5C9EDD00F77D3C /* R API */,
 			);
 			path = R;
@@ -239,6 +240,7 @@
 				0EF13F740D5CA9D100F77D3C /* lp.object.Rd */,
 				0EF13F760D5CA9D100F77D3C /* lp.transport.Rd */,
 				0EF13F770D5CA9D100F77D3C /* print.lp.Rd */,
+				0EC5CD3D0D6073BA00958B10 /* lpSolve.Rd */,
 				0EF13F780D5CA9DA00F77D3C /* R API */,
 			);
 			path = man;
@@ -259,14 +261,12 @@
 				0EABBD800D59E82A00CF7B0C /* get.mat.q */,
 				0EABBD810D59E82A00CF7B0C /* get.rhs.q */,
 				0ED0C4400D5B65700013E074 /* get.types.q */,
-				0EABBD850D59E82A00CF7B0C /* is.infinite.q */,
 				0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */,
 				0EABBD890D59E82A00CF7B0C /* print.lpExtPtr.q */,
 				0EABBD8A0D59E82A00CF7B0C /* resize.lp.q */,
 				0EABBD8C0D59E82A00CF7B0C /* set.bounds.q */,
 				0EABBD980D59E8A100CF7B0C /* set.column.q */,
 				0EABBD8D0D59E82A00CF7B0C /* set.constr.types.q */,
-				0EABBD8E0D59E82A00CF7B0C /* set.infinite.q */,
 				0EABBD910D59E82A00CF7B0C /* set.mat.q */,
 				0EABBD920D59E82A00CF7B0C /* set.objfn.q */,
 				0EABBD930D59E82A00CF7B0C /* set.rhs.q */,

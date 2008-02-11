@@ -18,5 +18,3 @@ delete.constraints(x, c(4,6))
 
 set.rhs(x, 1:4)
 set.constr.types(x, rep("<=", 4))
-
-
