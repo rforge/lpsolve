@@ -114,6 +114,52 @@ SEXP RlpSolve_set_anti_degen(SEXP Slp, SEXP Santi_degen);
 SEXP RlpSolve_is_anti_degen(SEXP Slp, SEXP Stestmask);
 SEXP RlpSolve_set_basis(SEXP Slp, SEXP Sbascolumn, SEXP Snonbasic);
 SEXP RlpSolve_get_basis(SEXP Slp, SEXP Snonbasic);
+SEXP RlpSolve_set_basiscrash(SEXP Slp, SEXP Smode);
+SEXP RlpSolve_get_basiscrash(SEXP Slp);
+/*set_bb_depthlimit*/
+/*get_bb_depthlimit*/
+/*set_bb_floorfirst*/
+/*get_bb_floorfirst*/
+/*set_bb_rule*/
+/*get_bb_rule*/
+/*set_BFP*/
+/*has_BFP*/
+/*is_nativeBFP*/
+/*set_break_at_first*/
+/*is_break_at_first*/
+/*set_break_at_value*/
+/*get_break_at_value*/
+SEXP RlpSolve_set_epsb(SEXP Slp, SEXP Sepsb);
+SEXP RlpSolve_get_epsb(SEXP Slp);
+SEXP RlpSolve_set_epsd(SEXP Slp, SEXP Sepsd);
+SEXP RlpSolve_get_epsd(SEXP Slp);
+SEXP RlpSolve_set_epsel(SEXP Slp, SEXP Sepsel);
+SEXP RlpSolve_get_epsel(SEXP Slp);
+SEXP RlpSolve_set_epsint(SEXP Slp, SEXP Sepsint);
+SEXP RlpSolve_get_epsint(SEXP Slp);
+SEXP RlpSolve_set_epsperturb(SEXP Slp, SEXP Sepsperturb);
+SEXP RlpSolve_get_epsperturb(SEXP Slp);
+SEXP RlpSolve_set_epspivot(SEXP Slp, SEXP Sepspivot);
+SEXP RlpSolve_get_epspivot(SEXP Slp);
+SEXP RlpSolve_set_epslevel(SEXP Slp, SEXP Sepslevel);
+SEXP RlpSolve_set_improve(SEXP Slp, SEXP Simprove);
+SEXP RlpSolve_get_improve(SEXP Slp);
+SEXP RlpSolve_set_maxim(SEXP Slp);
+SEXP RlpSolve_is_maxim(SEXP Slp);
+SEXP RlpSolve_set_maxpivot(SEXP Slp, SEXP Smax_num_inv);
+SEXP RlpSolve_get_maxpivot(SEXP Slp);
+SEXP RlpSolve_set_minim(SEXP Slp);
+/*set_mip_gap*/
+/*get_mip_gap*/
+SEXP RlpSolve_set_negrange(SEXP Slp, SEXP Snegrange);
+SEXP RlpSolve_get_negrange(SEXP Slp);
+SEXP RlpSolve_set_obj_in_basis(SEXP Slp, SEXP Sobj_in_basis);
+SEXP RlpSolve_is_obj_in_basis(SEXP Slp);
+SEXP RlpSolve_set_pivoting(SEXP Slp, SEXP Spivoting);
+SEXP RlpSolve_get_pivoting(SEXP Slp);
+SEXP RlpSolve_is_piv_mode(SEXP Slp, SEXP Stestmask);
+SEXP RlpSolve_is_piv_rule(SEXP Slp, SEXP Srule);
+
 
 
 

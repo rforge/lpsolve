@@ -769,16 +769,36 @@ SEXP RlpSolve_get_basis(SEXP Slp, SEXP Snonbasic)
   status = get_basis(lp, INTEGER(ret), (unsigned char) LOGICAL(Snonbasic)[0]);
 
   if(status)
-    INTEGER(ret)[0] <- 1;
+    INTEGER(ret)[0] = 1;
   else
-    INTEGER(ret)[0] <- -1;
+    INTEGER(ret)[0] = -1;
 
   UNPROTECT(1);
   return ret;
 }
 
-/*set_basiscrash*/
-/*get_basiscrash*/
+
+SEXP RlpSolve_set_basiscrash(SEXP Slp, SEXP Smode)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_basiscrash(lp, INTEGER(Smode)[0]);
+  return R_NilValue;
+}  
+
+
+SEXP RlpSolve_get_basiscrash(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_basiscrash(lp);
+  UNPROTECT(1);
+
+   return ret;
+}
+
+
 /*set_bb_depthlimit*/
 /*get_bb_depthlimit*/
 /*set_bb_floorfirst*/
@@ -792,36 +812,310 @@ SEXP RlpSolve_get_basis(SEXP Slp, SEXP Snonbasic)
 /*is_break_at_first*/
 /*set_break_at_value*/
 /*get_break_at_value*/
-/*set_epsb*/
-/*get_epsb*/
-/*set_epsd*/
-/*get_epsd*/
-/*set_epsel*/
-/*get_epsel*/
-/*set_epsint*/
-/*get_epsint*/
-/*set_epsperturb*/
-/*get_epsperturb*/
-/*set_epspivot*/
-/*get_epspivot*/
-/*set_epslevel*/
-/*set_improve*/
-/*get_improve*/
-/*set_maxim*/
-/*is_maxim*/
-/*set_maxpivot*/
-/*get_maxpivot*/
-/*set_minim*/
+
+SEXP RlpSolve_set_epsb(SEXP Slp, SEXP Sepsb)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_epsb(lp, REAL(Sepsb)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_epsb(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(REALSXP, 1));
+  REAL(ret)[0] = get_epsb(lp);
+  UNPROTECT(1);
+
+   return ret;
+}
+
+
+SEXP RlpSolve_set_epsd(SEXP Slp, SEXP Sepsd)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_epsd(lp, REAL(Sepsd)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_epsd(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(REALSXP, 1));
+  REAL(ret)[0] = get_epsd(lp);
+  UNPROTECT(1);
+
+   return ret;
+}
+
+
+SEXP RlpSolve_set_epsel(SEXP Slp, SEXP Sepsel)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_epsel(lp, REAL(Sepsel)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_epsel(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(REALSXP, 1));
+  REAL(ret)[0] = get_epsel(lp);
+  UNPROTECT(1);
+
+   return ret;
+}
+
+
+SEXP RlpSolve_set_epsint(SEXP Slp, SEXP Sepsint)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_epsint(lp, REAL(Sepsint)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_epsint(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(REALSXP, 1));
+  REAL(ret)[0] = get_epsint(lp);
+  UNPROTECT(1);
+
+   return ret;
+}
+
+
+SEXP RlpSolve_set_epsperturb(SEXP Slp, SEXP Sepsperturb)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_epsperturb(lp, REAL(Sepsperturb)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_epsperturb(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(REALSXP, 1));
+  REAL(ret)[0] = get_epsperturb(lp);
+  UNPROTECT(1);
+
+   return ret;
+}
+
+
+SEXP RlpSolve_set_epspivot(SEXP Slp, SEXP Sepspivot)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_epspivot(lp, REAL(Sepspivot)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_epspivot(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(REALSXP, 1));
+  REAL(ret)[0] = get_epspivot(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_epslevel(SEXP Slp, SEXP Sepslevel)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) set_epslevel(lp, INTEGER(Sepslevel)[0]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_improve(SEXP Slp, SEXP Simprove)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_improve(lp, INTEGER(Simprove)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_improve(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_improve(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_maxim(SEXP Slp)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_maxim(lp);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_is_maxim(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) is_maxim(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_maxpivot(SEXP Slp, SEXP Smax_num_inv)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_maxpivot(lp, INTEGER(Smax_num_inv)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_maxpivot(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_maxpivot(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_minim(SEXP Slp)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_minim(lp);
+  return R_NilValue;
+}
+
+
 /*set_mip_gap*/
 /*get_mip_gap*/
-/*set_negrange*/
-/*get_negrange*/
-/*set_obj_in_basis*/
-/*is_obj_in_basis*/
-/*set_pivoting*/
-/*get_pivoting*/
-/*is_piv_mode*/
-/*is_piv_rule*/
+
+SEXP RlpSolve_set_negrange(SEXP Slp, SEXP Snegrange)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_negrange(lp, REAL(Snegrange)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_negrange(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(REALSXP, 1));
+  REAL(ret)[0] = get_negrange(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_obj_in_basis(SEXP Slp, SEXP Sobj_in_basis)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_obj_in_basis(lp, (unsigned char) LOGICAL(Sobj_in_basis)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_is_obj_in_basis(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) is_obj_in_basis(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_pivoting(SEXP Slp, SEXP Spivoting)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_pivoting(lp, INTEGER(Spivoting)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_pivoting(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_pivoting(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_is_piv_mode(SEXP Slp, SEXP Stestmask)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) is_piv_mode(lp, INTEGER(Stestmask)[0]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_is_piv_rule(SEXP Slp, SEXP Srule)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) is_piv_rule(lp, INTEGER(Srule)[0]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+
 /*set_preferdual*/
 /*set_presolve*/
 /*get_presolve*/
