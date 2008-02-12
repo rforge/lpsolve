@@ -116,19 +116,19 @@ SEXP RlpSolve_set_basis(SEXP Slp, SEXP Sbascolumn, SEXP Snonbasic);
 SEXP RlpSolve_get_basis(SEXP Slp, SEXP Snonbasic);
 SEXP RlpSolve_set_basiscrash(SEXP Slp, SEXP Smode);
 SEXP RlpSolve_get_basiscrash(SEXP Slp);
-/*set_bb_depthlimit*/
-/*get_bb_depthlimit*/
-/*set_bb_floorfirst*/
-/*get_bb_floorfirst*/
-/*set_bb_rule*/
-/*get_bb_rule*/
+SEXP RlpSolve_set_bb_depthlimit(SEXP Slp, SEXP Sbb_maxlevel);
+SEXP RlpSolve_get_bb_depthlimit(SEXP Slp);
+SEXP RlpSolve_set_bb_floorfirst(SEXP Slp, SEXP Sbb_floorfirst);
+SEXP RlpSolve_get_bb_floorfirst(SEXP Slp);
+SEXP RlpSolve_set_bb_rule(SEXP Slp, SEXP Sbb_rule);
+SEXP RlpSolve_get_bb_rule(SEXP Slp);
 /*set_BFP*/
 /*has_BFP*/
 /*is_nativeBFP*/
-/*set_break_at_first*/
-/*is_break_at_first*/
-/*set_break_at_value*/
-/*get_break_at_value*/
+SEXP RlpSolve_set_break_at_first(SEXP Slp, SEXP Sbreak_at_first);
+SEXP RlpSolve_is_break_at_first(SEXP Slp);
+SEXP RlpSolve_set_break_at_value(SEXP Slp, SEXP Sbreak_at_value);
+SEXP RlpSolve_get_break_at_value(SEXP Slp);
 SEXP RlpSolve_set_epsb(SEXP Slp, SEXP Sepsb);
 SEXP RlpSolve_get_epsb(SEXP Slp);
 SEXP RlpSolve_set_epsd(SEXP Slp, SEXP Sepsd);
@@ -149,19 +149,36 @@ SEXP RlpSolve_is_maxim(SEXP Slp);
 SEXP RlpSolve_set_maxpivot(SEXP Slp, SEXP Smax_num_inv);
 SEXP RlpSolve_get_maxpivot(SEXP Slp);
 SEXP RlpSolve_set_minim(SEXP Slp);
-/*set_mip_gap*/
-/*get_mip_gap*/
+SEXP RlpSolve_set_mip_gap(SEXP Slp, SEXP Sabsolute, SEXP Smip_gap);
+SEXP RlpSolve_get_mip_gap(SEXP Slp, SEXP Sabsolute);
 SEXP RlpSolve_set_negrange(SEXP Slp, SEXP Snegrange);
 SEXP RlpSolve_get_negrange(SEXP Slp);
 SEXP RlpSolve_set_obj_in_basis(SEXP Slp, SEXP Sobj_in_basis);
 SEXP RlpSolve_is_obj_in_basis(SEXP Slp);
 SEXP RlpSolve_set_pivoting(SEXP Slp, SEXP Spivoting);
 SEXP RlpSolve_get_pivoting(SEXP Slp);
-SEXP RlpSolve_is_piv_mode(SEXP Slp, SEXP Stestmask);
-SEXP RlpSolve_is_piv_rule(SEXP Slp, SEXP Srule);
-
-
-
+SEXP RlpSolve_is_piv_mode(SEXP Slp, SEXP Stestmasks);
+SEXP RlpSolve_is_piv_rule(SEXP Slp, SEXP Srules);
+SEXP RlpSolve_set_preferdual(SEXP Slp, SEXP Sdodual);
+SEXP RlpSolve_set_presolve(SEXP Slp, SEXP Sdo_presolve, SEXP Smaxloops);
+SEXP RlpSolve_get_presolve(SEXP Slp);
+SEXP RlpSolve_get_presolveloops(SEXP Slp);
+SEXP RlpSolve_is_presolve(SEXP Slp, SEXP Stestmasks);
+SEXP RlpSolve_set_scaling(SEXP Slp, SEXP Sscalemode);
+SEXP RlpSolve_get_scaling(SEXP Slp);
+SEXP RlpSolve_is_integerscaling(SEXP Slp);
+SEXP RlpSolve_is_scalemode(SEXP Slp, SEXP Stestmasks);
+SEXP RlpSolve_is_scaletype(SEXP Slp, SEXP Sscaletype);
+SEXP RlpSolve_set_sense(SEXP Slp, SEXP Smaximize);
+SEXP RlpSolve_set_simplextype(SEXP Slp, SEXP Ssimplextype);
+SEXP RlpSolve_get_simplextype(SEXP Slp);
+SEXP RlpSolve_set_solutionlimit(SEXP Slp, SEXP Slimit);
+SEXP RlpSolve_get_solutionlimit(SEXP Slp);
+SEXP RlpSolve_set_timeout(SEXP Slp, SEXP Ssectimeout);
+SEXP RlpSolve_get_timeout(SEXP Slp);
+SEXP RlpSolve_set_use_names(SEXP Slp, SEXP Sisrow, SEXP Suse_names);
+SEXP RlpSolve_is_use_names(SEXP Slp, SEXP Sisrow);
+SEXP RlpSolve_unscale(SEXP Slp);
 
 
 /*******************************

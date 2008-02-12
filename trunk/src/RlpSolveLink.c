@@ -795,23 +795,118 @@ SEXP RlpSolve_get_basiscrash(SEXP Slp)
   INTEGER(ret)[0] = get_basiscrash(lp);
   UNPROTECT(1);
 
-   return ret;
+  return ret;
 }
 
 
-/*set_bb_depthlimit*/
-/*get_bb_depthlimit*/
-/*set_bb_floorfirst*/
-/*get_bb_floorfirst*/
-/*set_bb_rule*/
-/*get_bb_rule*/
+SEXP RlpSolve_set_bb_depthlimit(SEXP Slp, SEXP Sbb_maxlevel)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_bb_depthlimit(lp, INTEGER(Sbb_maxlevel)[0]);
+  return R_NilValue;
+}  
+
+
+SEXP RlpSolve_get_bb_depthlimit(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_bb_depthlimit(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_bb_floorfirst(SEXP Slp, SEXP Sbb_floorfirst)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_bb_floorfirst(lp, INTEGER(Sbb_floorfirst)[0]);
+  return R_NilValue;
+}  
+
+
+SEXP RlpSolve_get_bb_floorfirst(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_bb_floorfirst(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_bb_rule(SEXP Slp, SEXP Sbb_rule)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_bb_rule(lp, INTEGER(Sbb_rule)[0]);
+  return R_NilValue;
+}  
+
+
+SEXP RlpSolve_get_bb_rule(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_bb_rule(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
 /*set_BFP*/
 /*has_BFP*/
 /*is_nativeBFP*/
-/*set_break_at_first*/
-/*is_break_at_first*/
-/*set_break_at_value*/
-/*get_break_at_value*/
+
+SEXP RlpSolve_set_break_at_first(SEXP Slp, SEXP Sbreak_at_first)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_break_at_first(lp, (unsigned char) LOGICAL(Sbreak_at_first)[0]);
+  return R_NilValue;
+}  
+
+
+SEXP RlpSolve_is_break_at_first(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) is_break_at_first(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_break_at_value(SEXP Slp, SEXP Sbreak_at_value)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_break_at_value(lp, REAL(Sbreak_at_value)[0]);
+  return R_NilValue;
+}  
+
+
+SEXP RlpSolve_get_break_at_value(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(REALSXP, 1));
+  REAL(ret)[0] = get_break_at_value(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
 
 SEXP RlpSolve_set_epsb(SEXP Slp, SEXP Sepsb)
 {
@@ -1023,8 +1118,26 @@ SEXP RlpSolve_set_minim(SEXP Slp)
 }
 
 
-/*set_mip_gap*/
-/*get_mip_gap*/
+SEXP RlpSolve_set_mip_gap(SEXP Slp, SEXP Sabsolute, SEXP Smip_gap)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_mip_gap(lp, (unsigned char) LOGICAL(Sabsolute)[0], REAL(Smip_gap)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_mip_gap(SEXP Slp, SEXP Sabsolute)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(REALSXP, 1));
+  REAL(ret)[0] = get_mip_gap(lp, (unsigned char) LOGICAL(Sabsolute)[0]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
 
 SEXP RlpSolve_set_negrange(SEXP Slp, SEXP Snegrange)
 {
@@ -1089,55 +1202,276 @@ SEXP RlpSolve_get_pivoting(SEXP Slp)
 }
 
 
-SEXP RlpSolve_is_piv_mode(SEXP Slp, SEXP Stestmask)
+SEXP RlpSolve_is_piv_mode(SEXP Slp, SEXP Stestmasks)
 {
   SEXP ret = R_NilValue;
   lprec* lp = lprecPointerFromSEXP(Slp);
+  int nmask = LENGTH(Stestmasks), i = 0;
 
-  PROTECT(ret = allocVector(LGLSXP, 1));
-  LOGICAL(ret)[0] = (int) is_piv_mode(lp, INTEGER(Stestmask)[0]);
+  PROTECT(ret = allocVector(LGLSXP, nmask));
+  for(i = 0; i < nmask; i++)
+    LOGICAL(ret)[i] = (int) is_piv_mode(lp, INTEGER(Stestmasks)[i]);
   UNPROTECT(1);
 
   return ret;
 }
 
 
-SEXP RlpSolve_is_piv_rule(SEXP Slp, SEXP Srule)
+SEXP RlpSolve_is_piv_rule(SEXP Slp, SEXP Srules)
 {
   SEXP ret = R_NilValue;
   lprec* lp = lprecPointerFromSEXP(Slp);
+  int nrules = LENGTH(Srules), i = 0;
 
-  PROTECT(ret = allocVector(LGLSXP, 1));
-  LOGICAL(ret)[0] = (int) is_piv_rule(lp, INTEGER(Srule)[0]);
+  PROTECT(ret = allocVector(LGLSXP, nrules));
+  for(i = 0; i < nrules; i++)
+    LOGICAL(ret)[i] = (int) is_piv_rule(lp, INTEGER(Srules)[i]);
   UNPROTECT(1);
 
   return ret;
 }
 
 
+SEXP RlpSolve_set_preferdual(SEXP Slp, SEXP Sdodual)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_preferdual(lp, INTEGER(Sdodual)[0]);
+  return R_NilValue;
+}
 
-/*set_preferdual*/
-/*set_presolve*/
-/*get_presolve*/
-/*get_presolveloops*/
-/*is_presolve*/
-/*set_scalelimit*/
-/*get_scalelimit*/
-/*set_scaling*/
-/*get_scaling*/
-/*is_integerscaling*/
-/*is_scalemode*/
-/*is_scaletype*/
-/*set_sense*/
-/*set_simplextype*/
-/*get_simplextype*/
-/*set_solutionlimit*/
-/*get_solutionlimit*/
-/*set_timeout*/
-/*get_timeout*/
-/*set_use_names*/
-/*is_use_names*/
-/*unscale*/
+
+SEXP RlpSolve_set_presolve(SEXP Slp, SEXP Sdo_presolve, SEXP Smaxloops)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_presolve(lp, INTEGER(Sdo_presolve)[0], INTEGER(Smaxloops)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_presolve(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_presolve(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_presolveloops(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_presolveloops(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_is_presolve(SEXP Slp, SEXP Stestmasks)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  int nmask = LENGTH(Stestmasks), i = 0;
+
+  PROTECT(ret = allocVector(LGLSXP, nmask));
+  for(i = 0; i < nmask; i++)
+    LOGICAL(ret)[i] = (int) is_presolve(lp, INTEGER(Stestmasks)[i]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_scalelimit(SEXP Slp, SEXP Sscalelimit)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_scalelimit(lp, REAL(Sscalelimit)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_scalelimit(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(REALSXP, 1));
+  REAL(ret)[0] = get_scalelimit(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_scaling(SEXP Slp, SEXP Sscalemode)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_scaling(lp, REAL(Sscalemode)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_scaling(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_scaling(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_is_integerscaling(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) is_integerscaling(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_is_scalemode(SEXP Slp, SEXP Stestmasks)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  int nmask = LENGTH(Stestmasks), i = 0;
+
+  PROTECT(ret = allocVector(LGLSXP, nmask));
+  for(i = 0; i < nmask; i++)
+    LOGICAL(ret)[i] = (int) is_scalemode(lp, INTEGER(Stestmasks)[i]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_is_scaletype(SEXP Slp, SEXP Sscaletype)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  int ntype = LENGTH(Sscaletype), i = 0;
+
+  PROTECT(ret = allocVector(LGLSXP, ntype));
+  for(i = 0; i < ntype; i++)
+    LOGICAL(ret)[i] = (int) is_scaletype(lp, INTEGER(Sscaletype)[i]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_sense(SEXP Slp, SEXP Smaximize)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_sense(lp, (unsigned char) LOGICAL(Smaximize)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_set_simplextype(SEXP Slp, SEXP Ssimplextype)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_simplextype(lp, INTEGER(Ssimplextype)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_simplextype(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_simplextype(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_solutionlimit(SEXP Slp, SEXP Slimit)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_solutionlimit(lp, INTEGER(Slimit)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_solutionlimit(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_solutionlimit(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_timeout(SEXP Slp, SEXP Ssectimeout)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_timeout(lp, (long) INTEGER(Ssectimeout)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_get_timeout(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = (int) get_timeout(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_set_use_names(SEXP Slp, SEXP Sisrow, SEXP Suse_names)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_use_names(lp, (unsigned char) LOGICAL(Sisrow)[0], (unsigned char) LOGICAL(Suse_names)[0]);
+  return R_NilValue;
+}
+
+
+SEXP RlpSolve_is_use_names(SEXP Slp, SEXP Sisrow)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) is_use_names(lp, (unsigned char) LOGICAL(Sisrow)[0]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_unscale(SEXP Slp)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  unscale(lp);
+  return R_NilValue;
+}
 
 
 /*******************************
