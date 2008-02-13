@@ -725,15 +725,15 @@ SEXP RlpSolve_set_anti_degen(SEXP Slp, SEXP Santi_degen)
 }  
 
 
-SEXP RlpSolve_is_anti_degen(SEXP Slp, SEXP Stestmask)
+SEXP RlpSolve_is_anti_degen(SEXP Slp, SEXP Stestmasks)
 {
   SEXP ret = R_NilValue;
   lprec* lp = lprecPointerFromSEXP(Slp);
-  int nmask = LENGTH(Stestmask), i = 0;
+  int nmask = LENGTH(Stestmasks), i = 0;
 
   PROTECT(ret = allocVector(LGLSXP, nmask));
   for(i = 0; i < nmask; i++)
-    LOGICAL(ret)[i] = (int) is_anti_degen(lp, INTEGER(Stestmask)[i]);
+    LOGICAL(ret)[i] = (int) is_anti_degen(lp, INTEGER(Stestmasks)[i]);
   UNPROTECT(1);
 
   return ret;
@@ -1313,7 +1313,7 @@ SEXP RlpSolve_get_scalelimit(SEXP Slp)
 SEXP RlpSolve_set_scaling(SEXP Slp, SEXP Sscalemode)
 {
   lprec* lp = lprecPointerFromSEXP(Slp);
-  set_scaling(lp, REAL(Sscalemode)[0]);
+  set_scaling(lp, INTEGER(Sscalemode)[0]);
   return R_NilValue;
 }
 

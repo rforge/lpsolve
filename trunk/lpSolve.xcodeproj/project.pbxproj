@@ -15,13 +15,14 @@
 		0E3F54C80D536DB400617C9D /* RlpSolveLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolveLink.h; path = src/RlpSolveLink.h; sourceTree = SOURCE_ROOT; };
 		0E8B36220D5B9335000DEDC9 /* set.row.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.row.q; sourceTree = "<group>"; };
 		0E94F8AD0D57A8A100783D76 /* test.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.q; sourceTree = "<group>"; };
+		0E9AA01B0D622B8400426ADF /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lp.control.q; sourceTree = "<group>"; };
+		0EA6F46C0D631EE200496510 /* get.presolveloops.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.presolveloops.q; sourceTree = "<group>"; };
 		0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.q; sourceTree = "<group>"; };
 		0EABBD790D59D0A600CF7B0C /* make.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.Rd; sourceTree = "<group>"; };
 		0EABBD7A0D59E82A00CF7B0C /* add.constraint.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = add.constraint.q; sourceTree = "<group>"; };
 		0EABBD7B0D59E82A00CF7B0C /* delete.columns.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = delete.columns.q; sourceTree = "<group>"; };
 		0EABBD7C0D59E82A00CF7B0C /* delete.constraints.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = delete.constraints.q; sourceTree = "<group>"; };
 		0EABBD7D0D59E82A00CF7B0C /* get.constr.types.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.constr.types.q; sourceTree = "<group>"; };
-		0EABBD7E0D59E82A00CF7B0C /* get.infinite.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.infinite.q; sourceTree = "<group>"; };
 		0EABBD7F0D59E82A00CF7B0C /* get.bounds.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.bounds.q; sourceTree = "<group>"; };
 		0EABBD800D59E82A00CF7B0C /* get.mat.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.mat.q; sourceTree = "<group>"; };
 		0EABBD810D59E82A00CF7B0C /* get.rhs.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.rhs.q; sourceTree = "<group>"; };
@@ -257,10 +258,11 @@
 				0EABBD7F0D59E82A00CF7B0C /* get.bounds.q */,
 				0EABBD970D59E8A100CF7B0C /* get.column.q */,
 				0EABBD7D0D59E82A00CF7B0C /* get.constr.types.q */,
-				0EABBD7E0D59E82A00CF7B0C /* get.infinite.q */,
 				0EABBD800D59E82A00CF7B0C /* get.mat.q */,
+				0EA6F46C0D631EE200496510 /* get.presolveloops.q */,
 				0EABBD810D59E82A00CF7B0C /* get.rhs.q */,
 				0ED0C4400D5B65700013E074 /* get.types.q */,
+				0E9AA01B0D622B8400426ADF /* lp.control.q */,
 				0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */,
 				0EABBD890D59E82A00CF7B0C /* print.lpExtPtr.q */,
 				0EABBD8A0D59E82A00CF7B0C /* resize.lp.q */,
