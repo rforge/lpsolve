@@ -11,12 +11,13 @@
 SEXP RlpSolve_make_lp(SEXP Srows, SEXP Scolumns);
 SEXP RlpSolve_copy_lp(SEXP Slp);
 /*read_lp*/
-/*read_LP*/
+SEXP RlpSolve_read_LP(SEXP Sfilename);
 /*read_mps*/
 /*read_freemps*/
-/*read_MPS*/
-/*read_freeMPS*/
-/*read_XLI*/
+SEXP RlpSolve_read_MPS(SEXP Sfilename);
+SEXP RlpSolve_read_freeMPS(SEXP Sfilename);
+SEXP RlpSolve_read_XLI(SEXP Sxliname, SEXP Smodelname, SEXP Sdataname,
+                       SEXP Soptions);
 SEXP RlpSolve_delete_lp(SEXP Slp);
 /*free_lp*/
 
@@ -31,14 +32,16 @@ SEXP RlpSolve_set_columnex(SEXP Slp, SEXP Scol_no, SEXP Scolumn, SEXP Srowno);
 /*get_column*/
 SEXP RlpSolve_get_columnex(SEXP Slp, SEXP Scol_nr);
 /*add_constraint*/
-SEXP RlpSolve_add_constraintex(SEXP Slp, SEXP Srow, SEXP Scolno, SEXP Sconstr_type, SEXP Srh);
+SEXP RlpSolve_add_constraintex(SEXP Slp, SEXP Srow, SEXP Scolno,
+                               SEXP Sconstr_type, SEXP Srh);
 /*str_add_constraint*/
 /*set_row*/
-/*set_rowex*/
+SEXP RlpSolve_set_rowex(SEXP Slp, SEXP Srow_no, SEXP Srow, SEXP Scolno);
 /*add_lag_con*/
 /*str_add_lag_con*/
-/*add_SOS*/
-/*is_SOS_var*/
+SEXP RlpSolve_add_SOS(SEXP Slp, SEXP Sname, SEXP Ssostype, SEXP Spriority,
+                      SEXP Ssosvars, SEXP Sweights);
+SEXP RlpSolve_is_SOS_var(SEXP Slp, SEXP Scolumns);
 SEXP RlpSolve_del_columns(SEXP Slp, SEXP Scolumn);
 SEXP RlpSolve_del_constraints(SEXP Slp, SEXP Sdel_row);
 /*get_row*/

@@ -1,5 +1,10 @@
 library(lpSolve, lib.loc = "testlib")
-library.dynam("lpSolve")
+
+lp <- .Call("RlpSolve_read_LP", "lpSolve/tests/testmodel.lp")
+oldClass(lp) <- "lpExtPtr"
+
+mps <- .Call("RlpSolve_read_MPS", "lpSolve/tests/testmodel.mps")
+oldClass(mps) <- "lpExtPtr"
 
 x <- make.lp(3, 3)
 set.column(x, 1, 1:3)

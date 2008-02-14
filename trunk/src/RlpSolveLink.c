@@ -5,9 +5,9 @@
 extern SEXP RlpSolve_lprec_tag;
 
 
-/************************************************************************************
+/*******************************************************************************
   * The lp_solve API 
-************************************************************************************/
+*******************************************************************************/
 
 /*******************************
   * Create/destroy model
@@ -43,12 +43,70 @@ SEXP RlpSolve_copy_lp(SEXP Slp)
 
 
 /*read_lp*/
-/*read_LP*/
+
+SEXP RlpSolve_read_LP(SEXP Sfilename)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = read_LP((char *) CHAR(asChar(Sfilename)), NEUTRAL, NULL);
+
+  if(lp) {
+    ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
+    R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
+  }
+
+  return ret;
+}
+
+
 /*read_mps*/
 /*read_freemps*/
-/*read_MPS*/
-/*read_freeMPS*/
-/*read_XLI*/
+
+SEXP RlpSolve_read_MPS(SEXP Sfilename)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = read_MPS((char *) CHAR(asChar(Sfilename)), NEUTRAL);
+
+  if(lp) {
+    ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
+    R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
+  }
+
+  return ret;
+}
+
+
+SEXP RlpSolve_read_freeMPS(SEXP Sfilename)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = read_freeMPS((char *) CHAR(asChar(Sfilename)), NEUTRAL);
+
+  if(lp) {
+    ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
+    R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
+  }
+
+  return ret;
+}
+
+
+SEXP RlpSolve_read_XLI(SEXP Sxliname, SEXP Smodelname, SEXP Sdataname,
+                       SEXP Soptions)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = read_XLI((char *) CHAR(asChar(Sxliname)),
+                       (char *) CHAR(asChar(Smodelname)),
+                       (char *) CHAR(asChar(Sdataname)),
+                       (char *) CHAR(asChar(Soptions)),
+                       NEUTRAL);
+
+  if(lp) {
+    ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
+    R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
+  }
+
+  return ret;
+}
+
 
 SEXP RlpSolve_delete_lp(SEXP Slp)
 {
@@ -63,7 +121,6 @@ SEXP RlpSolve_delete_lp(SEXP Slp)
 
 /*free_lp*/
 
-
 /*******************************
   * Build model
 *******************************/
@@ -74,12 +131,18 @@ SEXP RlpSolve_add_columnex(SEXP Slp, SEXP Scolumn, SEXP Srowno)
 {
   SEXP ret = R_NilValue;
   lprec* lp = lprecPointerFromSEXP(Slp);
+  int* rowno = NULL;
 
-  if(LENGTH(Scolumn) != LENGTH(Srowno))
-    error("Scolumn and Srowno do not have the same length");
+  if(Srowno != R_NilValue) {
+    rowno = INTEGER(Srowno);
+
+    if(LENGTH(Scolumn) != LENGTH(Srowno))
+      error("Scolumn and Srowno do not have the same length");
+  }
 
   PROTECT(ret = allocVector(LGLSXP, 1));
-  LOGICAL(ret)[0] = (int) add_columnex(lp, (int) LENGTH(Scolumn), REAL(Scolumn), INTEGER(Srowno));
+  LOGICAL(ret)[0] = (int) add_columnex(lp, LENGTH(Scolumn), REAL(Scolumn),
+                                       rowno);
   UNPROTECT(1);
 
   return ret;
@@ -93,12 +156,18 @@ SEXP RlpSolve_set_columnex(SEXP Slp, SEXP Scol_no, SEXP Scolumn, SEXP Srowno)
 {
   SEXP ret = R_NilValue;
   lprec* lp = lprecPointerFromSEXP(Slp);
+  int* rowno = NULL;
 
-  if(LENGTH(Scolumn) != LENGTH(Srowno))
-    error("Scolumn and Srowno do not have the same length");
+  if(Srowno != R_NilValue) {
+    rowno = INTEGER(Srowno);
+
+    if(LENGTH(Scolumn) != LENGTH(Srowno))
+      error("Scolumn and Srowno do not have the same length");
+  }
 
   PROTECT(ret = allocVector(LGLSXP, 1));
-  LOGICAL(ret)[0] = (int) set_columnex(lp, INTEGER(Scol_no)[0], (int) LENGTH(Scolumn), REAL(Scolumn), INTEGER(Srowno));
+  LOGICAL(ret)[0] = (int) set_columnex(lp, INTEGER(Scol_no)[0], LENGTH(Scolumn),
+                                       REAL(Scolumn), rowno);
   UNPROTECT(1);
 
   return ret;
@@ -109,7 +178,8 @@ SEXP RlpSolve_set_columnex(SEXP Slp, SEXP Scol_no, SEXP Scolumn, SEXP Srowno)
 
 SEXP RlpSolve_get_columnex(SEXP Slp, SEXP Scol_nr)
 {
-  SEXP ret = R_NilValue, Scolumn = R_NilValue, Snzrow = R_NilValue, names = R_NilValue;
+  SEXP ret = R_NilValue, Scolumn = R_NilValue, Snzrow = R_NilValue,
+       names = R_NilValue;
   int nrow = -1;
   lprec* lp = lprecPointerFromSEXP(Slp);
   PROTECT(Scolumn = allocVector(REALSXP, get_Nrows(lp)));
@@ -138,17 +208,24 @@ SEXP RlpSolve_get_columnex(SEXP Slp, SEXP Scol_nr)
 /*add_constraint*/
 
 /* constraint types: LE = 1, EQ = 3, GE = 2 */
-SEXP RlpSolve_add_constraintex(SEXP Slp, SEXP Srow, SEXP Scolno, SEXP Sconstr_type, SEXP Srh)
+SEXP RlpSolve_add_constraintex(SEXP Slp, SEXP Srow, SEXP Scolno,
+                               SEXP Sconstr_type, SEXP Srh)
 {
   SEXP ret = R_NilValue;
   lprec* lp = lprecPointerFromSEXP(Slp);
+  int* colno = NULL;
 
-  if(LENGTH(Srow) != LENGTH(Scolno))
-    error("Scolumn and Srowno do not have the same length");
+  if(Scolno != R_NilValue) {
+    colno = INTEGER(Scolno);
+
+    if(LENGTH(Srow) != LENGTH(Scolno))
+      error("Scolumn and Srowno do not have the same length");
+  }
 
   PROTECT(ret = allocVector(LGLSXP, 1));
-  LOGICAL(ret)[0] = (int) add_constraintex(lp, LENGTH(Srow), REAL(Srow), INTEGER(Scolno),
-                                           INTEGER(Sconstr_type)[0], REAL(Srh)[0]);
+  LOGICAL(ret)[0] = (int) add_constraintex(lp, LENGTH(Srow), REAL(Srow), colno,
+                                           INTEGER(Sconstr_type)[0],
+                                           REAL(Srh)[0]);
   UNPROTECT(1);
 
   return ret;
@@ -162,12 +239,18 @@ SEXP RlpSolve_set_rowex(SEXP Slp, SEXP Srow_no, SEXP Srow, SEXP Scolno)
 {
   SEXP ret = R_NilValue;
   lprec* lp = lprecPointerFromSEXP(Slp);
+  int* colno = NULL;
 
-  if(LENGTH(Srow) != LENGTH(Scolno))
-    error("Scolumn and Srowno do not have the same length");
+  if(Scolno != R_NilValue) {
+    colno = INTEGER(Scolno);
+
+    if(LENGTH(Srow) != LENGTH(Scolno))
+      error("Scolumn and Srowno do not have the same length");
+  }
 
   PROTECT(ret = allocVector(LGLSXP, 1));
-  LOGICAL(ret)[0] = (int) set_rowex(lp, INTEGER(Srow_no)[0], LENGTH(Srow), REAL(Srow), INTEGER(Scolno));
+  LOGICAL(ret)[0] = (int) set_rowex(lp, INTEGER(Srow_no)[0], LENGTH(Srow),
+                                    REAL(Srow), colno);
   UNPROTECT(1);
 
   return ret;
@@ -176,8 +259,46 @@ SEXP RlpSolve_set_rowex(SEXP Slp, SEXP Srow_no, SEXP Srow, SEXP Scolno)
 
 /*add_lag_con*/
 /*str_add_lag_con*/
-/*add_SOS*/
-/*is_SOS_var*/
+
+SEXP RlpSolve_add_SOS(SEXP Slp, SEXP Sname, SEXP Ssostype, SEXP Spriority,
+                      SEXP Ssosvars, SEXP Sweights)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  double* weights = NULL;
+
+  if(Sweights != R_NilValue) {
+    weights = REAL(Sweights);
+
+    if(LENGTH(Ssosvars) != LENGTH(Sweights))
+      error("Scolumn and Srowno do not have the same length");
+  }
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = add_SOS(lp, (char *) CHAR(asChar(Sname)),
+                            INTEGER(Ssostype)[0], INTEGER(Spriority)[0],
+                            LENGTH(Ssosvars), INTEGER(Ssosvars),
+                            weights);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_is_SOS_var(SEXP Slp, SEXP Scolumns)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  int ncol = LENGTH(Scolumns), j = 0;
+
+  PROTECT(ret = allocVector(LGLSXP, ncol));
+  for(j = 0; j < ncol; j++)
+    LOGICAL(ret)[j] = (int) is_SOS_var(lp, INTEGER(Scolumns)[j]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
 
 SEXP RlpSolve_del_columns(SEXP Slp, SEXP Scolumns)
 {

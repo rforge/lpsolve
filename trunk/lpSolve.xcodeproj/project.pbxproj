@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		0E16C0090D64831600EE878E /* test.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test.q; path = tests/test.q; sourceTree = SOURCE_ROOT; };
+		0E16C0290D6487C700EE878E /* testmodel.mps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testmodel.mps; sourceTree = "<group>"; };
+		0E16C02A0D6488A100EE878E /* testmodel.lp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; name = testmodel.lp; path = tests/testmodel.lp; sourceTree = SOURCE_ROOT; };
+		0E16C0490D648A6B00EE878E /* library.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = library.q; sourceTree = "<group>"; };
+		0E16C06C0D64906900EE878E /* read.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read.lp.q; sourceTree = "<group>"; };
+		0E16C06D0D64907F00EE878E /* write.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = write.lp.q; sourceTree = "<group>"; };
 		0E219E3B0D572A7C003CEC7F /* DESCRIPTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DESCRIPTION; sourceTree = SOURCE_ROOT; };
 		0E3F54B60D536CB300617C9D /* Makevars.win */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Makevars.win; path = src/Makevars.win; sourceTree = SOURCE_ROOT; };
 		0E3F54C50D536DB400617C9D /* RlpSolve.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RlpSolve.c; path = src/RlpSolve.c; sourceTree = SOURCE_ROOT; };
@@ -14,7 +20,6 @@
 		0E3F54C70D536DB400617C9D /* RlpSolveLink.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RlpSolveLink.c; path = src/RlpSolveLink.c; sourceTree = SOURCE_ROOT; };
 		0E3F54C80D536DB400617C9D /* RlpSolveLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolveLink.h; path = src/RlpSolveLink.h; sourceTree = SOURCE_ROOT; };
 		0E8B36220D5B9335000DEDC9 /* set.row.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.row.q; sourceTree = "<group>"; };
-		0E94F8AD0D57A8A100783D76 /* test.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.q; sourceTree = "<group>"; };
 		0E9AA01B0D622B8400426ADF /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lp.control.q; sourceTree = "<group>"; };
 		0EA6F46C0D631EE200496510 /* get.presolveloops.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.presolveloops.q; sourceTree = "<group>"; };
 		0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.q; sourceTree = "<group>"; };
@@ -121,6 +126,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		0E16C0080D64831600EE878E /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				0E16C0090D64831600EE878E /* test.q */,
+				0E16C02A0D6488A100EE878E /* testmodel.lp */,
+				0E16C0290D6487C700EE878E /* testmodel.mps */,
+			);
+			path = tests;
+			sourceTree = SOURCE_ROOT;
+		};
 		0E219F030D576D93003CEC7F /* lp_solve */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,7 +215,7 @@
 				0EABBD6A0D59CD4500CF7B0C /* R */,
 				0EABBD6B0D59CD5000CF7B0C /* man */,
 				0E3F54710D536C9400617C9D /* src */,
-				0E94F8AD0D57A8A100783D76 /* test.q */,
+				0E16C0080D64831600EE878E /* tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -228,6 +243,7 @@
 				0EF13F9A0D5CAA3B00F77D3C /* lp.transport.q */,
 				0EF13F9B0D5CAA3B00F77D3C /* print.lp.q */,
 				0EF13F5B0D5C9FA600F77D3C /* lpSolve.q */,
+				0E16C0490D648A6B00EE878E /* library.q */,
 				0EF13F550D5C9EDD00F77D3C /* R API */,
 			);
 			path = R;
@@ -265,6 +281,7 @@
 				0E9AA01B0D622B8400426ADF /* lp.control.q */,
 				0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */,
 				0EABBD890D59E82A00CF7B0C /* print.lpExtPtr.q */,
+				0E16C06C0D64906900EE878E /* read.lp.q */,
 				0EABBD8A0D59E82A00CF7B0C /* resize.lp.q */,
 				0EABBD8C0D59E82A00CF7B0C /* set.bounds.q */,
 				0EABBD980D59E8A100CF7B0C /* set.column.q */,
@@ -274,6 +291,7 @@
 				0EABBD930D59E82A00CF7B0C /* set.rhs.q */,
 				0E8B36220D5B9335000DEDC9 /* set.row.q */,
 				0ED0C43F0D5B59950013E074 /* set.type.q */,
+				0E16C06D0D64907F00EE878E /* write.lp.q */,
 			);
 			name = "R API";
 			sourceTree = "<group>";
