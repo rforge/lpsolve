@@ -71,8 +71,8 @@ SEXP RlpSolve_set_int(SEXP Slp, SEXP Scolumns, SEXP Smust_be_int);
 SEXP RlpSolve_is_int(SEXP Slp, SEXP Scolumns);
 SEXP RlpSolve_set_lowbo(SEXP Slp, SEXP Scolumns, SEXP Svalues);
 SEXP RlpSolve_get_lowbo(SEXP Slp, SEXP Scolumns);
-/*set_lp_name*/
-/*get_lp_name*/
+SEXP RlpSolve_set_lp_name(SEXP Slp, SEXP Slpname);
+SEXP RlpSolve_get_lp_name(SEXP Slp);
 SEXP RlpSolve_set_mat(SEXP Slp, SEXP Srow, SEXP Scolumn, SEXP Svalue);
 SEXP RlpSolve_get_mat(SEXP Slp, SEXP Srow, SEXP Scolumn);
 /*set_obj_bound*/

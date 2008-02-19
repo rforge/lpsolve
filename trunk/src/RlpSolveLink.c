@@ -696,8 +696,31 @@ SEXP RlpSolve_get_lowbo(SEXP Slp, SEXP Scolumns)
 }
 
 
-/*set_lp_name*/
-/*get_lp_name*/
+SEXP RlpSolve_set_lp_name(SEXP Slp, SEXP Slpname)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) set_lp_name(lp, (char*) CHAR(STRING_ELT(Slpname, 0)));
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_lp_name(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(STRSXP, 1));
+  SET_STRING_ELT(ret, 0, mkChar((const char *) get_lp_name(lp)));
+  UNPROTECT(1);
+
+  return ret;
+}
+
 
 SEXP RlpSolve_set_mat(SEXP Slp, SEXP Srow, SEXP Scolumn, SEXP Svalue)
 {
