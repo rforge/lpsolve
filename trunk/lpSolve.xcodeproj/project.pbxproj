@@ -20,6 +20,7 @@
 		0E3F54C70D536DB400617C9D /* RlpSolveLink.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RlpSolveLink.c; path = src/RlpSolveLink.c; sourceTree = SOURCE_ROOT; };
 		0E3F54C80D536DB400617C9D /* RlpSolveLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolveLink.h; path = src/RlpSolveLink.h; sourceTree = SOURCE_ROOT; };
 		0E8B36220D5B9335000DEDC9 /* set.row.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.row.q; sourceTree = "<group>"; };
+		0E95A8740D65AC25004E889A /* dimnames.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dimnames.lp.q; path = R/dimnames.lp.q; sourceTree = SOURCE_ROOT; };
 		0E9AA01B0D622B8400426ADF /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lp.control.q; sourceTree = "<group>"; };
 		0EA6F46C0D631EE200496510 /* get.presolveloops.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.presolveloops.q; sourceTree = "<group>"; };
 		0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.q; sourceTree = "<group>"; };
@@ -271,6 +272,7 @@
 				0EABBD7B0D59E82A00CF7B0C /* delete.columns.q */,
 				0EABBD7C0D59E82A00CF7B0C /* delete.constraints.q */,
 				0EABBD9A0D5A104700CF7B0C /* dim.lp.q */,
+				0E95A8740D65AC25004E889A /* dimnames.lp.q */,
 				0EABBD7F0D59E82A00CF7B0C /* get.bounds.q */,
 				0EABBD970D59E8A100CF7B0C /* get.column.q */,
 				0EABBD7D0D59E82A00CF7B0C /* get.constr.types.q */,

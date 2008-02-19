@@ -24,3 +24,5 @@ delete.constraints(x, c(4,6))
 set.rhs(x, 1:4)
 set.constr.types(x, rep("<=", 4))
 
+dimnames(x) <- list(paste("row", 1:4), paste("column", 1:3))
+

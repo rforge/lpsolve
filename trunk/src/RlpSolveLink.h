@@ -57,9 +57,9 @@ SEXP RlpSolve_is_binary(SEXP Slp, SEXP Scolumns);
 SEXP RlpSolve_set_bounds(SEXP Slp, SEXP Scolumns, SEXP Slower, SEXP Supper);
 /*set_bounds_tighter*/
 /*get_bounds_tighter*/
-/*set_col_name*/
-/*get_col_name*/
-/*get_origcol_name*/
+SEXP RlpSolve_set_col_names(SEXP Slp, SEXP Scolumns, SEXP Snames);
+SEXP RlpSolve_get_col_names(SEXP Slp, SEXP Scolumns);
+SEXP RlpSolve_get_origcol_names(SEXP Slp, SEXP Scolumns);
 SEXP RlpSolve_set_constr_type(SEXP Slp, SEXP Srows, SEXP Scon_types);
 SEXP RlpSolve_get_constr_type(SEXP Slp, SEXP Srows);
 SEXP RlpSolve_is_constr_type(SEXP Slp, SEXP Srows, SEXP Smasks);
@@ -87,9 +87,9 @@ SEXP RlpSolve_get_rh(SEXP Slp, SEXP Srow);
 /*get_rh_range*/
 SEXP RlpSolve_set_rh_vec(SEXP Slp, SEXP Srh);
 /*str_set_rh_vec*/
-/*set_row_name*/
-/*get_row_name*/
-/*get_origrow_name*/
+SEXP RlpSolve_set_row_names(SEXP Slp, SEXP Srows, SEXP Snew_names);
+SEXP RlpSolve_get_row_names(SEXP Slp, SEXP Srows);
+SEXP RlpSolve_get_origrow_names(SEXP Slp, SEXP Srows);
 /*set_semicont*/
 /*is_semicont*/
 SEXP RlpSolve_set_upbo(SEXP Slp, SEXP Scolumns, SEXP Svalues);
