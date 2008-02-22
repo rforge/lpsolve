@@ -37,7 +37,7 @@ SEXP RlpSolve_add_constraintex(SEXP Slp, SEXP Srow, SEXP Scolno,
 /*str_add_constraint*/
 /*set_row*/
 SEXP RlpSolve_set_rowex(SEXP Slp, SEXP Srow_no, SEXP Srow, SEXP Scolno);
-/*add_lag_con*/
+SEXP RlpSolve_add_lag_con(SEXP Slp, SEXP Srow, SEXP Sconstr_type, SEXP Srh);
 /*str_add_lag_con*/
 SEXP RlpSolve_add_SOS(SEXP Slp, SEXP Sname, SEXP Ssostype, SEXP Spriority,
                       SEXP Ssosvars, SEXP Sweights);
@@ -50,13 +50,13 @@ SEXP RlpSolve_get_rowex(SEXP Slp, SEXP Srow_nr);
 SEXP RlpSolve_is_infinite(SEXP Slp, SEXP Svalues);
 SEXP RlpSolve_is_negative(SEXP Slp, SEXP Scolumns);
 SEXP RlpSolve_resize_lp(SEXP Slp, SEXP Srows, SEXP Scolumns);
-/*set_add_rowmode*/
-/*is_add_rowmode*/
+SEXP RlpSolve_set_add_rowmode(SEXP Slp, SEXP Sturnon);
+SEXP RlpSolve_is_add_rowmode(SEXP Slp);
 SEXP RlpSolve_set_binary(SEXP Slp, SEXP Scolumns, SEXP Smust_be_bin);
 SEXP RlpSolve_is_binary(SEXP Slp, SEXP Scolumns);
 SEXP RlpSolve_set_bounds(SEXP Slp, SEXP Scolumns, SEXP Slower, SEXP Supper);
-/*set_bounds_tighter*/
-/*get_bounds_tighter*/
+SEXP RlpSolve_set_bounds_tighter(SEXP Slp, SEXP Stighten);
+SEXP RlpSolve_get_bounds_tighter(SEXP Slp);
 SEXP RlpSolve_set_col_names(SEXP Slp, SEXP Scolumns, SEXP Snames);
 SEXP RlpSolve_get_col_names(SEXP Slp, SEXP Scolumns);
 SEXP RlpSolve_get_origcol_names(SEXP Slp, SEXP Scolumns);
@@ -75,30 +75,28 @@ SEXP RlpSolve_set_lp_name(SEXP Slp, SEXP Slpname);
 SEXP RlpSolve_get_lp_name(SEXP Slp);
 SEXP RlpSolve_set_mat(SEXP Slp, SEXP Srow, SEXP Scolumn, SEXP Svalue);
 SEXP RlpSolve_get_mat(SEXP Slp, SEXP Srow, SEXP Scolumn);
-/*set_obj_bound*/
-/*get_obj_bound*/
+SEXP RlpSolve_set_obj_bound(SEXP Slp, SEXP Sobj_bound);
+SEXP RlpSolve_get_obj_bound(SEXP Slp);
 /*set_obj_fn*/
 SEXP RlpSolve_set_obj_fnex(SEXP Slp, SEXP Srow, SEXP Scolno);
 /*str_set_obj_fn*/
 /*set_obj*/
 SEXP RlpSolve_set_rh(SEXP Slp, SEXP Srow, SEXP Svalue);
 SEXP RlpSolve_get_rh(SEXP Slp, SEXP Srow);
-/*set_rh_range*/
-/*get_rh_range*/
+SEXP RlpSolve_set_rh_range(SEXP Slp, SEXP Srows, SEXP Sdeltavalue);
+SEXP RlpSolve_get_rh_range(SEXP Slp, SEXP Srows);
 SEXP RlpSolve_set_rh_vec(SEXP Slp, SEXP Srh);
 /*str_set_rh_vec*/
 SEXP RlpSolve_set_row_names(SEXP Slp, SEXP Srows, SEXP Snew_names);
 SEXP RlpSolve_get_row_names(SEXP Slp, SEXP Srows);
 SEXP RlpSolve_get_origrow_names(SEXP Slp, SEXP Srows);
-/*set_semicont*/
-/*is_semicont*/
+SEXP RlpSolve_set_semicont(SEXP Slp, SEXP Scolumns, SEXP Ssc);
+SEXP RlpSolve_is_semicont(SEXP Slp, SEXP Scolumns);
 SEXP RlpSolve_set_upbo(SEXP Slp, SEXP Scolumns, SEXP Svalues);
 SEXP RlpSolve_get_upbo(SEXP Slp, SEXP Scolumns);
-/*set_var_branch*/
-/*get_var_branch*/
-/*set_var_weights*/
-
-
+SEXP RlpSolve_set_var_branch(SEXP Slp, SEXP Scolumns, SEXP Sbranch_mode);
+SEXP RlpSolve_get_var_branch(SEXP Slp, SEXP Scolumns);
+SEXP RlpSolve_set_var_weights(SEXP Slp, SEXP Sweights);
 
 
 /*******************************
@@ -188,12 +186,37 @@ SEXP RlpSolve_unscale(SEXP Slp);
   * Solve
 *******************************/
 
+SEXP RlpSolve_solve(SEXP Slp);
+/*SEXP RlpSolve_lag_solve(SEXP Slp, SEXP Sstart_bound, SEXP Snum_iter);*/
 
 
 /*******************************
   * Solution
 *******************************/
 
+SEXP RlpSolve_get_constraints(SEXP Slp, SEXP Sconstr);
+/*get_ptr_constraints*/
+/*get_constr_value*/
+SEXP RlpSolve_get_objective(SEXP Slp);
+/*get_primal_solution*/
+/*get_ptr_primal_solution*/
+/*get_var_primalresult*/
+/*get_sensitivity_obj*/
+/*get_ptr_sensitivity_obj*/
+/*get_sensitivity_objex*/
+/*get_ptr_sensitivity_objex*/
+/*get_sensitivity_rhs*/
+/*get_ptr_sensitivity_rhs*/
+/*get_dual_solution*/
+/*get_ptr_dual_solution*/
+/*get_var_dualresult*/
+/*get_solutioncount*/
+/*get_total_iter*/
+/*get_total_nodes*/
+/*get_variables*/
+/*get_ptr_variables*/
+/*get_working_objective*/
+/*is_feasible*/
 
 
 /*******************************
@@ -221,6 +244,18 @@ SEXP RlpSolve_print_tableau(SEXP Slp);
   * Write model to file
 *******************************/
 
+/*write_lp*/
+/*write_LP*/
+/*write_lpex*/
+/*write_mps*/
+/*write_freemps*/
+/*write_MPS*/
+/*write_freeMPS*/
+/*MPS_writefileex*/
+/*write_XLI*/
+/*set_XLI*/
+/*has_XLI*/
+/*is_nativeXLI*/
 
 /*******************************
   * Miscellaneous routines
