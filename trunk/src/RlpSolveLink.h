@@ -16,8 +16,8 @@ SEXP RlpSolve_read_LP(SEXP Sfilename);
 /*read_freemps*/
 SEXP RlpSolve_read_MPS(SEXP Sfilename);
 SEXP RlpSolve_read_freeMPS(SEXP Sfilename);
-SEXP RlpSolve_read_XLI(SEXP Sxliname, SEXP Smodelname, SEXP Sdataname,
-                       SEXP Soptions);
+/*SEXP RlpSolve_read_XLI(SEXP Sxliname, SEXP Smodelname, SEXP Sdataname,
+                       SEXP Soptions);*/
 SEXP RlpSolve_delete_lp(SEXP Slp);
 /*free_lp*/
 
@@ -46,7 +46,7 @@ SEXP RlpSolve_del_columns(SEXP Slp, SEXP Scolumn);
 SEXP RlpSolve_del_constraints(SEXP Slp, SEXP Sdel_row);
 /*get_row*/
 SEXP RlpSolve_get_rowex(SEXP Slp, SEXP Srow_nr);
-/*get_nameindex*/
+SEXP RlpSolve_get_nameindex(SEXP Slp, SEXP Snames, SEXP Sisrow);
 SEXP RlpSolve_is_infinite(SEXP Slp, SEXP Svalues);
 SEXP RlpSolve_is_negative(SEXP Slp, SEXP Scolumns);
 SEXP RlpSolve_resize_lp(SEXP Slp, SEXP Srows, SEXP Scolumns);
@@ -198,22 +198,22 @@ SEXP RlpSolve_get_constraints(SEXP Slp, SEXP Sconstr);
 /*get_ptr_constraints*/
 /*get_constr_value*/
 SEXP RlpSolve_get_objective(SEXP Slp);
-/*get_primal_solution*/
+SEXP RlpSolve_get_primal_solution(SEXP Slp);
 /*get_ptr_primal_solution*/
 /*get_var_primalresult*/
-/*get_sensitivity_obj*/
+SEXP RlpSolve_get_sensitivity_obj(SEXP Slp);
 /*get_ptr_sensitivity_obj*/
-/*get_sensitivity_objex*/
+SEXP RlpSolve_get_sensitivity_objex(SEXP Slp);
 /*get_ptr_sensitivity_objex*/
-/*get_sensitivity_rhs*/
+SEXP RlpSolve_get_sensitivity_rhs(SEXP Slp);
 /*get_ptr_sensitivity_rhs*/
-/*get_dual_solution*/
+SEXP RlpSolve_get_dual_solution(SEXP Slp);
 /*get_ptr_dual_solution*/
 /*get_var_dualresult*/
-/*get_solutioncount*/
-/*get_total_iter*/
-/*get_total_nodes*/
-/*get_variables*/
+SEXP RlpSolve_get_solutioncount(SEXP Slp);
+SEXP RlpSolve_get_total_iter(SEXP Slp);
+SEXP RlpSolve_get_total_nodes(SEXP Slp);
+SEXP RlpSolve_get_variables(SEXP Slp);
 /*get_ptr_variables*/
 /*get_working_objective*/
 /*is_feasible*/
@@ -223,6 +223,18 @@ SEXP RlpSolve_get_objective(SEXP Slp);
   * Debug/print settings
 *******************************/
 
+/*set_debug*/
+/*is_debug*/
+/*set_lag_trace*/
+/*is_lag_trace*/
+/*set_outputstream*/
+/*set_outputfile*/
+/*set_print_sol*/
+/*get_print_sol*/
+/*set_trace*/
+/*is_trace*/
+/*set_verbose*/
+/*get_verbose*/
 
 
 /*******************************
@@ -237,18 +249,18 @@ SEXP RlpSolve_print_lp(SEXP Slp);
 /*print_scales*/
 /*print_solution*/
 /*print_str*/
-SEXP RlpSolve_print_tableau(SEXP Slp);
+/*SEXP RlpSolve_print_tableau(SEXP Slp);*/
 
 
 /*******************************
   * Write model to file
 *******************************/
 
-/*write_lp*/
+SEXP RlpSolve_write_lp(SEXP Slp, SEXP Sfilename);
 /*write_LP*/
 /*write_lpex*/
-/*write_mps*/
-/*write_freemps*/
+SEXP RlpSolve_write_mps(SEXP Slp, SEXP Sfilename);
+SEXP RlpSolve_write_freemps(SEXP Slp, SEXP Sfilename);
 /*write_MPS*/
 /*write_freeMPS*/
 /*MPS_writefileex*/
@@ -262,20 +274,20 @@ SEXP RlpSolve_print_tableau(SEXP Slp);
 *******************************/
 
 /*column_in_lp*/
-/*dualize_lp*/
-/*get_lp_index*/
-/*get_Lrows*/
+SEXP RlpSolve_dualize_lp(SEXP Slp);
+SEXP RlpSolve_get_lp_index(SEXP Slp, SEXP Sorig_indices);
+SEXP RlpSolve_get_Lrows(SEXP Slp);
 SEXP RlpSolve_get_Ncolumns(SEXP Slp);
-/*get_nonzeros*/
-/*get_Norig_columns*/
-/*get_Norig_rows*/
+SEXP RlpSolve_get_nonzeros(SEXP Slp);
+SEXP RlpSolve_get_Norig_columns(SEXP Slp);
+SEXP RlpSolve_get_Norig_rows(SEXP Slp);
 SEXP RlpSolve_get_Nrows(SEXP Slp);
-/*get_orig_index*/
-/*get_statustext*/
-/*get_statustext*/
-/*lp_solve_version*/
+SEXP RlpSolve_get_orig_index(SEXP Slp, SEXP Slp_indices);
+SEXP RlpSolve_get_status(SEXP Slp);
+SEXP RlpSolve_get_statustext(SEXP Slp, SEXP Sstatuscode);
+SEXP RlpSolve_lp_solve_version();
 /*set_basisvar*/
-/*time_elapsed*/
+SEXP RlpSolve_time_elapsed(SEXP Slp);
 
 
 

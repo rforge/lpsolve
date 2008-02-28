@@ -89,7 +89,7 @@ SEXP RlpSolve_read_freeMPS(SEXP Sfilename)
 }
 
 
-SEXP RlpSolve_read_XLI(SEXP Sxliname, SEXP Smodelname, SEXP Sdataname,
+/*SEXP RlpSolve_read_XLI(SEXP Sxliname, SEXP Smodelname, SEXP Sdataname,
                        SEXP Soptions)
 {
   SEXP ret = R_NilValue;
@@ -105,7 +105,7 @@ SEXP RlpSolve_read_XLI(SEXP Sxliname, SEXP Smodelname, SEXP Sdataname,
   }
 
   return ret;
-}
+}*/
 
 
 SEXP RlpSolve_delete_lp(SEXP Slp)
@@ -378,7 +378,23 @@ SEXP RlpSolve_get_rowex(SEXP Slp, SEXP Srow_nr)
 }
 
 
-/*get_nameindex*/
+SEXP RlpSolve_get_nameindex(SEXP Slp, SEXP Snames, SEXP Sisrow)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  int nval = LENGTH(Snames), i = 0, index = -1;
+
+  PROTECT(ret = allocVector(INTSXP, nval));
+  for(i = 0; i < nval; i++) {
+    index = get_nameindex(lp, (char *) CHAR(STRING_ELT(Snames, i)),
+                          (unsigned char) LOGICAL(Sisrow)[0]);
+    INTEGER(ret)[i] = index >= 0 ? index : NA_INTEGER;
+  }
+  UNPROTECT(1);
+
+  return ret;
+}
+
 
 SEXP RlpSolve_is_infinite(SEXP Slp, SEXP Svalues)
 {
@@ -460,11 +476,13 @@ SEXP RlpSolve_set_binary(SEXP Slp, SEXP Scolumns, SEXP Smust_be_bin)
 
   if(LENGTH(Smust_be_bin) == 1)
     for(j = 0; j < ncol; j++)
-      LOGICAL(ret)[j] = (int) set_binary(lp, INTEGER(Scolumns)[j], (unsigned char) LOGICAL(Smust_be_bin)[0]);
+      LOGICAL(ret)[j] = (int) set_binary(lp, INTEGER(Scolumns)[j],
+                                    (unsigned char) LOGICAL(Smust_be_bin)[0]);
 
   else if(LENGTH(Smust_be_bin) == ncol)
     for(j = 0; j < ncol; j++)
-      LOGICAL(ret)[j] = (int) set_binary(lp, INTEGER(Scolumns)[j], (unsigned char) LOGICAL(Smust_be_bin)[j]);
+      LOGICAL(ret)[j] = (int) set_binary(lp, INTEGER(Scolumns)[j],
+                                    (unsigned char) LOGICAL(Smust_be_bin)[j]);
 
   else {
     UNPROTECT(1);
@@ -502,7 +520,8 @@ SEXP RlpSolve_set_bounds(SEXP Slp, SEXP Scolumns, SEXP Slower, SEXP Supper)
 
   PROTECT(ret = allocVector(LGLSXP, ncol));
   for(j = 0; j < ncol; j++)
-    LOGICAL(ret)[j] = (int) set_bounds(lp, INTEGER(Scolumns)[j], REAL(Slower)[j], REAL(Supper)[j]);
+    LOGICAL(ret)[j] = (int) set_bounds(lp, INTEGER(Scolumns)[j],
+                                       REAL(Slower)[j], REAL(Supper)[j]);
   UNPROTECT(1);
 
   return ret;
@@ -590,7 +609,8 @@ SEXP RlpSolve_set_constr_type(SEXP Slp, SEXP Srows, SEXP Scon_types)
 
   PROTECT(ret = allocVector(LGLSXP, nrow));
   for(i = 0; i < nrow; i++)
-    LOGICAL(ret)[i] = (int) set_constr_type(lp, INTEGER(Srows)[i], INTEGER(Scon_types)[i]);
+    LOGICAL(ret)[i] = (int) set_constr_type(lp, INTEGER(Srows)[i],
+                                            INTEGER(Scon_types)[i]);
   UNPROTECT(1);
 
   return ret;
@@ -625,7 +645,8 @@ SEXP RlpSolve_is_constr_type(SEXP Slp, SEXP Srows, SEXP Smasks)
 
   PROTECT(ret = allocVector(LGLSXP, nrow));
   for(i = 0; i < nrow; i++)
-    LOGICAL(ret)[i] = (int) is_constr_type(lp, INTEGER(Srows)[i], INTEGER(Smasks)[i]);
+    LOGICAL(ret)[i] = (int) is_constr_type(lp, INTEGER(Srows)[i],
+                                           INTEGER(Smasks)[i]);
   UNPROTECT(1);
 
   return ret;
@@ -692,11 +713,13 @@ SEXP RlpSolve_set_int(SEXP Slp, SEXP Scolumns, SEXP Smust_be_int)
 
   if(LENGTH(Smust_be_int) == 1)
     for(j = 0; j < ncol; j++)
-      LOGICAL(ret)[j] = (int) set_int(lp, INTEGER(Scolumns)[j], (unsigned char) LOGICAL(Smust_be_int)[0]);
+      LOGICAL(ret)[j] = (int) set_int(lp, INTEGER(Scolumns)[j],
+                                      (unsigned char) LOGICAL(Smust_be_int)[0]);
 
   else if(LENGTH(Smust_be_int) == ncol)
     for(j = 0; j < ncol; j++)
-      LOGICAL(ret)[j] = (int) set_int(lp, INTEGER(Scolumns)[j], (unsigned char) LOGICAL(Smust_be_int)[j]);
+      LOGICAL(ret)[j] = (int) set_int(lp, INTEGER(Scolumns)[j],
+                                      (unsigned char) LOGICAL(Smust_be_int)[j]);
 
   else {
     UNPROTECT(1);
@@ -734,7 +757,8 @@ SEXP RlpSolve_set_lowbo(SEXP Slp, SEXP Scolumns, SEXP Svalues)
 
   PROTECT(ret = allocVector(LGLSXP, ncol));
   for(j = 0; j < ncol; j++)
-    LOGICAL(ret)[j] = (int) set_lowbo(lp, INTEGER(Scolumns)[j], REAL(Svalues)[j]);
+    LOGICAL(ret)[j] = (int) set_lowbo(lp, INTEGER(Scolumns)[j],
+                                      REAL(Svalues)[j]);
   UNPROTECT(1);
 
   return ret;
@@ -788,7 +812,8 @@ SEXP RlpSolve_set_mat(SEXP Slp, SEXP Srow, SEXP Scolumn, SEXP Svalue)
   lprec* lp = lprecPointerFromSEXP(Slp);
 
   PROTECT(ret = allocVector(LGLSXP, 1));
-  LOGICAL(ret)[0] = (int) set_mat(lp, INTEGER(Srow)[0], INTEGER(Scolumn)[0], REAL(Svalue)[0]);
+  LOGICAL(ret)[0] = (int) set_mat(lp, INTEGER(Srow)[0], INTEGER(Scolumn)[0],
+                                  REAL(Svalue)[0]);
   UNPROTECT(1);
 
   return ret;
@@ -1009,7 +1034,8 @@ SEXP RlpSolve_set_upbo(SEXP Slp, SEXP Scolumns, SEXP Svalues)
 
   PROTECT(ret = allocVector(LGLSXP, ncol));
   for(j = 0; j < ncol; j++)
-    LOGICAL(ret)[j] = (int) set_upbo(lp, INTEGER(Scolumns)[j], REAL(Svalues)[j]);
+    LOGICAL(ret)[j] = (int) set_upbo(lp, INTEGER(Scolumns)[j],
+                                     REAL(Svalues)[j]);
   UNPROTECT(1);
 
   return ret;
@@ -1161,7 +1187,8 @@ SEXP RlpSolve_set_basis(SEXP Slp, SEXP Sbascolumn, SEXP Snonbasic)
   lprec* lp = lprecPointerFromSEXP(Slp);
 
   PROTECT(ret = allocVector(LGLSXP, 1));
-  LOGICAL(ret)[0] = (int) set_basis(lp, INTEGER(Sbascolumn), (unsigned char) LOGICAL(Snonbasic)[0]);
+  LOGICAL(ret)[0] = (int) set_basis(lp, INTEGER(Sbascolumn),
+                                    (unsigned char) LOGICAL(Snonbasic)[0]);
   UNPROTECT(1);
 
   return ret;
@@ -1863,7 +1890,8 @@ SEXP RlpSolve_get_timeout(SEXP Slp)
 SEXP RlpSolve_set_use_names(SEXP Slp, SEXP Sisrow, SEXP Suse_names)
 {
   lprec* lp = lprecPointerFromSEXP(Slp);
-  set_use_names(lp, (unsigned char) LOGICAL(Sisrow)[0], (unsigned char) LOGICAL(Suse_names)[0]);
+  set_use_names(lp, (unsigned char) LOGICAL(Sisrow)[0],
+                (unsigned char) LOGICAL(Suse_names)[0]);
   return R_NilValue;
 }
 
@@ -1958,22 +1986,202 @@ SEXP RlpSolve_get_objective(SEXP Slp)
 }
 
 
-/*get_primal_solution*/
+SEXP RlpSolve_get_primal_solution(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  unsigned char status = FALSE;
+
+  PROTECT(ret = allocVector(REALSXP, 1 + get_Nrows(lp) + get_Ncolumns(lp)));
+  status = get_primal_solution(lp, REAL(ret));
+  if(!status)
+    ret = R_NilValue;
+  UNPROTECT(1);
+
+  return ret;
+}
+
 /*get_ptr_primal_solution*/
 /*get_var_primalresult*/
-/*get_sensitivity_obj*/
+
+SEXP RlpSolve_get_sensitivity_obj(SEXP Slp)
+{
+  SEXP ret = R_NilValue, Sobjfrom = R_NilValue, Sobjtill = R_NilValue,
+       names = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  int ncol = get_Ncolumns(lp);
+  unsigned char status = FALSE;
+
+  PROTECT(Sobjfrom = allocVector(REALSXP, ncol));
+  PROTECT(Sobjtill = allocVector(REALSXP, ncol));
+
+  status = get_sensitivity_obj(lp, REAL(Sobjfrom), REAL(Sobjtill));
+
+  if(status) {
+    PROTECT(ret = allocVector(VECSXP, 2));
+    SET_VECTOR_ELT(ret, 0, Sobjfrom);
+    SET_VECTOR_ELT(ret, 1, Sobjtill);
+    PROTECT(names = allocVector(STRSXP, 2));
+    SET_VECTOR_ELT(names, 0, mkChar("objfrom"));
+    SET_VECTOR_ELT(names, 1, mkChar("objtill"));
+    setAttrib(ret, R_NamesSymbol, names);
+    UNPROTECT(2);
+  }
+
+  UNPROTECT(2);
+  return ret;
+}
+
+
 /*get_ptr_sensitivity_obj*/
-/*get_sensitivity_objex*/
+
+SEXP RlpSolve_get_sensitivity_objex(SEXP Slp)
+{
+  SEXP ret = R_NilValue, Sobjfrom = R_NilValue, Sobjtill = R_NilValue,
+       Sobjfromvalue = R_NilValue, Sobjtillvalue = R_NilValue,
+       names = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  int ncol = get_Ncolumns(lp);
+  unsigned char status = FALSE;
+
+  PROTECT(Sobjfrom = allocVector(REALSXP, ncol));
+  PROTECT(Sobjtill = allocVector(REALSXP, ncol));
+  PROTECT(Sobjfromvalue = allocVector(REALSXP, ncol));
+  PROTECT(Sobjtillvalue = allocVector(REALSXP, ncol));
+
+  status = get_sensitivity_objex(lp, REAL(Sobjfrom), REAL(Sobjtill),
+                                 REAL(Sobjfromvalue), REAL(Sobjtillvalue));
+
+  if(status) {
+    PROTECT(ret = allocVector(VECSXP, 4));
+    SET_VECTOR_ELT(ret, 0, Sobjfrom);
+    SET_VECTOR_ELT(ret, 1, Sobjtill);
+    SET_VECTOR_ELT(ret, 2, Sobjfromvalue);
+    SET_VECTOR_ELT(ret, 3, Sobjtillvalue);
+    PROTECT(names = allocVector(STRSXP, 4));
+    SET_VECTOR_ELT(names, 0, mkChar("objfrom"));
+    SET_VECTOR_ELT(names, 1, mkChar("objtill"));
+    SET_VECTOR_ELT(names, 2, mkChar("objfromvalue"));
+    SET_VECTOR_ELT(names, 3, mkChar("objtillvalue"));
+    setAttrib(ret, R_NamesSymbol, names);
+    UNPROTECT(2);
+  }
+
+  UNPROTECT(4);
+  return ret;
+}
+
+
 /*get_ptr_sensitivity_objex*/
-/*get_sensitivity_rhs*/
+
+SEXP RlpSolve_get_sensitivity_rhs(SEXP Slp)
+{
+  SEXP ret = R_NilValue, Sduals = R_NilValue, Sdualsfrom = R_NilValue,
+       Sdualstill = R_NilValue, names = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  int m = get_Nrows(lp) + get_Ncolumns(lp);
+  unsigned char status = FALSE;
+
+  PROTECT(Sduals = allocVector(REALSXP, m));
+  PROTECT(Sdualsfrom = allocVector(REALSXP, m));
+  PROTECT(Sdualstill = allocVector(REALSXP, m));
+
+  status = get_sensitivity_rhs(lp, REAL(Sduals), REAL(Sdualsfrom),
+                               REAL(Sdualstill));
+
+  if(status) {
+    PROTECT(ret = allocVector(VECSXP, 3));
+    SET_VECTOR_ELT(ret, 0, Sduals);
+    SET_VECTOR_ELT(ret, 1, Sdualsfrom);
+    SET_VECTOR_ELT(ret, 2, Sdualstill);
+    PROTECT(names = allocVector(STRSXP, 3));
+    SET_VECTOR_ELT(names, 0, mkChar("duals"));
+    SET_VECTOR_ELT(names, 1, mkChar("dualsfrom"));
+    SET_VECTOR_ELT(names, 2, mkChar("dualstill"));
+    setAttrib(ret, R_NamesSymbol, names);
+    UNPROTECT(2);
+  }
+
+  UNPROTECT(3);
+  return ret;
+}
+
+
 /*get_ptr_sensitivity_rhs*/
-/*get_dual_solution*/
+
+SEXP RlpSolve_get_dual_solution(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  unsigned char status = FALSE;
+
+  PROTECT(ret = allocVector(REALSXP, 1 + get_Nrows(lp) + get_Ncolumns(lp)));
+  status = get_dual_solution(lp, REAL(ret));
+  if(!status)
+    ret = R_NilValue;
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
 /*get_ptr_dual_solution*/
 /*get_var_dualresult*/
-/*get_solutioncount*/
-/*get_total_iter*/
-/*get_total_nodes*/
-/*get_variables*/
+
+SEXP RlpSolve_get_solutioncount(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_solutioncount(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_total_iter(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = (int) get_total_iter(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_total_nodes(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = (int) get_total_nodes(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_variables(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  unsigned char status = FALSE;
+
+  PROTECT(ret = allocVector(REALSXP, get_Ncolumns(lp)));
+  status = get_variables(lp, REAL(ret));
+  if(!status)
+    ret = R_NilValue;
+  UNPROTECT(1);
+
+  return ret;
+}
+
 /*get_ptr_variables*/
 /*get_working_objective*/
 /*is_feasible*/
@@ -2018,12 +2226,12 @@ SEXP RlpSolve_print_lp(SEXP Slp)
 /*print_solution*/
 /*print_str*/
 
-SEXP RlpSolve_print_tableau(SEXP Slp)
+/*SEXP RlpSolve_print_tableau(SEXP Slp)
 {
   lprec* lp = lprecPointerFromSEXP(Slp);
   print_tableau(lp);
   return R_NilValue;
-}
+}*/
 
 
 
@@ -2031,11 +2239,48 @@ SEXP RlpSolve_print_tableau(SEXP Slp)
   * Write model to file
 *******************************/
 
-/*write_lp*/
+SEXP RlpSolve_write_lp(SEXP Slp, SEXP Sfilename)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) write_lp(lp, (char *) CHAR(asChar(Sfilename)));
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
 /*write_LP*/
 /*write_lpex*/
-/*write_mps*/
-/*write_freemps*/
+
+SEXP RlpSolve_write_mps(SEXP Slp, SEXP Sfilename)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) write_mps(lp, (char *) CHAR(asChar(Sfilename)));
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_write_freemps(SEXP Slp, SEXP Sfilename)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) write_freemps(lp, (char *) CHAR(asChar(Sfilename)));
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
 /*write_MPS*/
 /*write_freeMPS*/
 /*MPS_writefileex*/
@@ -2051,9 +2296,47 @@ SEXP RlpSolve_print_tableau(SEXP Slp)
 
 
 /*column_in_lp*/
-/*dualize_lp*/
-/*get_lp_index*/
-/*get_Lrows*/
+
+SEXP RlpSolve_dualize_lp(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = (int) dualize_lp(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_lp_index(SEXP Slp, SEXP Sorig_indices)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  int nval = LENGTH(Sorig_indices), i = 0;
+
+  PROTECT(ret = allocVector(INTSXP, nval));
+  for(i = 0; i < nval; i++)
+    INTEGER(ret)[i] = get_lp_index(lp, INTEGER(Sorig_indices)[i]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_Lrows(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_Lrows(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
 
 SEXP RlpSolve_get_Ncolumns(SEXP Slp)
 {
@@ -2068,9 +2351,44 @@ SEXP RlpSolve_get_Ncolumns(SEXP Slp)
 }
 
 
-/*get_nonzeros*/
-/*get_Norig_columns*/
-/*get_Norig_rows*/
+SEXP RlpSolve_get_nonzeros(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_nonzeros(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_Norig_columns(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_Norig_columns(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_Norig_rows(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_Norig_rows(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
 
 SEXP RlpSolve_get_Nrows(SEXP Slp)
 {
@@ -2085,19 +2403,78 @@ SEXP RlpSolve_get_Nrows(SEXP Slp)
 }
 
 
+SEXP RlpSolve_get_orig_index(SEXP Slp, SEXP Slp_indices)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  int nval = LENGTH(Slp_indices), i = 0;
 
-/*get_orig_index*/
-/*get_statustext*/
-/*get_statustext*/
-/*lp_solve_version*/
+  PROTECT(ret = allocVector(INTSXP, nval));
+  for(i = 0; i < nval; i++)
+    INTEGER(ret)[i] = get_orig_index(lp, INTEGER(Slp_indices)[i]);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_status(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = get_status(lp);
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_get_statustext(SEXP Slp, SEXP Sstatuscode)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
+
+  PROTECT(ret = allocVector(STRSXP, 1));
+  SET_STRING_ELT(ret, 0,
+    mkChar((const char *) get_statustext(lp, INTEGER(Sstatuscode)[0])));
+  UNPROTECT(1);
+
+  return ret;
+}
+
+
+SEXP RlpSolve_lp_solve_version()
+{
+  SEXP ret = R_NilValue, names = R_NilValue;
+
+  PROTECT(ret = allocVector(INTSXP, 4));
+  lp_solve_version(INTEGER(ret), INTEGER(ret) + 1, INTEGER(ret) + 2,
+                   INTEGER(ret) + 3);
+  PROTECT(names = allocVector(STRSXP, 4));
+  SET_VECTOR_ELT(names, 0, mkChar("major"));
+  SET_VECTOR_ELT(names, 1, mkChar("minor"));
+  SET_VECTOR_ELT(names, 2, mkChar("release"));
+  SET_VECTOR_ELT(names, 3, mkChar("build"));
+  setAttrib(ret, R_NamesSymbol, names);
+  UNPROTECT(2);
+
+  return ret;
+}
+
+
 /*set_basisvar*/
-/*time_elapsed*/
 
+SEXP RlpSolve_time_elapsed(SEXP Slp)
+{
+  SEXP ret = R_NilValue;
+  lprec* lp = lprecPointerFromSEXP(Slp);
 
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] = (int) time_elapsed(lp);
+  UNPROTECT(1);
 
-
-
-
-
-
+  return ret;
+}
 

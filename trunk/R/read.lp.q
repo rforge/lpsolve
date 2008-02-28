@@ -1,18 +1,14 @@
-read.lp <- function(filename, type = c("lp", "mps", "xli"), xliname = NULL,
-                    dataname = NULL, options = "")
+read.lp <- function(filename, type = c("lp", "mps", "freemps"))
 {
+  if(!file.exists(filename))
+    stop(dQuote(filename), ": no such file")
+
   type <- match.arg(type)
   lp <- switch(type,
     "lp" = .Call("RlpSolve_read_LP", as.character(filename)),
     "mps" = .Call("RlpSolve_read_MPS", as.character(filename)),
-    "xli" = {
-      if(is.null(xliname) || is.null(dataname))
-        stop("a NULL value was passed for ", sQuote("xliname"), " and/or ",
-              sQuote("dataname"))
-
-      .Call("RlpSolve_read_XLI", as.character(xliname), as.character(filename),
-             as.character(dataname), as.character(options))
-    })
+    "freemps" = .Call("RlpSolve_read_freeMPS", as.character(filename))
+  )
 
   if(is.null(lp))
     stop("could not interpret ", basename(filename), " as an ", type, " file")
