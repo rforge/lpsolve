@@ -1953,7 +1953,7 @@ SEXP RlpSolve_solve(SEXP Slp)
   * Solution
 *******************************/
 
-SEXP RlpSolve_get_constraints(SEXP Slp, SEXP Sconstr)
+SEXP RlpSolve_get_constraints(SEXP Slp)
 {
   SEXP ret = R_NilValue;
   unsigned char status = FALSE;
@@ -1961,7 +1961,7 @@ SEXP RlpSolve_get_constraints(SEXP Slp, SEXP Sconstr)
   int nrow = get_Nrows(lp);
 
   PROTECT(ret = allocVector(REALSXP, nrow));
-  status = get_constraints(lp, REAL(Sconstr));
+  status = get_constraints(lp, REAL(ret));
   if(!status)
     ret = R_NilValue;
   UNPROTECT(1);

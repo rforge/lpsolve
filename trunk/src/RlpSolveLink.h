@@ -194,7 +194,7 @@ SEXP RlpSolve_solve(SEXP Slp);
   * Solution
 *******************************/
 
-SEXP RlpSolve_get_constraints(SEXP Slp, SEXP Sconstr);
+SEXP RlpSolve_get_constraints(SEXP Slp);
 /*get_ptr_constraints*/
 /*get_constr_value*/
 SEXP RlpSolve_get_objective(SEXP Slp);

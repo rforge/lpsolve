@@ -28,3 +28,19 @@ set.objfn(x, -c(1,1,1))
 
 dimnames(x) <- list(c("alpha", "bravo", "charlie", "delta"),
                     c("whiskey", "tango", "foxtrot"))
+
+solve.lp(x)
+
+get.constraints(x)
+get.variables(x)
+get.objective(x)
+
+get.primal.solution(x)
+get.sensitivity.obj(x)
+get.sensitivity.objex(x)
+get.sensitivity.rhs(x)
+get.dual.solution(x)
+get.total.iter(x)
+get.total.nodes(x)
+get.solutioncount(x)
+

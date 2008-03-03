@@ -23,6 +23,10 @@
 		0E3F54C70D536DB400617C9D /* RlpSolveLink.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RlpSolveLink.c; path = src/RlpSolveLink.c; sourceTree = SOURCE_ROOT; };
 		0E3F54C80D536DB400617C9D /* RlpSolveLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolveLink.h; path = src/RlpSolveLink.h; sourceTree = SOURCE_ROOT; };
 		0E8B36220D5B9335000DEDC9 /* set.row.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.row.q; sourceTree = "<group>"; };
+		0E98755F0D7B409D00E6EA75 /* solve.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = solve.lp.q; sourceTree = "<group>"; };
+		0E9875600D7B423800E6EA75 /* get.objective.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.objective.q; sourceTree = "<group>"; };
+		0E9875610D7B424D00E6EA75 /* get.variables.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.variables.q; sourceTree = "<group>"; };
+		0E9875850D7B443B00E6EA75 /* get.constraints.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.constraints.q; sourceTree = "<group>"; };
 		0E9AA01B0D622B8400426ADF /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lp.control.q; sourceTree = "<group>"; };
 		0EA6F46C0D631EE200496510 /* get.presolveloops.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.presolveloops.q; sourceTree = "<group>"; };
 		0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.q; sourceTree = "<group>"; };
@@ -46,6 +50,14 @@
 		0EABBD990D59FD8000CF7B0C /* add.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = add.column.q; sourceTree = "<group>"; };
 		0EC5CD3A0D60584D00958B10 /* lpslink55.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpslink55.c; path = src/lpslink55.c; sourceTree = SOURCE_ROOT; };
 		0EC5CD3D0D6073BA00958B10 /* lpSolve.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolve.Rd; path = man/lpSolve.Rd; sourceTree = SOURCE_ROOT; };
+		0ECDCA2D0D7C2CBB0000AFC4 /* get.primal.solution.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.primal.solution.q; sourceTree = "<group>"; };
+		0ECDCA390D7C310D0000AFC4 /* get.dual.solution.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.dual.solution.q; path = R/get.dual.solution.q; sourceTree = SOURCE_ROOT; };
+		0ECDCA3A0D7C310D0000AFC4 /* get.sensitivity.obj.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.sensitivity.obj.q; path = R/get.sensitivity.obj.q; sourceTree = SOURCE_ROOT; };
+		0ECDCA3B0D7C310D0000AFC4 /* get.sensitivity.objex.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.sensitivity.objex.q; path = R/get.sensitivity.objex.q; sourceTree = SOURCE_ROOT; };
+		0ECDCA3C0D7C310D0000AFC4 /* get.sensitivity.rhs.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.sensitivity.rhs.q; path = R/get.sensitivity.rhs.q; sourceTree = SOURCE_ROOT; };
+		0ECDCA3D0D7C310D0000AFC4 /* get.total.iter.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.total.iter.q; path = R/get.total.iter.q; sourceTree = SOURCE_ROOT; };
+		0ECDCA3E0D7C310D0000AFC4 /* get.total.nodes.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.total.nodes.q; path = R/get.total.nodes.q; sourceTree = SOURCE_ROOT; };
+		0ECDCA400D7C34670000AFC4 /* get.solutioncount.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.solutioncount.q; sourceTree = "<group>"; };
 		0ED0C43F0D5B59950013E074 /* set.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.type.q; sourceTree = "<group>"; };
 		0ED0C4400D5B65700013E074 /* get.types.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.types.q; sourceTree = "<group>"; };
 		0EF13EF20D5C918A00F77D3C /* colamd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = colamd.c; path = src/colamd.c; sourceTree = SOURCE_ROOT; };
@@ -277,10 +289,21 @@
 				0EABBD7F0D59E82A00CF7B0C /* get.bounds.q */,
 				0EABBD970D59E8A100CF7B0C /* get.column.q */,
 				0EABBD7D0D59E82A00CF7B0C /* get.constr.types.q */,
+				0E9875850D7B443B00E6EA75 /* get.constraints.q */,
+				0ECDCA390D7C310D0000AFC4 /* get.dual.solution.q */,
 				0EABBD800D59E82A00CF7B0C /* get.mat.q */,
+				0E9875600D7B423800E6EA75 /* get.objective.q */,
 				0EA6F46C0D631EE200496510 /* get.presolveloops.q */,
+				0ECDCA2D0D7C2CBB0000AFC4 /* get.primal.solution.q */,
 				0EABBD810D59E82A00CF7B0C /* get.rhs.q */,
+				0ECDCA3A0D7C310D0000AFC4 /* get.sensitivity.obj.q */,
+				0ECDCA3B0D7C310D0000AFC4 /* get.sensitivity.objex.q */,
+				0ECDCA3C0D7C310D0000AFC4 /* get.sensitivity.rhs.q */,
+				0ECDCA400D7C34670000AFC4 /* get.solutioncount.q */,
+				0ECDCA3D0D7C310D0000AFC4 /* get.total.iter.q */,
+				0ECDCA3E0D7C310D0000AFC4 /* get.total.nodes.q */,
 				0ED0C4400D5B65700013E074 /* get.types.q */,
+				0E9875610D7B424D00E6EA75 /* get.variables.q */,
 				0E9AA01B0D622B8400426ADF /* lp.control.q */,
 				0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */,
 				0E09FE720D6A6F290090E7A0 /* name.lp.q */,
@@ -295,6 +318,7 @@
 				0EABBD930D59E82A00CF7B0C /* set.rhs.q */,
 				0E8B36220D5B9335000DEDC9 /* set.row.q */,
 				0ED0C43F0D5B59950013E074 /* set.type.q */,
+				0E98755F0D7B409D00E6EA75 /* solve.lp.q */,
 				0E16C06D0D64907F00EE878E /* write.lp.q */,
 			);
 			name = "R API";
