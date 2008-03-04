@@ -1,19 +1,19 @@
-lp <- function(direction = "min", objective.in, const.mat, const.dir, const.rhs,
-	transpose.constraints = TRUE, int.vec, presolve = 0, compute.sens = 0)
+lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
+               const.rhs, transpose.constraints = TRUE, int.vec, presolve = 0,
+               compute.sens = 0)
 {
-	#
 	# lp: solve a general linear program
 	#
 	# Arguments:
-	#     direction: Character: direction of optimization: "min" (default) or "max."
+	#     direction: Character: direction of optimization: "min" (default) or
+  #                "max."
 	#  objective.in: Numeric vector (or one-column data frame) of coefficients
   #                of objective function
 	#     const.mat: Matrix of numeric constraint coefficients, one row  per
   #                constraint, one column per variable (unless
   #                transpose.constraints =  FALSE; see below).
 	#     const.dir: Vector of character strings giving the direction of the
-  #                constraints: each value should be one of "<," "<=," "=," "==,"
-  #                ">," or ">=."
+  #                constraints: each value should be one of "<=", "=" or ">=."
 	#     const.rhs: Vector of numeric values for the right-hand sides of  the
   #                constraints.
 	# transpose.constraints: By default each constraint occupies a row  of
@@ -29,69 +29,39 @@ lp <- function(direction = "min", objective.in, const.mat, const.dir, const.rhs,
 	#                A non-zero value means "yes." Currently mostly ignored.
 	#  compute.sens: Numeric: compute sensitivities? Default 0 (no). Any non-zero
 	#                value means "yes."
-	#
-	# Set up the direction.
-	#
-	if(direction == "min")
-		direction <- 0
-	else if (direction == "max")
-                direction <- 1
-             else stop ("Direction must be 'max' or 'min'")
-	#
-	# Convert one-column data frame objective to vector. Add leading 0 to obejctive.
-	#
-	if(is.data.frame(objective.in)) {
-		if(ncol(objective.in) > 1)
-			stop("Objective vector has more than one column")
-		objective.in <- unlist(objective.in)
-		names(objective.in) <- NULL
-	}
-	#
-	# Set up solution, status, x.count (= number of variables)
-	#
-	objective <- c(0, objective.in)
-	solution <- numeric(length(objective.in))
-	status <- objval <- 0
-	x.count <- length(objective.in)
-	#
-	# Convert "constraints" to a matrix if necessary; set NAs to 0.
-	#
-	if(is.data.frame(const.mat)) {
-		cm <- as.numeric(unlist(const.mat))
-		names(cm) <- NULL
-		const.mat <- matrix(cm, nrow = nrow(const.mat))
-	}
-	const.mat[is.na(const.mat)] <- 0
-	#
-	# Transpose if necessary.
-	#
-	if(transpose.constraints)
-		const.mat <- t(const.mat)
-	#
-	# Set up constraint signs...
-	#
+
+  if(!transpose.constraints)
+    const.mat <- t(const.mat)
+
+  n <- dim(const.mat)[1]
+  p <- dim(const.mat)[2]
+  one2n <- as.integer(1:n)
+
+  # Basic usage checks
+
+  if(length(objective.in) != p)
+    stop(sQuote("objective.in"), " must have the same number of elements as ",
+         "there are columns in ", sQuote("const.mat"))
+
+  if(length(const.dir) != n)
+    stop(sQuote("const.dir"), " must have the same number of elements as ",
+         "there are rows in ", sQuote("const.mat"))
+
+  if(length(const.rhs) != n)
+    stop(sQuote("const.rhs"), " must have the same number of elements as ",
+         "there are rows in ", sQuote("const.mat"))
+
+  # The following is for consistency with the old version of lpSolve lp objects
+
 	const.dir.num <- rep(-1, length(const.dir))
 	const.dir.num[const.dir == "<" | const.dir == "<="] <- 1
 	const.dir.num[const.dir == "=" | const.dir == "=="] <- 3
 	const.dir.num[const.dir == ">" | const.dir == ">="] <- 2
 	if(any(const.dir.num == -1))
 		stop("Unknown constraint direction found\n")
-	#
-	# ...constraint count, and right-hand sides.
-	#
-	const.count <- ncol(const.mat)
-	if(is.data.frame(const.rhs))
-		const.rhs <- as.matrix(const.rhs)
-	const.rhs <- c(const.rhs)
-	names(const.rhs) <- NULL
-	#
-	# Set up big matrix of constraint info; add a 0 on the front.
-	#
-	big.const.mat <- rbind(const.mat, const.dir.num, const.rhs)
-	constraints <- c(0, c(big.const.mat))
-	#
-	# Set up int.vec.
-	#
+
+  big.const.mat <- rbind(t(const.mat), const.dir.num, const.rhs)
+
 	if(missing(int.vec)) {
 		int.count <- 0
 		int.vec <- 0
@@ -99,39 +69,62 @@ lp <- function(direction = "min", objective.in, const.mat, const.dir, const.rhs,
 	else {
 		int.count <- length(int.vec)
 	}
-	#
-	# Set up sensitivity stuff.
-	#
-	sens.coef.from <- sens.coef.to <- 0
-	duals <- duals.from <- duals.to <- 0
-	if(compute.sens != 0) {
-		sens.coef.from <- sens.coef.to <- numeric(x.count)
-		duals <- duals.from <- duals.to <- numeric(x.count + const.count)
-	}
 
-	lp.out <- .C("lpslink",
-		direction = as.integer(direction),
-		x.count = as.integer(x.count),
-		objective = as.double(objective),
-		const.count = as.integer(const.count),
-		constraints = as.double(constraints),
-		int.count = as.integer(int.count),
-		int.vec = as.integer(int.vec),
-		objval = as.double(objval),
-		solution = as.double(solution),
-		presolve = as.integer(presolve),
-		compute.sens = as.integer(compute.sens),
-		sens.coef.from = as.double(sens.coef.from),
-		sens.coef.to = as.double(sens.coef.to),
-		duals = as.double(duals),
-		duals.from = as.double(duals.from),
-		duals.to = as.double(duals.to),
-		status = as.integer(status), PACKAGE="lpSolve")
-        lp.out$objective <- objective.in
-        lp.out$constraints <- big.const.mat
-	if(any(names(version) == "language"))
-		class(lp.out) <- "lp"
-	else oldClass(lp.out) <- "lp"
-	return(lp.out)
+  # Build the model
+
+  lp <- make.lp(n, p)
+  control <- lp.control(lp, sense = direction)
+  for(j in 1:p)
+    set.column(lp, j, const.mat[, j], one2n)
+  set.rhs(lp, const.rhs, one2n)
+  set.constr.types(lp, const.dir.num, one2n)
+  set.objfn(lp, objective.in)
+  if(int.vec[1] > 0)
+    set.type(lp, int.vec, "integer")
+  if(compute.sens > 0)
+    control <- lp.control(lp, presolve = "sensduals")
+
+  # Solve the model
+  status <- solve.lp(lp)
+
+  if(compute.sens > 0) {
+    sens.obj <- get.sensitivity.obj(lp)
+    sens.rhs <- get.sensitivity.rhs(lp)
+  }
+
+  lp.out <- list(direction = as.integer(ifelse(direction == "min", 0, 1)),
+                 x.count = as.integer(p),
+                 objective = objective.in,
+                 const.count = as.integer(n),
+                 constraints = big.const.mat,
+                 int.count = as.integer(int.count),
+                 int.vec = as.integer(int.vec),
+                 objval = as.double(get.objective(lp)),
+                 solution = as.double(get.variables(lp)),
+                 presolve = as.integer(0),
+                 compute.sens = as.integer(compute.sens),
+                 sens.coef.from = double(1),
+                 sens.coef.to = double(1),
+                 duals = double(1),
+                 duals.from = double(1),
+                 duals.to = double(1),
+                 status = as.integer(status))
+
+  if(compute.sens > 0) {
+    sens.obj <- get.sensitivity.obj(lp)
+    sens.rhs <- get.sensitivity.rhs(lp)
+    lp.out$sens.coef.from = as.double(sens.obj$objfrom)
+    lp.out$sens.coef.to = as.double(sens.obj$objtill)
+    lp.out$duals = as.double(sens.rhs$duals)
+    lp.out$duals.from = as.double(sens.rhs$dualsfrom)
+    lp.out$duals.to = as.double(sens.rhs$dualstill)
+  }
+
+  if(any(names(version) == "language"))
+    class(lp.out) <- "lp"
+  else
+  oldClass(lp.out) <- "lp"
+
+	lp.out
 }
 

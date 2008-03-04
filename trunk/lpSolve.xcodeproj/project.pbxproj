@@ -252,13 +252,12 @@
 		0EABBD6A0D59CD4500CF7B0C /* R */ = {
 			isa = PBXGroup;
 			children = (
-				0EF13F980D5CAA3B00F77D3C /* lp.assign.q */,
 				0EF13F990D5CAA3B00F77D3C /* lp.q */,
+				0EF13F980D5CAA3B00F77D3C /* lp.assign.q */,
 				0EF13F9A0D5CAA3B00F77D3C /* lp.transport.q */,
 				0EF13F9B0D5CAA3B00F77D3C /* print.lp.q */,
 				0EF13F5B0D5C9FA600F77D3C /* lpSolve.q */,
 				0E16C0490D648A6B00EE878E /* library.q */,
-				0EABBD990D59FD8000CF7B0C /* add.column.q */,
 				0EF13F550D5C9EDD00F77D3C /* R API */,
 			);
 			path = R;
@@ -281,6 +280,7 @@
 		0EF13F550D5C9EDD00F77D3C /* R API */ = {
 			isa = PBXGroup;
 			children = (
+				0EABBD990D59FD8000CF7B0C /* add.column.q */,
 				0EABBD7A0D59E82A00CF7B0C /* add.constraint.q */,
 				0EABBD7B0D59E82A00CF7B0C /* delete.columns.q */,
 				0EABBD7C0D59E82A00CF7B0C /* delete.constraints.q */,

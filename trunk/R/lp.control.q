@@ -305,6 +305,7 @@ lp.control <- function(lprec, ..., reset = FALSE)
 
       "sense" = {
         sense <- dots[[dot.name]]
+        sense <- match.arg(sense, c("minimize", "maximize"))
         sense <- sense == "maximize"
         status[["sense"]] <- .Call("RlpSolve_set_sense", lprec,
                                     as.logical(sense))
