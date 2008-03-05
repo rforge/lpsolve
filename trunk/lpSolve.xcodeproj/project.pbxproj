@@ -27,7 +27,10 @@
 		0E9875600D7B423800E6EA75 /* get.objective.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.objective.q; sourceTree = "<group>"; };
 		0E9875610D7B424D00E6EA75 /* get.variables.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.variables.q; sourceTree = "<group>"; };
 		0E9875850D7B443B00E6EA75 /* get.constraints.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.constraints.q; sourceTree = "<group>"; };
+		0E99A1550D7DD2FE00F4A4CC /* add.SOS.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = add.SOS.q; sourceTree = "<group>"; };
+		0E99A1560D7DD7ED00F4A4CC /* set.semicont.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.semicont.q; sourceTree = "<group>"; };
 		0E9AA01B0D622B8400426ADF /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lp.control.q; sourceTree = "<group>"; };
+		0EA4F05B0D7ECA480010FBA9 /* get.kind.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.kind.q; sourceTree = "<group>"; };
 		0EA6F46C0D631EE200496510 /* get.presolveloops.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.presolveloops.q; sourceTree = "<group>"; };
 		0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.q; sourceTree = "<group>"; };
 		0EABBD790D59D0A600CF7B0C /* make.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.Rd; sourceTree = "<group>"; };
@@ -266,9 +269,9 @@
 		0EABBD6B0D59CD5000CF7B0C /* man */ = {
 			isa = PBXGroup;
 			children = (
-				0EF13F730D5CA9D100F77D3C /* lp.assign.Rd */,
 				0EF13F750D5CA9D100F77D3C /* lp.Rd */,
 				0EF13F740D5CA9D100F77D3C /* lp.object.Rd */,
+				0EF13F730D5CA9D100F77D3C /* lp.assign.Rd */,
 				0EF13F760D5CA9D100F77D3C /* lp.transport.Rd */,
 				0EF13F770D5CA9D100F77D3C /* print.lp.Rd */,
 				0EC5CD3D0D6073BA00958B10 /* lpSolve.Rd */,
@@ -282,6 +285,7 @@
 			children = (
 				0EABBD990D59FD8000CF7B0C /* add.column.q */,
 				0EABBD7A0D59E82A00CF7B0C /* add.constraint.q */,
+				0E99A1550D7DD2FE00F4A4CC /* add.SOS.q */,
 				0EABBD7B0D59E82A00CF7B0C /* delete.columns.q */,
 				0EABBD7C0D59E82A00CF7B0C /* delete.constraints.q */,
 				0E09FE610D6A6E0E0090E7A0 /* dim.lpExtPtr.q */,
@@ -291,6 +295,7 @@
 				0EABBD7D0D59E82A00CF7B0C /* get.constr.types.q */,
 				0E9875850D7B443B00E6EA75 /* get.constraints.q */,
 				0ECDCA390D7C310D0000AFC4 /* get.dual.solution.q */,
+				0EA4F05B0D7ECA480010FBA9 /* get.kind.q */,
 				0EABBD800D59E82A00CF7B0C /* get.mat.q */,
 				0E9875600D7B423800E6EA75 /* get.objective.q */,
 				0EA6F46C0D631EE200496510 /* get.presolveloops.q */,
@@ -317,6 +322,7 @@
 				0EABBD920D59E82A00CF7B0C /* set.objfn.q */,
 				0EABBD930D59E82A00CF7B0C /* set.rhs.q */,
 				0E8B36220D5B9335000DEDC9 /* set.row.q */,
+				0E99A1560D7DD7ED00F4A4CC /* set.semicont.q */,
 				0ED0C43F0D5B59950013E074 /* set.type.q */,
 				0E98755F0D7B409D00E6EA75 /* solve.lp.q */,
 				0E16C06D0D64907F00EE878E /* write.lp.q */,

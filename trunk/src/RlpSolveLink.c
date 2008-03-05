@@ -19,6 +19,8 @@ SEXP RlpSolve_make_lp(SEXP Srows, SEXP Scolumns)
   lprec* lp = make_lp(INTEGER(Srows)[0], INTEGER(Scolumns)[0]);
 
   if(lp) {
+    put_abortfunc(lp, RlpSolveAbortFunction, NULL);
+    set_verbose(lp, NEUTRAL);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
     R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
   }
@@ -999,9 +1001,14 @@ SEXP RlpSolve_set_semicont(SEXP Slp, SEXP Scolumns, SEXP Ssc)
   int ncol = LENGTH(Scolumns), j = 0;
 
   PROTECT(ret = allocVector(LGLSXP, ncol));
-  for(j = 0; j < ncol; j++)
-    LOGICAL(ret)[j] = (int) set_semicont(lp, INTEGER(Scolumns)[j],
-                                         (unsigned char) LOGICAL(Ssc)[j]);
+  if(LENGTH(Ssc) == 1)
+    for(j = 0; j < ncol; j++)
+      LOGICAL(ret)[j] = (int) set_semicont(lp, INTEGER(Scolumns)[j],
+                                           (unsigned char) LOGICAL(Ssc)[0]);
+  else
+    for(j = 0; j < ncol; j++)
+      LOGICAL(ret)[j] = (int) set_semicont(lp, INTEGER(Scolumns)[j],
+                                           (unsigned char) LOGICAL(Ssc)[j]);
   UNPROTECT(1);
 
   return ret;

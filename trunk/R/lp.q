@@ -33,6 +33,8 @@ lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
   if(!transpose.constraints)
     const.mat <- t(const.mat)
 
+  direction <- match.arg(direction)
+
   n <- dim(const.mat)[1]
   p <- dim(const.mat)[2]
   one2n <- as.integer(1:n)
@@ -85,12 +87,8 @@ lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
     control <- lp.control(lp, presolve = "sensduals")
 
   # Solve the model
-  status <- solve.lp(lp)
 
-  if(compute.sens > 0) {
-    sens.obj <- get.sensitivity.obj(lp)
-    sens.rhs <- get.sensitivity.rhs(lp)
-  }
+  status <- solve.lp(lp)
 
   lp.out <- list(direction = as.integer(ifelse(direction == "min", 0, 1)),
                  x.count = as.integer(p),
@@ -123,7 +121,7 @@ lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
   if(any(names(version) == "language"))
     class(lp.out) <- "lp"
   else
-  oldClass(lp.out) <- "lp"
+    oldClass(lp.out) <- "lp"
 
 	lp.out
 }

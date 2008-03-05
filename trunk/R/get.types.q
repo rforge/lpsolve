@@ -1,9 +1,7 @@
 get.types <- function(lprec, columns = NULL, char = TRUE)
 {
-  n <- dim(lprec)[2]
-
   if(is.null(columns))
-    columns <- 1:n
+    columns <- 1:dim(lprec)[2]
 
   ans <- .Call("RlpSolve_is_int", lprec, as.integer(columns))
 
