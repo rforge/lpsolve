@@ -315,7 +315,7 @@ SEXP RlpSolve_is_SOS_var(SEXP Slp, SEXP Scolumns)
 }
 
 
-SEXP RlpSolve_del_columns(SEXP Slp, SEXP Scolumns)
+SEXP RlpSolve_del_column(SEXP Slp, SEXP Scolumns)
 {
   SEXP ret = R_NilValue;
   lprec* lp = lprecPointerFromSEXP(Slp);
@@ -332,7 +332,7 @@ SEXP RlpSolve_del_columns(SEXP Slp, SEXP Scolumns)
 }
 
 
-SEXP RlpSolve_del_constraints(SEXP Slp, SEXP Sdel_rows)
+SEXP RlpSolve_del_constraint(SEXP Slp, SEXP Sdel_rows)
 {
   SEXP ret = R_NilValue;
   lprec* lp = lprecPointerFromSEXP(Slp);

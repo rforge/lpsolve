@@ -1,4 +1,4 @@
-get.types <- function(lprec, columns = NULL, char = TRUE)
+get.type <- function(lprec, columns = NULL, char = TRUE)
 {
   if(is.null(columns))
     columns <- 1:dim(lprec)[2]

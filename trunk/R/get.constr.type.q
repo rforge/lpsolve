@@ -1,4 +1,4 @@
-get.constr.types <- function(lprec, constraints = NULL, char = TRUE)
+get.constr.type <- function(lprec, constraints = NULL, char = TRUE)
 {
   if(is.null(constraints))
     constraints <- 1:dim(lprec)[1]

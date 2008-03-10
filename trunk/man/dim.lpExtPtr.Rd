@@ -1,0 +1,46 @@
+\name{dim.lpExtPtr}
+\alias{dim.lpExtPtr}
+
+\title{Dimension of an Object}
+
+\description{
+Retrieve the dimension (number of rows and columns) from an lpSolve linear programming model.
+}
+
+\usage{
+\method{dim}{lpExtPtr}(x)
+}
+
+\arguments{
+  \item{lprec}{an lpSolve linear programming model.}
+}
+
+\details{
+Setting the number of rows/columns is not supported.  See \code{\link{resize.lp}}.
+}
+
+\value{
+an integer vector of length two containing the number of rows and the number of columns in the lpSolve linear programming model.
+}
+
+\references{LPSOLVE_CAPI_REFERENCE}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
+\seealso{\code{\link{resize.lp}}}
+
+\examples{
+lp <- make.lp(4, 0)
+
+x <- c(6,2,4,9)
+add.column(lp, x)
+
+y <- c(3,1,5)
+ind <- c(1,2,4)
+add.column(lp, y, ind)
+
+dim(lp)
+}
+
+\keyword{programming}
+
