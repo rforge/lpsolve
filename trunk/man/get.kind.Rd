@@ -1,54 +1,45 @@
 \name{get.kind}
 \alias{get.kind}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Get Kind}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Retrieve the kind of a decision variable from an lpSolve linear programming model.
 }
+
 \usage{
 get.kind(lprec, columns = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{columns}{ ~~Describe \code{columns} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying the columns for which the kind will be retrieved.}
 }
+
 \details{
-  ~~ If necessary, more details than the description above ~~
+Decision variables have both a type and a kind. The type is either \code{real} or \code{integer} and indicates the type of values the decision variable may take. The kind is one of \code{\{standard, semi-continuous, SOS\}}. Semi-continuous decision variables can take allowed values between their upper and lower bound as well as zero. Please see the link in the references for a discussion of special ordered set (SOS) constraints.
 }
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a character vector containing the kind of each decision variable specified in \code{columns}.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(0, 3)
+xt <- c(6,2,4)
+add.constraint(lp, xt, "<=", 150)
+xt <- c(1,1,6)
+add.constraint(lp, xt, ">=", 0)
+xt <- c(4,5,4)
+add.constraint(lp, xt, "=", 40)
+set.objfn(lp, c(-3,-4,-3))
 
-## The function is currently defined as
-function (lprec, columns = NULL) 
-{
-    if (is.null(columns)) 
-        columns <- 1:dim(lprec)[2]
-    ans <- rep("standard", length(columns))
-    idx <- .Call("RlpSolve_is_semicont", lprec, as.integer(columns))
-    ans[idx] <- "sc"
-    idx <- .Call("RlpSolve_is_SOS_var", lprec, as.integer(columns))
-    ans[idx] <- "SOS"
-    ans
-  }
+get.kind(lp)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+

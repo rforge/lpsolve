@@ -20,7 +20,7 @@ delete.constraint(lprec, constraints)
 a logical value is invisibly returned: \code{TRUE} indicates that the operation was successful and \code{FALSE} indicates that an error occurred.
 }
 
-\references{LPSOLVE_CAPI_REFERENCE}
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

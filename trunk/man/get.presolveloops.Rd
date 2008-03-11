@@ -1,44 +1,27 @@
 \name{get.presolveloops}
 \alias{get.presolveloops}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Get Presolve Loops}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Returns the number of times presolve must be done.
 }
+
 \usage{
 get.presolveloops(lprec)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
 }
-\details{
-  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a single integer value.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
-\examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-## The function is currently defined as
-function (lprec) 
-.Call("RlpSolve_get_presolveloops", lprec)
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
+\keyword{programming}
+

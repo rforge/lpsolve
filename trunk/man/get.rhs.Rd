@@ -1,45 +1,41 @@
 \name{get.rhs}
 \alias{get.rhs}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Get Right-Hand-Side}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Retrieve right-hand-side values from an lpSolve linear programming model.
 }
+
 \usage{
 get.rhs(lprec, rows = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{rows}{ ~~Describe \code{rows} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{rows}{a numeric vector of unique values from the set \code{\{1, \dots, m\}} specifying the rows for which the right-hand-side values will be retrieved. If \code{NULL} the right-hand-side values are retrieved for all rows.}
 }
-\details{
-  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a numeric vector containing the right-hand-side values specified by \code{rows}.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(0, 3)
+xt <- c(6,2,4)
+add.constraint(lp, xt, "<=", 150)
+xt <- c(1,1,6)
+add.constraint(lp, xt, ">=", 0)
+xt <- c(4,5,4)
+add.constraint(lp, xt, "=", 40)
+set.objfn(lp, c(-3,-4,-3))
 
-## The function is currently defined as
-function (lprec, rows = NULL) 
-.Call("RlpSolve_get_rh", lprec, as.integer(row))
+get.rhs(lp)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+

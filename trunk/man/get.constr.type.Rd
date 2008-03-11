@@ -1,53 +1,44 @@
 \name{get.constr.type}
 \alias{get.constr.type}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Get Constraint Type}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Retrieve the constraint types from an lpSolve linear programming model.
 }
+
 \usage{
-get.constr.type(lprec, constraints = NULL, char = TRUE)
+get.constr.type(lprec, constraints = NULL, as.char = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{constraints}{ ~~Describe \code{constraints} here~~ }
-  \item{char}{ ~~Describe \code{char} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{constraints}{a numeric vector of unique values from the set \code{\{1, \dots, m\}} (where \code{m} is the number of constraints in \code{lprec}) specifying the constraints for which the types will be retrieved. If \code{NULL} the types are retrieved for all constraints.}
+  \item{as.char}{a logical value. If \code{TRUE} the constraint type is returned as a character string, otherwise the integer code used directly in lp_solve is returned.}
 }
-\details{
-  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+either a character vector or an integer vector containing the types of the constraints specified in \code{constraints}. The possibilities are: \code{0 = "free"}, \code{1 = "<="}, \code{2 = ">="} and \code{3 = "="}.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(0, 3)
 
-## The function is currently defined as
-function(lprec, constraints = NULL, char = TRUE)
-{
-  if(is.null(constraints))
-    constraints <- 1:dim(lprec)[1]
+xt <- c(6,2,4)
+add.constraint(lp, xt, "<=", 15)
 
-  types <- .Call("RlpSolve_get_constr_type", lprec, as.integer(constraints))
-  if(char) types <- c("NA", "<=", ">=", "=")[types+1]
-  types
-  }
+xt <- c(1,1,6)
+add.constraint(lp, xt, ">=", 15)
+
+xt <- c(4,5,4)
+add.constraint(lp, xt, "=", 40)
+
+get.constr.type(lp)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+

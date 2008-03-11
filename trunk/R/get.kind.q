@@ -6,7 +6,7 @@ get.kind <- function(lprec, columns = NULL)
   ans <- rep("standard", length(columns))
 
   idx <- .Call("RlpSolve_is_semicont", lprec, as.integer(columns))
-  ans[idx] <- "sc"
+  ans[idx] <- "semi-continuous"
 
   idx <- .Call("RlpSolve_is_SOS_var", lprec, as.integer(columns))
   ans[idx] <- "SOS"

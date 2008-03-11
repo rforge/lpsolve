@@ -1,45 +1,42 @@
 \name{get.column}
 \alias{get.column}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Get Column}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Retrieve a column from an lpSolve linear Programming model.
 }
+
 \usage{
 get.column(lprec, column)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{column}{ ~~Describe \code{column} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{column}{a single numeric value from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying which column to retrieve.}
 }
-\details{
-  ~~ If necessary, more details than the description above ~~
-}
+
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a list with elements \code{column} and \code{nzrow} such that \code{column[i]} contains the constraint coefficient in row \code{nzrow[i]}. Rows not present in \code{nzrow} have coefficient zero in \code{column}.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(4, 0)
 
-## The function is currently defined as
-function (lprec, column) 
-.Call("RlpSolve_get_columnex", lprec, as.integer(column))
+x <- c(6,2,4,9)
+add.column(lp, x)
+
+y <- c(3,1,5)
+ind <- c(1,2,4)
+add.column(lp, y, ind)
+
+get.column(lp, 2)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+

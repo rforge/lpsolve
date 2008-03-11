@@ -1,44 +1,41 @@
 \name{get.objective}
 \alias{get.objective}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Get Objective}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Retrieve the value of the objective function from a successfully solved lpSolve linear programming model.
 }
+
 \usage{
 get.objective(lprec)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
 }
-\details{
-  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a single numeric value containing the value of the objective function.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(0, 3)
+xt <- c(6,2,4)
+add.constraint(lp, xt, "<=", 150)
+xt <- c(1,1,6)
+add.constraint(lp, xt, ">=", 0)
+xt <- c(4,5,4)
+add.constraint(lp, xt, "=", 40)
+set.objfn(lp, c(-3,-4,-3))
 
-## The function is currently defined as
-function (lprec) 
-.Call("RlpSolve_get_objective", lprec)
+solve.lp(lp)
+get.objective(lp)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+
