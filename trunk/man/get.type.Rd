@@ -1,61 +1,50 @@
 \name{get.type}
 \alias{get.type}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Get Type}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Retrieve the type of a decision variable from an lpSolve linear programming model.
 }
+
 \usage{
-get.type(lprec, columns = NULL, char = TRUE)
+get.type(lprec, columns = NULL, as.char = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{columns}{ ~~Describe \code{columns} here~~ }
-  \item{char}{ ~~Describe \code{char} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying the columns for which the type will be retrieved.}
+  \item{as.char}{a logical value. If \code{TRUE} the constraint type is returned as a character string, otherwise the logical code used directly in lp_solve is returned.}
 }
+
 \details{
-  ~~ If necessary, more details than the description above ~~
+The function \code{\link{set.type}} can be used to set a decision variable as binary. A binary decision variable is simply an integer decision with an upper bound of one and a lower bound of zero - hence this function will report the type as integer.
 }
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+either a character vector with elements from the set \code{\{"real", "integer"\}} indicating the type of each decision variable specified in \code{columns} or (if \code{as.char = FALSE}) a logical vector with \code{TRUE} elements corresponding to the integer decision variables specified in \code{columns}.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
+\seealso{\code{\link{set.type}}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(0, 3)
+xt <- c(6,2,4)
+add.constraint(lp, xt, "<=", 150)
+xt <- c(1,1,6)
+add.constraint(lp, xt, ">=", 0)
+set.type(lp, 2, "binary")
+xt <- c(4,5,4)
+add.constraint(lp, xt, "=", 40)
+set.type(lp, 3, "integer")
+set.objfn(lp, c(-3,-4,-3))
 
-## The function is currently defined as
-function(lprec, columns = NULL, char = TRUE)
-{
-  if(is.null(columns))
-    columns <- 1:dim(lprec)[2]
-
-  ans <- .Call("RlpSolve_is_int", lprec, as.integer(columns))
-
-  if(char) {
-    ans <- rep("real", length(columns))
-    ans[.Call("RlpSolve_is_int", lprec, as.integer(columns))] <- "integer"
-  }
-
-  else
-    ans <- .Call("RlpSolve_is_int", lprec, as.integer(columns))
-
-  ans
-  }
+get.type(lp)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+

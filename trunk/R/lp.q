@@ -79,7 +79,7 @@ lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
   for(j in 1:p)
     set.column(lp, j, const.mat[, j], one2n)
   set.rhs(lp, const.rhs, one2n)
-  set.constr.types(lp, const.dir.num, one2n)
+  set.constr.type(lp, const.dir.num, one2n)
   set.objfn(lp, objective.in)
   if(int.vec[1] > 0)
     set.type(lp, int.vec, "integer")
@@ -88,7 +88,7 @@ lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
 
   # Solve the model
 
-  status <- solve.lp(lp)
+  status <- solve(lp)
 
   lp.out <- list(direction = as.integer(ifelse(direction == "min", 0, 1)),
                  x.count = as.integer(p),

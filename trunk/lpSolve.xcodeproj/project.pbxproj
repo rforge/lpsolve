@@ -22,7 +22,6 @@
 		0E3F54C70D536DB400617C9D /* RlpSolveLink.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RlpSolveLink.c; path = src/RlpSolveLink.c; sourceTree = SOURCE_ROOT; };
 		0E3F54C80D536DB400617C9D /* RlpSolveLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolveLink.h; path = src/RlpSolveLink.h; sourceTree = SOURCE_ROOT; };
 		0E8B36220D5B9335000DEDC9 /* set.row.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.row.q; sourceTree = "<group>"; };
-		0E98755F0D7B409D00E6EA75 /* solve.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = solve.lp.q; sourceTree = "<group>"; };
 		0E9875600D7B423800E6EA75 /* get.objective.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.objective.q; sourceTree = "<group>"; };
 		0E9875610D7B424D00E6EA75 /* get.variables.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.variables.q; sourceTree = "<group>"; };
 		0E9875850D7B443B00E6EA75 /* get.constraints.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.constraints.q; sourceTree = "<group>"; };
@@ -43,7 +42,6 @@
 		0EABBD890D59E82A00CF7B0C /* print.lpExtPtr.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = print.lpExtPtr.q; sourceTree = "<group>"; };
 		0EABBD8A0D59E82A00CF7B0C /* resize.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = resize.lp.q; sourceTree = "<group>"; };
 		0EABBD8C0D59E82A00CF7B0C /* set.bounds.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.bounds.q; sourceTree = "<group>"; };
-		0EABBD8D0D59E82A00CF7B0C /* set.constr.types.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.constr.types.q; sourceTree = "<group>"; };
 		0EABBD910D59E82A00CF7B0C /* set.mat.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.mat.q; sourceTree = "<group>"; };
 		0EABBD920D59E82A00CF7B0C /* set.objfn.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.objfn.q; sourceTree = "<group>"; };
 		0EABBD930D59E82A00CF7B0C /* set.rhs.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.rhs.q; sourceTree = "<group>"; };
@@ -175,6 +173,8 @@
 		0EF13F990D5CAA3B00F77D3C /* lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.q; path = R/lp.q; sourceTree = SOURCE_ROOT; };
 		0EF13F9A0D5CAA3B00F77D3C /* lp.transport.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.transport.q; path = R/lp.transport.q; sourceTree = SOURCE_ROOT; };
 		0EF13F9B0D5CAA3B00F77D3C /* print.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = print.lp.q; path = R/print.lp.q; sourceTree = SOURCE_ROOT; };
+		0EFEA4400D884CE10053E8F9 /* set.constr.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.constr.type.q; sourceTree = "<group>"; };
+		0EFEA4420D884D8B0053E8F9 /* solve.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = solve.q; path = R/solve.q; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -357,14 +357,14 @@
 				0EBC20280D806D6300DD261B /* set.branch.mode.q */,
 				0EBC202A0D806EBF00DD261B /* set.branch.weights.q */,
 				0EABBD980D59E8A100CF7B0C /* set.column.q */,
-				0EABBD8D0D59E82A00CF7B0C /* set.constr.types.q */,
+				0EFEA4400D884CE10053E8F9 /* set.constr.type.q */,
 				0EABBD910D59E82A00CF7B0C /* set.mat.q */,
 				0EABBD920D59E82A00CF7B0C /* set.objfn.q */,
 				0EABBD930D59E82A00CF7B0C /* set.rhs.q */,
 				0E8B36220D5B9335000DEDC9 /* set.row.q */,
 				0E99A1560D7DD7ED00F4A4CC /* set.semicont.q */,
 				0ED0C43F0D5B59950013E074 /* set.type.q */,
-				0E98755F0D7B409D00E6EA75 /* solve.lp.q */,
+				0EFEA4420D884D8B0053E8F9 /* solve.q */,
 				0E16C06D0D64907F00EE878E /* write.lp.q */,
 			);
 			name = "R API";

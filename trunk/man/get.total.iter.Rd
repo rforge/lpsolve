@@ -1,44 +1,31 @@
 \name{get.total.iter}
 \alias{get.total.iter}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Get Total Iterations}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Retrieves the total number of iterations from a successfully solved lpSolve linear programming model.
 }
+
 \usage{
 get.total.iter(lprec)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
 }
+
 \details{
-  ~~ If necessary, more details than the description above ~~
+If \code{lprec} contains integer variables then this function returns the number of iterations to find a relaxed solution plus the number of iterations in the B&B process. If \code{lprec} contains no integer variables then this function returns the number of iterations to find a solution.
 }
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a single integer value giving the total number of iterations.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
-\examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-## The function is currently defined as
-function (lprec) 
-.Call("RlpSolve_get_total_iter", lprec)
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
+\keyword{programming}
+

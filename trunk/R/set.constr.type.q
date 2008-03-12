@@ -1,4 +1,4 @@
-set.constr.types <- function(lprec, types, indices = NULL)
+set.constr.type <- function(lprec, types, indices = NULL)
 {
   m <- dim(lprec)[1]
 

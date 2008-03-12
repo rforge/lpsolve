@@ -1,3 +1,4 @@
+#include "RlpSolve.h"
 #include "RlpSolveLink.h"
 
 /* Global variable defined in RlpSolve.c */
@@ -943,7 +944,14 @@ SEXP RlpSolve_get_rh_range(SEXP Slp, SEXP Srows)
 }
 
 
-/*set_rh_vec*/
+SEXP RlpSolve_set_rh_vec(SEXP Slp, SEXP Srh)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_rh_vec(lp, REAL(Srh));
+  return R_NilValue;
+}
+
+
 /*str_set_rh_vec*/
 
 SEXP RlpSolve_set_row_names(SEXP Slp, SEXP Srows, SEXP Snames)
@@ -2219,27 +2227,12 @@ SEXP RlpSolve_get_variables(SEXP Slp)
 /*print_constraints*/
 /*print_debugdump*/
 /*print_duals*/
-
-SEXP RlpSolve_print_lp(SEXP Slp)
-{
-  lprec* lp = lprecPointerFromSEXP(Slp);
-  print_lp(lp);
-  return R_NilValue;
-}
-
-
+/*print_lp*/
 /*print_objective*/
 /*print_scales*/
 /*print_solution*/
 /*print_str*/
-
-/*SEXP RlpSolve_print_tableau(SEXP Slp)
-{
-  lprec* lp = lprecPointerFromSEXP(Slp);
-  print_tableau(lp);
-  return R_NilValue;
-}*/
-
+/*print_tableau*/
 
 
 /*******************************

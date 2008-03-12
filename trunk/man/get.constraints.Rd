@@ -33,7 +33,7 @@ xt <- c(4,5,4)
 add.constraint(lp, xt, "=", 40)
 set.objfn(lp, c(-3,-4,-3))
 
-solve.lp(lp)
+solve(lp)
 get.constraints(lp)
 }
 

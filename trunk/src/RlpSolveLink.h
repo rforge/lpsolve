@@ -1,5 +1,3 @@
-#include "RlpSolve.h"
-
 /************************************************************************************
   * The lp_solve API 
 ************************************************************************************/
@@ -244,7 +242,7 @@ SEXP RlpSolve_get_variables(SEXP Slp);
 /*print_constraints*/
 /*print_debugdump*/
 /*print_duals*/
-SEXP RlpSolve_print_lp(SEXP Slp);
+/*print_lp*/
 /*print_objective*/
 /*print_scales*/
 /*print_solution*/
