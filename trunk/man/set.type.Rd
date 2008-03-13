@@ -1,52 +1,50 @@
 \name{set.type}
 \alias{set.type}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Set Type}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Set the type of a decision variable in an lpSolve linear programming model.
 }
+
 \usage{
 set.type(lprec, columns, type = c("integer", "binary", "real"))
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{columns}{ ~~Describe \code{columns} here~~ }
-  \item{type}{ ~~Describe \code{type} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying which variables are to have their type set.}
+  \item{type}{either \code{"integer"}, \code{"binary"} or \code{"real"}. The decision variables in \code{columns} will have their type set to this value.}
 }
+
 \details{
-  ~~ If necessary, more details than the description above ~~
+A binary decision variable is simply an integer decision with an upper bound of one and a lower bound of zero. When \code{type = "binary"} the type of the decision variable will be set to \code{"integer"} and the bounds will be set to zero and one respectively.
 }
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a logical vector indicating whether the types were successfully set.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
+\seealso{\code{\link{set.type}}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(0, 3)
+xt <- c(6,2,4)
+add.constraint(lp, xt, "<=", 150)
+xt <- c(1,1,6)
+add.constraint(lp, xt, ">=", 0)
+set.type(lp, 2, "binary")
+xt <- c(4,5,4)
+add.constraint(lp, xt, "=", 40)
+set.type(lp, 3, "integer")
+set.objfn(lp, c(-3,-4,-3))
 
-## The function is currently defined as
-function (lprec, columns, type = c("integer", "binary", "real")) 
-{
-    type <- match.arg(type)
-    invisible(switch(type, integer = .Call("RlpSolve_set_int", 
-        lprec, as.integer(columns), as.logical(TRUE)), binary = .Call("RlpSolve_set_binary", 
-        lprec, as.integer(columns), as.logical(TRUE)), real = .Call("RlpSolve_set_int", 
-        lprec, as.integer(columns), as.logical(FALSE))))
-  }
+get.type(lp)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+

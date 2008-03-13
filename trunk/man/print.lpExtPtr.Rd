@@ -8,7 +8,7 @@ Display an lpSolve linear programming model in the console.
 }
 
 \usage{
-print.lpExtPtr(x, ...)
+\method{print}{lpExtPtr}(x, ...)
 }
 
 \arguments{

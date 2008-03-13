@@ -8,6 +8,7 @@ set.rhs <- function(lprec, b, rows = NULL)
   if(length(b) != length(rows))
     stop(sQuote("b"), " and ", sQuote("rows"), " do not have the same length")
 
-  invisible(.Call("RlpSolve_set_rh", lprec, as.integer(rows), as.double(b)))
+  invisible(.Call("RlpSolve_set_rh", lprec, as.integer(rows), as.double(b),
+                   PACKAGE = "lpSolve"))
 }
 

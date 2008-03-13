@@ -63,6 +63,7 @@
 		0ECDCA3D0D7C310D0000AFC4 /* get.total.iter.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.total.iter.q; path = R/get.total.iter.q; sourceTree = SOURCE_ROOT; };
 		0ECDCA3E0D7C310D0000AFC4 /* get.total.nodes.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.total.nodes.q; path = R/get.total.nodes.q; sourceTree = SOURCE_ROOT; };
 		0ECDCA400D7C34670000AFC4 /* get.solutioncount.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.solutioncount.q; sourceTree = "<group>"; };
+		0ECECA800D897CEE000DC3A1 /* undocumented.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = undocumented.Rd; path = man/undocumented.Rd; sourceTree = SOURCE_ROOT; };
 		0ED0C43F0D5B59950013E074 /* set.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.type.q; sourceTree = "<group>"; };
 		0ED7988D0D83EC09004836E1 /* delete.constraint.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.constraint.q; path = R/delete.constraint.q; sourceTree = SOURCE_ROOT; };
 		0ED798960D83ED34004836E1 /* get.constr.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.constr.type.q; path = R/get.constr.type.q; sourceTree = SOURCE_ROOT; };
@@ -327,6 +328,7 @@
 				0EF13F760D5CA9D100F77D3C /* lp.transport.Rd */,
 				0EF13F770D5CA9D100F77D3C /* print.lp.Rd */,
 				0EC5CD3D0D6073BA00958B10 /* lpSolve.Rd */,
+				0ECECA800D897CEE000DC3A1 /* undocumented.Rd */,
 				0EF13F780D5CA9DA00F77D3C /* R API */,
 			);
 			path = man;

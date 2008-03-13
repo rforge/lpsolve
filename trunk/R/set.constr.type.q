@@ -11,13 +11,13 @@ set.constr.type <- function(lprec, types, indices = NULL)
 
   else
     if(length(indices) != length(types))
-      stop(Squote("types"), " and ", sQuote("indices"), " must contain the",
+      stop(sQuote("types"), " and ", sQuote("indices"), " must contain the",
            " same number of elements")
 
   if(is.character(types))
     types <- match(types, c("<=", ">=", "="), nomatch = 0)
 
   invisible(.Call("RlpSolve_set_constr_type", lprec, as.integer(indices),
-                   as.integer(types)))
+                   as.integer(types), PACKAGE = "lpSolve"))
 }
 

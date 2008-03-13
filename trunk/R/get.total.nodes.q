@@ -1,3 +1,3 @@
 get.total.nodes <- function(lprec)
-  .Call("RlpSolve_get_total_nodes", lprec)
+  .Call("RlpSolve_get_total_nodes", lprec, PACKAGE = "lpSolve")
 

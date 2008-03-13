@@ -8,11 +8,13 @@ Attempt to compute the optimal solution of an lpSolve linear programming model.
 }
 
 \usage{
-\method{solve}{lpExtPtr}(lprec)
+\method{solve}{lpExtPtr}(a, b, ...)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{a}{an lpSolve linear programming model.}
+  \item{b}{this argument is ignored.}
+  \item{...}{additional arguments are ignored.}
 }
 
 \value{
@@ -36,6 +38,8 @@ a single integer value containing the status code.
   13: \tab "no feasible branch and bound solution was found" \cr
   }
 }
+
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

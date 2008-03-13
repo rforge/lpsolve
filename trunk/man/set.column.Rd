@@ -26,8 +26,6 @@ a logical value indicating whether the column was successfully set is invisibly 
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
-\seealso{\code{\link{resize.lp}}}
-
 \examples{
 lp <- make.lp(4, 2)
 

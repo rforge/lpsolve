@@ -1,5 +1,6 @@
 \name{dim.lpExtPtr}
 \alias{dim.lpExtPtr}
+\alias{dim<-.lpExtPtr}
 
 \title{Dimension of an Object}
 
@@ -9,10 +10,12 @@ Retrieve the dimension (number of rows and columns) from an lpSolve linear progr
 
 \usage{
 \method{dim}{lpExtPtr}(x)
+\method{dim}{lpExtPtr}(x) <- value
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{x}{an lpSolve linear programming model.}
+  \item{value}{assignment is not supported.}
 }
 
 \details{

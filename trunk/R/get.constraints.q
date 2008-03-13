@@ -1,3 +1,3 @@
 get.constraints <- function(lprec)
-  .Call("RlpSolve_get_constraints", lprec)
+  .Call("RlpSolve_get_constraints", lprec, PACKAGE = "lpSolve")
 

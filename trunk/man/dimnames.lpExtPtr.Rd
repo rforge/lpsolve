@@ -14,8 +14,8 @@ Retrieve or set the dimnames in an lpSolve linear programming model.
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
-  \item{value}{a list containing two character vectors of lengths \code{m} and \code{n} specifying the row names and the column names for the lpSolve linear programming model.  The number of constraints in \code{lprec} is denoted by \code{m} and the number of decision variables by \code{n}.}
+  \item{x}{an lpSolve linear programming model.}
+  \item{value}{a list containing two character vectors of lengths \code{m} and \code{n} specifying the row names and the column names for the lpSolve linear programming model.  The number of constraints in \code{x} is denoted by \code{m} and the number of decision variables by \code{n}.}
 }
 
 \value{

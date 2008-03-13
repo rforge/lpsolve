@@ -15,6 +15,6 @@ add.column <- function(lprec, x, indices = NULL)
            " must have the same number of elements")
 
   invisible(.Call("RlpSolve_add_columnex", lprec, as.double(x),
-                   as.integer(indices)))
+                   as.integer(indices), PACKAGE = "lpSolve"))
 }
 

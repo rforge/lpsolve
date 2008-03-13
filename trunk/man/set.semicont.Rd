@@ -1,47 +1,33 @@
 \name{set.semicont}
 \alias{set.semicont}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Set Semicontinuous}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Set a decision variable as semicontinuous in an lpSolve linear programming model.
 }
+
 \usage{
 set.semicont(lprec, columns, sc = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{columns}{ ~~Describe \code{columns} here~~ }
-  \item{sc}{ ~~Describe \code{sc} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying which variables should be made semicontinuous.}
+  \item{sc}{a logical value. If \code{FALSE} the decision variables specified in \code{columns} will have their \code{kind} set to \code{standard}.}
 }
+
 \details{
-  ~~ If necessary, more details than the description above ~~
+Decision variables have both a type and a kind. The type is either \code{real} or \code{integer} and indicates the type of values the decision variable may take. The kind is one of \code{\{standard, semi-continuous, SOS\}}. Semi-continuous decision variables can take allowed values between their upper and lower bound as well as zero. Please see the link in the references for further details.
 }
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a logical vector indicating whether each variable successfully had its kind set.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
-\examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-## The function is currently defined as
-function (lprec, columns, sc = TRUE) 
-invisible(.Call("RlpSolve_set_semicont", lprec, as.integer(columns), 
-    as.logical(sc)))
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
+\keyword{programming}
+

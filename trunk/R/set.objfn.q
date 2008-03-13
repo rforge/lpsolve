@@ -8,6 +8,6 @@ set.objfn <- function(lprec, obj, columns = NULL)
          " do not have the same length")
 
   invisible(.Call("RlpSolve_set_obj_fnex", lprec, as.double(obj),
-                   as.integer(columns)))
+                   as.integer(columns), PACKAGE = "lpSolve"))
 }
 

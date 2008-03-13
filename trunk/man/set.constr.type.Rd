@@ -13,12 +13,12 @@ set.constr.type(lprec, types, indices = NULL)
 
 \arguments{
   \item{lprec}{an lpSolve linear programming model.}
-  \item{type}{either a numeric vector or a character vector containing elements from the set \code{\{1 = "<=", 2 = ">=", 3 = "="\}} specifying the type of the constraint.}
+  \item{types}{either a numeric vector or a character vector containing elements from the set \code{\{1 = "<=", 2 = ">=", 3 = "="\}} specifying the types of constraints.}
   \item{indices}{a numeric vector of unique values from the set \{1, \dots, m\} (where m is the number of constraints in \code{lprec}) specifying which constraints to set.}
 }
 
 \value{
-a vector of logical values indicating whether the constraint types were successfully set.
+a logical vector indicating whether the constraint types were successfully set is invisibly returned.
 }
 
 \references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}

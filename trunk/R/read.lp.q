@@ -18,9 +18,12 @@ read.lp <- function(filename, type = c("lp", "mps", "freemps"))
     type <- match.arg(type)
 
   lp <- switch(type,
-    "lp" = .Call("RlpSolve_read_LP", as.character(filename)),
-    "mps" = .Call("RlpSolve_read_MPS", as.character(filename)),
-    "freemps" = .Call("RlpSolve_read_freeMPS", as.character(filename))
+    "lp" = .Call("RlpSolve_read_LP", as.character(filename),
+                  PACKAGE = "lpSolve"),
+    "mps" = .Call("RlpSolve_read_MPS", as.character(filename),
+                   PACKAGE = "lpSolve"),
+    "freemps" = .Call("RlpSolve_read_freeMPS", as.character(filename),
+                       PACKAGE = "lpSolve")
   )
 
   if(is.null(lp))

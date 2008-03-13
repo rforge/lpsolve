@@ -1,48 +1,44 @@
 \name{set.mat}
 \alias{set.mat}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Set Matrix Element}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Set the value of a single matrix element in an lpSolve linear programming model.
 }
+
 \usage{
 set.mat(lprec, row, column, value)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{row}{ ~~Describe \code{row} here~~ }
-  \item{column}{ ~~Describe \code{column} here~~ }
-  \item{value}{ ~~Describe \code{value} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{row}{a single numeric value from the set \code{\{1, \dots, m\}} (where \code{m} is the number of constraints in \code{lprec}) specifying the row of the matrix.}
+  \item{column}{a single numeric value from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying the column of the matrix.}
+  \item{value}{a single numeric value.}
 }
-\details{
-  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a logical value indicating whether setting the matrix element was successful is invisibly returned.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
+\seealso{\code{\link{resize.lp}}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(4, 2)
+x <- c(6,2,4,9)
+set.column(lp, 2, x)
+y <- c(3,1,5)
+ind <- c(1,2,4)
+set.column(lp, 1, y, ind)
+set.constr.type(lp, rep("<=", 4))
 
-## The function is currently defined as
-function (lprec, row, column, value) 
-invisible(.Call("RlpSolve_set_mat", lprec, as.integer(row), as.integer(column), 
-    as.double(value)))
+set.mat(lp, 3, 2, 4.5)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+

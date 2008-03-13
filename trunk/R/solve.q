@@ -1,4 +1,4 @@
-solve.lpExtPtr <- function(lprec)
-  .Call("RlpSolve_solve", lprec)
+solve.lpExtPtr <- function(a, b, ...)
+  .Call("RlpSolve_solve", a, PACKAGE = "lpSolve")
 
 
