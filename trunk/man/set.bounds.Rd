@@ -1,67 +1,39 @@
 \name{set.bounds}
 \alias{set.bounds}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Set Bounds}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Set bounds on the decision variables in an lpSolve linear programming model.
 }
+
 \usage{
 set.bounds(lprec, lower = NULL, upper = NULL, columns = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{lower}{ ~~Describe \code{lower} here~~ }
-  \item{upper}{ ~~Describe \code{upper} here~~ }
-  \item{columns}{ ~~Describe \code{columns} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{lower}{a numeric vector of lower bounds to be set on the decision variables specified in \code{columns}. If \code{NULL} the lower bounds are not changed.}
+  \item{upper}{a numeric vector of upper bounds to be set on the decision variables specified in \code{columns}. If \code{NULL} the upper bounds are not changed.}
+  \item{columns}{a numeric vector of values from the set \code{\{1, \dots, n\}} specifying the columns to have their bounds set. If \code{NULL} all columns are set.}
 }
-\details{
-  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a list of logical values indicating whether the bounds were successfully set.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(0, 4)
 
-## The function is currently defined as
-function (lprec, lower = NULL, upper = NULL, columns = NULL) 
-{
-    if (is.null(columns)) 
-        columns <- 1:dim(lprec)[2]
-    ncol <- length(columns)
-    ans <- list()
-    if (!is.null(lower)) {
-        if (length(lower) != ncol) 
-            stop(sQuote("lower"), " must contain one element for each column", 
-                " in the model")
-        ans$lower <- .Call("RlpSolve_set_lowbo", lprec, as.integer(columns), 
-            as.double(lower))
-    }
-    if (!is.null(upper)) {
-        if (length(upper) != ncol) 
-            stop(sQuote("upper"), " must contain one element for each column", 
-                " in the model")
-        ans$upper <- .Call("RlpSolve_set_upbo", lprec, as.integer(columns), 
-            as.double(upper))
-    }
-    invisible(ans)
-  }
+set.bounds(lp, lower = rep(-1.0, 4))
+set.bounds(lp, upper = 1:4)
+
+set.bounds(lp, lower = rep(0.0, 4), upper = rep(1.0, 4))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+

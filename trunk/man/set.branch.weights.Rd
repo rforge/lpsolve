@@ -1,50 +1,28 @@
 \name{set.branch.weights}
 \alias{set.branch.weights}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Set Branch Weights}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Set weights on the variables in an lpSolve linear programming model.
 }
+
 \usage{
 set.branch.weights(lprec, weights)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{weights}{ ~~Describe \code{weights} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{weights}{a numeric vector with \code{n} elements (where \code{n} is the number of decision variables in \code{lprec}) containing the weights for the decision variables.}
 }
-\details{
-  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a logical value indicating whether the weight were successfully set is invisibly returned.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
-\examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-## The function is currently defined as
-function (lprec, weights) 
-{
-    if (length(weights) != dim(lprec)[2]) 
-        stop("the length of ", sQuote("weights"), " must be the same as the number", 
-            " of columns in the model")
-    .Call("RlpSolve_set_var_weights", lprec, as.double(weights))
-  }
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
+\keyword{programming}
+

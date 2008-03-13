@@ -14,7 +14,7 @@ add.column(lprec, x, indices = NULL)
 \arguments{
   \item{lprec}{an lpSolve linear programming model.}
   \item{x}{a numeric vector containing the elements (only the nonzero elements if \code{indices} is also given) to be used in the added column. The length of \code{x} must be equal to the number of constraints in \code{lprec} unless \code{indices} is provided.}
-  \item{indices}{a numeric vector the same length as \code{x} of unique values from the set \{1, \dots, m\} where m is the number of constraints in \code{lprec}; \code{x[i]} is entered into constraint \code{indices[i]} in the added column. The coefficients for the constraints not in \code{indices} are set to be zero.}
+  \item{indices}{a numeric vector the same length as \code{x} of unique values from the set \{1, \dots, m\} where m is the number of constraints in \code{lprec}; \code{x[i]} is entered into constraint \code{indices[i]} in the added column. The coefficients for the constraints not in \code{indices} are set to zero.}
 }
 
 \details{

@@ -175,6 +175,24 @@
 		0EF13F9B0D5CAA3B00F77D3C /* print.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = print.lp.q; path = R/print.lp.q; sourceTree = SOURCE_ROOT; };
 		0EFEA4400D884CE10053E8F9 /* set.constr.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.constr.type.q; sourceTree = "<group>"; };
 		0EFEA4420D884D8B0053E8F9 /* solve.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = solve.q; path = R/solve.q; sourceTree = SOURCE_ROOT; };
+		0EFEA4520D884F570053E8F9 /* name.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = name.lp.Rd; path = man/name.lp.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA4530D884F570053E8F9 /* print.lpExtPtr.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = print.lpExtPtr.Rd; path = man/print.lpExtPtr.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA4540D884F570053E8F9 /* read.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = read.lp.Rd; path = man/read.lp.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA4550D884F570053E8F9 /* resize.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = resize.lp.Rd; path = man/resize.lp.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA4560D884F570053E8F9 /* set.basis.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.basis.Rd; path = man/set.basis.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA4570D884F570053E8F9 /* set.bounds.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.bounds.Rd; path = man/set.bounds.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA4580D884F570053E8F9 /* set.branch.mode.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.branch.mode.Rd; path = man/set.branch.mode.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA4590D884F570053E8F9 /* set.branch.weights.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.branch.weights.Rd; path = man/set.branch.weights.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA45A0D884F570053E8F9 /* set.column.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.column.Rd; path = man/set.column.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA45B0D884F570053E8F9 /* set.constr.type.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.constr.type.Rd; path = man/set.constr.type.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA45C0D884F570053E8F9 /* set.mat.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.mat.Rd; path = man/set.mat.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA45D0D884F570053E8F9 /* set.objfn.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.objfn.Rd; path = man/set.objfn.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA45E0D884F570053E8F9 /* set.rhs.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.rhs.Rd; path = man/set.rhs.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA45F0D884F570053E8F9 /* set.row.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.row.Rd; path = man/set.row.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA4600D884F570053E8F9 /* set.semicont.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.semicont.Rd; path = man/set.semicont.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA4610D884F570053E8F9 /* set.type.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.type.Rd; path = man/set.type.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA4620D884F570053E8F9 /* solve.lpExtPtr.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = solve.lpExtPtr.Rd; path = man/solve.lpExtPtr.Rd; sourceTree = SOURCE_ROOT; };
+		0EFEA4630D884F570053E8F9 /* write.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = write.lp.Rd; path = man/write.lp.Rd; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -404,6 +422,24 @@
 				0ED798B40D83F28F004836E1 /* guess.basis.Rd */,
 				0ED798B50D83F28F004836E1 /* lp.control.Rd */,
 				0EABBD790D59D0A600CF7B0C /* make.lp.Rd */,
+				0EFEA4520D884F570053E8F9 /* name.lp.Rd */,
+				0EFEA4530D884F570053E8F9 /* print.lpExtPtr.Rd */,
+				0EFEA4540D884F570053E8F9 /* read.lp.Rd */,
+				0EFEA4550D884F570053E8F9 /* resize.lp.Rd */,
+				0EFEA4560D884F570053E8F9 /* set.basis.Rd */,
+				0EFEA4570D884F570053E8F9 /* set.bounds.Rd */,
+				0EFEA4580D884F570053E8F9 /* set.branch.mode.Rd */,
+				0EFEA4590D884F570053E8F9 /* set.branch.weights.Rd */,
+				0EFEA45A0D884F570053E8F9 /* set.column.Rd */,
+				0EFEA45B0D884F570053E8F9 /* set.constr.type.Rd */,
+				0EFEA45C0D884F570053E8F9 /* set.mat.Rd */,
+				0EFEA45D0D884F570053E8F9 /* set.objfn.Rd */,
+				0EFEA45E0D884F570053E8F9 /* set.rhs.Rd */,
+				0EFEA45F0D884F570053E8F9 /* set.row.Rd */,
+				0EFEA4600D884F570053E8F9 /* set.semicont.Rd */,
+				0EFEA4610D884F570053E8F9 /* set.type.Rd */,
+				0EFEA4620D884F570053E8F9 /* solve.lpExtPtr.Rd */,
+				0EFEA4630D884F570053E8F9 /* write.lp.Rd */,
 			);
 			name = "R API";
 			sourceTree = "<group>";

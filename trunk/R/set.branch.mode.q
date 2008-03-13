@@ -13,8 +13,8 @@ set.branch.mode <- function(lprec, columns, modes)
       modes <- modes - 1
   }
 
-  .Call("RlpSolve_set_var_branch", lprec, as.integer(columns),
-         as.integer(modes))
+  invisible(.Call("RlpSolve_set_var_branch", lprec, as.integer(columns),
+         as.integer(modes)))
 }
 
 

@@ -1,47 +1,45 @@
 \name{resize.lp}
 \alias{resize.lp}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Resize LP}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Resize the data structures in an lpSolve linear programming model.
 }
+
 \usage{
 resize.lp(lprec, nrow, ncol)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{nrow}{ ~~Describe \code{nrow} here~~ }
-  \item{ncol}{ ~~Describe \code{ncol} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{nrow}{a single nonnegative integer value specifying the new number of rows for the lpSolve linear programming model.}
+  \item{ncol}{a single nonnegative integer value specifying the new number of rows for the lpSolve linear programming model.}
 }
+
 \details{
-  ~~ If necessary, more details than the description above ~~
+If the new size of the model is smaller than the size of the current model, the excess rows and/or columns are deleted. If the new size is larger, no change will be immediately apparent. However, the internal structures of \code{lprec} will have been adjusted to accommodate the larger model. Efficiency of model building can be improved by calling this function before adding additional columns (for example).
 }
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a logical value indicating whether the model was successfully resized is invisibly returned.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(4, 0)
+resize.lp(lp, 4, 2)
 
-## The function is currently defined as
-function (lprec, nrow, ncol) 
-invisible(.Call("RlpSolve_resize_lp", lprec, as.integer(nrow), 
-    as.integer(ncol)))
+x <- c(6,2,4,9)
+add.column(lp, x)
+
+y <- c(3,1,5)
+ind <- c(1,2,4)
+add.column(lp, y, ind)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+

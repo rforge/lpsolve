@@ -1,66 +1,44 @@
 \name{set.constr.type}
 \alias{set.constr.type}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Set Constraint Type}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Set constraint types in an lpSolve linear programming model.
 }
+
 \usage{
 set.constr.type(lprec, types, indices = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{types}{ ~~Describe \code{types} here~~ }
-  \item{indices}{ ~~Describe \code{indices} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{type}{either a numeric vector or a character vector containing elements from the set \code{\{1 = "<=", 2 = ">=", 3 = "="\}} specifying the type of the constraint.}
+  \item{indices}{a numeric vector of unique values from the set \{1, \dots, m\} (where m is the number of constraints in \code{lprec}) specifying which constraints to set.}
 }
-\details{
-  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a vector of logical values indicating whether the constraint types were successfully set.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
+\seealso{\code{\link{resize.lp}}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(4, 2)
 
-## The function is currently defined as
-function(lprec, types, indices = NULL)
-{
-  m <- dim(lprec)[1]
+x <- c(6,2,4,9)
+set.column(lp, 2, x)
 
-  if(is.null(indices)) {
-    if(length(types) != m)
-      stop(sQuote("types"), " must contain one relation for each constraint",
-           " in the model")
-    indices <- 1:m
-  }
+y <- c(3,1,5)
+ind <- c(1,2,4)
+set.column(lp, 1, y, ind)
 
-  else
-    if(length(indices) != length(types))
-      stop(Squote("types"), " and ", sQuote("indices"), " must contain the",
-           " same number of elements")
-
-  if(is.character(types))
-    types <- match(types, c("<=", ">=", "="), nomatch = 0)
-
-  invisible(.Call("RlpSolve_set_constr_type", lprec, as.integer(indices),
-                   as.integer(types)))
-  }
+set.constr.type(lp, rep("<=", 4))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+

@@ -2,6 +2,10 @@ print.lpExtPtr <- function(x, ...)
 {
   m <- dim(x)[1]
   n <- dim(x)[2]
+  if(n < 1) {
+    cat(paste("Model name: ", name.lp(x), "\n", sep = ""))
+    return(invisible(x))
+  }
   ans <- matrix(0.0, m + 1, n)
   for(j in 1:n) {
     col <- get.column(x, j)
@@ -19,11 +23,18 @@ print.lpExtPtr <- function(x, ...)
   ans <- format(rbind(dimnames(x)[[2]], ans, types, upper, lower),
                 justify = "right")
   sense <- ifelse(lp.control(x)$sense == "minimize", "Minimize", "Maximize")
-  rowNames <- format(c("", sense, dimnames(x)[[1]], "Type", "upbo", "lowbo"))
-  constrs <- format(c("", "", get.constr.type(x), "", "", ""),
-                    justify = "right")
-  rhs <- format(c("", "",  as.character(get.rhs(x)), "", "", ""),
-                justify = "right")
+  if(m > 0) {
+    rowNames <- format(c("", sense, dimnames(x)[[1]], "Type", "upbo", "lowbo"))
+    constrs <- format(c("", "", get.constr.type(x), "", "", ""),
+                      justify = "right")
+    rhs <- format(c("", "",  as.character(get.rhs(x)), "", "", ""),
+                  justify = "right")
+  }
+  else {
+    rowNames <- format(c("", sense, "Type", "upbo", "lowbo"))
+    constrs <- format(c("", "", "", "", ""), justify = "right")
+    rhs <- format(c("", "", "", "", ""), justify = "right")
+  }
   ans <- cbind(rowNames, ans, constrs, rhs)
   ans <- apply(ans, 1, paste, collapse = "  ")
   ans <- paste(ans, collapse = "\n")

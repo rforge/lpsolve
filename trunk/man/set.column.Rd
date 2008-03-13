@@ -1,59 +1,43 @@
 \name{set.column}
 \alias{set.column}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Set Column}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Set a column in an lpSolve linear programming model.
 }
+
 \usage{
 set.column(lprec, column, x, indices = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{column}{ ~~Describe \code{column} here~~ }
-  \item{x}{ ~~Describe \code{x} here~~ }
-  \item{indices}{ ~~Describe \code{indices} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{column}{a single numeric value from the set \code{\{1, \dots, n\}} specifying which column to set.}
+  \item{x}{a numeric vector containing the elements (only the nonzero elements if \code{indices} is also given) to be used in the added column. The length of \code{x} must be equal to the number of constraints in \code{lprec} unless \code{indices} is provided.}
+  \item{indices}{a numeric vector the same length as \code{x} of unique values from the set \{1, \dots, m\} where m is the number of constraints in \code{lprec}; \code{x[i]} is entered into constraint \code{indices[i]} in the column. The coefficients for the constraints not in \code{indices} are set to zero.}
 }
-\details{
-  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a logical value indicating whether the column was successfully set is invisibly returned.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
+\seealso{\code{\link{resize.lp}}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(4, 2)
 
-## The function is currently defined as
-function (lprec, column, x, indices = NULL) 
-{
-    m <- dim(lprec)[1]
-    if (is.null(indices)) {
-        if (length(x) != m) 
-            stop(sQuote("x"), " must contain one element for each constraint in ", 
-                sQuote("lprec"))
-        indices <- 1:m
-    }
-    else if (length(x) != length(indices)) 
-        stop(sQuote("x"), " and ", sQuote("indices"), " must have the same number of elements")
-    invisible(.Call("RlpSolve_set_columnex", lprec, as.integer(column), 
-        as.double(x), as.integer(indices)))
-  }
+x <- c(6,2,4,9)
+set.column(lp, 2, x)
+
+y <- c(3,1,5)
+ind <- c(1,2,4)
+set.column(lp, 1, y, ind)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+

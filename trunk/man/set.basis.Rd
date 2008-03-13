@@ -1,59 +1,30 @@
 \name{set.basis}
 \alias{set.basis}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Set Basis}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Set the initial basis in an lpSolve linear programming model.
 }
+
 \usage{
 set.basis(lprec, basis, nonbasic = FALSE, default = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{basis}{ ~~Describe \code{basis} here~~ }
-  \item{nonbasic}{ ~~Describe \code{nonbasic} here~~ }
-  \item{default}{ ~~Describe \code{default} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{basis}{a numeric vector of unique values from the set \code{\{1, \dots, (m+n)\}} (where \code{m} is the number of constraints and \code{n} is the number of decision variables) specifying the initial basis. The values may be positive or negative where a negative value indicates that the variable is at its lower bound and positive value indicates that the variable is at its upper bound. If \code{nonbasic} is \code{FALSE} then the \code{n} basic variables must be provided. If \code{nonbasic} is \code{TRUE} then the nonbasic variables must be provided as well.}
+  \item{nonbasic}{a logical value. If \code{TRUE} the nonbasic variables must be included in \code{basis} as well.}
+  \item{default}{a logical value. If \code{TRUE} the default (all slack variable) basis is used. In this case, the value of \code{basis} and \code{nonbasic} are ignored.}
 }
-\details{
-  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+a logical value indicating whether the basis was successfully set. If \code{FALSE} then the specified basis was invalid.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
-\examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-## The function is currently defined as
-function (lprec, basis, nonbasic = FALSE, default = FALSE) 
-{
-    if (default) 
-        return(invisible(.Call("RlpSolve_default_basis", lprec)))
-    if (nonbasic) 
-        if (length(basis) != sum(dim(lprec))) 
-            stop("the length of ", sQuote("basis"), " must be the same as the number", 
-                " of columns and constraints in the model")
-        else if (length(basis) != dim(lprec)[2]) 
-            stop("the length of ", sQuote("basis"), " must be the same as the number", 
-                " of columns in the model")
-    invisible(.Call("RlpSolve_set_basis", lprec, as.integer(c(0, 
-        basis)), as.logical(nonbasic)))
-  }
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
+\keyword{programming}
+

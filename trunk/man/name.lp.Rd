@@ -1,49 +1,46 @@
 \name{name.lp}
 \alias{name.lp}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+
+\title{Name LP}
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+Set or retrieve the name of an lpSolve linear programming model.
 }
+
 \usage{
 name.lp(lprec, name)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{lprec}{ ~~Describe \code{lprec} here~~ }
-  \item{name}{ ~~Describe \code{name} here~~ }
+  \item{lprec}{an lpSolve linear programming model.}
+  \item{name}{an optional character string giving a new name for \code{lprec}.}
 }
+
 \details{
-  ~~ If necessary, more details than the description above ~~
+If \code{name} is provided then this function sets the name of the lpSolve linear programming model. If \code{name} is missing then this function retrieves the name from \code{lprec}.
 }
+
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+if \code{name} is given, a logical value indicating whether the name was successfully set. Otherwise a character string containing the name of the lpSolve linear programming model.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
 
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+
+\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+lp <- make.lp(0, 3)
+xt <- c(6,2,4)
+add.constraint(lp, xt, "<=", 150)
+xt <- c(1,1,6)
+add.constraint(lp, xt, ">=", 0)
+xt <- c(4,5,4)
+add.constraint(lp, xt, "=", 40)
+set.objfn(lp, c(-3,-4,-3))
 
-## The function is currently defined as
-function (lprec, name) 
-{
-    if (missing(name)) 
-        return(.Call("RlpSolve_get_lp_name", lprec))
-    .Call("RlpSolve_set_lp_name", lprec, as.character(name))
-  }
+name.lp(lp, "Simple LP")
+name.lp(lp)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{programming}
+
