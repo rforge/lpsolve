@@ -27,14 +27,14 @@ a logical value indicating whether the row was successfully set.
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \examples{
-lp <- make.lp(2, 4)
+lps.model <- make.lp(2, 4)
 
 xt <- c(6,2,4,9)
-set.row(lp, 2, xt)
+set.row(lps.model, 2, xt)
 
 yt <- c(3,1,5)
 ind <- c(1,2,4)
-set.row(lp, 1, yt, ind)
+set.row(lps.model, 1, yt, ind)
 }
 
 \keyword{programming}

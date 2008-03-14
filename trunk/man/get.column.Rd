@@ -26,16 +26,16 @@ a list with elements \code{column} and \code{nzrow} such that \code{column[i]} c
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \examples{
-lp <- make.lp(4, 0)
+lps.model <- make.lp(4, 0)
 
 x <- c(6,2,4,9)
-add.column(lp, x)
+add.column(lps.model, x)
 
 y <- c(3,1,5)
 ind <- c(1,2,4)
-add.column(lp, y, ind)
+add.column(lps.model, y, ind)
 
-get.column(lp, 2)
+get.column(lps.model, 2)
 }
 
 \keyword{programming}

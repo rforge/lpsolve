@@ -28,16 +28,16 @@ a logical vector indicating whether the constraint types were successfully set i
 \seealso{\code{\link{resize.lp}}}
 
 \examples{
-lp <- make.lp(4, 2)
+lps.model <- make.lp(4, 2)
 
 x <- c(6,2,4,9)
-set.column(lp, 2, x)
+set.column(lps.model, 2, x)
 
 y <- c(3,1,5)
 ind <- c(1,2,4)
-set.column(lp, 1, y, ind)
+set.column(lps.model, 1, y, ind)
 
-set.constr.type(lp, rep("<=", 4))
+set.constr.type(lps.model, rep("<=", 4))
 }
 
 \keyword{programming}

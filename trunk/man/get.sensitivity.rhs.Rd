@@ -30,17 +30,17 @@ a list with components
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \examples{
-lp <- make.lp(0, 3)
+lps.model <- make.lp(0, 3)
 xt <- c(6,2,4)
-add.constraint(lp, xt, "<=", 150)
+add.constraint(lps.model, xt, "<=", 150)
 xt <- c(1,1,6)
-add.constraint(lp, xt, ">=", 0)
+add.constraint(lps.model, xt, ">=", 0)
 xt <- c(4,5,4)
-add.constraint(lp, xt, "=", 40)
-set.objfn(lp, c(-3,-4,-3))
+add.constraint(lps.model, xt, "=", 40)
+set.objfn(lps.model, c(-3,-4,-3))
 
-solve(lp)
-get.sensitivity.rhs(lp)
+solve(lps.model)
+get.sensitivity.rhs(lps.model)
 }
 
 \keyword{programming}

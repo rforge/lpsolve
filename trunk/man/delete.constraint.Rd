@@ -25,17 +25,17 @@ a logical value is invisibly returned: \code{TRUE} indicates that the operation 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \examples{
-lp <- make.lp(0, 4)
-set.objfn(lp, rep(1, 4))
+lps.model <- make.lp(0, 4)
+set.objfn(lps.model, rep(1, 4))
 
 xt <- c(6,2,4,9)
-add.constraint(lp, xt, "<=", 50)
+add.constraint(lps.model, xt, "<=", 50)
 
 yt <- c(3,1,5)
 ind <- c(1,2,4)
-add.constraint(lp, yt, 2, 75, ind)
+add.constraint(lps.model, yt, 2, 75, ind)
 
-delete.constraint(lp, 1)
+delete.constraint(lps.model, 1)
 }
 
 \keyword{programming}

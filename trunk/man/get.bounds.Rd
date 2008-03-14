@@ -25,8 +25,8 @@ get.bounds(lprec, columns = NULL)
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \examples{
-lp <- make.lp(3, 3)
-get.bounds(lp)
+lps.model <- make.lp(3, 3)
+get.bounds(lps.model)
 }
 
 \keyword{programming}

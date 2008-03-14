@@ -14,7 +14,7 @@ get.constr.type(lprec, constraints = NULL, as.char = TRUE)
 \arguments{
   \item{lprec}{an lpSolve linear programming model.}
   \item{constraints}{a numeric vector of unique values from the set \code{\{1, \dots, m\}} (where \code{m} is the number of constraints in \code{lprec}) specifying the constraints for which the types will be retrieved. If \code{NULL} the types are retrieved for all constraints.}
-  \item{as.char}{a logical value. If \code{TRUE} the constraint type is returned as a character string, otherwise the integer code used directly in lp_solve is returned.}
+  \item{as.char}{a logical value. If \code{TRUE} the constraint type is returned as a character string, otherwise the integer code used internally by lpSolve is returned.}
 }
 
 \value{
@@ -26,18 +26,18 @@ either a character vector or an integer vector containing the types of the const
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \examples{
-lp <- make.lp(0, 3)
+lps.model <- make.lp(0, 3)
 
 xt <- c(6,2,4)
-add.constraint(lp, xt, "<=", 15)
+add.constraint(lps.model, xt, "<=", 15)
 
 xt <- c(1,1,6)
-add.constraint(lp, xt, ">=", 15)
+add.constraint(lps.model, xt, ">=", 15)
 
 xt <- c(4,5,4)
-add.constraint(lp, xt, "=", 40)
+add.constraint(lps.model, xt, "=", 40)
 
-get.constr.type(lp)
+get.constr.type(lps.model)
 }
 
 \keyword{programming}

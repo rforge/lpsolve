@@ -14,7 +14,7 @@ get.type(lprec, columns = NULL, as.char = TRUE)
 \arguments{
   \item{lprec}{an lpSolve linear programming model.}
   \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying the columns for which the type will be retrieved.}
-  \item{as.char}{a logical value. If \code{TRUE} the constraint type is returned as a character string, otherwise the logical code used directly in lp_solve is returned.}
+  \item{as.char}{a logical value. If \code{TRUE} the constraint type is returned as a character string, otherwise the logical code used internally by lpSolve is returned.}
 }
 
 \details{
@@ -32,18 +32,18 @@ either a character vector with elements from the set \code{\{"real", "integer"\}
 \seealso{\code{\link{set.type}}}
 
 \examples{
-lp <- make.lp(0, 3)
+lps.model <- make.lp(0, 3)
 xt <- c(6,2,4)
-add.constraint(lp, xt, "<=", 150)
+add.constraint(lps.model, xt, "<=", 150)
 xt <- c(1,1,6)
-add.constraint(lp, xt, ">=", 0)
-set.type(lp, 2, "binary")
+add.constraint(lps.model, xt, ">=", 0)
+set.type(lps.model, 2, "binary")
 xt <- c(4,5,4)
-add.constraint(lp, xt, "=", 40)
-set.type(lp, 3, "integer")
-set.objfn(lp, c(-3,-4,-3))
+add.constraint(lps.model, xt, "=", 40)
+set.type(lps.model, 3, "integer")
+set.objfn(lps.model, c(-3,-4,-3))
 
-get.type(lp)
+get.type(lps.model)
 }
 
 \keyword{programming}

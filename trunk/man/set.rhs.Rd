@@ -26,14 +26,14 @@ a logical vector indicating whether setting each right-hand-side element was suc
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \examples{
-lp <- make.lp(4, 2)
+lps.model <- make.lp(4, 2)
 x <- c(6,2,4,9)
-set.column(lp, 2, x)
+set.column(lps.model, 2, x)
 y <- c(3,1,5)
 ind <- c(1,2,4)
-set.column(lp, 1, y, ind)
+set.column(lps.model, 1, y, ind)
 
-set.rhs(lp, c(10, 20, 40, 80))
+set.rhs(lps.model, c(10, 20, 40, 80))
 }
 
 \keyword{programming}

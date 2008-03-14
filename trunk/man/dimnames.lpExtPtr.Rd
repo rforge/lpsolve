@@ -27,16 +27,16 @@ a list of two character vectors containing the row names and the column names in
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \examples{
-lp <- make.lp(4, 0)
+lps.model <- make.lp(4, 0)
 
 x <- c(6,2,4,9)
-add.column(lp, x)
+add.column(lps.model, x)
 
 y <- c(3,1,5)
 ind <- c(1,2,4)
-add.column(lp, y, ind)
+add.column(lps.model, y, ind)
 
-dimnames(lp) <- list(c("alpha", "bravo", "charlie", "delta"),
+dimnames(lps.model) <- list(c("alpha", "bravo", "charlie", "delta"),
                      c("whiskey", "tango"))
 }
 

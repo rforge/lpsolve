@@ -32,14 +32,14 @@ a logical value is invisibly returned: \code{TRUE} indicates that the operation 
 \seealso{\code{\link{resize.lp}}}
 
 \examples{
-lp <- make.lp(4, 0)
+lps.model <- make.lp(4, 0)
 
 x <- c(6,2,4,9)
-add.column(lp, x)
+add.column(lps.model, x)
 
 y <- c(3,1,5)
 ind <- c(1,2,4)
-add.column(lp, y, ind)
+add.column(lps.model, y, ind)
 }
 
 \keyword{programming}

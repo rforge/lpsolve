@@ -25,7 +25,7 @@ an lpSolve linear programming model. Specifically an R external pointer with cla
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \examples{
-lp <- make.lp(4, 3)
+lps.model <- make.lp(4, 3)
 }
 
 \keyword{programming}

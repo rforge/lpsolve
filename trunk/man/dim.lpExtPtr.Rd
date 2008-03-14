@@ -33,16 +33,16 @@ an integer vector of length two containing the number of rows and the number of 
 \seealso{\code{\link{resize.lp}}}
 
 \examples{
-lp <- make.lp(4, 0)
+lps.model <- make.lp(4, 0)
 
 x <- c(6,2,4,9)
-add.column(lp, x)
+add.column(lps.model, x)
 
 y <- c(3,1,5)
 ind <- c(1,2,4)
-add.column(lp, y, ind)
+add.column(lps.model, y, ind)
 
-dim(lp)
+dim(lps.model)
 }
 
 \keyword{programming}

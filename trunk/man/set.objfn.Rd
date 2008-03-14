@@ -28,14 +28,14 @@ a logical value indicating whether setting the objective function was successful
 \seealso{\code{\link{resize.lp}}}
 
 \examples{
-lp <- make.lp(4, 2)
+lps.model <- make.lp(4, 2)
 x <- c(6,2,4,9)
-set.column(lp, 2, x)
+set.column(lps.model, 2, x)
 y <- c(3,1,5)
 ind <- c(1,2,4)
-set.column(lp, 1, y, ind)
+set.column(lps.model, 1, y, ind)
 
-set.objfn(lp, c(-3, -4))
+set.objfn(lps.model, c(-3, -4))
 }
 
 \keyword{programming}

@@ -25,9 +25,9 @@ an integer vector containing the indices of the basic (and nonbasic if requested
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \examples{
-lp <- make.lp(3, 3)
+lps.model <- make.lp(3, 3)
 ## build and solve model ##
-get.basis(lp)
+get.basis(lps.model)
 }
 
 \keyword{programming}

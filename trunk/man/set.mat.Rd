@@ -29,15 +29,15 @@ a logical value indicating whether setting the matrix element was successful is 
 \seealso{\code{\link{resize.lp}}}
 
 \examples{
-lp <- make.lp(4, 2)
+lps.model <- make.lp(4, 2)
 x <- c(6,2,4,9)
-set.column(lp, 2, x)
+set.column(lps.model, 2, x)
 y <- c(3,1,5)
 ind <- c(1,2,4)
-set.column(lp, 1, y, ind)
-set.constr.type(lp, rep("<=", 4))
+set.column(lps.model, 1, y, ind)
+set.constr.type(lps.model, rep("<=", 4))
 
-set.mat(lp, 3, 2, 4.5)
+set.mat(lps.model, 3, 2, 4.5)
 }
 
 \keyword{programming}

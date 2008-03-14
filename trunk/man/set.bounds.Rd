@@ -27,12 +27,12 @@ a list of logical values indicating whether the bounds were successfully set.
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \examples{
-lp <- make.lp(0, 4)
+lps.model <- make.lp(0, 4)
 
-set.bounds(lp, lower = rep(-1.0, 4))
-set.bounds(lp, upper = 1:4)
+set.bounds(lps.model, lower = rep(-1.0, 4))
+set.bounds(lps.model, upper = 1:4)
 
-set.bounds(lp, lower = rep(0.0, 4), upper = rep(1.0, 4))
+set.bounds(lps.model, lower = rep(0.0, 4), upper = rep(1.0, 4))
 }
 
 \keyword{programming}
