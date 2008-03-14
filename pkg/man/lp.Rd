@@ -3,7 +3,7 @@
 \title{Linear and Integer Programming}
 \description{Interface to lp\_solve linear/integer programming system}
 \usage{
-lp (direction = "min", objective.in, const.mat, const.dir, const.rhs,
+lp (direction = c("min", "max"), objective.in, const.mat, const.dir, const.rhs,
 	transpose.constraints = TRUE, int.vec, presolve=0, compute.sens=0)
 }
 \arguments{

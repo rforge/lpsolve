@@ -147,7 +147,8 @@ lpSolve <- function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
             objective = double(1),
             x = double(p),
             status = integer(1),
-            NAOK = TRUE)
+            NAOK = TRUE,
+            PACKAGE = "lpSolve")
 
   if(lps$status == -2)
     status.message = "out of memory"

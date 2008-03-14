@@ -21,7 +21,8 @@ add.constraint <- function(lprec, xt, type = c("<=", "=", ">="), b,
   }
 
   invisible(.Call("RlpSolve_add_constraintex", lprec, as.double(xt),
-                   as.integer(indices), as.integer(type), as.double(b)))
+                   as.integer(indices), as.integer(type), as.double(b),
+                   PACKAGE = "lpSolve"))
 }
 
 

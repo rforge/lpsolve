@@ -1,3 +1,4 @@
+#include "RlpSolve.h"
 #include "RlpSolveLink.h"
 
 /* Global variable defined in RlpSolve.c */
@@ -19,6 +20,8 @@ SEXP RlpSolve_make_lp(SEXP Srows, SEXP Scolumns)
   lprec* lp = make_lp(INTEGER(Srows)[0], INTEGER(Scolumns)[0]);
 
   if(lp) {
+    put_abortfunc(lp, RlpSolveAbortFunction, NULL);
+    set_verbose(lp, NEUTRAL);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
     R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
   }
@@ -313,7 +316,7 @@ SEXP RlpSolve_is_SOS_var(SEXP Slp, SEXP Scolumns)
 }
 
 
-SEXP RlpSolve_del_columns(SEXP Slp, SEXP Scolumns)
+SEXP RlpSolve_del_column(SEXP Slp, SEXP Scolumns)
 {
   SEXP ret = R_NilValue;
   lprec* lp = lprecPointerFromSEXP(Slp);
@@ -330,7 +333,7 @@ SEXP RlpSolve_del_columns(SEXP Slp, SEXP Scolumns)
 }
 
 
-SEXP RlpSolve_del_constraints(SEXP Slp, SEXP Sdel_rows)
+SEXP RlpSolve_del_constraint(SEXP Slp, SEXP Sdel_rows)
 {
   SEXP ret = R_NilValue;
   lprec* lp = lprecPointerFromSEXP(Slp);
@@ -941,7 +944,14 @@ SEXP RlpSolve_get_rh_range(SEXP Slp, SEXP Srows)
 }
 
 
-/*set_rh_vec*/
+SEXP RlpSolve_set_rh_vec(SEXP Slp, SEXP Srh)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  set_rh_vec(lp, REAL(Srh));
+  return R_NilValue;
+}
+
+
 /*str_set_rh_vec*/
 
 SEXP RlpSolve_set_row_names(SEXP Slp, SEXP Srows, SEXP Snames)
@@ -999,9 +1009,14 @@ SEXP RlpSolve_set_semicont(SEXP Slp, SEXP Scolumns, SEXP Ssc)
   int ncol = LENGTH(Scolumns), j = 0;
 
   PROTECT(ret = allocVector(LGLSXP, ncol));
-  for(j = 0; j < ncol; j++)
-    LOGICAL(ret)[j] = (int) set_semicont(lp, INTEGER(Scolumns)[j],
-                                         (unsigned char) LOGICAL(Ssc)[j]);
+  if(LENGTH(Ssc) == 1)
+    for(j = 0; j < ncol; j++)
+      LOGICAL(ret)[j] = (int) set_semicont(lp, INTEGER(Scolumns)[j],
+                                           (unsigned char) LOGICAL(Ssc)[0]);
+  else
+    for(j = 0; j < ncol; j++)
+      LOGICAL(ret)[j] = (int) set_semicont(lp, INTEGER(Scolumns)[j],
+                                           (unsigned char) LOGICAL(Ssc)[j]);
   UNPROTECT(1);
 
   return ret;
@@ -2212,27 +2227,12 @@ SEXP RlpSolve_get_variables(SEXP Slp)
 /*print_constraints*/
 /*print_debugdump*/
 /*print_duals*/
-
-SEXP RlpSolve_print_lp(SEXP Slp)
-{
-  lprec* lp = lprecPointerFromSEXP(Slp);
-  print_lp(lp);
-  return R_NilValue;
-}
-
-
+/*print_lp*/
 /*print_objective*/
 /*print_scales*/
 /*print_solution*/
 /*print_str*/
-
-/*SEXP RlpSolve_print_tableau(SEXP Slp)
-{
-  lprec* lp = lprecPointerFromSEXP(Slp);
-  print_tableau(lp);
-  return R_NilValue;
-}*/
-
+/*print_tableau*/
 
 
 /*******************************

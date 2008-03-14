@@ -1,5 +1,3 @@
-#include "RlpSolve.h"
-
 /************************************************************************************
   * The lp_solve API 
 ************************************************************************************/
@@ -42,8 +40,8 @@ SEXP RlpSolve_add_lag_con(SEXP Slp, SEXP Srow, SEXP Sconstr_type, SEXP Srh);
 SEXP RlpSolve_add_SOS(SEXP Slp, SEXP Sname, SEXP Ssostype, SEXP Spriority,
                       SEXP Ssosvars, SEXP Sweights);
 SEXP RlpSolve_is_SOS_var(SEXP Slp, SEXP Scolumns);
-SEXP RlpSolve_del_columns(SEXP Slp, SEXP Scolumn);
-SEXP RlpSolve_del_constraints(SEXP Slp, SEXP Sdel_row);
+SEXP RlpSolve_del_column(SEXP Slp, SEXP Scolumn);
+SEXP RlpSolve_del_constraint(SEXP Slp, SEXP Sdel_row);
 /*get_row*/
 SEXP RlpSolve_get_rowex(SEXP Slp, SEXP Srow_nr);
 SEXP RlpSolve_get_nameindex(SEXP Slp, SEXP Snames, SEXP Sisrow);
@@ -244,7 +242,7 @@ SEXP RlpSolve_get_variables(SEXP Slp);
 /*print_constraints*/
 /*print_debugdump*/
 /*print_duals*/
-SEXP RlpSolve_print_lp(SEXP Slp);
+/*print_lp*/
 /*print_objective*/
 /*print_scales*/
 /*print_solution*/

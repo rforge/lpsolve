@@ -15,6 +15,6 @@ set.row <- function(lprec, row, xt, indices = NULL)
            " must have the same number of elements")
 
   invisible(.Call("RlpSolve_set_rowex", lprec, as.integer(row), as.double(xt),
-                   as.integer(indices)))
+                   as.integer(indices), PACKAGE = "lpSolve"))
 }
 

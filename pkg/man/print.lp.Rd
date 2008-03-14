@@ -3,7 +3,7 @@
 \title{Print an lp object}
 \description{Print method for lp objects}
 \usage{
-print.lp (x, ...)
+\method{print}{lp}(x, ...)
 }
 \arguments{
 \item{x}{List with items named \code{objval} and \code{status}.

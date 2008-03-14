@@ -1,3 +1,3 @@
 get.total.iter <- function(lprec)
-  .Call("RlpSolve_get_total_iter", lprec)
+  .Call("RlpSolve_get_total_iter", lprec, PACKAGE = "lpSolve")
 
