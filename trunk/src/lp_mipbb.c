@@ -48,14 +48,14 @@ STATIC BBrec *create_BB(lprec *lp, BBrec *parentBB, MYBOOL dofullcopy)
   if(newBB != NULL) {
 
     if(parentBB == NULL) {
-      allocREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
-      allocREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
+      allocLPSREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
+      allocLPSREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
       MEMCOPY(newBB->upbo,  lp->orig_upbo,  lp->sum + 1);
       MEMCOPY(newBB->lowbo, lp->orig_lowbo, lp->sum + 1);
     }
     else if(dofullcopy) {
-      allocREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
-      allocREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
+      allocLPSREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
+      allocLPSREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
       MEMCOPY(newBB->upbo,  parentBB->upbo,  lp->sum + 1);
       MEMCOPY(newBB->lowbo, parentBB->lowbo, lp->sum + 1);
     }
@@ -322,7 +322,7 @@ STATIC MYBOOL initbranches_BB(BBrec *BB)
   push_basis(lp, NULL, NULL, NULL);
 
  /* Set default number of branches at the current B&B branch */
-  if(BB->vartype == BB_REAL)
+  if(BB->vartype == BB_LPSREAL)
     BB->nodesleft = 1;
 
   else {
@@ -873,6 +873,17 @@ STATIC int solve_LP(lprec *lp, BBrec *BB)
     if((status == USERABORT) || (status == TIMEOUT)) {
       /* Construct the last feasible solution, if available */
       if((lp->solutioncount == 0) &&
+         /*
+            30/01/08 <peno> added MIP_count test because in following situation thing were wrong:
+             - The model contains integers
+             - A break at first is set
+             - A timeout is set
+             - The timeout occurs before a first integer solution is found
+             - When the timeout occurs, the simplex algorithm is in phase 2 and has a feasible (but non-integer) solution, but not optimal yet.
+            If above situation occurs then a (sub-optimal) solution was returned while no integer
+            solution isn't found yet at this time
+         */
+         (MIP_count(lp) == 0) &&
          ((lp->simplex_mode & (SIMPLEX_Phase2_PRIMAL | SIMPLEX_Phase2_DUAL)) > 0)) {
         lp->solutioncount++;
         construct_solution(lp, NULL);
@@ -967,7 +978,14 @@ STATIC int rcfbound_BB(BBrec *BB, int varno, MYBOOL isINT, LPSREAL *newbound, MY
   rangeLU = upbo - lowbo;
 
   if(rangeLU > lp->epsprimal) {
+#if 1      /* v5.5 problematic - Gap between current node and the current best bound */
     deltaOF = lp->rhs[0] - lp->bb_workOF;
+#elif 0    /* v6 less aggressive - Gap between current best bound and the relaxed problem */
+    deltaOF = my_chsign(is_maxim(lp), lp->real_solution) - lp->bb_workOF;
+#else      /* v6 more aggressive - Gap between current node and the relaxed problem */
+    deltaOF = my_chsign(is_maxim(lp), lp->real_solution) - lp->rhs[0];
+#endif
+
     deltaRC = my_chsign(!lp->is_lower[varno], lp->drow[varno]);
     /* Protect against divisions with tiny numbers and stray sign
        reversals of the reduced cost */
@@ -1024,7 +1042,7 @@ STATIC MYBOOL findnode_BB(BBrec *BB, int *varno, int *vartype, int *varcus)
 
   /* Initialize result and return variables */
   *varno    = 0;
-  *vartype  = BB_REAL;
+  *vartype  = BB_LPSREAL;
   *varcus   = 0;
   countnint = 0;
   BB->nodestatus = lp->spx_status;
@@ -1127,7 +1145,21 @@ STATIC MYBOOL findnode_BB(BBrec *BB, int *varno, int *vartype, int *varcus)
     /* Check if the current MIP solution is optimal; equal or better */
     if(*varno == 0) {
       is_better = (MYBOOL) (lp->solutioncount == 0) || bb_better(lp, OF_INCUMBENT | OF_DELTA, OF_TEST_BT);
+#if 1
       is_better &= bb_better(lp, OF_INCUMBENT | OF_DELTA, OF_TEST_BT | OF_TEST_RELGAP);
+#else
+      /* Check if we can determine clear improvement */
+      is_better = (MYBOOL) (lp->solutioncount == 0) ||
+                  (MYBOOL) ((lp->bb_deltaOF > 0) &&
+                            (my_chsign(is_maxim(lp), lp->solution[0]-lp->best_solution[0]) < 0));
+
+      /* Apply gap-based improvement testing if the current solution is not clearly better */
+
+      if(!is_better) {
+        is_better  = bb_better(lp, OF_INCUMBENT | OF_DELTA, OF_TEST_BT);
+        is_better |= bb_better(lp, OF_INCUMBENT | OF_DELTA, OF_TEST_BT | OF_TEST_RELGAP);
+      }
+#endif
       is_equal  = !is_better;
 
       if(is_equal) {
@@ -1354,11 +1386,23 @@ STATIC int run_BB(lprec *lp)
 #endif
   lp->bb_upperchange = createUndoLadder(lp, varno, 2*MIP_count(lp));
   lp->bb_lowerchange = createUndoLadder(lp, varno, 2*MIP_count(lp));
-  lp->rootbounds = currentBB = push_BB(lp, NULL, 0, BB_REAL, 0);
+  lp->rootbounds = currentBB = push_BB(lp, NULL, 0, BB_LPSREAL, 0);
 
   /* Perform the branch & bound loop */
   while(lp->bb_level > 0) {
     status = solve_BB(currentBB);
+
+#if 0
+    if((lp->bb_level == 1) && (MIP_count(lp) > 0)) {
+      if(status == RUNNING)
+        ;
+
+      /* Check if there was an integer solution of an aborted model */
+      else if((status == SUBOPTIMAL) && (lp->solutioncount == 1) &&
+              findnode_BB(currentBB, &varno, &vartype, &varcus))
+        status = USERABORT;
+    }
+#endif
 
     if((status == OPTIMAL) && findnode_BB(currentBB, &varno, &vartype, &varcus))
       currentBB = push_BB(lp, currentBB, varno, vartype, varcus);

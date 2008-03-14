@@ -13,7 +13,7 @@ void __VACALL report(lprec *lp, int level, char *format, ...);
 void debug_print(lprec *lp, char *format, ...);
 void debug_print_solution(lprec *lp);
 void debug_print_bounds(lprec *lp, LPSREAL *upbo, LPSREAL *lowbo);
-void blockWriteLREAL(FILE *output, char *label, LREAL *vector, int first, int last);
+void blockWriteLLPSREAL(FILE *output, char *label, LLPSREAL *vector, int first, int last);
 void blockWriteAMAT(FILE *output, const char *label, lprec* lp, int first, int last);
 void blockWriteBMAT(FILE *output, const char *label, lprec* lp, int first, int last);
 

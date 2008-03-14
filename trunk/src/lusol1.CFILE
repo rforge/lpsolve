@@ -515,7 +515,7 @@ void LU1PQ3(LUSOLrec *LUSOL, int MN, int LEN[], int IPERM[], int IW[], int *NRAN
    27 Mar 2001: Decided to use only ind(l) > 0 and = 0 in lu1fad.
                 Still have to keep entries with len(i) = 0.
    ================================================================== */
-void LU1REC(LUSOLrec *LUSOL, int N, MYBOOL REALS, int *LTOP,
+void LU1REC(LUSOLrec *LUSOL, int N, MYBOOL LPSREALS, int *LTOP,
                              int IND[], int LEN[], int LOC[])
 {
   int  NEMPTY, I, LENI, L, LEND, K, KLAST, ILAST, LPRINT;
@@ -542,7 +542,7 @@ void LU1REC(LUSOLrec *LUSOL, int N, MYBOOL REALS, int *LTOP,
     if(I>0) {
       K++;
       IND[K] = I;
-      if(REALS)
+      if(LPSREALS)
         LUSOL->a[K] = LUSOL->a[L];
     }
     else if(I<-N) {
@@ -551,7 +551,7 @@ void LU1REC(LUSOLrec *LUSOL, int N, MYBOOL REALS, int *LTOP,
       ILAST = I;
       K++;
       IND[K] = LEN[I];
-      if(REALS)
+      if(LPSREALS)
         LUSOL->a[K] = LUSOL->a[L];
       LOC[I] = KLAST+1;
       LEN[I] = K-KLAST;
@@ -572,7 +572,7 @@ void LU1REC(LUSOLrec *LUSOL, int N, MYBOOL REALS, int *LTOP,
   LPRINT = LUSOL->luparm[LUSOL_IP_PRINTLEVEL];
   if(LPRINT>=LUSOL_MSG_PIVOT)
     LUSOL_report(LUSOL, 0, "lu1rec.  File compressed from %d to %d\n",
-                        *LTOP,K,REALS,NEMPTY);
+                        *LTOP,K,LPSREALS,NEMPTY);
 /*      ncp */
   LUSOL->luparm[LUSOL_IP_COMPRESSIONS_LU]++;
 /*      Return ilast in ind(ltop + 1). */

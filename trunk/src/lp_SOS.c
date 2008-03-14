@@ -189,9 +189,9 @@ STATIC int append_SOSrec(SOSrec *SOS, int size, int *variables, LPSREAL *weights
 
  /* Copy the new data into the arrays */
   if(SOS->weights == NULL)
-    allocREAL(lp, &SOS->weights, 1+newsize, TRUE);
+    allocLPSREAL(lp, &SOS->weights, 1+newsize, TRUE);
   else
-    allocREAL(lp, &SOS->weights, 1+newsize, AUTOMATIC);
+    allocLPSREAL(lp, &SOS->weights, 1+newsize, AUTOMATIC);
   for(i = oldsize+1; i <= newsize; i++) {
     SOS->members[i] = variables[i-oldsize-1];
     if((SOS->members[i] < 1) || (SOS->members[i] > lp->columns))
@@ -210,7 +210,7 @@ STATIC int append_SOSrec(SOSrec *SOS, int size, int *variables, LPSREAL *weights
   }
 
  /* Sort the new paired lists ascending by weight (simple bubble sort) */
-  i = sortByREAL(SOS->members, SOS->weights, newsize, 1, TRUE);
+  i = sortByLPSREAL(SOS->members, SOS->weights, newsize, 1, TRUE);
   if(i > 0)
     report(lp, DETAILED, "append_SOS_rec: Non-unique SOS variable weight for index %d\n", i);
 
@@ -249,7 +249,7 @@ STATIC int make_SOSchain(lprec *lp, MYBOOL forceresort)
   if(lp->sos_vars > 0) /* Prevent memory loss in case of multiple solves */
     FREE(lp->sos_priority);
   allocINT(lp, &lp->sos_priority, n, FALSE);
-  allocREAL(lp, &order, n, FALSE);
+  allocLPSREAL(lp, &order, n, FALSE);
 
   /* Move variable data to the master SOS list and sort by ascending weight */
   n = 0;
@@ -263,7 +263,7 @@ STATIC int make_SOSchain(lprec *lp, MYBOOL forceresort)
       n++;
     }
   }
-  hpsortex(order, n, 0, sizeof(*order), FALSE, compareREAL, lp->sos_priority);
+  hpsortex(order, n, 0, sizeof(*order), FALSE, compareLPSREAL, lp->sos_priority);
   FREE(order);
 
   /* Remove duplicate SOS variables */

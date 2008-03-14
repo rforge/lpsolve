@@ -1666,7 +1666,7 @@ lprec* __WINAPI copy_lp(lprec *lp)
 #endif
 
   if(!allocINT(lp, &idx, lp->rows+1, FALSE) ||
-     !allocREAL(lp, &val, lp->rows+1, FALSE))
+     !allocLPSREAL(lp, &val, lp->rows+1, FALSE))
     goto Finish;
 
   /* Create the new object */
@@ -1759,7 +1759,7 @@ lprec* __WINAPI copy_lp(lprec *lp)
     MEMCOPY(newlp->is_lower, lp->is_lower, lp->sum+1);
     MEMCOPY(newlp->solution, lp->solution, lp->sum+1);
     if(lp->duals != NULL) {
-      allocREAL(newlp, &newlp->duals, newlp->sum_alloc+1, FALSE);
+      allocLPSREAL(newlp, &newlp->duals, newlp->sum_alloc+1, FALSE);
       MEMCOPY(newlp->duals, lp->duals, lp->sum+1);
     }
     newlp->solutioncount = lp->solutioncount;
@@ -1797,9 +1797,9 @@ MYBOOL __WINAPI dualize_lp(lprec *lp)
   /* Row-column swap other vectors */
   swapINT(&lp->rows, &lp->columns);
   swapINT(&lp->rows_alloc, &lp->columns_alloc);
-  swapREAL(lp->orig_rhs, lp->orig_obj);
+  swapLPSREAL(lp->orig_rhs, lp->orig_obj);
   if ((lp->rhs != NULL) && (lp->obj != NULL))
-    swapREAL(lp->rhs, lp->obj);
+    swapLPSREAL(lp->rhs, lp->obj);
 
   /* Reallocate storage */
 /*
@@ -2440,7 +2440,7 @@ STATIC MYBOOL shift_coldata(lprec *lp, int base, int delta, LLrec *usedmap)
     /* Set defaults */
     for(i = 0; i < delta; i++) {
       ii = base + i;
-      lp->var_type[ii] = ISREAL;
+      lp->var_type[ii] = ISLPSREAL;
       lp->sc_lobound[ii] = 0;
       lp->orig_obj[ii] = 0;
       if(lp->obj != NULL)
@@ -2647,15 +2647,15 @@ STATIC MYBOOL inc_rowcol_space(lprec *lp, int delta, MYBOOL isrows)
   rowcolsum = lp->sum_alloc + 1;
 
   /* Reallocate lp memory */
-  if(!allocREAL(lp, &lp->upbo, rowcolsum, AUTOMATIC) ||
-     !allocREAL(lp, &lp->orig_upbo, rowcolsum, AUTOMATIC) ||
-     !allocREAL(lp, &lp->lowbo, rowcolsum, AUTOMATIC) ||
-     !allocREAL(lp, &lp->orig_lowbo, rowcolsum, AUTOMATIC) ||
-     !allocREAL(lp, &lp->solution, rowcolsum, AUTOMATIC) ||
-     !allocREAL(lp, &lp->best_solution, rowcolsum, AUTOMATIC) ||
+  if(!allocLPSREAL(lp, &lp->upbo, rowcolsum, AUTOMATIC) ||
+     !allocLPSREAL(lp, &lp->orig_upbo, rowcolsum, AUTOMATIC) ||
+     !allocLPSREAL(lp, &lp->lowbo, rowcolsum, AUTOMATIC) ||
+     !allocLPSREAL(lp, &lp->orig_lowbo, rowcolsum, AUTOMATIC) ||
+     !allocLPSREAL(lp, &lp->solution, rowcolsum, AUTOMATIC) ||
+     !allocLPSREAL(lp, &lp->best_solution, rowcolsum, AUTOMATIC) ||
      !allocMYBOOL(lp, &lp->is_basic, rowcolsum, AUTOMATIC) ||
      !allocMYBOOL(lp, &lp->is_lower, rowcolsum, AUTOMATIC) ||
-     ((lp->scalars != NULL) && !allocREAL(lp, &lp->scalars, rowcolsum, AUTOMATIC)))
+     ((lp->scalars != NULL) && !allocLPSREAL(lp, &lp->scalars, rowcolsum, AUTOMATIC)))
     return( FALSE );
 
   /* Fill in default values, where appropriate */
@@ -2689,8 +2689,8 @@ STATIC MYBOOL inc_lag_space(lprec *lp, int deltarows, MYBOOL ignoreMAT)
     newsize = get_Lrows(lp) + deltarows;
 
     /* Reallocate arrays */
-    if(!allocREAL(lp, &lp->lag_rhs, newsize+1, AUTOMATIC) ||
-       !allocREAL(lp, &lp->lambda, newsize+1, AUTOMATIC) ||
+    if(!allocLPSREAL(lp, &lp->lag_rhs, newsize+1, AUTOMATIC) ||
+       !allocLPSREAL(lp, &lp->lambda, newsize+1, AUTOMATIC) ||
        !allocINT(lp, &lp->lag_con_type, newsize+1, AUTOMATIC))
       return( FALSE );
 
@@ -2747,8 +2747,8 @@ STATIC MYBOOL inc_row_space(lprec *lp, int deltarows)
     deltarows = rowsum - oldrowsalloc;
     rowsum++;
 
-    if(!allocREAL(lp, &lp->orig_rhs, rowsum, AUTOMATIC) ||
-       !allocLREAL(lp, &lp->rhs, rowsum, AUTOMATIC) ||
+    if(!allocLPSREAL(lp, &lp->orig_rhs, rowsum, AUTOMATIC) ||
+       !allocLLPSREAL(lp, &lp->rhs, rowsum, AUTOMATIC) ||
        !allocINT(lp, &lp->row_type, rowsum, AUTOMATIC) ||
        !allocINT(lp, &lp->var_basic, rowsum, AUTOMATIC))
       return( FALSE );
@@ -2845,10 +2845,10 @@ STATIC MYBOOL inc_col_space(lprec *lp, int deltacols)
         lp->col_name[i] = NULL;
     }
 
-    if(!allocREAL(lp, &lp->orig_obj, colsum, AUTOMATIC) ||
+    if(!allocLPSREAL(lp, &lp->orig_obj, colsum, AUTOMATIC) ||
        !allocMYBOOL(lp, &lp->var_type, colsum, AUTOMATIC) ||
-       !allocREAL(lp, &lp->sc_lobound, colsum, AUTOMATIC) ||
-       ((lp->obj != NULL) && !allocREAL(lp, &lp->obj, colsum, AUTOMATIC)) ||
+       !allocLPSREAL(lp, &lp->sc_lobound, colsum, AUTOMATIC) ||
+       ((lp->obj != NULL) && !allocLPSREAL(lp, &lp->obj, colsum, AUTOMATIC)) ||
        ((lp->var_priority != NULL) && !allocINT(lp, &lp->var_priority, colsum-1, AUTOMATIC)) ||
        ((lp->var_is_free != NULL) && !allocINT(lp, &lp->var_is_free, colsum, AUTOMATIC)) ||
        ((lp->bb_varbranch != NULL) && !allocMYBOOL(lp, &lp->bb_varbranch, colsum-1, AUTOMATIC)))
@@ -2863,7 +2863,7 @@ STATIC MYBOOL inc_col_space(lprec *lp, int deltacols)
       lp->orig_obj[i] = 0;
       if(lp->obj != NULL)
         lp->obj[i] = 0;
-      lp->var_type[i] = ISREAL;
+      lp->var_type[i] = ISLPSREAL;
       lp->sc_lobound[i] = 0;
       if(lp->var_priority != NULL)
         lp->var_priority[i-1] = i;
@@ -2943,7 +2943,7 @@ MYBOOL __WINAPI str_set_obj_fn(lprec *lp, char *row_string)
   LPSREAL   *arow;
   char   *p, *newp;
 
-  allocREAL(lp, &arow, lp->columns + 1, FALSE);
+  allocLPSREAL(lp, &arow, lp->columns + 1, FALSE);
   p = row_string;
   for(i = 1; i <= lp->columns; i++) {
     arow[i] = (LPSREAL) strtod(p, &newp);
@@ -3084,7 +3084,7 @@ MYBOOL __WINAPI str_add_constraint(lprec *lp, char *row_string, int constr_type,
   LPSREAL   *aRow;
   MYBOOL status = FALSE;
 
-  allocREAL(lp, &aRow, lp->columns + 1, FALSE);
+  allocLPSREAL(lp, &aRow, lp->columns + 1, FALSE);
   p = row_string;
 
   for(i = 1; i <= lp->columns; i++) {
@@ -3224,7 +3224,7 @@ MYBOOL __WINAPI str_add_lag_con(lprec *lp, char *row_string, int con_type, LPSRE
   LPSREAL   *a_row;
   char   *p, *new_p;
 
-  allocREAL(lp, &a_row, lp->columns + 1, FALSE);
+  allocLPSREAL(lp, &a_row, lp->columns + 1, FALSE);
   p = row_string;
 
   for(i = 1; i <= lp->columns; i++) {
@@ -3343,7 +3343,7 @@ MYBOOL __WINAPI str_add_column(lprec *lp, char *col_string)
   LPSREAL *aCol;
   char *p, *newp;
 
-  allocREAL(lp, &aCol, lp->rows + 1, FALSE);
+  allocLPSREAL(lp, &aCol, lp->rows + 1, FALSE);
   p = col_string;
 
   for(i = 0; i <= lp->rows; i++) {
@@ -3808,7 +3808,7 @@ MYBOOL __WINAPI set_var_weights(lprec *lp, LPSREAL *weights)
     for(n = 0; n < lp->columns; n++) {
       lp->var_priority[n] = n+1;
     }
-    n = sortByREAL(lp->var_priority, weights, lp->columns, 0, FALSE);
+    n = sortByLPSREAL(lp->var_priority, weights, lp->columns, 0, FALSE);
   }
   return(TRUE);
 }
@@ -3838,7 +3838,7 @@ MYBOOL __WINAPI set_var_priority(lprec *lp)
     i = getMDO(lp, NULL, colorder, NULL, FALSE);
 
     /* Map to variable weight */
-    allocREAL(lp, &rcost, lp->columns+1, FALSE);
+    allocLPSREAL(lp, &rcost, lp->columns+1, FALSE);
     for(j = lp->columns; j > 0; j--) {
       i = colorder[j]-lp->rows;
       rcost[i] = -j;
@@ -4136,7 +4136,7 @@ MYBOOL __WINAPI str_set_rh_vec(lprec *lp, char *rh_string)
   LPSREAL *newrh;
   char *p, *newp;
 
-  allocREAL(lp, &newrh, lp->rows + 1, TRUE);
+  allocLPSREAL(lp, &newrh, lp->rows + 1, TRUE);
   p = rh_string;
 
   for(i = 1; i <= lp->rows; i++) {
@@ -4325,7 +4325,7 @@ STATIC char *get_str_constr_class(lprec *lp, int con_class)
   switch(con_class) {
     case ROWCLASS_Unknown:     return("Unknown");
     case ROWCLASS_Objective:   return("Objective");
-    case ROWCLASS_GeneralREAL: return("General LPSREAL");
+    case ROWCLASS_GeneralLPSREAL: return("General LPSREAL");
     case ROWCLASS_GeneralMIP:  return("General MIP");
     case ROWCLASS_GeneralINT:  return("General INT");
     case ROWCLASS_GeneralBIN:  return("General BIN");
@@ -4351,8 +4351,8 @@ STATIC char *get_str_constr_type(lprec *lp, int con_type)
 
 STATIC int get_constr_class(lprec *lp, int rownr)
 {
-  int    aBIN = 0, aINT = 0, aREAL = 0,
-         xBIN = 0, xINT = 0, xREAL = 0;
+  int    aBIN = 0, aINT = 0, aLPSREAL = 0,
+         xBIN = 0, xINT = 0, xLPSREAL = 0;
   int    j, elmnr, elmend, nelm;
   MYBOOL chsign;
   LPSREAL   a;
@@ -4393,14 +4393,14 @@ STATIC int get_constr_class(lprec *lp, int rownr)
     else if((get_lowbo(lp, j) >= 0) && is_int(lp, j))
       xINT++;
     else
-      xREAL++;  /* Includes integer variables with negative lower bound */
+      xLPSREAL++;  /* Includes integer variables with negative lower bound */
 
     if(fabs(a-1.0) < lp->epsvalue)
       aBIN++;
     else if((a > 0) && (fabs(floor(a+lp->epsvalue)-a) < lp->epsvalue))
       aINT++;
     else
-      aREAL++;  /* Includes negative integer-valued coefficients */
+      aLPSREAL++;  /* Includes negative integer-valued coefficients */
   }
 
   /* Get the constraint type and the RHS */
@@ -4426,10 +4426,10 @@ STATIC int get_constr_class(lprec *lp, int rownr)
     j = ROWCLASS_GeneralBIN;
   else if(xINT == nelm)
     j = ROWCLASS_GeneralINT;
-  else if((xREAL > 0) && (xINT+xBIN > 0))
+  else if((xLPSREAL > 0) && (xINT+xBIN > 0))
     j = ROWCLASS_GeneralMIP;
   else
-    j = ROWCLASS_GeneralREAL;
+    j = ROWCLASS_GeneralLPSREAL;
 
   return( j );
 }
@@ -4678,7 +4678,7 @@ STATIC void set_OF_p1extra(lprec *lp, LPSREAL p1extra)
                           p1extra, (double) get_total_iter(lp));
   lp->P1extraVal = p1extra;
   if(lp->obj == NULL)
-    allocREAL(lp, &lp->obj, lp->columns_alloc+1, TRUE);
+    allocLPSREAL(lp, &lp->obj, lp->columns_alloc+1, TRUE);
   for(i = 1, value = lp->obj+1; i <= lp->columns; i++, value++) {
     *value = lp->orig_obj[i];
     modifyOF1(lp, lp->rows + i, value, 1.0);
@@ -5796,7 +5796,7 @@ MYBOOL __WINAPI is_feasible(lprec *lp, LPSREAL *values, LPSREAL threshold)
   }
 
   this_rhs = (LPSREAL *) mempool_obtainVector(lp->workarrays, lp->rows+1, sizeof(*this_rhs));
-/*  allocREAL(lp, &this_rhs, lp->rows + 1, TRUE); */
+/*  allocLPSREAL(lp, &this_rhs, lp->rows + 1, TRUE); */
   for(j = 1; j <= lp->columns; j++) {
     elmnr = mat->col_end[j - 1];
     ie = mat->col_end[j];
@@ -6184,7 +6184,7 @@ STATIC LPSREAL compute_dualslacks(lprec *lp, int target, LPSREAL **dvalues, int 
   int    i, varnr,
          *coltarget, **nzduals, *nzvtemp = NULL;
   LPSREAL   d, g = 0, **duals, *vtemp = NULL;
-  MYBOOL localREAL = (MYBOOL) (dvalues == NULL),
+  MYBOOL localLPSREAL = (MYBOOL) (dvalues == NULL),
          localINT  = (MYBOOL) (nzdvalues == NULL);
 
   if(is_action(lp->spx_action, ACTION_REBASE) ||
@@ -6192,7 +6192,7 @@ STATIC LPSREAL compute_dualslacks(lprec *lp, int target, LPSREAL **dvalues, int 
     return( g );
 
   /* Initialize */
-  if(!localREAL) {
+  if(!localLPSREAL) {
     duals = dvalues;
     nzduals = nzdvalues;
   }
@@ -6202,8 +6202,8 @@ STATIC LPSREAL compute_dualslacks(lprec *lp, int target, LPSREAL **dvalues, int 
   }
   if(localINT || (*nzduals == NULL))
     allocINT(lp, nzduals, lp->columns + 1, AUTOMATIC);
-  if(localREAL || (*duals == NULL))
-    allocREAL(lp, duals, lp->sum + 1, AUTOMATIC);
+  if(localLPSREAL || (*duals == NULL))
+    allocLPSREAL(lp, duals, lp->sum + 1, AUTOMATIC);
   if(target == 0)
     target = SCAN_ALLVARS+ USE_NONBASICVARS;
 
@@ -6232,7 +6232,7 @@ STATIC LPSREAL compute_dualslacks(lprec *lp, int target, LPSREAL **dvalues, int 
   }
 
   /* Clean up */
-  if(localREAL)
+  if(localLPSREAL)
     FREE(*duals);
   if(localINT)
     FREE(*nzduals);
@@ -6570,7 +6570,7 @@ STATIC MYBOOL isPrimalFeasible(lprec *lp, LPSREAL tol, int infeasibles[], LPSREA
     feasible = isBasisVarFeasible(lp, tol, i);
 #else
   /* Fast array pointer style */
-  LREAL *rhsptr;
+  LLPSREAL *rhsptr;
   int  *idxptr;
 
   if(infeasibles != NULL)
@@ -7370,7 +7370,7 @@ STATIC int find_int_bbvar(lprec *lp, int *count, BBrec *BB, MYBOOL *isfeasible)
   depthfirstmode = is_bb_mode(lp, NODE_DEPTHFIRSTMODE);
   breadthfirstmode = is_bb_mode(lp, NODE_BREADTHFIRSTMODE) &&
                      (MYBOOL) (lp->bb_level <= lp->int_vars);
-  rcostmode      = (MYBOOL) (BB->lp->solutioncount > 0) && is_bb_mode(lp, NODE_RCOSTFIXING);
+  rcostmode      = (MYBOOL) /* FALSE */ (BB->lp->solutioncount > 0) && is_bb_mode(lp, NODE_RCOSTFIXING) ; /* 5/2/08 peno disabled NODE_RCOSTFIXING because it results in non-optimal solutions with some models */ /* 15/2/8 peno enabled NODE_RCOSTFIXING again because a fix is found. See lp_simplex.c NODE__RCOSTFIXING fix */
   pseudocostmode = is_bb_mode(lp, NODE_PSEUDOCOSTMODE);
   pseudocostsel  = is_bb_rule(lp, NODE_PSEUDOCOSTSELECT) ||
                    is_bb_rule(lp, NODE_PSEUDONONINTSELECT) ||
@@ -7780,12 +7780,12 @@ STATIC LPSREAL get_pseudonodecost(BBPSrec *pc, int mipvar, int vartype, LPSREAL 
   return( hold*uplim );
 }
 
-STATIC int compute_theta(lprec *lp, int rownr, LREAL *theta, int isupbound, LPSREAL HarrisScalar, MYBOOL primal)
+STATIC int compute_theta(lprec *lp, int rownr, LLPSREAL *theta, int isupbound, LPSREAL HarrisScalar, MYBOOL primal)
 /* The purpose of this routine is to compute the non-basic bound state / value of
    the leaving variable. Note that the incoming theta is "d" in Chvatal-terminology */
 {
   int             colnr = lp->var_basic[rownr];
-  register LREAL x     = lp->rhs[rownr];
+  register LLPSREAL x     = lp->rhs[rownr];
   LPSREAL            lb    = 0,  /* Put lower bound here when the fully bounded version is implemented */
                   ub    = lp->upbo[colnr],
                   eps   = lp->epsprimal;  /* Primal feasibility tolerance */
@@ -7873,7 +7873,7 @@ STATIC MYBOOL check_degeneracy(lprec *lp, LPSREAL *pcol, int *degencount)
   return( (MYBOOL) (sdegen <= 0) );
 }
 
-STATIC MYBOOL performiteration(lprec *lp, int rownr, int varin, LREAL theta, MYBOOL primal, MYBOOL allowminit,
+STATIC MYBOOL performiteration(lprec *lp, int rownr, int varin, LLPSREAL theta, MYBOOL primal, MYBOOL allowminit,
                                LPSREAL *prow, int *nzprow, LPSREAL *pcol, int *nzpcol, int *boundswaps)
 {
   static int    varout;
@@ -7881,7 +7881,7 @@ STATIC MYBOOL performiteration(lprec *lp, int rownr, int varin, LREAL theta, MYB
   static MYBOOL leavingToUB, enteringFromUB, enteringIsFixed, leavingIsFixed;
   MYBOOL *islower = &(lp->is_lower[varin]);
   MYBOOL minitNow = FALSE, minitStatus = ITERATE_MAJORMAJOR;
-  LREAL  deltatheta = theta;
+  LLPSREAL  deltatheta = theta;
 
   if(userabort(lp, MSG_ITERATION))
     return( minitNow );
@@ -7934,7 +7934,7 @@ STATIC MYBOOL performiteration(lprec *lp, int rownr, int varin, LREAL theta, MYB
     LPSREAL  *hold;
 
     /* Allocate and initialize accumulation array */
-    allocREAL(lp, &hold, lp->rows + 1, TRUE);
+    allocLPSREAL(lp, &hold, lp->rows + 1, TRUE);
 
     /* Accumulate effective bound swaps and update flag */
     for(i = 1; i <= boundswaps[0]; i++) {
@@ -8535,12 +8535,12 @@ STATIC int check_solution(lprec *lp, int  lastcolumn, LPSREAL *solution,
 
  /* Find the signed sums and the largest absolute product in the matrix (exclude the OF for speed) */
 #ifdef UseMaxValueInCheck
-  allocREAL(lp, &maxvalue, lp->rows + 1, FALSE);
+  allocLPSREAL(lp, &maxvalue, lp->rows + 1, FALSE);
   for(i = 0; i <= lp->rows; i++)
     maxvalue[i] = fabs(get_rh(lp, i));
 #else
-  allocREAL(lp, &plusum, lp->rows + 1, TRUE);
-  allocREAL(lp, &negsum, lp->rows + 1, TRUE);
+  allocLPSREAL(lp, &plusum, lp->rows + 1, TRUE);
+  allocLPSREAL(lp, &negsum, lp->rows + 1, TRUE);
 #endif
   n = get_nonzeros(lp);
   matRownr = &COL_MAT_ROWNR(0);
@@ -8793,7 +8793,7 @@ STATIC MYBOOL construct_duals(lprec *lp)
 
   if(is_action(lp->spx_action, ACTION_REBASE) ||
      is_action(lp->spx_action, ACTION_REINVERT) || (!lp->basis_valid) ||
-     !allocREAL(lp, &(lp->duals), lp->sum + 1, AUTOMATIC))
+     !allocLPSREAL(lp, &(lp->duals), lp->sum + 1, AUTOMATIC))
     return(FALSE);
 
   /* Initialize */
@@ -8828,7 +8828,7 @@ STATIC MYBOOL construct_duals(lprec *lp)
   /* If we presolved, then reconstruct the duals */
   n = lp->presolve_undo->orig_sum;
   if(((lp->do_presolve & PRESOLVE_LASTMASKMODE) != PRESOLVE_NONE) &&
-      allocREAL(lp, &(lp->full_duals), n + 1, TRUE)) {
+      allocLPSREAL(lp, &(lp->full_duals), n + 1, TRUE)) {
     int ix, ii = lp->presolve_undo->orig_rows;
 
     n = lp->sum;
@@ -8890,10 +8890,10 @@ STATIC MYBOOL construct_sensitivity_duals(lprec *lp)
   FREE(lp->objfromvalue);
   FREE(lp->dualsfrom);
   FREE(lp->dualstill);
-  if(!allocREAL(lp, &pcol, lp->rows + 1, TRUE) ||
-     !allocREAL(lp, &lp->objfromvalue, lp->columns + 1, AUTOMATIC) ||
-     !allocREAL(lp, &lp->dualsfrom, lp->sum + 1, AUTOMATIC) ||
-     !allocREAL(lp, &lp->dualstill, lp->sum + 1, AUTOMATIC)) {
+  if(!allocLPSREAL(lp, &pcol, lp->rows + 1, TRUE) ||
+     !allocLPSREAL(lp, &lp->objfromvalue, lp->columns + 1, AUTOMATIC) ||
+     !allocLPSREAL(lp, &lp->dualsfrom, lp->sum + 1, AUTOMATIC) ||
+     !allocLPSREAL(lp, &lp->dualstill, lp->sum + 1, AUTOMATIC)) {
     FREE(pcol);
     FREE(lp->objfromvalue);
     FREE(lp->dualsfrom);
@@ -8981,11 +8981,11 @@ STATIC MYBOOL construct_sensitivity_obj(lprec *lp)
   /* objective function */
   FREE(lp->objfrom);
   FREE(lp->objtill);
-  if(!allocREAL(lp, &drow, lp->sum + 1, TRUE) ||
-     !allocREAL(lp, &OrigObj, lp->columns + 1, FALSE) ||
-     !allocREAL(lp, &prow, lp->sum + 1, TRUE) ||
-     !allocREAL(lp, &lp->objfrom, lp->columns + 1, AUTOMATIC) ||
-     !allocREAL(lp, &lp->objtill, lp->columns + 1, AUTOMATIC)) {
+  if(!allocLPSREAL(lp, &drow, lp->sum + 1, TRUE) ||
+     !allocLPSREAL(lp, &OrigObj, lp->columns + 1, FALSE) ||
+     !allocLPSREAL(lp, &prow, lp->sum + 1, TRUE) ||
+     !allocLPSREAL(lp, &lp->objfrom, lp->columns + 1, AUTOMATIC) ||
+     !allocLPSREAL(lp, &lp->objtill, lp->columns + 1, AUTOMATIC)) {
 Abandon:
     FREE(drow);
     FREE(OrigObj);
@@ -9163,7 +9163,7 @@ STATIC void free_duals(lprec *lp)
 STATIC void initialize_solution(lprec *lp, MYBOOL shiftbounds)
 {
   int     i, k1, k2, *matRownr, colnr;
-  LREAL   theta;
+  LLPSREAL   theta;
   LPSREAL    value, *matValue, loB, upB;
   MATrec  *mat = lp->matA;
 
@@ -9317,7 +9317,7 @@ STATIC int verify_solution(lprec *lp, MYBOOL reinvert, char *info)
 
   allocINT(lp, &oldmap, lp->rows+1, FALSE);
   allocINT(lp, &newmap, lp->rows+1, FALSE);
-  allocREAL(lp, &oldrhs, lp->rows+1, FALSE);
+  allocLPSREAL(lp, &oldrhs, lp->rows+1, FALSE);
 
   /* Get sorted mapping of the old basis */
   for(i = 0; i <= lp->rows; i++)
@@ -9659,7 +9659,7 @@ int preprocess(lprec *lp)
           continue;
         }
         if(new_column == NULL) {
-          if(!allocREAL(lp, &new_column, lp->rows + 1, FALSE) ||
+          if(!allocLPSREAL(lp, &new_column, lp->rows + 1, FALSE) ||
              !allocINT(lp, &new_index, lp->rows + 1, FALSE)) {
             ok = FALSE;
             break;
@@ -9721,7 +9721,7 @@ int preprocess(lprec *lp)
     prepare_GUB(lp);
 
   /* (Re)allocate reduced cost arrays */
-  ok = allocREAL(lp, &(lp->drow), lp->sum+1, AUTOMATIC) &&
+  ok = allocLPSREAL(lp, &(lp->drow), lp->sum+1, AUTOMATIC) &&
        allocINT(lp, &(lp->nzdrow), lp->sum+1, AUTOMATIC);
   if(ok)
     lp->nzdrow[0] = 0;

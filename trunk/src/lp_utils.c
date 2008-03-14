@@ -89,7 +89,7 @@ STATIC MYBOOL allocINT(lprec *lp, int **ptr, int size, MYBOOL clear)
   else
     return( TRUE );
 }
-STATIC MYBOOL allocREAL(lprec *lp, LPSREAL **ptr, int size, MYBOOL clear)
+STATIC MYBOOL allocLPSREAL(lprec *lp, LPSREAL **ptr, int size, MYBOOL clear)
 {
   if(clear == TRUE)
     *ptr = (LPSREAL *) calloc(size, sizeof(**ptr));
@@ -108,19 +108,19 @@ STATIC MYBOOL allocREAL(lprec *lp, LPSREAL **ptr, int size, MYBOOL clear)
   else
     return( TRUE );
 }
-STATIC MYBOOL allocLREAL(lprec *lp, LREAL **ptr, int size, MYBOOL clear)
+STATIC MYBOOL allocLLPSREAL(lprec *lp, LLPSREAL **ptr, int size, MYBOOL clear)
 {
   if(clear == TRUE)
-    *ptr = (LREAL *) calloc(size, sizeof(**ptr));
+    *ptr = (LLPSREAL *) calloc(size, sizeof(**ptr));
   else if(clear & AUTOMATIC) {
-    *ptr = (LREAL *) realloc(*ptr, size * sizeof(**ptr));
+    *ptr = (LLPSREAL *) realloc(*ptr, size * sizeof(**ptr));
     if(clear & TRUE)
       MEMCLEAR(*ptr, size);
   }
   else
-    *ptr = (LREAL *) malloc(size * sizeof(**ptr));
+    *ptr = (LLPSREAL *) malloc(size * sizeof(**ptr));
   if(((*ptr) == NULL) && (size > 0)) {
-    lp->report(lp, CRITICAL, "alloc of %d 'LREAL' failed\n", size);
+    lp->report(lp, CRITICAL, "alloc of %d 'LLPSREAL' failed\n", size);
     lp->spx_status = NOMEMORY;
     return( FALSE );
   }
@@ -285,7 +285,7 @@ STATIC char *mempool_obtainVector(workarraysrec *mempool, int count, int unitsiz
     newmem = (char *) inewmem;
   }
   else if(unitsize == sizeof(LPSREAL)) {
-    allocREAL(mempool->lp, &rnewmem, count, TRUE);
+    allocLPSREAL(mempool->lp, &rnewmem, count, TRUE);
     newmem = (char *) rnewmem;
   }
 
@@ -353,12 +353,12 @@ STATIC MYBOOL mempool_free(workarraysrec **mempool)
   return( TRUE );
 }
 
-LPSREAL *cloneREAL(lprec *lp, LPSREAL *origlist, int size)
+LPSREAL *cloneLPSREAL(lprec *lp, LPSREAL *origlist, int size)
 {
   LPSREAL *newlist;
 
   size += 1;
-  if(allocREAL(lp, &newlist, size, FALSE))
+  if(allocLPSREAL(lp, &newlist, size, FALSE))
     MEMCOPY(newlist, origlist, size);
   return(newlist);
 }
@@ -381,7 +381,7 @@ int *cloneINT(lprec *lp, int *origlist, int size)
   return(newlist);
 }
 
-STATIC void roundVector(LREAL *myvector, int endpos, LREAL roundzero)
+STATIC void roundVector(LLPSREAL *myvector, int endpos, LLPSREAL roundzero)
 {
   if(roundzero > 0)
     for(; endpos >= 0; myvector++, endpos--)
@@ -420,7 +420,7 @@ STATIC void swapINT(int *item1, int *item2)
   *item2 = hold;
 }
 
-STATIC void swapREAL(LPSREAL *item1, LPSREAL *item2)
+STATIC void swapLPSREAL(LPSREAL *item1, LPSREAL *item2)
 {
   LPSREAL hold = *item1;
   *item1 = *item2;
@@ -436,21 +436,21 @@ STATIC void swapPTR(void **item1, void **item2)
 }
 
 
-STATIC LPSREAL restoreINT(LPSREAL valREAL, LPSREAL epsilon)
+STATIC LPSREAL restoreINT(LPSREAL valLPSREAL, LPSREAL epsilon)
 {
-  LPSREAL valINT, fracREAL, fracABS;
+  LPSREAL valINT, fracLPSREAL, fracABS;
 
-  fracREAL = modf(valREAL, &valINT);
-  fracABS = fabs(fracREAL);
+  fracLPSREAL = modf(valLPSREAL, &valINT);
+  fracABS = fabs(fracLPSREAL);
   if(fracABS < epsilon)
     return(valINT);
   else if(fracABS > 1-epsilon) {
-    if(fracREAL < 0)
+    if(fracLPSREAL < 0)
       return(valINT-1);
     else
       return(valINT+1);
   }
-  return(valREAL);
+  return(valLPSREAL);
 }
 
 STATIC LPSREAL roundToPrecision(LPSREAL value, LPSREAL precision)
@@ -1021,7 +1021,7 @@ STATIC MYBOOL unpackPackedVector(PVrec *PV, LPSREAL **target)
   if(target == NULL)
     return( FALSE );
   if(*target == NULL)
-    allocREAL(NULL, target, PV->startpos[PV->count], FALSE);
+    allocLPSREAL(NULL, target, PV->startpos[PV->count], FALSE);
 
   /* Expand the packed vector into the target */
   i = PV->startpos[0];
