@@ -922,7 +922,7 @@ YY_RULE_SETUP
   for(x = 0; x < lp_yyleng; x++)
     if(lp_yytext[x] == '-' || lp_yytext[x] == '+')
       Sign = (Sign == (lp_yytext[x] == '+'));
-  return (SIGN);
+  return (TOK_SIGN);
   /* Sign is TRUE if the sign-string
      represents a '-'. Otherwise Sign
      is FALSE */

@@ -30,8 +30,8 @@ static int write_data(void *userhandle, write_modeldata_func write_modeldata, ch
 
   va_start(ap, format);
   vsnprintf(buff, DEF_STRBUFSIZE, format, ap);
-  n = write_modeldata(userhandle, buff);
   va_end(ap);
+  n = write_modeldata(userhandle, buff);
   return(n);
 }
 

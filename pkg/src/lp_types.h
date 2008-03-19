@@ -1,6 +1,10 @@
 #ifndef HEADER_lp_types
 #define HEADER_lp_types
 
+#ifdef WIN32
+  #include <windows.h>
+#endif
+
 /* Define data types                                                         */
 /* ------------------------------------------------------------------------- */
 #ifndef LLONG
@@ -21,19 +25,19 @@
   #define LPSREAL    double
 #endif
 
-#ifndef REALXP
+#ifndef LPSREALXP
   #if 1
-    #define REALXP long double  /* Set local accumulation variable as long double */
+    #define LPSREALXP long double  /* Set local accumulation variable as long double */
   #else
-    #define REALXP LPSREAL          /* Set local accumulation as default precision */
+    #define LPSREALXP LPSREAL          /* Set local accumulation as default precision */
   #endif
 #endif
 
-#ifndef LREAL
+#ifndef LLPSREAL
   #if 0
-    #define LREAL long double   /* Set global solution update variable as long double */
+    #define LLPSREAL long double   /* Set global solution update variable as long double */
   #else
-    #define LREAL LPSREAL           /* Set global solution update variable as default precision */
+    #define LLPSREAL LPSREAL           /* Set global solution update variable as default precision */
   #endif
 #endif
 
@@ -60,9 +64,9 @@
 #endif
 #ifndef MAXUINT64
   #if defined _LONGLONG || defined __LONG_LONG_MAX__ || defined LLONG_MAX
-    #define MAXUINT64 18446744073709551616ll
+    #define MAXUINT64 18446744073709551615ll
   #else
-    #define MAXUINT64 18446744073709551616l
+    #define MAXUINT64 18446744073709551615l
   #endif
 #endif
 

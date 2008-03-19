@@ -246,7 +246,7 @@
 #define SIMPLEX_DEFAULT         (SIMPLEX_DUAL_PRIMAL)
 
 /* Variable codes (internal) */
-#define ISREAL                   0
+#define ISLPSREAL                   0
 #define ISINTEGER                1
 #define ISSEMI                   2
 #define ISSOS                    4
@@ -373,7 +373,7 @@
 /* MIP constraint classes */
 #define ROWCLASS_Unknown         0   /* Undefined/unknown */
 #define ROWCLASS_Objective       1   /* The objective function */
-#define ROWCLASS_GeneralREAL     2   /* General real-values constraint */
+#define ROWCLASS_GeneralLPSREAL     2   /* General real-values constraint */
 #define ROWCLASS_GeneralMIP      3   /* General mixed integer/binary and real valued constraint */
 #define ROWCLASS_GeneralINT      4   /* General integer-only constraint */
 #define ROWCLASS_GeneralBIN      5   /* General binary-only constraint */
@@ -484,7 +484,7 @@
                                   PRICE_FORCEFULL + PRICE_TRUENORMINIT)
 
 /* B&B active variable codes (internal) */
-#define BB_REAL                  0
+#define BB_LPSREAL                  0
 #define BB_INT                   1
 #define BB_SC                    2
 #define BB_SOS                   3
@@ -1086,8 +1086,8 @@ typedef MYBOOL (BFP_CALLMODEL BFPbool_lpbool)(lprec *lp, MYBOOL changesign);
 typedef MYBOOL (BFP_CALLMODEL BFPbool_lpint)(lprec *lp, int size);
 typedef MYBOOL (BFP_CALLMODEL BFPbool_lpintintchar)(lprec *lp, int size, int deltasize, char *options);
 typedef MYBOOL (BFP_CALLMODEL BFPbool_lpintintint)(lprec *lp, int size, int deltasize, int sizeofvar);
-typedef LREAL  (BFP_CALLMODEL BFPlreal_lpintintreal)(lprec *lp, int row_nr, int col_nr, LPSREAL *pcol);
-typedef LPSREAL   (BFP_CALLMODEL BFPreal_lplrealreal)(lprec *lp, LREAL theta, LPSREAL *pcol);
+typedef LLPSREAL  (BFP_CALLMODEL BFPlreal_lpintintreal)(lprec *lp, int row_nr, int col_nr, LPSREAL *pcol);
+typedef LPSREAL   (BFP_CALLMODEL BFPreal_lplrealreal)(lprec *lp, LLPSREAL theta, LPSREAL *pcol);
 
 typedef int    (BFP_CALLMODEL getcolumnex_func)(lprec *lp, int colnr, LPSREAL *nzvalues, int *nzrows, int *mapin);
 typedef int    (BFP_CALLMODEL BFPint_lpintrealcbintint)(lprec *lp, int items, getcolumnex_func cb, int *maprow, int*mapcol);
@@ -1490,7 +1490,7 @@ struct _lprec
   /* RHS storage */
   LPSREAL      *orig_rhs;          /* rows_alloc+1 : The RHS after scaling and sign
                                    changing, but before 'Bound transformation' */
-  LREAL     *rhs;               /* rows_alloc+1 : The RHS of the current simplex tableau */
+  LLPSREAL     *rhs;               /* rows_alloc+1 : The RHS of the current simplex tableau */
 
   /* Row (constraint) parameters */
   int       *row_type;          /* rows_alloc+1 : Row/constraint type coding */
@@ -2222,7 +2222,7 @@ STATIC MYBOOL isDualFeasible(lprec *lp, LPSREAL tol, int *boundflips, int infeas
 /* Main simplex driver routines */
 STATIC int preprocess(lprec *lp);
 STATIC void postprocess(lprec *lp);
-STATIC MYBOOL performiteration(lprec *lp, int rownr, int varin, LREAL theta, MYBOOL primal, MYBOOL allowminit, LPSREAL *prow, int *nzprow, LPSREAL *pcol, int *nzpcol, int *boundswaps);
+STATIC MYBOOL performiteration(lprec *lp, int rownr, int varin, LLPSREAL theta, MYBOOL primal, MYBOOL allowminit, LPSREAL *prow, int *nzprow, LPSREAL *pcol, int *nzpcol, int *boundswaps);
 STATIC void transfer_solution_var(lprec *lp, int uservar);
 STATIC void transfer_solution(lprec *lp, MYBOOL dofinal);
 
@@ -2260,7 +2260,7 @@ STATIC MYBOOL is_OF_nz(lprec *lp, int colnr);
 STATIC int get_basisOF(lprec *lp, int coltarget[], LPSREAL crow[], int colno[]);
 int    __WINAPI get_basiscolumn(lprec *lp, int j, int rn[], double bj[]);
 int    __WINAPI obtain_column(lprec *lp, int varin, LPSREAL *pcol, int *nzlist, int *maxabs);
-STATIC int compute_theta(lprec *lp, int rownr, LREAL *theta, int isupbound, LPSREAL HarrisScalar, MYBOOL primal);
+STATIC int compute_theta(lprec *lp, int rownr, LLPSREAL *theta, int isupbound, LPSREAL HarrisScalar, MYBOOL primal);
 
 /* Pivot utility routines */
 STATIC int findBasisPos(lprec *lp, int notint, int *var_basic);

@@ -15,7 +15,7 @@
 #define	SEC_SOS	265
 #define	SOSDESCR	266
 #define	SEC_FREE	267
-#define	SIGN	268
+#define	TOK_SIGN	268
 #define	AR_M_OP	269
 #define	RE_OPLE	270
 #define	RE_OPGE	271
@@ -208,12 +208,12 @@ static const short lp_yyrline[] = { 0,
 
 static const char * const lp_yytname[] = {   "$","error","$undefined.","VAR","CONS",
 "INTCONS","VARIABLECOLON","INF","SEC_INT","SEC_BIN","SEC_SEC","SEC_SOS","SOSDESCR",
-"SEC_FREE","SIGN","AR_M_OP","RE_OPLE","RE_OPGE","END_C","COMMA","COLON","MINIMISE",
-"MAXIMISE","UNDEFINED","EMPTY","inputfile","@1","objective_function","real_of",
-"lineair_sum","constraints","x_constraints","constraint","@2","real_constraint",
+"SEC_FREE","TOK_SIGN","AR_M_OP","RE_OPLE","RE_OPGE","END_C","COMMA","COLON",
+"MINIMISE","MAXIMISE","UNDEFINED","EMPTY","inputfile","@1","objective_function",
+"real_of","lineair_sum","constraints","x_constraints","constraint","@2","real_constraint",
 "@3","@4","@5","optionalrange","@6","@7","x_lineair_sum2","x_lineair_sum3","@8",
 "x_lineair_sum","@9","x_lineair_sum1","x_lineair_term","x_lineair_term1","@10",
-"RE_OP","cons_term","REALCONS","x_SIGN","optional_AR_M_OP","RHS_STORE","int_bin_sec_sos_free_declarations",
+"RE_OP","cons_term","LPSREALCONS","x_SIGN","optional_AR_M_OP","RHS_STORE","int_bin_sec_sos_free_declarations",
 "real_int_bin_sec_sos_free_decls","SEC_INT_BIN_SEC_SOS_FREE","int_bin_sec_sos_free_declaration",
 "@11","xx_int_bin_sec_sos_free_declaration","@12","x_int_bin_sec_sos_free_declaration",
 "optionalsos","@13","optionalsostype","@14","optionalSOSweight","vars","x_vars",

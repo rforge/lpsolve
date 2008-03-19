@@ -11,16 +11,16 @@
 typedef int (__WINAPI int_get_function)(lprec *lp);
 typedef long (__WINAPI long_get_function)(lprec *lp);
 typedef MYBOOL (__WINAPI MYBOOL_get_function)(lprec *lp);
-typedef LPSREAL (__WINAPI REAL_get_function)(lprec *lp);
+typedef LPSREAL (__WINAPI LPSREAL_get_function)(lprec *lp);
 typedef void (__WINAPI int_set_function)(lprec *lp, int value);
 typedef void (__WINAPI long_set_function)(lprec *lp, long value);
 typedef void (__WINAPI MYBOOL_set_function)(lprec *lp, MYBOOL value);
-typedef void (__WINAPI REAL_set_function)(lprec *lp, LPSREAL value);
+typedef void (__WINAPI LPSREAL_set_function)(lprec *lp, LPSREAL value);
 
 #define intfunction    1
 #define longfunction   2
 #define MYBOOLfunction 3
-#define REALfunction   4
+#define LPSREALfunction   4
 
 #define setvalues(values, basemask) values, sizeof(values) / sizeof(*values), basemask
 #define setNULLvalues NULL, 0, 0
@@ -28,7 +28,7 @@ typedef void (__WINAPI REAL_set_function)(lprec *lp, LPSREAL value);
 #define setintfunction(get_function, set_function) get_function, set_function, intfunction
 #define setlongfunction(get_function, set_function) (int_get_function *) get_function, (int_set_function *) set_function, longfunction
 #define setMYBOOLfunction(get_function, set_function) (int_get_function *) get_function, (int_set_function *) set_function, MYBOOLfunction
-#define setREALfunction(get_function, set_function) (int_get_function *) get_function, (int_set_function *) set_function, REALfunction
+#define setLPSREALfunction(get_function, set_function) (int_get_function *) get_function, (int_set_function *) set_function, LPSREALfunction
 
 #define WRITE_COMMENTED 0
 #define WRITE_ACTIVE    1
@@ -44,13 +44,13 @@ struct _functions {
     int_get_function *int_get_function;         /* set via setintfunction */
     long_get_function *long_get_function;       /* set via setlongfunction */
     MYBOOL_get_function *MYBOOL_get_function;   /* set via setMYBOOLfunction */
-    REAL_get_function *REAL_get_function;       /* set via setREALfunction */
+    LPSREAL_get_function *LPSREAL_get_function;       /* set via setLPSREALfunction */
   } get_function;
   union {
     int_set_function *int_set_function;         /* set via setintfunction */
     long_set_function *long_set_function;       /* set via setlongfunction */
     MYBOOL_set_function *MYBOOL_set_function;   /* set via setMYBOOLfunction */
-    REAL_set_function *REAL_set_function;       /* set via setREALfunction */
+    LPSREAL_set_function *LPSREAL_set_function;       /* set via setLPSREALfunction */
   } set_function;
   int type;                                     /* set via set*function */
   struct _values *values;                       /* set via setvalues to a structure of _values */
@@ -269,11 +269,11 @@ static struct _functions functions[] =
   { "BASISCRASH", setintfunction(get_basiscrash, set_basiscrash), setvalues(basiscrash, ~0), WRITE_ACTIVE },
   { "IMPROVE", setintfunction(get_improve, set_improve), setvalues(improve, ~0), WRITE_ACTIVE },
   { "MAXPIVOT", setintfunction(get_maxpivot, set_maxpivot), setNULLvalues, WRITE_ACTIVE },
-  { "NEGRANGE", setREALfunction(get_negrange, set_negrange), setNULLvalues, WRITE_ACTIVE },
+  { "NEGRANGE", setLPSREALfunction(get_negrange, set_negrange), setNULLvalues, WRITE_ACTIVE },
   { "PIVOTING", setintfunction(get_pivoting, set_pivoting), setvalues(pivoting, PRICER_LASTOPTION), WRITE_ACTIVE },
   { "PRESOLVE", setintfunction(get_presolve, set_presolve1), setvalues(presolving, ~0), WRITE_ACTIVE },
   { "PRESOLVELOOPS", setintfunction(get_presolveloops, set_presolve2), setNULLvalues, WRITE_ACTIVE },
-  { "SCALELIMIT", setREALfunction(get_scalelimit, set_scalelimit), setNULLvalues, WRITE_ACTIVE },
+  { "SCALELIMIT", setLPSREALfunction(get_scalelimit, set_scalelimit), setNULLvalues, WRITE_ACTIVE },
   { "SCALING", setintfunction(get_scaling, set_scaling), setvalues(scaling, SCALE_CURTISREID), WRITE_ACTIVE },
   { "SIMPLEXTYPE", setintfunction(get_simplextype, set_simplextype), setvalues(simplextype, ~0), WRITE_ACTIVE },
   { "OBJ_IN_BASIS", setMYBOOLfunction(is_obj_in_basis, set_obj_in_basis), setNULLvalues, WRITE_COMMENTED },
@@ -283,22 +283,22 @@ static struct _functions functions[] =
   { "BB_FLOORFIRST", setintfunction(get_bb_floorfirst, set_bb_floorfirst), setvalues(bb_floorfirst, ~0), WRITE_ACTIVE },
   { "BB_RULE", setintfunction(get_bb_rule, set_bb_rule), setvalues(bb_rule, NODE_STRATEGYMASK), WRITE_ACTIVE },
   { "BREAK_AT_FIRST", setMYBOOLfunction(is_break_at_first, set_break_at_first), setNULLvalues, WRITE_COMMENTED },
-  { "BREAK_AT_VALUE", setREALfunction(get_break_at_value, set_break_at_value), setNULLvalues, WRITE_COMMENTED },
-  { "MIP_GAP_ABS", setREALfunction(get_mip_gap_abs, set_mip_gap_abs), setNULLvalues, WRITE_ACTIVE },
-  { "MIP_GAP_REL", setREALfunction(get_mip_gap_rel, set_mip_gap_rel), setNULLvalues, WRITE_ACTIVE },
-  { "EPSINT", setREALfunction(get_epsint, set_epsint), setNULLvalues, WRITE_ACTIVE },
+  { "BREAK_AT_VALUE", setLPSREALfunction(get_break_at_value, set_break_at_value), setNULLvalues, WRITE_COMMENTED },
+  { "MIP_GAP_ABS", setLPSREALfunction(get_mip_gap_abs, set_mip_gap_abs), setNULLvalues, WRITE_ACTIVE },
+  { "MIP_GAP_REL", setLPSREALfunction(get_mip_gap_rel, set_mip_gap_rel), setNULLvalues, WRITE_ACTIVE },
+  { "EPSINT", setLPSREALfunction(get_epsint, set_epsint), setNULLvalues, WRITE_ACTIVE },
 
   /* tolerances, values */
-  { "EPSB", setREALfunction(get_epsb, set_epsb), setNULLvalues, WRITE_ACTIVE },
-  { "EPSD", setREALfunction(get_epsd, set_epsd), setNULLvalues, WRITE_ACTIVE },
-  { "EPSEL", setREALfunction(get_epsel, set_epsel), setNULLvalues, WRITE_ACTIVE },
-  { "EPSPERTURB", setREALfunction(get_epsperturb, set_epsperturb), setNULLvalues, WRITE_ACTIVE },
-  { "EPSPIVOT", setREALfunction(get_epspivot, set_epspivot), setNULLvalues, WRITE_ACTIVE },
-  { "INFINITE", setREALfunction(get_infinite, set_infinite), setNULLvalues, WRITE_ACTIVE },
+  { "EPSB", setLPSREALfunction(get_epsb, set_epsb), setNULLvalues, WRITE_ACTIVE },
+  { "EPSD", setLPSREALfunction(get_epsd, set_epsd), setNULLvalues, WRITE_ACTIVE },
+  { "EPSEL", setLPSREALfunction(get_epsel, set_epsel), setNULLvalues, WRITE_ACTIVE },
+  { "EPSPERTURB", setLPSREALfunction(get_epsperturb, set_epsperturb), setNULLvalues, WRITE_ACTIVE },
+  { "EPSPIVOT", setLPSREALfunction(get_epspivot, set_epspivot), setNULLvalues, WRITE_ACTIVE },
+  { "INFINITE", setLPSREALfunction(get_infinite, set_infinite), setNULLvalues, WRITE_ACTIVE },
 
   /* read-only options */
   { "DEBUG", setMYBOOLfunction(is_debug, set_debug), setNULLvalues, WRITE_COMMENTED },
-  { "OBJ_BOUND", setREALfunction(get_obj_bound, set_obj_bound), setNULLvalues, WRITE_COMMENTED },
+  { "OBJ_BOUND", setLPSREALfunction(get_obj_bound, set_obj_bound), setNULLvalues, WRITE_COMMENTED },
   { "PRINT_SOL", setintfunction(get_print_sol, set_print_sol), setvalues(print_sol, ~0), WRITE_COMMENTED },
   { "TIMEOUT", setlongfunction(get_timeout, set_timeout), setNULLvalues, WRITE_COMMENTED },
   { "TRACE", setMYBOOLfunction(is_trace, set_trace), setNULLvalues, WRITE_COMMENTED },
@@ -333,10 +333,10 @@ static void write_params1(lprec *lp, FILE *fp, char *header, int newline)
         continue;
       ret = (int) functions[i].get_function.MYBOOL_get_function(lp);
       break;
-    case REALfunction:
-      if(functions[i].get_function.REAL_get_function == NULL)
+    case LPSREALfunction:
+      if(functions[i].get_function.LPSREAL_get_function == NULL)
         continue;
-      a = functions[i].get_function.REAL_get_function(lp);
+      a = functions[i].get_function.LPSREAL_get_function(lp);
       break;
     }
     buf[0] = 0;
@@ -347,7 +347,7 @@ static void write_params1(lprec *lp, FILE *fp, char *header, int newline)
       case MYBOOLfunction:
         sprintf(buf, "%d", ret);
         break;
-      case REALfunction:
+      case LPSREALfunction:
         sprintf(buf, "%g", a);
         break;
       }
@@ -520,7 +520,7 @@ MYBOOL __WINAPI read_params(lprec *lp, char *filename, char *options)
   hashtable *hashfunctions, *hashparameters;
   hashelem *hp;
   int i, j, elements, n, intvalue, state = 0;
-  LPSREAL REALvalue;
+  LPSREAL LPSREALvalue;
   char buf[4096], *header = NULL, *ptr, *ptr1, *ptr2;
 
   if((fp = ini_open(filename)) == NULL)
@@ -600,7 +600,7 @@ MYBOOL __WINAPI read_params(lprec *lp, char *filename, char *options)
                   i = hp->index;
                   ptr1 = ++ptr;
                   intvalue = 0;
-                  REALvalue = 0;
+                  LPSREALvalue = 0;
                   if(functions[i].values == NULL) {
                     switch(functions[i].type) {
                       case intfunction:
@@ -614,8 +614,8 @@ MYBOOL __WINAPI read_params(lprec *lp, char *filename, char *options)
                           ret = FALSE;
                         }
                         break;
-                      case REALfunction:
-                        REALvalue = strtod(ptr1, &ptr2);
+                      case LPSREALfunction:
+                        LPSREALvalue = strtod(ptr1, &ptr2);
                         while((*ptr2) && (isspace(*ptr2)))
                           ptr2++;
                         if(*ptr2) {
@@ -667,8 +667,8 @@ MYBOOL __WINAPI read_params(lprec *lp, char *filename, char *options)
                       case MYBOOLfunction:
                         functions[i].set_function.MYBOOL_set_function(lp, (MYBOOL) intvalue);
                         break;
-                      case REALfunction:
-                        functions[i].set_function.REAL_set_function(lp, REALvalue);
+                      case LPSREALfunction:
+                        functions[i].set_function.LPSREAL_set_function(lp, LPSREALvalue);
                         break;
                     }
                   }

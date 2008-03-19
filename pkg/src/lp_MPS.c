@@ -476,7 +476,7 @@ STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], LPSREAL rowValue[])
 
   while((i > 0) && (rowIndex[i] < rowIndex[i-1])) {
     swapINT (rowIndex+i, rowIndex+i-1);
-    swapREAL(rowValue+i, rowValue+i-1);
+    swapLPSREAL(rowValue+i, rowValue+i-1);
     i--;
   }
   (*count)++;
@@ -495,7 +495,7 @@ STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], LPSREAL rowValue[])
   /* Move the element so that the index list is sorted ascending */
   while((i > 0) && (rowIndex[i] < rowIndex[i-1])) {
     swapINT (rowIndex+i, rowIndex+i-1);
-    swapREAL(rowValue+i, rowValue+i-1);
+    swapLPSREAL(rowValue+i, rowValue+i-1);
     i--;
   }
 
@@ -624,7 +624,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
           report(lp, FULL, "Switching to ROWS section\n");
         }
         else if(strcmp(tmp, "COLUMNS") == 0) {
-          allocREAL(lp, &Last_column, lp->rows + 1, TRUE);
+          allocLPSREAL(lp, &Last_column, lp->rows + 1, TRUE);
           allocINT(lp, &Last_columnno, lp->rows + 1, TRUE);
           count = 0;
           if ((Last_column == NULL) || (Last_columnno == NULL))
@@ -1265,8 +1265,8 @@ static void write_data(void *userhandle, write_modeldata_func write_modeldata, c
 
   va_start(ap, format);
   vsnprintf(buff, DEF_STRBUFSIZE, format, ap);
-  write_modeldata(userhandle, buff);
   va_end(ap);
+  write_modeldata(userhandle, buff);
 }
 
 MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata_func write_modeldata)
@@ -1274,7 +1274,6 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
   int    i, j, jj, je, k, marker, putheader, ChangeSignObj = FALSE, *idx, *idx1;
   MYBOOL ok = TRUE, names_used;
   LPSREAL   a, *val, *val1;
-  FILE   *output = stdout;
   char * (*MPSname)(char *name);
 
   if(lp->matA->is_roworder) {
@@ -1347,7 +1346,7 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
     write_data(userhandle, write_modeldata, "%s\n", MPSname(get_row_name(lp, i)));
   }
 
-  allocREAL(lp, &val, 1 + lp->rows, TRUE);
+  allocLPSREAL(lp, &val, 1 + lp->rows, TRUE);
   allocINT(lp, &idx, 1 + lp->rows, TRUE);
   write_data(userhandle, write_modeldata, "COLUMNS\n");
   for(i = 1; i <= lp->columns; i++) {

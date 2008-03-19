@@ -50,7 +50,7 @@ STATIC void compute_reducedcosts(lprec *lp, MYBOOL isdual, int row_nr, int *colt
 STATIC int find_rowReplacement(lprec *lp, int rownr, LPSREAL *prow, int *nzprow);
 STATIC int colprim(lprec *lp, LPSREAL *drow, int *nzdrow,
                               MYBOOL skipupdate, int partialloop, int *candidatecount, MYBOOL updateinfeas, LPSREAL *xviol);
-STATIC int rowprim(lprec *lp, int colnr, LREAL *theta, LPSREAL *pcol, int *nzpcol, MYBOOL forceoutEQ, LPSREAL *xviol);
+STATIC int rowprim(lprec *lp, int colnr, LLPSREAL *theta, LPSREAL *pcol, int *nzpcol, MYBOOL forceoutEQ, LPSREAL *xviol);
 STATIC int rowdual(lprec *lp, LPSREAL *rhvec, MYBOOL forceoutEQ, MYBOOL updateinfeas, LPSREAL *xviol);
 STATIC int coldual(lprec *lp, int row_nr,
                               LPSREAL *prow, int *nzprow, LPSREAL *drow, int *nzdrow,

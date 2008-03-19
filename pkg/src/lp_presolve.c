@@ -102,9 +102,9 @@ STATIC MYBOOL inc_presolve_space(lprec *lp, int delta, MYBOOL isrows)
 
   /* Reallocate lp memory */
   if(isrows)
-    allocREAL(lp, &psundo->fixed_rhs,   lp->rows_alloc+1, AUTOMATIC);
+    allocLPSREAL(lp, &psundo->fixed_rhs,   lp->rows_alloc+1, AUTOMATIC);
   else
-    allocREAL(lp, &psundo->fixed_obj,   lp->columns_alloc+1, AUTOMATIC);
+    allocLPSREAL(lp, &psundo->fixed_obj,   lp->columns_alloc+1, AUTOMATIC);
   allocINT(lp,  &psundo->var_to_orig, rowcolsum, AUTOMATIC);
   allocINT(lp,  &psundo->orig_to_var, rowcolsum, AUTOMATIC);
 
@@ -1182,7 +1182,7 @@ STATIC MYBOOL presolve_singletonbounds(presolverec *psdata, int rownr, int colnr
     else if(isneg)
       *upbound = -(*upbound);
     if(isneg)
-      swapREAL(lobound, upbound);
+      swapLPSREAL(lobound, upbound);
   }
 
   /* Check against bound - handle SC variables specially */
@@ -1511,7 +1511,7 @@ STATIC int presolve_rowtighten(presolverec *psdata, int rownr, int *tally, MYBOO
   MATrec *mat = lp->matA;
 
   jx = presolve_rowlength(psdata, rownr);
-  allocREAL(lp, &newbound, 2*jx, TRUE);
+  allocLPSREAL(lp, &newbound, 2*jx, TRUE);
   allocINT (lp, &idxbound, 2*jx, TRUE);
 
   /* Identify bound tightening for each active variable in the constraint */
@@ -2158,7 +2158,7 @@ STATIC MYBOOL presolve_probefix01(presolverec *psdata, int colnr, LPSREAL *fixva
     if(chsign) {
       loLim = my_chsign(chsign, loLim);
       upLim = my_chsign(chsign, upLim);
-      swapREAL(&loLim, &upLim);
+      swapLPSREAL(&loLim, &upLim);
     }
 
     /* Check the upper constraint bound for possible violation if the value were to be fixed at 1 */
@@ -2351,7 +2351,7 @@ STATIC int presolve_mergerows(presolverec *psdata, int *nRows, int *nSum)
           my_roundzero(Value2, lp->epsdual);      /* Extra rounding tolerance *** */
 
           if((bound < 0))
-            swapREAL(&Value1, &Value2);
+            swapLPSREAL(&Value1, &Value2);
 
           bound = get_rh_lower(lp, ix);
           if(Value1 > bound + psdata->epsvalue)
@@ -2465,7 +2465,7 @@ STATIC int presolve_knapsack(presolverec *psdata, int *nn)
 
   /* Get the OF row */
   allocINT(lp, &rownr,  map->count+1, FALSE);
-  allocREAL(lp, &ratio, map->count+1, FALSE);
+  allocLPSREAL(lp, &ratio, map->count+1, FALSE);
 
   /* Loop over each row trying to find equal entries in the OF */
   rownr[0] = 0;
@@ -2666,8 +2666,8 @@ STATIC int presolve_elimeq2(presolverec *psdata, int *nn, int *nr, int *nc, int 
 
   /* Tally counts */
   createLink(lp->rows, &EQ2, NULL);
-  if((EQ2 == NULL) || !allocREAL(lp, &colvalue, nrows+1, FALSE) ||
-                      !allocREAL(lp, &delvalue, nrows+1, FALSE))
+  if((EQ2 == NULL) || !allocLPSREAL(lp, &colvalue, nrows+1, FALSE) ||
+                      !allocLPSREAL(lp, &delvalue, nrows+1, FALSE))
     goto Finish;
   for(i = firstActiveLink(psdata->EQmap); i > 0; i = nextActiveLink(psdata->EQmap, i)) {
     if(presolve_rowlength(psdata, i) == 2)
@@ -2767,7 +2767,7 @@ STATIC int presolve_elimeq2(presolverec *psdata, int *nn, int *nr, int *nc, int 
     /* Perform variable index swap if indicated */
     if(k != 0) {
       swapINT(&jx, &jjx);
-      swapREAL(&Coeff1, &Coeff2);
+      swapLPSREAL(&Coeff1, &Coeff2);
     }
 
     Value1 = lp->orig_rhs[i]/Coeff2; /* Delta constant term */
@@ -3115,7 +3115,7 @@ STATIC MYBOOL presolve_impliedcolfix(presolverec *psdata, int rownr, int colnr, 
       varHi = get_upbo(lp, colnr);
       varHi *= (my_infinite(lp, varHi) ? my_sign(pivot) : pivot);
       if(pivot < 0)
-        swapREAL(&varHi, &varLo);
+        swapLPSREAL(&varHi, &varLo);
       signflip = my_infinite(lp, varLo);
     }
     if(signflip) {
@@ -3128,7 +3128,7 @@ STATIC MYBOOL presolve_impliedcolfix(presolverec *psdata, int rownr, int colnr, 
       if(!isfree) {
         varLo = -varLo;
         varHi = -varHi;
-        swapREAL(&varHi, &varLo);
+        swapLPSREAL(&varHi, &varLo);
       }
     }
     matValue = RHS/pivot;
@@ -3255,10 +3255,10 @@ STATIC psrec *presolve_initpsrec(lprec *lp, int size)
   allocINT(lp, &ps->empty, size, FALSE);
   ps->empty[0] = 0;
 
-  allocREAL(lp, &ps->pluupper,  size, FALSE);
-  allocREAL(lp, &ps->negupper,  size, FALSE);
-  allocREAL(lp, &ps->plulower,  size, FALSE);
-  allocREAL(lp, &ps->neglower,  size, FALSE);
+  allocLPSREAL(lp, &ps->pluupper,  size, FALSE);
+  allocLPSREAL(lp, &ps->negupper,  size, FALSE);
+  allocLPSREAL(lp, &ps->plulower,  size, FALSE);
+  allocLPSREAL(lp, &ps->neglower,  size, FALSE);
   allocINT(lp,  &ps->infcount,  size, FALSE);
 
   ps->next = (int **) calloc(size, sizeof(*(ps->next)));
@@ -3325,14 +3325,14 @@ STATIC presolverec *presolve_init(lprec *lp)
 
   /* Save incoming primal bounds */
   k = lp->sum + 1;
-  allocREAL(lp, &psdata->pv_lobo, k, FALSE);
+  allocLPSREAL(lp, &psdata->pv_lobo, k, FALSE);
   MEMCOPY(psdata->pv_lobo, lp->orig_lowbo, k);
-  allocREAL(lp, &psdata->pv_upbo, k, FALSE);
+  allocLPSREAL(lp, &psdata->pv_upbo, k, FALSE);
   MEMCOPY(psdata->pv_upbo, lp->orig_upbo, k);
 
   /* Create and initialize dual value (Langrangean and slack) limits */
-  allocREAL(lp, &psdata->dv_lobo, k, FALSE);
-  allocREAL(lp, &psdata->dv_upbo, k, FALSE);
+  allocLPSREAL(lp, &psdata->dv_lobo, k, FALSE);
+  allocLPSREAL(lp, &psdata->dv_upbo, k, FALSE);
   for(i = 0; i <= nrows; i++) {
     psdata->dv_lobo[i] = (is_constr_type(lp, i, EQ) ? -lp->infinite : 0);
     psdata->dv_upbo[i] = lp->infinite;
@@ -3630,10 +3630,10 @@ STATIC MYBOOL presolve_debugdump(lprec *lp, presolverec *psdata, char *filename,
   blockWriteINT(output, "pluneg",    psdata->rows->pluneg,    0, lp->rows);
 
   fprintf(output, "\nSUMS\n----\n\n");
-  blockWriteREAL(output, "pluupper", psdata->rows->pluupper, 0, lp->rows);
-  blockWriteREAL(output, "negupper", psdata->rows->negupper, 0, lp->rows);
-  blockWriteREAL(output, "plulower", psdata->rows->pluupper, 0, lp->rows);
-  blockWriteREAL(output, "neglower", psdata->rows->negupper, 0, lp->rows);
+  blockWriteLPSREAL(output, "pluupper", psdata->rows->pluupper, 0, lp->rows);
+  blockWriteLPSREAL(output, "negupper", psdata->rows->negupper, 0, lp->rows);
+  blockWriteLPSREAL(output, "plulower", psdata->rows->pluupper, 0, lp->rows);
+  blockWriteLPSREAL(output, "neglower", psdata->rows->negupper, 0, lp->rows);
 
   if(filename != NULL)
     fclose(output);
@@ -3747,7 +3747,7 @@ STATIC int presolve_rowdominance(presolverec *psdata, int *nCoeffChanged, int *n
 
   /* Let us start from the top of the list, going forward and looking
     for the longest possible dominating row */
-  if(!allocREAL(lp, &rowvalues, lp->columns + 1, TRUE) ||
+  if(!allocLPSREAL(lp, &rowvalues, lp->columns + 1, TRUE) ||
      !allocINT(lp, &coldel, lp->columns + 1, FALSE))
     goto Finish;
 
@@ -3941,7 +3941,7 @@ STATIC int presolve_coldominance01(presolverec *psdata, int *nConRemoved, int *n
 
   /* Let us start from the top of the list, going forward and looking
     for the longest possible dominated column */
-  if(!allocREAL(lp, &colvalues, lp->rows + 1, TRUE) ||
+  if(!allocLPSREAL(lp, &colvalues, lp->rows + 1, TRUE) ||
      !allocINT(lp, &coldel, lp->columns + 1, FALSE))
     goto Finish;
 
@@ -4146,8 +4146,8 @@ STATIC int presolve_coldominance01(presolverec *psdata, NATURAL *nConRemoved, NA
 
   /* Let us start from the top of the list, going forward and looking
     for the longest possible dominated column */
-  if(!allocREAL(lp, &colvalues, nrows + 1, TRUE) ||
-     !allocREAL(lp, &colobj, n + 1, FALSE) ||
+  if(!allocLPSREAL(lp, &colvalues, nrows + 1, TRUE) ||
+     !allocLPSREAL(lp, &colobj, n + 1, FALSE) ||
      !allocINT(lp, &coldel, n + 1, FALSE))
     goto Finish;
 
@@ -4223,7 +4223,7 @@ STATIC int presolve_coldominance01(presolverec *psdata, NATURAL *nConRemoved, NA
 
     /* Find the dominant columns, fix and delete the others */
     if(coldel[0] > 1) {
-      qsortex(colobj+1, coldel[0], 0, sizeof(*colobj), FALSE, compareREAL, coldel+1, sizeof(*coldel));
+      qsortex(colobj+1, coldel[0], 0, sizeof(*colobj), FALSE, compareLPSREAL, coldel+1, sizeof(*coldel));
       jb = (NATURAL) (rhsval+lp->epsvalue);
       for(jb++; jb <= coldel[0]; jb++) {
         jx = coldel[jb];
@@ -4293,7 +4293,7 @@ STATIC int presolve_aggregate(presolverec *psdata, int *nConRemoved, int *nVarsF
 
   /* Let us start from the top of the list, going forward and looking
     for the longest possible identical column */
-  if(!allocREAL(lp, &colvalues, lp->rows + 1, TRUE) ||
+  if(!allocLPSREAL(lp, &colvalues, lp->rows + 1, TRUE) ||
      !allocINT(lp, &coldel, lp->columns + 1, FALSE))
     goto Finish;
 
@@ -5286,7 +5286,7 @@ STATIC int presolve_rows(presolverec *psdata, int *nCoeffChanged, int *nConRemov
         Value2 = ROW_MAT_VALUE(jx);
         Value1 = lp->orig_rhs[i] / Value2;
         if(Value2 < 0)
-          swapREAL(&losum, &upsum);
+          swapLPSREAL(&losum, &upsum);
         if((Value1 < losum / my_if(my_infinite(lp, losum), my_sign(Value2), Value2) - epsvalue) ||
            (Value1 > upsum / my_if(my_infinite(lp, upsum), my_sign(Value2), Value2) + epsvalue))
           status = presolve_setstatus(psdata, INFEASIBLE);
@@ -5491,7 +5491,7 @@ write_lp(lp, "test_in.lp");    /* Write to lp-formatted file for debugging */
   else {
 
     if(lp->full_solution == NULL)
-      allocREAL(lp, &lp->full_solution, lp->sum_alloc+1, TRUE);
+      allocLPSREAL(lp, &lp->full_solution, lp->sum_alloc+1, TRUE);
 
     /* Identify infeasible SOS'es prior to any pruning */
     j = 0;

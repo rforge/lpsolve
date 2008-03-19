@@ -392,7 +392,7 @@ static int inccoldata(void)
   if(Columns == 0)
     CALLOC(coldata, coldatastep, struct structcoldata);
   else if((Columns%coldatastep) == 0)
-    REALLOC(coldata, Columns + coldatastep, struct structcoldata);
+    LPSREALLOC(coldata, Columns + coldatastep, struct structcoldata);
 
   if(coldata != NULL) {
     coldata[Columns].upbo = (LPSREAL) DEF_INFINITE;

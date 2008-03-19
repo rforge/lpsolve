@@ -18,12 +18,12 @@
 #ifdef MATLAB
   #define LUSOL_MALLOC(bytesize)        mxMalloc(bytesize)
   #define LUSOL_CALLOC(count, recsize)  mxCalloc(count, recsize)
-  #define LUSOL_REALLOC(ptr, bytesize)  mxRealloc((void *) ptr, bytesize)
+  #define LUSOL_LPSREALLOC(ptr, bytesize)  mxRealloc((void *) ptr, bytesize)
   #define LUSOL_FREE(ptr)               {mxFree(ptr); ptr=NULL;}
 #else
   #define LUSOL_MALLOC(bytesize)        malloc(bytesize)
   #define LUSOL_CALLOC(count, recsize)  calloc(count, recsize)
-  #define LUSOL_REALLOC(ptr, bytesize)  realloc((void *) ptr, bytesize)
+  #define LUSOL_LPSREALLOC(ptr, bytesize)  realloc((void *) ptr, bytesize)
   #define LUSOL_FREE(ptr)               {free(ptr); ptr=NULL;}
 #endif
 
@@ -79,8 +79,8 @@
 #ifndef LPSREAL
   #define LPSREAL double
 #endif
-#ifndef REALXP
-  #define REALXP long double
+#ifndef LPSREALXP
+  #define LPSREALXP long double
 #endif
 #ifndef MYBOOL
   #define MYBOOL unsigned char

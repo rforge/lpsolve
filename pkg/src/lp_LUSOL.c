@@ -57,7 +57,7 @@ MYBOOL BFP_CALLMODEL bfp_resize(lprec *lp, int newsize)
   lu->dimalloc = newsize;
 
   /* Allocate index tracker arrays, LU matrices and various work vectors */
-  if(!allocREAL(lp, &(lu->value), newsize+MATINDEXBASE, AUTOMATIC))
+  if(!allocLPSREAL(lp, &(lu->value), newsize+MATINDEXBASE, AUTOMATIC))
     return( FALSE );
 
   /* Data specific to the factorization engine */
@@ -660,7 +660,7 @@ int BFP_CALLMODEL bfp_findredundant(lprec *lp, int items, getcolumnex_func cb, i
 
   /* If so, initialize memory structures */
   if(!allocINT(lp, &nzrows, items, FALSE) ||
-     !allocREAL(lp, &nzvalues, items, FALSE))
+     !allocLPSREAL(lp, &nzvalues, items, FALSE))
     return( n );
 
   /* Compute the number of non-empty columns */
@@ -702,7 +702,7 @@ int BFP_CALLMODEL bfp_findredundant(lprec *lp, int items, getcolumnex_func cb, i
   }
 
   /* Scale rows to prevent numerical problems */
-  if((lp->scalemode != SCALE_NONE) && allocREAL(lp, &arraymax, items+1, TRUE)) {
+  if((lp->scalemode != SCALE_NONE) && allocLPSREAL(lp, &arraymax, items+1, TRUE)) {
     for(i = 1; i <= nz; i++) {
       SETMAX(arraymax[LUSOL->indc[i]], fabs(LUSOL->a[i]));
     }

@@ -161,16 +161,16 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, LPSREAL *FRowScale, LPSREAL *F
   nz = get_nonzeros(lp);
   colMax = lp->columns;
 
-  allocREAL(lp, &RowSum, lp->rows+1, TRUE);
+  allocLPSREAL(lp, &RowSum, lp->rows+1, TRUE);
   allocINT(lp,  &RowCount, lp->rows+1, TRUE);
-  allocREAL(lp, &residual_odd, lp->rows+1, TRUE);
+  allocLPSREAL(lp, &residual_odd, lp->rows+1, TRUE);
 
-  allocREAL(lp, &ColSum, colMax+1, TRUE);
+  allocLPSREAL(lp, &ColSum, colMax+1, TRUE);
   allocINT(lp,  &ColCount, colMax+1, TRUE);
-  allocREAL(lp, &residual_even, colMax+1, TRUE);
+  allocLPSREAL(lp, &residual_even, colMax+1, TRUE);
 
-  allocREAL(lp, &RowScalem2, lp->rows+1, FALSE);
-  allocREAL(lp, &ColScalem2, colMax+1, FALSE);
+  allocLPSREAL(lp, &RowScalem2, lp->rows+1, FALSE);
+  allocLPSREAL(lp, &ColScalem2, colMax+1, FALSE);
 
   /* Set origin for row scaling */
   for(i = 1; i <= colMax; i++) {
@@ -442,14 +442,14 @@ STATIC MYBOOL scaleCR(lprec *lp, LPSREAL *scaledelta)
   int  Result;
 
   if(!lp->scaling_used) {
-    allocREAL(lp, &lp->scalars, lp->sum_alloc + 1, FALSE);
+    allocLPSREAL(lp, &lp->scalars, lp->sum_alloc + 1, FALSE);
     for(Result = 0; Result <= lp->sum; Result++)
       lp->scalars[Result] = 1;
     lp->scaling_used = TRUE;
   }
 
   if(scaledelta == NULL)
-    allocREAL(lp, &scalechange, lp->sum + 1, FALSE);
+    allocLPSREAL(lp, &scalechange, lp->sum + 1, FALSE);
   else
     scalechange = scaledelta;
 
@@ -740,7 +740,7 @@ STATIC LPSREAL scale(lprec *lp, LPSREAL *scaledelta)
     return(0.0);
 
   if(!lp->scaling_used) {
-    allocREAL(lp, &lp->scalars, lp->sum_alloc + 1, FALSE);
+    allocLPSREAL(lp, &lp->scalars, lp->sum_alloc + 1, FALSE);
     for(i = 0; i <= lp->sum; i++) {
       lp->scalars[i] = 1;
     }
@@ -754,7 +754,7 @@ STATIC LPSREAL scale(lprec *lp, LPSREAL *scaledelta)
     }
 #endif
   if(scaledelta == NULL)
-    allocREAL(lp, &scalechange, lp->sum + 1, FALSE);
+    allocLPSREAL(lp, &scalechange, lp->sum + 1, FALSE);
   else
     scalechange = scaledelta;
 
@@ -763,8 +763,8 @@ STATIC LPSREAL scale(lprec *lp, LPSREAL *scaledelta)
     scalechange[i] = 1;
 
   row_count = lp->rows;
-  allocREAL(lp, &row_max, row_count + 1, TRUE);
-  allocREAL(lp, &row_min, row_count + 1, FALSE);
+  allocLPSREAL(lp, &row_max, row_count + 1, TRUE);
+  allocLPSREAL(lp, &row_min, row_count + 1, FALSE);
 
   /* Initialise min and max values of rows */
   for(i = 0; i <= row_count; i++) {
@@ -922,7 +922,7 @@ STATIC LPSREAL auto_scale(lprec *lp)
     /* Allocate array for incremental scaling if appropriate */
     if((lp->solvecount > 1) && (lp->bb_level < 1) &&
        ((lp->scalemode & SCALE_DYNUPDATE) != 0))
-      allocREAL(lp, &scalenew, lp->sum + 1, FALSE);
+      allocLPSREAL(lp, &scalenew, lp->sum + 1, FALSE);
 
     if(is_scaletype(lp, SCALE_CURTISREID)) {
       scalingmetric = scaleCR(lp, scalenew);

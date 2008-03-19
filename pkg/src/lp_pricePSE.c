@@ -67,7 +67,7 @@ STATIC MYBOOL resizePricer(lprec *lp)
     return( TRUE );
 
   /* Reallocate vector for new size */
-  if(!allocREAL(lp, &(lp->edgeVector), lp->sum_alloc+1, AUTOMATIC))
+  if(!allocLPSREAL(lp, &(lp->edgeVector), lp->sum_alloc+1, AUTOMATIC))
     return( FALSE );
 
   /* Signal that we have not yet initialized the price vector */
@@ -171,7 +171,7 @@ STATIC MYBOOL restartPricer(lprec *lp, MYBOOL isdual)
   }
 
   /* Otherwise do the full Steepest Edge norm initialization */
-  ok = allocREAL(lp, &sEdge, m+1, FALSE);
+  ok = allocLPSREAL(lp, &sEdge, m+1, FALSE);
   if(!ok)
     return( ok );
 
@@ -227,7 +227,7 @@ STATIC MYBOOL restartPricer(lprec *lp, MYBOOL isdual)
 STATIC MYBOOL formWeights(lprec *lp, int colnr, LPSREAL *pcol, LPSREAL **w)
 /* This computes Bw = a, where B is the basis and a is a column of A */
 {
-  MYBOOL ok = allocREAL(lp, w, lp->rows+1, FALSE);
+  MYBOOL ok = allocLPSREAL(lp, w, lp->rows+1, FALSE);
 
   if(ok) {
     if(pcol == NULL)
@@ -298,7 +298,7 @@ STATIC MYBOOL updatePricer(lprec *lp, int rownr, int colnr, LPSREAL *pcol, LPSRE
 
     /* Don't need to compute cross-products with DEVEX */
     if(!isDEVEX) {
-      ok = allocREAL(lp, &vEdge, m+1, FALSE);
+      ok = allocLPSREAL(lp, &vEdge, m+1, FALSE);
       if(!ok)
         return( ok );
 
@@ -374,8 +374,8 @@ STATIC MYBOOL updatePricer(lprec *lp, int rownr, int colnr, LPSREAL *pcol, LPSRE
     LPSREAL *vTemp = NULL, *vAlpha = NULL, cAlpha;
     int  *coltarget;
 
-    ok = allocREAL(lp, &vTemp, m+1, TRUE) &&
-         allocREAL(lp, &vAlpha, n+1, TRUE);
+    ok = allocLPSREAL(lp, &vTemp, m+1, TRUE) &&
+         allocLPSREAL(lp, &vAlpha, n+1, TRUE);
     if(!ok)
       return( ok );
 
@@ -393,7 +393,7 @@ STATIC MYBOOL updatePricer(lprec *lp, int rownr, int colnr, LPSREAL *pcol, LPSRE
 
     /* Don't need to compute cross-products with DEVEX */
     if(!isDEVEX) {
-      ok = allocREAL(lp, &vEdge, n+1, TRUE);
+      ok = allocLPSREAL(lp, &vEdge, n+1, TRUE);
       if(!ok)
         return( ok );
 
