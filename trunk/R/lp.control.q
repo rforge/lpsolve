@@ -76,21 +76,18 @@ lp.control <- function(lprec, ..., reset = FALSE)
       "bb.rule" = {
         bb.rule <- dots[[dot.name]]
 
-        rules <- c("firstselect", "gapselect", "rangeselect", "fractionselect",
-                   "pseudocostselect", "pseudononintselect",
-                   "pseudoratioselect", "userselect")
+        rules <- c("first", "gap", "range", "fraction", "pseudocost",
+                   "pseudononint", "pseudoratio")
         rule <- match.arg(bb.rule[1], rules, several.ok = FALSE)
-        idx <- 0:7
+        idx <- 0:6
         names(idx) <- rules
         rule <- idx[rule]
 
-
         bb.rule <- bb.rule[-1]
         if(length(bb.rule)) {
-          all.values <- c("weightreversemode", "branchreversemode",
-                          "greedymode", "pseudocostmode", "depthfirstmode",
-                          "randomizemode", "gubmode", "dynamicmode",
-                          "restartmode", "breadthfirstmode", "autoorder",
+          all.values <- c("weightreverse", "branchreverse", "greedy",
+                          "pseudocost", "depthfirst", "randomize", "gub",
+                          "dynamic", "restart", "breadthfirst", "autoorder",
                           "rcostfixing", "stronginit")
           values <- match.arg(bb.rule, all.values, several.ok = TRUE)
           idx <- 2^(3:15)
@@ -206,10 +203,10 @@ lp.control <- function(lprec, ..., reset = FALSE)
         if(length(mip.gap) != 2)
           mip.gap <- rep(mip.gap[1], 2)
 
-        status[["mip.gap"]] <- c(.Call("RlpSolve_set_mip_gap", lprec, TRUE,
+        status[["mip.gap"]] <- c(.Call("RlpSolve_set_mip_gap", lprec, as.logical(TRUE),
                                         as.double(mip.gap[1]),
                                         PACKAGE = "lpSolve"),
-                                 .Call("RlpSolve_set_mip_gap", lprec, FALSE,
+                                 .Call("RlpSolve_set_mip_gap", lprec, as.logical(FALSE),
                                         as.double(mip.gap[2]),
                                         PACKAGE = "lpSolve"))
       },
@@ -354,31 +351,10 @@ lp.control <- function(lprec, ..., reset = FALSE)
                                           PACKAGE = "lpSolve")
       },
 
-      "solutionlimit" = {
-        solutionlimit <- dots[[dot.name]]
-        status[["solutionlimit"]] <- .Call("RlpSolve_set_solutionlimit", lprec,
-                                            as.integer(solutionlimit),
-                                            PACKAGE = "lpSolve")
-      },
-
       "timeout" = {
         timeout <- dots[[dot.name]]
         status[["timeout"]] <- .Call("RlpSolve_set_timeout", lprec,
                                       as.integer(timeout), PACKAGE = "lpSolve")
-      },
-
-      "use.names" = {
-        use.names <- dots[[dot.name]]
-
-        if(length(use.names) != 2)
-          use.names <- rep(use.names[1], 2)
-
-        status[["use.names"]] <- c(.Call("RlpSolve_set_use_names", lprec, TRUE,
-                                          as.logical(use.names[1]),
-                                          PACKAGE = "lpSolve"),
-                                   .Call("RlpSolve_set_use_names", lprec, FALSE,
-                                          as.logical(use.names[2]),
-                                          PACKAGE = "lpSolve"))
       }
     )
   }
@@ -402,9 +378,8 @@ lp.control <- function(lprec, ..., reset = FALSE)
 
   bb.rule.index <- .Call("RlpSolve_get_bb_rule", lprec, PACKAGE = "lpSolve")
   bb.rule <- bb.rule.index %% 8
-  bb.rule <- c("firstselect", "gapselect", "rangeselect", "fractionselect",
-               "pseudocostselect", "pseudononintselect", "pseudoratioselect",
-               "userselect")[1 + bb.rule]
+  bb.rule <- c("first", "gap", "range", "fraction", "pseudocost",
+               "pseudononint", "pseudoratio", "user")[1 + bb.rule]
 
   bb.value.index <- integer(0)
 
@@ -416,10 +391,9 @@ lp.control <- function(lprec, ..., reset = FALSE)
     }
   }
 
-  bb.rule <- c(bb.rule, c("weightreversemode", "branchreversemode",
-               "greedymode", "pseudocostmode", "depthfirstmode",
-               "randomizemode", "gubmode", "dynamicmode", "restartmode",
-               "breadthfirstmode", "autoorder", "rcostfixing",
+  bb.rule <- c(bb.rule, c("weightreverse", "branchreverse", "greedy",
+               "pseudocost", "depthfirst", "randomize", "gub", "dynamic",
+               "restart", "breadthfirst", "autoorder", "rcostfixing",
                "stronginit")[bb.value.index - 2])
 
   break.at.first <- .Call("RlpSolve_is_break_at_first", lprec,
@@ -509,15 +483,7 @@ lp.control <- function(lprec, ..., reset = FALSE)
                          "9" = c("primal", "dual"),
                         "10" = c("dual", "dual"))
 
-  solutionlimit <- .Call("RlpSolve_get_solutionlimit", lprec,
-                          PACKAGE = "lpSolve")
-
   timeout <- .Call("RlpSolve_get_timeout", lprec, PACKAGE = "lpSolve")
-
-  use.names <- c(rows = .Call("RlpSolve_is_use_names", lprec, TRUE,
-                               PACKAGE = "lpSolve"),
-                 columns = .Call("RlpSolve_is_use_names", lprec, FALSE,
-                                  PACKAGE = "lpSolve"))
 
   list(anti.degen = anti.degen, basis.crash = basis.crash,
        bb.depthlimit = bb.depthlimit, bb.floorfirst = bb.floorfirst,
@@ -526,8 +492,7 @@ lp.control <- function(lprec, ..., reset = FALSE)
        infinite = infinite, maxpivot = maxpivot, mip.gap = mip.gap,
        negrange = negrange, obj.in.basis = obj.in.basis, pivoting = pivoting,
        presolve = presolve, scalelimit = scalelimit, scaling = scaling,
-       sense = sense, simplextype = simplextype, solutionlimit = solutionlimit,
-       timeout = timeout, use.names = use.names)
+       sense = sense, simplextype = simplextype, timeout = timeout)
 }
 
 

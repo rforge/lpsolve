@@ -21,7 +21,7 @@ set.objfn(lprec, obj, columns = NULL)
 a logical value indicating whether setting the objective function was successful is invisibly returned.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

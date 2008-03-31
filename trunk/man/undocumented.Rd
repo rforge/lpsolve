@@ -20,7 +20,7 @@ These lpSolve functions are provided without documentation.
 usually something.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

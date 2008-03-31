@@ -262,19 +262,23 @@
 							<array>
 								<string>0E3F54630D536C6800617C9D</string>
 								<string>0EABBD6A0D59CD4500CF7B0C</string>
+								<string>0EF13F550D5C9EDD00F77D3C</string>
 								<string>0EABBD6B0D59CD5000CF7B0C</string>
+								<string>0EF13F780D5CA9DA00F77D3C</string>
 								<string>0E3F54710D536C9400617C9D</string>
 								<string>0E16C0080D64831600EE878E</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>1</integer>
+									<integer>58</integer>
+									<integer>9</integer>
+									<integer>2</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {215, 675}}</string>
+							<string>{{0, 1603}, {215, 675}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -293,7 +297,7 @@
 							<real>215</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>140 91 897 734 0 0 1280 832 </string>
+						<string>129 92 897 734 0 0 1280 832 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -311,7 +315,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>DESCRIPTION</string>
+								<string>write.lp.q</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -319,35 +323,49 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>DESCRIPTION</string>
+										<string>write.lp.q</string>
 										<key>_historyCapacity</key>
 										<integer>10</integer>
 										<key>bookmark</key>
-										<string>0E98D7A10D8ADBAF004C8E14</string>
+										<string>0E9A35870DA0322E0000B43C</string>
 										<key>history</key>
 										<array>
-											<string>0ECECA830D898E9E000DC3A1</string>
-											<string>0ECECA840D898E9E000DC3A1</string>
-											<string>0ECECA850D898E9E000DC3A1</string>
-											<string>0ECECA860D898E9E000DC3A1</string>
-											<string>0ECECA870D898E9E000DC3A1</string>
-											<string>0ECECA880D898E9E000DC3A1</string>
-											<string>0ECECA890D898E9E000DC3A1</string>
-											<string>0E9CBCE80D89A095002B95B6</string>
-											<string>0E98D79E0D8ADBAF004C8E14</string>
-											<string>0E98D79F0D8ADBAF004C8E14</string>
+											<string>0EA084FF0D93D82B007DBBD5</string>
+											<string>0E9B1FD10D93E61F00040A7E</string>
+											<string>0EE104F60D9EEA4200519304</string>
+											<string>0E9A356F0DA0322E0000B43C</string>
+											<string>0E9A35700DA0322E0000B43C</string>
+											<string>0E9A35710DA0322E0000B43C</string>
+											<string>0E9A35720DA0322E0000B43C</string>
+											<string>0E9A35730DA0322E0000B43C</string>
+											<string>0E9A35740DA0322E0000B43C</string>
+											<string>0E9A35750DA0322E0000B43C</string>
 										</array>
 										<key>prevStack</key>
 										<array>
-											<string>0ECECA8E0D898E9E000DC3A1</string>
-											<string>0ECECA8F0D898E9E000DC3A1</string>
-											<string>0ECECA900D898E9E000DC3A1</string>
-											<string>0ECECA910D898E9E000DC3A1</string>
-											<string>0ECECA920D898E9E000DC3A1</string>
-											<string>0ECECA930D898E9E000DC3A1</string>
-											<string>0ECECA950D898E9E000DC3A1</string>
-											<string>0E9CBCEA0D89A095002B95B6</string>
-											<string>0E98D7A00D8ADBAF004C8E14</string>
+											<string>0EA084E30D93D6CF007DBBD5</string>
+											<string>0EA084E40D93D6CF007DBBD5</string>
+											<string>0EA084E60D93D6CF007DBBD5</string>
+											<string>0EA084EB0D93D6CF007DBBD5</string>
+											<string>0E9B1FD30D93E61F00040A7E</string>
+											<string>0EE104FA0D9EEA4200519304</string>
+											<string>0E9A35760DA0322E0000B43C</string>
+											<string>0E9A35770DA0322E0000B43C</string>
+											<string>0E9A35780DA0322E0000B43C</string>
+											<string>0E9A35790DA0322E0000B43C</string>
+											<string>0E9A357A0DA0322E0000B43C</string>
+											<string>0E9A357B0DA0322E0000B43C</string>
+											<string>0E9A357C0DA0322E0000B43C</string>
+											<string>0E9A357D0DA0322E0000B43C</string>
+											<string>0E9A357E0DA0322E0000B43C</string>
+											<string>0E9A357F0DA0322E0000B43C</string>
+											<string>0E9A35800DA0322E0000B43C</string>
+											<string>0E9A35810DA0322E0000B43C</string>
+											<string>0E9A35820DA0322E0000B43C</string>
+											<string>0E9A35830DA0322E0000B43C</string>
+											<string>0E9A35840DA0322E0000B43C</string>
+											<string>0E9A35850DA0322E0000B43C</string>
+											<string>0E9A35860DA0322E0000B43C</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -361,7 +379,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {660, 688}}</string>
 								<key>RubberWindowFrame</key>
-								<string>140 91 897 734 0 0 1280 832 </string>
+								<string>129 92 897 734 0 0 1280 832 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -381,7 +399,7 @@
 								<key>Frame</key>
 								<string>{{0, 693}, {660, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>140 91 897 734 0 0 1280 832 </string>
+								<string>129 92 897 734 0 0 1280 832 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -405,9 +423,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>0E98D7A20D8ADBAF004C8E14</string>
+				<string>0E9A35880DA0322E0000B43C</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>0E98D7A30D8ADBAF004C8E14</string>
+				<string>0E9A35890DA0322E0000B43C</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -544,7 +562,7 @@
 		<string>/Users/kjell/Documents/Projects/lpSolve/lpSolve.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>140 91 897 734 0 0 1280 832 </string>
+	<string>129 92 897 734 0 0 1280 832 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -837,8 +855,8 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D57069F1CE1000CFCEE</string>
-				<string>0E98D7940D8AD958004C8E14</string>
-				<string>0E98D7950D8AD958004C8E14</string>
+				<string>0EA084F90D93D7D9007DBBD5</string>
+				<string>0EA084FA0D93D7D9007DBBD5</string>
 				<string>1CDD528C0622207200134675</string>
 				<string>1CD0528E0623707200166675</string>
 			</array>

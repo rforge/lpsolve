@@ -26,7 +26,7 @@ Setting the number of rows/columns is not supported.  See \code{\link{resize.lp}
 an integer vector of length two containing the number of rows and the number of columns in the lpSolve linear programming model.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

@@ -25,7 +25,7 @@ If the new size of the model is smaller than the size of the current model, the 
 a logical value indicating whether the model was successfully resized is invisibly returned.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

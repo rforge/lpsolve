@@ -20,7 +20,7 @@ read.lp(filename, type = c("lp", "mps", "freemps"))
 an lpSolve linear programming model.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

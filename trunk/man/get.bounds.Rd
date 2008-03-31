@@ -20,7 +20,7 @@ get.bounds(lprec, columns = NULL)
   a list with components \code{columns}, \code{lower} and \code{upper}.  The bounds on the decision variable in \code{columns[j]} are \code{lower[j]} and \code{upper[j]}.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
