@@ -20,7 +20,7 @@ get.rhs(lprec, rows = NULL)
 a numeric vector containing the right-hand-side values specified by \code{rows}.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

@@ -21,7 +21,7 @@ set.rhs(lprec, b, rows = NULL)
 a logical vector indicating whether setting each right-hand-side element was successful.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

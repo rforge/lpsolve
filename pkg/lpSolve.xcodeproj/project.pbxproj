@@ -31,6 +31,7 @@
 		0E99A1550D7DD2FE00F4A4CC /* add.SOS.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = add.SOS.q; sourceTree = "<group>"; };
 		0E99A1560D7DD7ED00F4A4CC /* set.semicont.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.semicont.q; sourceTree = "<group>"; };
 		0E9AA01B0D622B8400426ADF /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lp.control.q; sourceTree = "<group>"; };
+		0EA084D70D93CEE0007DBBD5 /* lp.control.options.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.control.options.Rd; path = man/lp.control.options.Rd; sourceTree = SOURCE_ROOT; };
 		0EA4F05B0D7ECA480010FBA9 /* get.kind.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.kind.q; sourceTree = "<group>"; };
 		0EA6F46C0D631EE200496510 /* get.presolveloops.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.presolveloops.q; sourceTree = "<group>"; };
 		0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.q; sourceTree = "<group>"; };
@@ -423,6 +424,7 @@
 				0ED798B30D83F28F004836E1 /* get.variables.Rd */,
 				0ED798B40D83F28F004836E1 /* guess.basis.Rd */,
 				0ED798B50D83F28F004836E1 /* lp.control.Rd */,
+				0EA084D70D93CEE0007DBBD5 /* lp.control.options.Rd */,
 				0EABBD790D59D0A600CF7B0C /* make.lp.Rd */,
 				0EFEA4520D884F570053E8F9 /* name.lp.Rd */,
 				0EFEA4530D884F570053E8F9 /* print.lpExtPtr.Rd */,

@@ -22,7 +22,7 @@ set.basis(lprec, basis, nonbasic = FALSE, default = FALSE)
 a logical value indicating whether the basis was successfully set. If \code{FALSE} then the specified basis was invalid.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

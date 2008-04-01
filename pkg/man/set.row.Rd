@@ -22,7 +22,7 @@ set.row(lprec, row, xt, indices = NULL)
 a logical value indicating whether the row was successfully set.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

@@ -22,7 +22,7 @@ set.column(lprec, column, x, indices = NULL)
 a logical value indicating whether the column was successfully set is invisibly returned.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

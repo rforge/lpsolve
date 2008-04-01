@@ -21,7 +21,7 @@ set.constr.type(lprec, types, indices = NULL)
 a logical vector indicating whether the constraint types were successfully set is invisibly returned.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

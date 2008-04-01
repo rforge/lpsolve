@@ -20,7 +20,7 @@ make.lp(nrow = 0, ncol = 0)
 an lpSolve linear programming model. Specifically an R external pointer with class \code{lpExtPtr}.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 

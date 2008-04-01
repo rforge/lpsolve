@@ -20,7 +20,7 @@ set.branch.weights(lprec, weights)
 a logical value indicating whether the weight were successfully set is invisibly returned.
 }
 
-\references{url{http://lpsolve.sourceforge.net/5.5/index.htm}}
+\references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
