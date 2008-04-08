@@ -31,6 +31,8 @@
 		0E99A1550D7DD2FE00F4A4CC /* add.SOS.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = add.SOS.q; sourceTree = "<group>"; };
 		0E99A1560D7DD7ED00F4A4CC /* set.semicont.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.semicont.q; sourceTree = "<group>"; };
 		0E9AA01B0D622B8400426ADF /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lp.control.q; sourceTree = "<group>"; };
+		0E9B6DB20DA76684003356E5 /* row.add.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = row.add.mode.q; sourceTree = "<group>"; };
+		0E9B6DB30DA76B66003356E5 /* row.add.mode.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = row.add.mode.Rd; sourceTree = "<group>"; };
 		0EA084D70D93CEE0007DBBD5 /* lp.control.options.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.control.options.Rd; path = man/lp.control.options.Rd; sourceTree = SOURCE_ROOT; };
 		0EA4F05B0D7ECA480010FBA9 /* get.kind.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.kind.q; sourceTree = "<group>"; };
 		0EA6F46C0D631EE200496510 /* get.presolveloops.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.presolveloops.q; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				0EABBD890D59E82A00CF7B0C /* print.lpExtPtr.q */,
 				0E16C06C0D64906900EE878E /* read.lp.q */,
 				0EABBD8A0D59E82A00CF7B0C /* resize.lp.q */,
+				0E9B6DB20DA76684003356E5 /* row.add.mode.q */,
 				0E98F97E0D8048B900C06D67 /* set.basis.q */,
 				0EABBD8C0D59E82A00CF7B0C /* set.bounds.q */,
 				0EBC20280D806D6300DD261B /* set.branch.mode.q */,
@@ -430,6 +433,7 @@
 				0EFEA4530D884F570053E8F9 /* print.lpExtPtr.Rd */,
 				0EFEA4540D884F570053E8F9 /* read.lp.Rd */,
 				0EFEA4550D884F570053E8F9 /* resize.lp.Rd */,
+				0E9B6DB30DA76B66003356E5 /* row.add.mode.Rd */,
 				0EFEA4560D884F570053E8F9 /* set.basis.Rd */,
 				0EFEA4570D884F570053E8F9 /* set.bounds.Rd */,
 				0EFEA4580D884F570053E8F9 /* set.branch.mode.Rd */,
