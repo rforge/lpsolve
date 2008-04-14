@@ -1,50 +1,41 @@
 \name{lp}
 \alias{lp}
+
 \title{Linear and Integer Programming}
-\description{Interface to lp\_solve linear/integer programming system}
+
+\description{Interface to the lp\_solve Linear/Integer Program Solver. This function is provided in this version of the lpSolve package mainly for backward compatibility but also as an example of programming with the lpSolve API. For dense linear programs, the function \code{\link{lpSolve}} provides better performance and several additional features. For sparse linear programs, far better performance can be achieved by building and solving the linear program using the functions provided in the lpSolve API.}
+
 \usage{
-lp (direction = c("min", "max"), objective.in, const.mat, const.dir, const.rhs,
-	transpose.constraints = TRUE, int.vec, presolve=0, compute.sens=0)
+lp(direction = c("min", "max"), objective.in, const.mat, const.dir, const.rhs,
+	transpose.constraints = TRUE, int.vec, presolve = 0, compute.sens = 0)
 }
+
 \arguments{
-\item{direction}{Character string giving direction of optimization:
-"min" (default) or "max."}
-\item{objective.in}{Numeric vector of coefficients of objective function}
-\item{const.mat}{Matrix of numeric constraint coefficients, one row 
-per constraint, one column per variable (unless transpose.constraints = 
-FALSE; see below).}
-\item{const.dir}{Vector of character strings giving the direction of 
-the constraint: each value should be one of "<," "<=," "=," "==," ">," or ">=."}
-\item{const.rhs}{Vector of numeric values for the right-hand sides of 
-the constraints.}
-\item{transpose.constraints}{By default each constraint occupies a row 
-of const.mat, and that matrix needs to be transposed before being passed 
-to the optimizing code.  For very large constraint matrices it may be wiser 
-to construct the constraints in a matrix column-by-column. In that case set 
-transpose.constraints to FALSE.}
-\item{int.vec}{Numeric vector giving the indices of variables that are 
-required to be integer. The length of this vector will therefore be the 
-number of integer variables.}
-\item{presolve}{Numeric: presolve? Default 0 (no); any
-non-zero value means "yes." Currently ignored.}
-\item{compute.sens}{Numeric: compute sensitivity? Default 0 (no); any
-non-zero value means "yes."}
+  \item{direction}{a character string specifying the direction of optimization: "min" (default) or "max."}
+  \item{objective.in}{a numeric vector containing the coefficients of the objective function.}
+  \item{const.mat}{a numeric matrix containing the constraint coefficients, one row 
+per constraint, one column per decision variable.}
+  \item{const.dir}{a character vector specifying the types of constraints: each element must be one of "<=", "=", or ">=".}
+  \item{const.rhs}{a numeric vector containing the right-hand sides of the constraints.}
+  \item{transpose.constraints}{this argument is present only for backwards compatibility.}
+  \item{int.vec}{a numeric vector of positive integer values specifying the indices of the decision variables that are required to be integer. The length of this vector will therefore be the number of integer decision variables.}
+  \item{presolve}{currently ignored.}
+  \item{compute.sens}{compute sensitivity? Default 0 (no); any non-zero value means yes.}
 }
-\details{
-This function calls the lp\_solve 5.5 solver. That system has many options not
-supported here. The current version is maintained at
-\url{ftp://ftp.es.ele.tue.nl/pub/lp_solve}
-}
+
 \value{
-An lp object. See \code{\link{lp.object}} for details.
+nn lp object. See \code{\link{lp.object}} for details.
 }
-\author{Sam Buttrey, \email{buttrey@nps.edu}}
+
+\author{Sam Buttrey, \email{sebuttre@nps.edu}}
+
 \seealso{\code{\link{lp.assign}}, \code{\link{lp.transport}}}
+
 \examples{
 #
 # Set up problem: maximize
 #   x1 + 9 x2 +   x3 subject to
-#   x1 + 2 x2 + 3 x3  <= 9
+#   x1 + 2 x2 + 3 x3 <=  9
 # 3 x1 + 2 x2 + 2 x3 <= 15
 #
 f.obj <- c(1, 9, 3)
@@ -93,4 +84,5 @@ lp ("max", f.obj, f.con, f.dir, f.rhs, int.vec=1:3)$solution
 lp ("max", f.obj, f.con, f.dir, f.rhs, int.vec=1:3, compute.sens=TRUE)$duals
 \dontrun{[1] 1 0 0 7 0}
 }
+
 \keyword{optimize}

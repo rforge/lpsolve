@@ -54,7 +54,6 @@
 		0EBC20280D806D6300DD261B /* set.branch.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.branch.mode.q; sourceTree = "<group>"; };
 		0EBC20290D806D7500DD261B /* get.branch.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.branch.mode.q; sourceTree = "<group>"; };
 		0EBC202A0D806EBF00DD261B /* set.branch.weights.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.branch.weights.q; sourceTree = "<group>"; };
-		0EC5CD3A0D60584D00958B10 /* lpslink55.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpslink55.c; path = src/lpslink55.c; sourceTree = SOURCE_ROOT; };
 		0EC5CD3D0D6073BA00958B10 /* lpSolve.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolve.Rd; path = man/lpSolve.Rd; sourceTree = SOURCE_ROOT; };
 		0ECCA9210D8532E20093DFAC /* delete.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.column.q; path = R/delete.column.q; sourceTree = SOURCE_ROOT; };
 		0ECCA9220D85330B0093DFAC /* delete.column.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.column.Rd; path = man/delete.column.Rd; sourceTree = SOURCE_ROOT; };
@@ -297,7 +296,6 @@
 			isa = PBXGroup;
 			children = (
 				0EF13F2D0D5C918A00F77D3C /* Makevars */,
-				0EC5CD3A0D60584D00958B10 /* lpslink55.c */,
 				0EF13F5A0D5C9F9100F77D3C /* lpSolve.c */,
 				0E3F54C50D536DB400617C9D /* RlpSolve.c */,
 				0E3F54C60D536DB400617C9D /* RlpSolve.h */,

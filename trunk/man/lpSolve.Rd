@@ -13,7 +13,7 @@ Solves the linear program
                  lb[j] <= x[j] <= ub[j]
 }
 
-where \code{x} is a vector of \code{p} decision variables, \code{obj} is a vector of \code{p} obective coefficients, \code{A} is an \code{ldA} by \code{p} matrix of inequality constraint coefficients, \code{b} is a vector of \code{ldA} inequality constraint values, \code{Aeq} is an \code{ldAeq} by \code{p} matrix of equality constraint coefficients, \code{beq} is a vector of \code{ldAeq} equailty constraint values, and \code{ub} and \code{lb} are respectively vectors of \code{p} upper and lower bounds on the decision variables.
+where \code{x} is a vector of \code{n} decision variables, \code{obj} is a vector of \code{n} obective coefficients, \code{A} is an \code{ldA} by \code{n} matrix of inequality constraint coefficients, \code{b} is a vector of \code{ldA} inequality constraint values, \code{Aeq} is an \code{ldAeq} by \code{n} matrix of equality constraint coefficients, \code{beq} is a vector of \code{ldAeq} equailty constraint values, and \code{ub} and \code{lb} are respectively vectors of \code{n} upper and lower bounds on the decision variables.
 }
 
 \usage{
@@ -22,26 +22,22 @@ lpSolve(obj, A, b, Aeq = NULL, beq = NULL, lb = 0, ub = Inf,
 }
 
 \arguments{
-  \item{obj}{a numeric vector of length \code{p} containing the coefficients of the linear objective function.}
-  \item{A}{a numeric matrix with \code{ldA} rows and \code{p} columns containing the coefficients of the linear inequality constraints.}
+  \item{obj}{a numeric vector of length \code{n} containing the coefficients of the linear objective function.}
+  \item{A}{a numeric matrix with \code{ldA} rows and \code{n} columns containing the coefficients of the linear inequality constraints.}
   \item{b}{a numeric vector of length \code{ldA} containing the values for the linear inequality constraints.}
-  \item{Aeq}{a numeric matrix with \code{p} columns containing the coefficients of the linear equality constraints.}
+  \item{Aeq}{a numeric matrix with \code{n} columns containing the coefficients of the linear equality constraints.}
   \item{beq}{a numeric vector of length \code{ldA} containing the values for the linear equality constraints.}
-  \item{lb}{a numeric vector of length \code{p} containing the lower bounds for the decision variables.}
-  \item{ub}{a numeric vector of length \code{p} containing the upper bounds for the decision variables.}
-  \item{intvec}{a vector of unique positive integer values from \code{1} to \code{p} indicating decision variables that are restricted to integer values.}
-  \item{control}{a list containing control parameters for the MILP solver.}
-}
-
-\details{
-details here.
+  \item{lb}{a numeric vector of length \code{n} containing the lower bounds for the decision variables.}
+  \item{ub}{a numeric vector of length \code{n} containing the upper bounds for the decision variables.}
+  \item{intvec}{a vector of unique positive integer values from \code{1} to \code{n} indicating decision variables that are restricted to integer values.}
+  \item{control}{a list containing control parameters for the MILP solver.  See \code{\link{lp.control}}.}
 }
 
 \value{
   A list with the following components:
   \item{objective}{a single numeric value containing the optimal value of the objective function (provided a finite optimal solution is found).}
-  \item{x}{a numeric vector of length \code{p} containing the values of the decision variables at the optimal solution.}
-  \item{status}{a single integer value indicating the exit status of the MILP solver. A value of \code{0} indicates that an optimal solution was found. Other possibilities are given in the note below.}
+  \item{x}{a numeric vector of length \code{n} containing the values of the decision variables at the optimal solution.}
+  \item{status}{an integer value indicating the exit status of the MILP solver. A value of \code{0} indicates that an optimal solution was found. Other possibilities are given in the note below.}
   \item{message}{a character string describing the value of \code{status}.}
   \item{control}{a list containing the control parameters used in the MILP solver.}
 }
@@ -66,9 +62,6 @@ details here.
   12: \tab "a feasible branch and bound solution was found" \cr
   13: \tab "no feasible branch and bound solution was found" \cr
   }
-}
-
-\section{Control Parameters}{
 }
 
 \seealso{\code{\link{lp}}}

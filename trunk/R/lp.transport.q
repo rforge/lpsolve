@@ -1,7 +1,8 @@
-lp.transport <- function (cost.mat, direction = "min", row.signs, row.rhs, col.signs,
-    col.rhs, presolve = 0, compute.sens = 0, integers = integer (nc * nr))
+lp.transport <- function(cost.mat, direction = c("min", "max"), row.signs,
+    row.rhs, col.signs, col.rhs, presolve = 0, compute.sens = 0,
+    integers = "all")
 {
-#
+
 # lp.transport: use lpsolve.dll to solve a transportation problem.
 # This is a linear program with an ixj matrix of decision variables,
 # and constraints on the row and column sums (and no others)
@@ -19,143 +20,68 @@ lp.transport <- function (cost.mat, direction = "min", row.signs, row.rhs, col.s
 #            integers: Indicator of integer variables: default, all.
 #
 # Return value: list from lpsolve, including objective and optimal values.
-#
-# Check that the cost matrix is in fact a matrix; convert
-# from data.frame if needed.
-#
-    if (!is.matrix(cost.mat))
-        stop("Matrix of costs required.")
-    if (is.data.frame(cost.mat))
-        cost.mat <- as.matrix(cost.mat)
-#
-# Set up the stuff.
-#
-    nr <- nrow(cost.mat)
-    nc <- ncol(cost.mat)
-	#
-	# Ensure that row stuff is of the correct size.
-	#
-    if (is.matrix(row.signs))
-        row.signs <- as.vector(row.signs)
-    if (length(row.signs) != nr)
-        stop(paste("Error: We have", length(row.signs), "signs, but",
-            nr, "rows"))
-    if (is.matrix(row.rhs))
-        row.rhs <- as.vector(row.rhs)
-    if (length(row.rhs) != nr)
-        stop(paste("Error: We have", length(row.rhs), "rhs's, but",
-            nr, "rows"))
-	#
-	# Ensure that col stuff is of the correct size.
-	#
-    if (is.matrix(col.signs))
-        col.signs <- as.vector(col.signs)
-    if (length(col.signs) != nc)
-        stop(paste("Error: We have", length(col.signs), "signs, but",
-            nc, "columns"))
-    if (is.matrix(col.rhs))
-        col.rhs <- as.vector(col.rhs)
-    if (length(col.rhs) != nc)
-        stop(paste("Error: We have", length(col.rhs), "rhs's, but",
-            nc, "rows"))
-    if (direction == "min")
-        direction <- as.integer(0)
-    else
-        if (direction == "max")
-            direction <- as.integer(1)
-        else
-            stop ("Direction should be 'min' or 'max'")
-    varcount <- as.integer(nr * nc)              # no of vars
-    objective <- as.double(c(0, c(t(cost.mat))))
-    if (is.null (integers)) {
-        int.count <- 0
-        integers <- 0
-    }
-    else
-        int.count <- length(integers)
-    const.count <- as.integer(nr + nc)       # no of constraints
-    rnum.signs <- rep(-1, nr)               # sign holder
-#
-# Set the signs: <, >, = turn into 1,2,3 respectively. We also
-# allow those followed by another "=". Anything else is an error.
-#
-    rnum.signs[row.signs == "<" | row.signs == "<="] <- 1
-    rnum.signs[row.signs == "=" | row.signs == "=="] <- 3
-    rnum.signs[row.signs == ">" | row.signs == ">="] <- 2
-    if (any(rnum.signs == -1))
-        stop(paste("Unknown row sign in position ", which(rnum.signs ==
-            -1)[1]))
-#
-# Column signs.
-#
-    cnum.signs <- rep(-1, nc)
-    cnum.signs[col.signs == "<" | col.signs == "<="] <- 1
-    cnum.signs[col.signs == "=" | col.signs == "=="] <- 3
-    cnum.signs[col.signs == ">" | col.signs == ">="] <- 2
-    if (any(cnum.signs == -1))
-        stop(paste("Unknown column sign in position ", which(cnum.signs ==
-            -1)[1]))
-#
-# Set up integer indicator: all variables are integers here.
-#
-    intcount <- as.integer(varcount)
-    intvec <- as.integer(1:varcount)
-#
-# A few more things, plus dual action.
-#
-    objval <- as.double(0)
-    solution <- as.double(numeric(nc * nr))
-    status <- as.integer(0)
-    sens.coef.from <- sens.coef.to <- 0
-    duals <- duals.from <- duals.to <- 0
-    if (compute.sens) {
-        sens.coef.from <- sens.coef.to <- numeric(varcount)
-        duals <- duals.from <- duals.to <- numeric(varcount +
-            const.count)
-    }
-#
-# Stick a zero on the front of costs, and off we go.
-#
-    costs <- as.double (c(0, c(cost.mat)))
-    lps.out <- .C("lp_transbig",
-	direction = direction,
-	rcount = as.integer (nr),
-        ccount = as.integer (nc),
-	costs = costs,
-	rsigns = as.integer (rnum.signs),
-	rrhs = as.double (row.rhs),
-	csigns = as.integer (cnum.signs),
-	crhs = as.double (col.rhs),
-	objval = objval,
-        int.count = int.count,
-	integers = integers,
-        solution = solution,
-	presolve = as.integer(presolve),
-        compute.sens = as.integer(compute.sens),
-	sens.coef.from = as.double(sens.coef.from),
-        sens.coef.to = as.double(sens.coef.to),
-	duals = as.double(duals),
-        duals.from = as.double(duals.from),
-	duals.to = as.double(duals.to),
-        status = status, PACKAGE="lpSolve")
-#
-# Set solution back into a matrix.
-#
-    lps.out$solution = matrix(lps.out$solution, nr, nc, byrow = FALSE)
-    if (length(duals) > 0) {
-        lps.out$sens.coef.from <- matrix(lps.out$sens.coef.from,
-            nr, nc, byrow = TRUE)
-        lps.out$sens.coef.to <- matrix(lps.out$sens.coef.to,
-            nr, nc, byrow = TRUE)
-        lps.out$duals <- matrix(lps.out$duals, nr, nc, byrow = TRUE)
-        lps.out$duals.from <- matrix(lps.out$duals.from, nr,
-            nc, byrow = TRUE)
-        lps.out$duals.to <- matrix(lps.out$duals.to, nr, nc,
-            byrow = TRUE)
-    }
-    if(any(names(version) == "language"))
-        class(lps.out) <- "lp"
-    else oldClass(lps.out) <- "lp"
-    lps.out
+
+  if(any(is.element(c("<", ">", "=="), c(row.signs, col.signs))))
+    stop("constraint types must be specified by ", dQuote("<="), ", ",
+          dQuote(">="), " or ", dQuote("="))
+
+  cost.mat <- as.matrix(cost.mat)
+
+  nr <- nrow(cost.mat)
+  nc <- ncol(cost.mat)
+  nvar <- nr * nc
+
+  direction <- match.arg(direction)
+
+  if(is.null(integers))
+    integers <- integer(0)
+  if(length(integers) && integers[1] == "all")
+    integers <- 1:nvar
+
+  lprec <- make.lp(nr + nc, nvar)
+
+  x <- as.double(rep(1.0, 2))
+  for(k in 1:nvar) {
+    index <- c(((k - 1) %% nr) + 1, nr + ceiling(k / nr))
+    set.column(lprec, k, x, index)
+  }
+
+  set.objfn(lprec, cost.mat)
+  set.constr.type(lprec, c(row.signs, col.signs))
+  set.rhs(lprec, c(row.rhs, col.rhs))
+  set.type(lprec, integers, "integer")
+
+  if(presolve > 0)
+    control <- lp.control(lprec, presolve = "sensduals")
+
+  status <- solve(lprec)
+
+  if(compute.sens) {
+    sens.obj <- get.sensitivity.obj(lprec)
+    sens.coef.from = matrix(sens.obj$objfrom, nr, nc)
+    sens.coef.to = matrix(sens.obj$objtill, nr, nc)
+  }
+  else {
+    sens.coef.from = NA
+    sens.coef.to = NA
+  }
+
+  ans <- list(direction = ifelse(direction == "min", 0, 1),
+              costs = cost.mat,
+              rsigns = row.signs,
+              rrhs = row.rhs,
+              csigns = col.signs,
+              crhs = col.rhs,
+              objval = get.objective(lprec),
+              integers = integers,
+              solution = matrix(get.variables(lprec), nr, nc),
+              presolve = presolve,
+              compute.sens = compute.sens,
+              sens.coef.from = sens.coef.from,
+              sens.coef.to = sens.coef.to,
+              status = status)
+
+  oldClass(ans) <- "lp"
+  ans
 }
 

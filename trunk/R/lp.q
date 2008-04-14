@@ -30,6 +30,10 @@ lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
   #  compute.sens: Numeric: compute sensitivities? Default 0 (no). Any non-zero
   #                value means "yes."
 
+  if(any(is.element(c("<", ">", "=="), const.dir)))
+    stop("constraint types must be specified by ", dQuote("<="), ", ",
+          dQuote(">="), " or ", dQuote("="))
+
   if(!transpose.constraints)
     const.mat <- t(const.mat)
 
@@ -37,7 +41,7 @@ lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
 
   m <- dim(const.mat)[1]
   n <- dim(const.mat)[2]
-  one2n <- as.integer(1:m)
+  one2m <- as.integer(1:m)
 
   # Basic usage checks
 
@@ -53,36 +57,21 @@ lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
     stop(sQuote("const.rhs"), " must have the same number of elements as ",
          "there are rows in ", sQuote("const.mat"))
 
-  # The following is for consistency with the old version of lpSolve lp objects
-
-  const.dir.num <- rep(-1, length(const.dir))
-  const.dir.num[const.dir == "<" | const.dir == "<="] <- 1
-  const.dir.num[const.dir == "=" | const.dir == "=="] <- 3
-  const.dir.num[const.dir == ">" | const.dir == ">="] <- 2
-  if(any(const.dir.num == -1))
-    stop("unknown constraint direction found")
-
-  big.const.mat <- rbind(t(const.mat), const.dir.num, const.rhs)
-
-  if(missing(int.vec)) {
-    int.count <- 0
-    int.vec <- 0
-  }
-  else {
-    int.count <- length(int.vec)
-  }
-
   # Build the model
 
   lprec <- make.lp(m, n)
   control <- lp.control(lprec, sense = direction)
   for(j in 1:n)
-    set.column(lprec, j, const.mat[, j], one2n)
-  set.rhs(lprec, const.rhs, one2n)
-  set.constr.type(lprec, const.dir.num, one2n)
+    set.column(lprec, j, const.mat[, j], one2m)
+  set.rhs(lprec, const.rhs, one2m)
+  set.constr.type(lprec, const.dir, one2m)
   set.objfn(lprec, objective.in)
-  if(int.vec[1] > 0)
+
+  if(!missing(int.vec))
     set.type(lprec, int.vec, "integer")
+  else
+    int.vec <- integer(0)
+
   if(compute.sens > 0)
     control <- lp.control(lprec, presolve = "sensduals")
 
@@ -90,23 +79,22 @@ lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
 
   status <- solve(lprec)
 
-  lp.out <- list(direction = as.integer(ifelse(direction == "min", 0, 1)),
-                 x.count = as.integer(n),
+  lp.out <- list(direction = ifelse(direction == "min", 0, 1),
+                 x.count = n,
                  objective = objective.in,
-                 const.count = as.integer(m),
-                 constraints = big.const.mat,
-                 int.count = as.integer(int.count),
-                 int.vec = as.integer(int.vec),
-                 objval = as.double(get.objective(lprec)),
-                 solution = as.double(get.variables(lprec)),
-                 presolve = as.integer(0),
-                 compute.sens = as.integer(compute.sens),
-                 sens.coef.from = double(1),
-                 sens.coef.to = double(1),
-                 duals = double(1),
-                 duals.from = double(1),
-                 duals.to = double(1),
-                 status = as.integer(status))
+                 const.count = m,
+                 int.count = length(int.vec),
+                 int.vec = int.vec,
+                 objval = get.objective(lprec),
+                 solution = get.variables(lprec),
+                 presolve = 0,
+                 compute.sens = compute.sens,
+                 sens.coef.from = NA,
+                 sens.coef.to = NA,
+                 duals = NA,
+                 duals.from = NA,
+                 duals.to = NA,
+                 status = status)
 
   if(compute.sens > 0) {
     sens.obj <- get.sensitivity.obj(lprec)
@@ -118,11 +106,7 @@ lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
     lp.out$duals.to = as.double(sens.rhs$dualstill)
   }
 
-  if(any(names(version) == "language"))
-    class(lp.out) <- "lp"
-  else
-    oldClass(lp.out) <- "lp"
-
+  oldClass(lp.out) <- "lp"
   lp.out
 }
 
