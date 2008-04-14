@@ -5,11 +5,11 @@ SEXP RlpSolve_lprec_tag;
 
 lprec* lprecPointerFromSEXP(SEXP Slprec)
 {
-  if(TYPEOF(Slprec) != EXTPTRSXP || R_ExternalPtrTag(Slprec) != RlpSolve_lprec_tag)
-    error("the lp argument does not appear to be a valid linear program record");
-
   if(R_ExternalPtrAddr(Slprec) == NULL)
     error("NULL value passed as linear program record");
+
+  if(TYPEOF(Slprec) != EXTPTRSXP || R_ExternalPtrTag(Slprec) != RlpSolve_lprec_tag)
+    error("the lp argument does not appear to be a valid linear program record");
 
   return (lprec*) R_ExternalPtrAddr(Slprec);
 }

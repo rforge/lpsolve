@@ -31,7 +31,7 @@ void lpSolve(double* obj, double* A, int* pldA, int* pp, int* peq, double* b,
   if(lp == NULL)
     error("unable to create linear program");
 
-  set_verbose(lp, 0);
+  set_verbose(lp, NEUTRAL);
 
   for(j = 0; j < p; j++) {
     set_columnex(lp, j+1, ldA, A+j*ldA, rowno);

@@ -1,47 +1,40 @@
 \name{lp.transport}
 \alias{lp.transport}
-\title{Integer Programming for the Transportation Problem}
-\description{Interface to lp\_solve linear/integer programming
-system specifically for solving transportation problems}
+
+\title{The Transportation Problem}
+
+\description{An integer program solving the transportation problem. Additionally, this function provides an example of building and solving a sparse integer/linear program using the lpSolve API.}
+
 \usage{
-lp.transport (cost.mat, direction="min", row.signs, row.rhs, col.signs, col.rhs, presolve=0, compute.sens=0, integers = integer(nc*nr) )
+lp.transport(cost.mat, direction = c("min", "max"), row.signs, row.rhs,
+             col.signs, col.rhs, presolve = 0, compute.sens = 0,
+             integers = "all")
 }
+
 \arguments{
-\item{cost.mat}{Matrix of costs; ij-th element is the cost of transporting 
-one item from source i to destination j.}
-\item{direction}{Character, length 1: "min" or "max"}
-\item{row.signs}{Vector of character strings giving the direction of the 
-row constraints: each value should be one of "<," "<=," "=," "==," ">," 
-or ">=."}
-\item{row.rhs}{Vector of numeric values for the right-hand sides of the 
-row constraints.}
-\item{col.signs}{Vector of character strings giving the direction of the 
-column constraints: each value should be one of "<," "<=," "=," "==," ">," 
-or ">=."}
-\item{col.rhs}{Vector of numeric values for the right-hand sides of the 
-column constraints.}
-\item{presolve}{Numeric: presolve? Default 0 (no); any
-non-zero value means "yes." Currently ignored.}
-\item{compute.sens}{Numeric: compute sensitivity? Default 0 (no); any
-non-zero value means "yes."}
-\item{integers}{Vector of integers whose ith element gives the index 
-of the ith integer variable. Its length will be the number of integer 
-variables. Default: all variables are integer. Set to NULL to have no
-variables be integer.}
+  \item{cost.mat}{a numeric matrix containing the costs. The ij-th element is the cost of transporting one item from source i to destination j.}
+  \item{direction}{a character string specifying the direction of optimization: "min" (default) or "max."}
+  \item{row.signs}{a character vector specifying the types of the row constraints: each element must be one of "<=", "=", or ">=".}
+  \item{row.rhs}{a numeric vector containing the right-hand side of the row constraints.}
+\item{col.signs}{a character vector specifying the types of the column constraints: each element must be one of "<=", "=", or ">=".}
+  \item{col.rhs}{a numeric vector containing the right-hand side of the column constraints.}
+  \item{presolve}{presolve? Default 0 (no); any non-zero value means yes.}
+  \item{compute.sens}{compute sensitivity? Default 0 (no); any non-zero value means yes.}
+  \item{integers}{a numeric vector of positive integers containing the indices of the decision variables that are restricted to integer values. Additionally, \code{"all"} (the default) restricts all decision variables to integer values and \code{NULL} sets all the decision variables to type real.}
 }
+
 \details{
-This is a particular integer programming problem. All the decision variables
-are assumed to be integers, and there is one constraint per row and one per
-column (and no others). This is assumed to be a minimization problem.
+This is a particular integer programming problem. All the decision variables are assumed to be integers, and there is one constraint per row and one per column (and no others). This is assumed to be a minimization problem.
 }
+
 \value{
-An \code{\link{lp}} object. Constraints are implicit and not returned.
-See documentation for details.
+An \code{\link{lp}} object. Constraints are implicit and not returned. See documentation for details.
 }
+
 \references{Example problem from Bronson (1981), \emph{Operations Research},
 Scahum's Outline Series, McGraw-Hill.}
-\author{Sam Buttrey, \email{buttrey@nps.edu}}
-\seealso{\code{\link{lp.assign}}, \code{\link{lp.transport}}}
+
+\author{Sam Buttrey, \email{sebuttre@nps.edu}}
 
 \examples{
 #
@@ -56,9 +49,9 @@ costs[8,4] <- 10; costs[4,2:4] <- c(.7, 1.4, 2.1)
 #
 # Set up constraint signs and right-hand sides.
 #
-row.signs <- rep ("<", 8)
+row.signs <- rep ("<=", 8)
 row.rhs <- c(200, 300, 350, 200, 100, 50, 100, 150)
-col.signs <- rep (">", 5)
+col.signs <- rep (">=", 5)
 col.rhs <- c(250, 100, 400, 500, 200)
 #
 # Run
@@ -78,6 +71,7 @@ lp.transport (costs, "min", row.signs, row.rhs, col.signs, col.rhs)$solution
 [8,]    0    0    0   50  100
 }
 }
+
 \keyword{optimize}
 
 

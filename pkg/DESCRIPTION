@@ -1,9 +1,9 @@
 Package: lpSolve
 Version: 5.5.0.12
-Date: 2008-02-08
+Date: 2008-04-12
 Title: Interface to lp_solve v. 5.5
 Author: lp_solve <http://lpsolve.sourceforge.net/>,
-        Sam Buttrey <buttrey@nps.navy.mil>,
+        Sam Buttrey <sebuttre@nps.edu>,
         Kjell Konis <kjell.konis@epfl.ch>.
 Maintainer: Kjell Konis <kjell.konis@epfl.ch>
 Depends: R (>= 2.6.2)
