@@ -4,7 +4,7 @@
 \title{Set Type}
 
 \description{
-Set the type of a decision variable in an lpSolve linear programming model.
+Set the type of a decision variable in an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ set.type(lprec, columns, type = c("integer", "binary", "real"))
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying which variables are to have their type set.}
   \item{type}{either \code{"integer"}, \code{"binary"} or \code{"real"}. The decision variables in \code{columns} will have their type set to this value.}
 }

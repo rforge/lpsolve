@@ -4,7 +4,7 @@
 \title{Set Right-Hand-Side}
 
 \description{
-Set elements on the right-hand-side of an lpSolve linear programming model.
+Set elements on the right-hand-side of an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ set.rhs(lprec, b, rows = NULL)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{b}{a numeric vector of length \code{m} (where m is the number of constraints in \code{lprec}) }
   \item{rows}{a numeric vector containing unique elements from the set \{1, \dots, m\} (where m is the number of constraints in \code{lprec}) identifying the constraints for which to set the right-hand-side value. If \code{NULL} the right-hand-side is set for all constraints.}
 }

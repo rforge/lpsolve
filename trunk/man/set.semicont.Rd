@@ -4,7 +4,7 @@
 \title{Set Semicontinuous}
 
 \description{
-Set a decision variable as semicontinuous in an lpSolve linear programming model.
+Set a decision variable as semicontinuous in an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ set.semicont(lprec, columns, sc = TRUE)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying which variables should be made semicontinuous.}
   \item{sc}{a logical value. If \code{FALSE} the decision variables specified in \code{columns} will have their \code{kind} set to \code{standard}.}
 }

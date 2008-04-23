@@ -33,6 +33,8 @@
 		0E9AA01B0D622B8400426ADF /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lp.control.q; sourceTree = "<group>"; };
 		0E9B6DB20DA76684003356E5 /* row.add.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = row.add.mode.q; sourceTree = "<group>"; };
 		0E9B6DB30DA76B66003356E5 /* row.add.mode.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = row.add.mode.Rd; sourceTree = "<group>"; };
+		0E9D0A3B0DBA5D49007E96B8 /* delete.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = delete.lp.q; sourceTree = "<group>"; };
+		0E9D0A3D0DBA716D007E96B8 /* delete.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.lp.Rd; path = man/delete.lp.Rd; sourceTree = SOURCE_ROOT; };
 		0EA084D70D93CEE0007DBBD5 /* lp.control.options.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.control.options.Rd; path = man/lp.control.options.Rd; sourceTree = SOURCE_ROOT; };
 		0EA4F05B0D7ECA480010FBA9 /* get.kind.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.kind.q; sourceTree = "<group>"; };
 		0EA6F46C0D631EE200496510 /* get.presolveloops.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.presolveloops.q; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				0E99A1550D7DD2FE00F4A4CC /* add.SOS.q */,
 				0ECCA9210D8532E20093DFAC /* delete.column.q */,
 				0ED7988D0D83EC09004836E1 /* delete.constraint.q */,
+				0E9D0A3B0DBA5D49007E96B8 /* delete.lp.q */,
 				0E09FE610D6A6E0E0090E7A0 /* dim.lpExtPtr.q */,
 				0E09FE620D6A6E0E0090E7A0 /* dimnames.lpExtPtr.q */,
 				0E98F97F0D8048C400C06D67 /* get.basis.q */,
@@ -400,6 +403,7 @@
 				0ED7989A0D83F28F004836E1 /* add.SOS.Rd */,
 				0ECCA9220D85330B0093DFAC /* delete.column.Rd */,
 				0ED7989C0D83F28F004836E1 /* delete.constraint.Rd */,
+				0E9D0A3D0DBA716D007E96B8 /* delete.lp.Rd */,
 				0ED7989D0D83F28F004836E1 /* dim.lpExtPtr.Rd */,
 				0ED7989E0D83F28F004836E1 /* dimnames.lpExtPtr.Rd */,
 				0ED7989F0D83F28F004836E1 /* get.basis.Rd */,

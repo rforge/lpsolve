@@ -22,6 +22,16 @@ int __WINAPI RlpSolveAbortFunction(lprec *lp, void *userhandle)
 }
 
 
+SEXP RlpSolve_NAMED(SEXP Sobject)
+{
+  SEXP ret = R_NilValue;
+  PROTECT(ret = allocVector(INTSXP, 1));
+  INTEGER(ret)[0] <- (int)  NAMED(Sobject);
+  UNPROTECT(1);
+  return ret;
+}
+
+
 void R_init_lpSolve(DllInfo *info)
 {
   RlpSolve_lprec_tag = install("RLPSOLVE_LPREC_TAG");

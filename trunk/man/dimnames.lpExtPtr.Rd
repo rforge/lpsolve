@@ -5,7 +5,7 @@
 \title{Dimnames of an Object}
 
 \description{
-Retrieve or set the dimnames in an lpSolve linear programming model.
+Retrieve or set the dimnames in an lpSolve linear program model object.
 }
 
 \usage{
@@ -14,12 +14,12 @@ Retrieve or set the dimnames in an lpSolve linear programming model.
 }
 
 \arguments{
-  \item{x}{an lpSolve linear programming model.}
-  \item{value}{a list containing two character vectors of lengths \code{m} and \code{n} specifying the row names and the column names for the lpSolve linear programming model.  The number of constraints in \code{x} is denoted by \code{m} and the number of decision variables by \code{n}.}
+  \item{x}{an lpSolve linear program model object.}
+  \item{value}{a list containing two character vectors of lengths \code{m} and \code{n} specifying the row names and the column names for the lpSolve linear program model object.  The number of constraints in \code{x} is denoted by \code{m} and the number of decision variables by \code{n}.}
 }
 
 \value{
-a list of two character vectors containing the row names and the column names in the lpSolve linear programming model.
+a list of two character vectors containing the row names and the column names in the lpSolve linear program model object.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}

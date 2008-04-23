@@ -4,7 +4,7 @@
 \title{Make LP}
 
 \description{
-Create a new lpSolve linear programming model.
+Create a new lpSolve linear program model object.
 }
 
 \usage{
@@ -17,7 +17,7 @@ make.lp(nrow = 0, ncol = 0)
 }
 
 \value{
-an lpSolve linear programming model. Specifically an R external pointer with class \code{lpExtPtr}.
+an lpSolve linear program model object. Specifically an R external pointer with class \code{lpExtPtr}.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}

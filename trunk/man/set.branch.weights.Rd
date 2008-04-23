@@ -4,7 +4,7 @@
 \title{Set Branch Weights}
 
 \description{
-Set weights on the variables in an lpSolve linear programming model.
+Set weights on the variables in an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ set.branch.weights(lprec, weights)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{weights}{a numeric vector with \code{n} elements (where \code{n} is the number of decision variables in \code{lprec}) containing the weights for the decision variables.}
 }
 

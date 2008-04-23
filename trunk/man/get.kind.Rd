@@ -4,7 +4,7 @@
 \title{Get Kind}
 
 \description{
-Retrieve the kind of a decision variable from an lpSolve linear programming model.
+Retrieve the kind of a decision variable from an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.kind(lprec, columns = NULL)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying the columns for which the kind will be retrieved.}
 }
 

@@ -1,7 +1,7 @@
 lpSolve <- function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
                     intvec = integer(0), control = list())
 {
-  p <- length(obj)
+  n <- length(obj)
 
   if(!is.null(A) && !is.null(Aeq)) {
     dimnames(A) <- dimnames(Aeq) <- names(b) <- names(beq) <- NULL
@@ -30,15 +30,15 @@ lpSolve <- function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
     stop("no constraints provided")
 
   if(length(lb) == 1)
-    lb <- rep(lb, p)
+    lb <- rep(lb, n)
 
-  if(length(lb) != p)
+  if(length(lb) != n)
     stop("the number of lower bounds must match the number of decision variables")
 
   if(length(ub) == 1)
-    ub <- rep(ub, p)
+    ub <- rep(ub, n)
 
-  if(length(ub) != p)
+  if(length(ub) != n)
     stop("the number of upper bounds must match the number of decision variables")
 
   n.ints <- length(intvec)
@@ -131,7 +131,7 @@ lpSolve <- function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
             obj = as.double(obj),
             A = A,
             ldA = as.integer(ldA),
-            p = as.integer(p),
+            n = as.integer(n),
             ldAeq = as.integer(ldAeq),
             b = as.double(b),
             lb = as.double(lb),
@@ -145,7 +145,7 @@ lpSolve <- function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
             eps = as.double(eps),
             presolve = as.integer(presolve),
             objective = double(1),
-            x = double(p),
+            x = double(n),
             status = integer(1),
             NAOK = TRUE,
             PACKAGE = "lpSolve")

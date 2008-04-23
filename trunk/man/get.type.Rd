@@ -4,7 +4,7 @@
 \title{Get Type}
 
 \description{
-Retrieve the type of a decision variable from an lpSolve linear programming model.
+Retrieve the type of a decision variable from an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.type(lprec, columns = NULL, as.char = TRUE)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying the columns for which the type will be retrieved.}
   \item{as.char}{a logical value. If \code{TRUE} the constraint type is returned as a character string, otherwise the logical code used internally by lpSolve is returned.}
 }

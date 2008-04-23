@@ -2,24 +2,25 @@ lp.transport <- function(cost.mat, direction = c("min", "max"), row.signs,
     row.rhs, col.signs, col.rhs, presolve = 0, compute.sens = 0,
     integers = "all")
 {
-
-# lp.transport: use lpsolve.dll to solve a transportation problem.
-# This is a linear program with an ixj matrix of decision variables,
-# and constraints on the row and column sums (and no others)
-#
-# Arguments: cost.mat: matrix or data.frame of costs
-#                 dir: direction ("min" or "max")
-#           row.signs: signs for row constraints
-#             row.rhs: values for row constraints
-#           col.signs: signs for column constraints
-#             col.rhs: values for column constraints
-#            presolve: Numeric: should we presolve? Default 0 (no); non-0
-#                      values means "yes." Currently mostly ignored.
-#        compute.sens: Numeric: compute sensitivities? Default 0 (no);
-#                      non-zero value means "yes."
-#            integers: Indicator of integer variables: default, all.
-#
-# Return value: list from lpsolve, including objective and optimal values.
+  # lp.transport: use lpsolve.dll to solve a transportation problem.
+  # This is a linear program with an ixj matrix of decision variables,
+  # and constraints on the row and column sums (and no others)
+  #
+  # Arguments:
+  #     cost.mat: matrix or data.frame of costs
+  #          dir: direction ("min" or "max")
+  #    row.signs: signs for row constraints
+  #      row.rhs: values for row constraints
+  #    col.signs: signs for column constraints
+  #      col.rhs: values for column constraints
+  #     presolve: numeric: should we presolve? Default 0 (no); non-0
+  #                        values means "yes." Currently mostly ignored.
+  # compute.sens: numeric: compute sensitivities? Default 0 (no);
+  #                        non-zero value means "yes."
+  #              integers: indicator of integer variables: default, all.
+  #
+  # Return value:
+  #   a list from lpsolve, including objective and optimal values.
 
   if(any(is.element(c("<", ">", "=="), c(row.signs, col.signs))))
     stop("constraint types must be specified by ", dQuote("<="), ", ",

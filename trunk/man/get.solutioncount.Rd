@@ -4,7 +4,7 @@
 \title{Get Solution Count}
 
 \description{
-Computes the number of equal solutions in a successfully solved lpSolve linear programming model. This is only valid if there are integer, semi-continuous or SOS variables in the model so that the branch-and-bound algorithm is used. This count gives the number of solutions with the same optimal objective value.
+Computes the number of equal solutions in a successfully solved lpSolve linear program model object. This is only valid if there are integer, semi-continuous or SOS variables in the model so that the branch-and-bound algorithm is used. This count gives the number of solutions with the same optimal objective value.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.solutioncount(lprec)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
 }
 
 \value{

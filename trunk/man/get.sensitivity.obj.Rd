@@ -4,7 +4,7 @@
 \title{Get Sensitivity: Objective}
 
 \description{
-Retrieve the sensitivity of the objective function from a successfully solved lpSolve linear programming model.
+Retrieve the sensitivity of the objective function from a successfully solved lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.sensitivity.obj(lprec)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
 }
 
 \value{

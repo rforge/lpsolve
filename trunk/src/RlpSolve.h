@@ -13,5 +13,6 @@ void R_init_lpSolve(DllInfo *info);
 
 lprec* lprecPointerFromSEXP(SEXP Slprec);
 int __WINAPI RlpSolveAbortFunction(lprec *lp, void *userhandle);
+SEXP RlpSolve_is_bound(SEXP Sobject);
 
 

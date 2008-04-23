@@ -4,7 +4,7 @@
 \title{Solver Control Options}
 
 \description{
-A description of the various control options that can be set in an lpSolve linear programming model using the \code{\link{lp.control}} function.
+A description of the various control options that can be set in an lpSolve linear program model object using the \code{\link{lp.control}} function.
 }
 
 \section{Control Options}{

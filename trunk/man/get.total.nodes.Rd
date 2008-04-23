@@ -4,7 +4,7 @@
 \title{Get Total Nodes}
 
 \description{
-Retrieves the total number of nodes processed in the branch-and-bound algorithm from a successfully solved lpSolve linear programming model.
+Retrieves the total number of nodes processed in the branch-and-bound algorithm from a successfully solved lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.total.nodes(lprec)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
 }
 
 \details{

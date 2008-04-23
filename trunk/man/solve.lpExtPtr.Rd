@@ -4,7 +4,7 @@
 \title{Solve a Linear Program}
 
 \description{
-Attempt to compute the optimal solution of an lpSolve linear programming model.
+Attempt to compute the optimal solution of an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ Attempt to compute the optimal solution of an lpSolve linear programming model.
 }
 
 \arguments{
-  \item{a}{an lpSolve linear programming model.}
+  \item{a}{an lpSolve linear program model object.}
   \item{b}{this argument is ignored.}
   \item{...}{additional arguments are ignored.}
 }

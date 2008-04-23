@@ -4,7 +4,7 @@
 \title{Get Branch Mode}
 
 \description{
-Retrieve the branch mode for one or more decision variables from an lpSolve linear programming model.
+Retrieve the branch mode for one or more decision variables from an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.branch.mode(lprec, columns = NULL, as.char = TRUE)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying for which decision variables the branch modes should be retrieved. If \code{NULL} branch modes are retrieved for all the decision variables.}
   \item{as.char}{a logical value. If \code{TRUE} the branch mode is returned as a character string, otherwise the integer code used directly in lpSolve is returned.}
 }

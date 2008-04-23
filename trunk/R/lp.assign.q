@@ -1,20 +1,20 @@
 lp.assign <- function(cost.mat, direction = c("min", "max"), presolve = 0,
                       compute.sens = 0)
 {
-# lp.assign: use lpsolve.dll to solve an assignment problem. This
-# is a linear program with an ixj matrix of decision variables,
-# and i+j constraints: that the rows and columns all add up to one.
-#
-# Arguments:
-#  cost.mat: matrix or data.frame of costs
-#  direction: "min" (default) or "max"
-#  presolve: numeric. Presolve? Default 0. Currently ignored.
-#  compute.sens: numeric. Compute sensitivities? Default 0 (no).
-#                Any non-zero number means "yes" and, in that
-#                case, presolving is attempted.
-#
-# Return value: list from lpsolve, including objective and
-# assignments.
+  # lp.assign: use lpsolve.dll to solve an assignment problem. This
+  # is a linear program with an ixj matrix of decision variables,
+  # and i+j constraints: that the rows and columns all add up to one.
+  #
+  # Arguments:
+  #      cost.mat: matrix or data.frame of costs
+  #     direction: "min" (default) or "max"
+  #      presolve: numeric. Presolve? Default 0. Currently ignored.
+  #  compute.sens: numeric. Compute sensitivities? Default 0 (no).
+  #                Any non-zero number means "yes" and, in that
+  #                case, presolving is attempted.
+  #
+  # Return value:
+  #   a list from lpsolve, including objective and assignments.
 
   direction <- match.arg(direction)
 

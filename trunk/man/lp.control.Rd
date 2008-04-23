@@ -4,7 +4,7 @@
 \title{lpSolve Control Parameters}
 
 \description{
-Set control parameters in an lpSolve linear programming model.
+Set control parameters in an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ lp.control(lprec, ..., reset = FALSE)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{\dots}{control arguments to bet set in \code{lprec}.}
   \item{reset}{a logical value. If \code{TRUE} all control parameters are reset to their default values.}
 }

@@ -4,7 +4,7 @@
 \title{Get Right-Hand-Side}
 
 \description{
-Retrieve right-hand-side values from an lpSolve linear programming model.
+Retrieve right-hand-side values from an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.rhs(lprec, rows = NULL)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{rows}{a numeric vector of unique values from the set \code{\{1, \dots, m\}} specifying the rows for which the right-hand-side values will be retrieved. If \code{NULL} the right-hand-side values are retrieved for all rows.}
 }
 

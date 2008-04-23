@@ -1,8 +1,13 @@
 make.lp <- function(nrow = 0, ncol = 0)
 {
-  lp <- .Call("RlpSolve_make_lp", as.integer(nrow), as.integer(ncol),
-               PACKAGE = "lpSolve")
-  oldClass(lp) <- "lpExtPtr"
-  lp
+  lprec <- .Call("RlpSolve_make_lp", as.integer(nrow), as.integer(ncol),
+                  PACKAGE = "lpSolve")
+
+  if(!is.null(lp)) {
+    reg.finalizer(lprec, lpSolve::delete.lp, TRUE)
+    oldClass(lprec) <- "lpExtPtr"
+  }
+
+  lprec
 }
 

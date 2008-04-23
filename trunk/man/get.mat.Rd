@@ -12,7 +12,7 @@ get.mat(lprec, row, column)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{row}{a single numeric value from the set \{1, \dots, m\} (where \code{m} is the number of constraints in \code{lprec}) specifying the row of the matrix element.}
   \item{column}{a single numeric value from the set \{1, \dots, n\} (where \code{n} is the number of decision variables in \code{lprec}) specifying the column of the matrix element.}
 }
