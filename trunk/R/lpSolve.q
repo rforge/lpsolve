@@ -153,20 +153,20 @@ lpSolve <- function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
   if(lps$status == -2)
     message <- "out of memory"
   else
-    message = c("optimal solution found",
-                "the model is sub-optimal",
-                "the model is infeasible",
-                "the model is unbounded",
-                "the model is degenerate",
-                "numerical failure encountered",
-                "process aborted",
-                "timeout",
-                "NOT USED",
-                "the model was solved by presolve",
-                "the branch and bound routine failed",
-                "the branch and bound was stopped because of a break-at-first or break-at-value",
-                "a feasible branch and bound solution was found",
-                "no feasible branch and bound solution was found")[lps$status+1]
+    message <- c("optimal solution found",
+                 "the model is sub-optimal",
+                 "the model is infeasible",
+                 "the model is unbounded",
+                 "the model is degenerate",
+                 "numerical failure encountered",
+                 "process aborted",
+                 "timeout",
+                 "NOT USED",
+                 "the model was solved by presolve",
+                 "the branch and bound routine failed",
+                 "the branch and bound was stopped because of a break-at-first or break-at-value",
+                 "a feasible branch and bound solution was found",
+                 "no feasible branch and bound solution was found")[lps$status+1]
 
   control$eps <- lps$eps
   names(control$eps) <- c("epsb", "epsd", "epsel", "epsint", "epsperturb", "epspivot")
