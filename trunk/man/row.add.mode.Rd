@@ -32,8 +32,5 @@ There are several caveats associated with row entry mode. First, only use this f
 
 \seealso{\code{\link{add.constraint}}}
 
-\examples{
-}
-
 \keyword{programming}
 

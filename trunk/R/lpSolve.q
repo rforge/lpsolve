@@ -151,7 +151,7 @@ lpSolve <- function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
             PACKAGE = "lpSolve")
 
   if(lps$status == -2)
-    status.message = "out of memory"
+    message <- "out of memory"
   else
     message = c("optimal solution found",
                 "the model is sub-optimal",
