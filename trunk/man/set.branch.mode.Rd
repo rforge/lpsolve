@@ -27,3 +27,4 @@ a vector of logical values indicating whether the branch modes were successfully
 
 \keyword{programming}
 
+

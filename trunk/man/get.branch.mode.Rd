@@ -8,7 +8,7 @@ Retrieve the branch mode for one or more decision variables from an lpSolve line
 }
 
 \usage{
-get.branch.mode(lprec, columns = NULL, as.char = TRUE)
+get.branch.mode(lprec, columns = 1:n, as.char = TRUE)
 }
 
 \arguments{
@@ -31,4 +31,5 @@ get.branch.mode(lps.model)
 }
 
 \keyword{programming}
+
 

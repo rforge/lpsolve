@@ -1,7 +1,6 @@
-get.type <- function(lprec, columns = NULL, as.char = TRUE)
+get.type <- function(lprec, columns = 1:n, as.char = TRUE)
 {
-  if(is.null(columns))
-    columns <- 1:dim(lprec)[2]
+  n <- dim(lprec)[2]
 
   ind <- .Call("RlpSolve_is_int", lprec, as.integer(columns),
                 PACKAGE = "lpSolve")
@@ -16,4 +15,5 @@ get.type <- function(lprec, columns = NULL, as.char = TRUE)
 
   types
 }
+
 

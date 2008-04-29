@@ -231,8 +231,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -265,19 +263,22 @@
 								<string>0E3F54630D536C6800617C9D</string>
 								<string>0EABBD6A0D59CD4500CF7B0C</string>
 								<string>0EF13F550D5C9EDD00F77D3C</string>
+								<string>0EABBD6B0D59CD5000CF7B0C</string>
+								<string>0EF13F780D5CA9DA00F77D3C</string>
 								<string>0E3F54710D536C9400617C9D</string>
 								<string>0E16C0080D64831600EE878E</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>39</integer>
 									<integer>9</integer>
 									<integer>2</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {215, 675}}</string>
+							<string>{{0, 454}, {215, 675}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -296,7 +297,7 @@
 							<real>215</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>60 91 897 734 0 0 1280 832 </string>
+						<string>113 92 897 734 0 0 1280 832 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -307,12 +308,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>dimnames.lpExtPtr.q</string>
+								<string>lp.control.q</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -320,33 +323,38 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>dimnames.lpExtPtr.q</string>
+										<string>lp.control.q</string>
 										<key>_historyCapacity</key>
 										<integer>10</integer>
 										<key>bookmark</key>
-										<string>0EA1304C0DBF8F50000F1ED6</string>
+										<string>0EB3C0D50DC67B3F0081500F</string>
 										<key>history</key>
 										<array>
-											<string>0EAA7E560DBAB91A0058615C</string>
-											<string>0EAA7E580DBAB91A0058615C</string>
-											<string>0EAA7E5A0DBAB91A0058615C</string>
-											<string>0E943B210DBB48A700C3469E</string>
-											<string>0E943B220DBB48A700C3469E</string>
-											<string>0E943B230DBB48A700C3469E</string>
-											<string>0E943B240DBB48A700C3469E</string>
-											<string>0E943B250DBB48A700C3469E</string>
-											<string>0E943B300DBB48A700C3469E</string>
+											<string>0EB3C0BF0DC67B3F0081500F</string>
+											<string>0EB3C0C00DC67B3F0081500F</string>
+											<string>0EB3C0C10DC67B3F0081500F</string>
+											<string>0EB3C0C20DC67B3F0081500F</string>
+											<string>0EB3C0C30DC67B3F0081500F</string>
+											<string>0EB3C0C40DC67B3F0081500F</string>
+											<string>0EB3C0C50DC67B3F0081500F</string>
+											<string>0EB3C0C60DC67B3F0081500F</string>
+											<string>0EB3C0C70DC67B3F0081500F</string>
+											<string>0EB3C0C80DC67B3F0081500F</string>
 										</array>
 										<key>prevStack</key>
 										<array>
-											<string>0EAA7E5E0DBAB91A0058615C</string>
-											<string>0EAA7E5F0DBAB91A0058615C</string>
-											<string>0EAA7E680DBAB91A0058615C</string>
-											<string>0EAA7E6A0DBAB91A0058615C</string>
-											<string>0EAA7E6B0DBAB91A0058615C</string>
-											<string>0E943B290DBB48A700C3469E</string>
-											<string>0E943B2B0DBB48A700C3469E</string>
-											<string>0E943B2D0DBB48A700C3469E</string>
+											<string>0EB3C0C90DC67B3F0081500F</string>
+											<string>0EB3C0CA0DC67B3F0081500F</string>
+											<string>0EB3C0CB0DC67B3F0081500F</string>
+											<string>0EB3C0CC0DC67B3F0081500F</string>
+											<string>0EB3C0CD0DC67B3F0081500F</string>
+											<string>0EB3C0CE0DC67B3F0081500F</string>
+											<string>0EB3C0CF0DC67B3F0081500F</string>
+											<string>0EB3C0D00DC67B3F0081500F</string>
+											<string>0EB3C0D10DC67B3F0081500F</string>
+											<string>0EB3C0D20DC67B3F0081500F</string>
+											<string>0EB3C0D30DC67B3F0081500F</string>
+											<string>0EB3C0D40DC67B3F0081500F</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -360,7 +368,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {660, 688}}</string>
 								<key>RubberWindowFrame</key>
-								<string>60 91 897 734 0 0 1280 832 </string>
+								<string>113 92 897 734 0 0 1280 832 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -380,7 +388,7 @@
 								<key>Frame</key>
 								<string>{{0, 693}, {660, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>60 91 897 734 0 0 1280 832 </string>
+								<string>113 92 897 734 0 0 1280 832 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -404,9 +412,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>0EA1304D0DBF8F50000F1ED6</string>
+				<string>0EB3C0D60DC67B3F0081500F</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>0EA1304E0DBF8F50000F1ED6</string>
+				<string>0EB3C0D70DC67B3F0081500F</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -543,7 +551,7 @@
 		<string>/Users/kjell/Documents/Projects/lpSolve/lpSolve.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>60 91 897 734 0 0 1280 832 </string>
+	<string>113 92 897 734 0 0 1280 832 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

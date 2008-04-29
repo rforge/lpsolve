@@ -1,19 +1,10 @@
 add.constraint <- function(lprec, xt, type = c("<=", "=", ">="), b,
-                           indices = NULL)
+                           indices = 1:n)
 {
   n <- dim(lprec)[2]
 
-  if(is.null(indices)) {
-    if(length(xt) != n)
-      stop(sQuote("xt"), " must contain one element for each column in ",
-           sQuote("lprec"))
-    indices <- 1:n
-  }
-
-  else
-    if(length(xt) != length(indices))
-      stop(sQuote("xt"), " and ", sQuote("indices"),
-           " must have the same number of elements")
+  if(length(xt) != length(indices))
+    stop(sQuote("xt"), " and ", sQuote("indices"), " are not the same length")
 
   if(is.character(type)) {
     type <- match.arg(type)

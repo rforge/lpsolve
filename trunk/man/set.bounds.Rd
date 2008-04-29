@@ -8,7 +8,7 @@ Set bounds on the decision variables in an lpSolve linear program model object.
 }
 
 \usage{
-set.bounds(lprec, lower = NULL, upper = NULL, columns = NULL)
+set.bounds(lprec, lower = NULL, upper = NULL, columns = 1:n)
 }
 
 \arguments{
@@ -36,4 +36,5 @@ set.bounds(lps.model, lower = rep(0.0, 4), upper = rep(1.0, 4))
 }
 
 \keyword{programming}
+
 

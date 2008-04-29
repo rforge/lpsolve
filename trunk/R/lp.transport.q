@@ -22,9 +22,13 @@ lp.transport <- function(cost.mat, direction = c("min", "max"), row.signs,
   # Return value:
   #   a list from lpsolve, including objective and optimal values.
 
-  if(any(is.element(c("<", ">", "=="), c(row.signs, col.signs))))
-    stop("constraint types must be specified by ", dQuote("<="), ", ",
-          dQuote(">="), " or ", dQuote("="))
+  row.signs[row.signs == "<"] <- "<="
+  row.signs[row.signs == ">"] <- ">="
+  row.signs[row.signs == "=="] <- "="
+
+  col.signs[col.signs == "<"] <- "<="
+  col.signs[col.signs == ">"] <- ">="
+  col.signs[col.signs == "=="] <- "="
 
   cost.mat <- as.matrix(cost.mat)
 

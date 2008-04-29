@@ -4,3 +4,4 @@ delete.lp <- function(lprec)
   invisible(lprec)
 }
 
+

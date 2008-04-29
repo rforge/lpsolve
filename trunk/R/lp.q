@@ -30,9 +30,9 @@ lp <- function(direction = c("min", "max"), objective.in, const.mat, const.dir,
   #  compute.sens: Numeric: compute sensitivities? Default 0 (no). Any non-zero
   #                value means "yes."
 
-  if(any(is.element(c("<", ">", "=="), const.dir)))
-    stop("constraint types must be specified by ", dQuote("<="), ", ",
-          dQuote(">="), " or ", dQuote("="))
+  const.dir[const.dir == "<"] <- "<="
+  const.dir[const.dir == ">"] <- ">="
+  const.dir[const.dir == "=="] <- "="
 
   if(!transpose.constraints)
     const.mat <- t(const.mat)

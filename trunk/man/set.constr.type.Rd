@@ -8,13 +8,13 @@ Set constraint types in an lpSolve linear program model object.
 }
 
 \usage{
-set.constr.type(lprec, types, indices = NULL)
+set.constr.type(lprec, types, constraints = 1:m)
 }
 
 \arguments{
   \item{lprec}{an lpSolve linear program model object.}
   \item{types}{either a numeric vector or a character vector containing elements from the set \code{\{1 = "<=", 2 = ">=", 3 = "="\}} specifying the types of constraints.}
-  \item{indices}{a numeric vector of unique values from the set \{1, \dots, m\} (where m is the number of constraints in \code{lprec}) specifying which constraints to set.}
+  \item{constraints}{a numeric vector of unique values from the set \{1, \dots, m\} (where m is the number of constraints in \code{lprec}) specifying which constraints to set.}
 }
 
 \value{
@@ -41,4 +41,5 @@ set.constr.type(lps.model, rep("<=", 4))
 }
 
 \keyword{programming}
+
 

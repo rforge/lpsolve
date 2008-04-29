@@ -1,4 +1,5 @@
-set.mat <- function(lprec, row, column, value)
-  invisible(.Call("RlpSolve_set_mat", lprec, as.integer(row),
-                   as.integer(column), as.double(value), PACKAGE = "lpSolve"))
+set.mat <- function(lprec, i, j, value)
+  invisible(.Call("RlpSolve_set_mat", lprec, as.integer(i), as.integer(j),
+                   as.double(value), PACKAGE = "lpSolve"))
+
 

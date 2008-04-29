@@ -8,7 +8,7 @@ Retrieve the kind of a decision variable from an lpSolve linear program model ob
 }
 
 \usage{
-get.kind(lprec, columns = NULL)
+get.kind(lprec, columns = 1:n)
 }
 
 \arguments{
@@ -42,4 +42,5 @@ get.kind(lps.model)
 }
 
 \keyword{programming}
+
 

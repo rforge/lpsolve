@@ -1,7 +1,6 @@
-get.kind <- function(lprec, columns = NULL)
+get.kind <- function(lprec, columns = 1:n)
 {
-  if(is.null(columns))
-    columns <- 1:dim(lprec)[2]
+  n <- dim(lprec)[2]
 
   ans <- rep("standard", length(columns))
 
@@ -15,4 +14,5 @@ get.kind <- function(lprec, columns = NULL)
 
   ans
 }
+
 

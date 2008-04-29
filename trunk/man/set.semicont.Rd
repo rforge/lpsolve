@@ -31,3 +31,4 @@ a logical vector indicating whether each variable successfully had its kind set.
 
 \keyword{programming}
 
+

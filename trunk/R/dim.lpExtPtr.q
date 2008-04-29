@@ -7,3 +7,4 @@ dim.lpExtPtr <- function(x)
   stop("use the ", sQuote("resize.lp"), " function to set the number of rows ",
        "and columns")
 
+

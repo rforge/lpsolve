@@ -231,3 +231,5 @@ The presolve options are given in the following table. If any element of \code{p
 \seealso{\code{\link{lp.control}}}
 
 \keyword{programming}
+
+

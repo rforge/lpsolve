@@ -1,7 +1,6 @@
-get.branch.mode <- function(lprec, columns = NULL, as.char = TRUE)
+get.branch.mode <- function(lprec, columns = 1:n, as.char = TRUE)
 {
-  if(is.null(columns))
-    columns <- 1:dim(lprec)[2]
+  n <- dim(lprec)[2]
 
   modes <- .Call("RlpSolve_get_var_branch", lprec, as.integer(columns),
                   PACKAGE = "lpSolve")
@@ -11,4 +10,5 @@ get.branch.mode <- function(lprec, columns = NULL, as.char = TRUE)
 
   modes
 }
+
 

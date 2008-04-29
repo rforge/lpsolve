@@ -8,15 +8,14 @@ Retrieve a single element from the matrix of constraints.
 }
 
 \usage{
-get.mat(lprec, row, column)
+get.mat(lprec, i, j)
 }
 
 \arguments{
   \item{lprec}{an lpSolve linear program model object.}
-  \item{row}{a single numeric value from the set \{1, \dots, m\} (where \code{m} is the number of constraints in \code{lprec}) specifying the row of the matrix element.}
-  \item{column}{a single numeric value from the set \{1, \dots, n\} (where \code{n} is the number of decision variables in \code{lprec}) specifying the column of the matrix element.}
+  \item{i}{a single numeric value from the set \{1, \dots, m\} (where \code{m} is the number of constraints in \code{lprec}) specifying the row of the matrix element.}
+  \item{j}{a single numeric value from the set \{1, \dots, n\} (where \code{n} is the number of decision variables in \code{lprec}) specifying the column of the matrix element.}
 }
-
 
 \value{
 a single numeric value.
@@ -40,4 +39,5 @@ get.mat(lps.model, 2, 2)
 }
 
 \keyword{programming}
+
 
