@@ -11,3 +11,4 @@ set.type <- function(lprec, columns, type = c("integer", "binary", "real"))
   ))
 }
 
+

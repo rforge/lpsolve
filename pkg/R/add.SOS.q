@@ -3,3 +3,4 @@ add.SOS <- function(lprec, name, type, priority, columns, weights)
                    as.integer(type), as.integer(priority), as.integer(columns),
                    as.double(weights), PACKAGE = "lpSolve"))
 
+

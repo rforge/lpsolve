@@ -4,7 +4,7 @@
 \title{Get Column}
 
 \description{
-Retrieve a column from an lpSolve linear Programming model.
+Retrieve a column from an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,10 +12,9 @@ get.column(lprec, column)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{column}{a single numeric value from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying which column to retrieve.}
 }
-
 
 \value{
 a list with elements \code{column} and \code{nzrow} such that \code{column[i]} contains the constraint coefficient in row \code{nzrow[i]}. Rows not present in \code{nzrow} have coefficient zero in \code{column}.
@@ -39,4 +38,5 @@ get.column(lps.model, 2)
 }
 
 \keyword{programming}
+
 

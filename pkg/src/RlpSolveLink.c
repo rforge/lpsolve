@@ -20,10 +20,10 @@ SEXP RlpSolve_make_lp(SEXP Srows, SEXP Scolumns)
   lprec* lp = make_lp(INTEGER(Srows)[0], INTEGER(Scolumns)[0]);
 
   if(lp) {
-    put_abortfunc(lp, RlpSolveAbortFunction, NULL);
+    /*put_abortfunc(lp, RlpSolveAbortFunction, NULL);*/
     set_verbose(lp, NEUTRAL);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
-    R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
+    /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
 
   return ret;
@@ -38,7 +38,7 @@ SEXP RlpSolve_copy_lp(SEXP Slp)
 
   if(copy) {
     ret = R_MakeExternalPtr(copy, RlpSolve_lprec_tag, R_NilValue);
-    R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
+    /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
 
   return ret;
@@ -54,7 +54,7 @@ SEXP RlpSolve_read_LP(SEXP Sfilename)
 
   if(lp) {
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
-    R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
+    /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
 
   return ret;
@@ -71,7 +71,7 @@ SEXP RlpSolve_read_MPS(SEXP Sfilename)
 
   if(lp) {
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
-    R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
+    /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
 
   return ret;
@@ -85,31 +85,14 @@ SEXP RlpSolve_read_freeMPS(SEXP Sfilename)
 
   if(lp) {
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
-    R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
+    /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
 
   return ret;
 }
 
 
-/*SEXP RlpSolve_read_XLI(SEXP Sxliname, SEXP Smodelname, SEXP Sdataname,
-                       SEXP Soptions)
-{
-  SEXP ret = R_NilValue;
-  lprec* lp = read_XLI((char *) CHAR(asChar(Sxliname)),
-                       (char *) CHAR(asChar(Smodelname)),
-                       (char *) CHAR(asChar(Sdataname)),
-                       (char *) CHAR(asChar(Soptions)),
-                       NEUTRAL);
-
-  if(lp) {
-    ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
-    R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);
-  }
-
-  return ret;
-}*/
-
+/*read_XLI*/
 
 SEXP RlpSolve_delete_lp(SEXP Slp)
 {

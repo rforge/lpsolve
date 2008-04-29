@@ -4,7 +4,7 @@
 \title{lpSolve Print Method}
 
 \description{
-Display an lpSolve linear programming model in the console.
+Display an lpSolve linear program model object in the console.
 }
 
 \usage{
@@ -12,7 +12,7 @@ Display an lpSolve linear programming model in the console.
 }
 
 \arguments{
-  \item{x}{an lpSolve linear programming model.}
+  \item{x}{an lpSolve linear program model object.}
   \item{\dots}{additional arguments are ignored.}
 }
 
@@ -25,4 +25,5 @@ Display an lpSolve linear programming model in the console.
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \keyword{programming}
+
 

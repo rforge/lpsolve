@@ -1,7 +1,6 @@
-get.bounds <- function(lprec, columns = NULL)
+get.bounds <- function(lprec, columns = 1:n)
 {
-  if(is.null(columns))
-    columns <- 1:dim(lprec)[2]
+  n <- dim(lprec)[2]
 
   lower <- .Call("RlpSolve_get_lowbo", lprec, as.integer(columns),
                   PACKAGE = "lpSolve")

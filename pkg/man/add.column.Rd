@@ -4,21 +4,21 @@
 \title{Add Column}
 
 \description{
-Add a column to an lpSolve linear programming model.
+Add a column to an lpSolve linear program model object.
 }
 
 \usage{
-add.column(lprec, x, indices = NULL)
+add.column(lprec, x, indices = 1:m)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{x}{a numeric vector containing the elements (only the nonzero elements if \code{indices} is also given) to be used in the added column. The length of \code{x} must be equal to the number of constraints in \code{lprec} unless \code{indices} is provided.}
-  \item{indices}{a numeric vector the same length as \code{x} of unique values from the set \{1, \dots, m\} where m is the number of constraints in \code{lprec}; \code{x[i]} is entered into constraint \code{indices[i]} in the added column. The coefficients for the constraints not in \code{indices} are set to zero.}
+  \item{indices}{a numeric vector the same length as \code{x} of unique values from the set \{0, \dots, m\} where m is the number of constraints in \code{lprec}; \code{x[i]} is entered into constraint \code{indices[i]} in the added column.  The coefficients for the constraints not in \code{indices} are set to zero.  In particular, index \code{0} is the objective function coefficient in the added column and is set to zero by default.}
 }
 
 \details{
-This function adds an additional column to an lpSolve linear programming model.  If multiple columns are to be added, performance can be improved by first calling \code{\link{resize.lp}} then adding the columns.
+This function adds an additional column to an lpSolve linear program model object.  If multiple columns are to be added, performance can be improved by calling \code{\link{resize.lp}} before adding the columns.
 }
 
 \value{
@@ -43,4 +43,5 @@ add.column(lps.model, y, ind)
 }
 
 \keyword{programming}
+
 

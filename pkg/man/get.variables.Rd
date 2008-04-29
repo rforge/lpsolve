@@ -4,7 +4,7 @@
 \title{Get Variables}
 
 \description{
-Retrieve the values of the decision variables from a successfully solved lpSolve linear programming model.
+Retrieve the values of the decision variables from a successfully solved lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.variables(lprec)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
 }
 
 \value{
@@ -38,4 +38,5 @@ get.variables(lps.model)
 }
 
 \keyword{programming}
+
 

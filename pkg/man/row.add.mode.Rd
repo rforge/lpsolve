@@ -12,7 +12,7 @@ row.add.mode(lprec, state)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{state}{optional: either \code{"on"} or \code{"off"}. This argument should be provided only to switch row entry mode on or off.}
 }
 
@@ -32,8 +32,6 @@ There are several caveats associated with row entry mode. First, only use this f
 
 \seealso{\code{\link{add.constraint}}}
 
-\examples{
-}
-
 \keyword{programming}
+
 

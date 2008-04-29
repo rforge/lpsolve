@@ -4,7 +4,7 @@
 \title{Read LP}
 
 \description{
-Read an lpSolve linear programming model from a file.
+Read an lpSolve linear program model object from a file.
 }
 
 \usage{
@@ -17,7 +17,7 @@ read.lp(filename, type = c("lp", "mps", "freemps"))
 }
 
 \value{
-an lpSolve linear programming model.
+an lpSolve linear program model object.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
@@ -25,4 +25,5 @@ an lpSolve linear programming model.
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \keyword{programming}
+
 

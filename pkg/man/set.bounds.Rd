@@ -4,15 +4,15 @@
 \title{Set Bounds}
 
 \description{
-Set bounds on the decision variables in an lpSolve linear programming model.
+Set bounds on the decision variables in an lpSolve linear program model object.
 }
 
 \usage{
-set.bounds(lprec, lower = NULL, upper = NULL, columns = NULL)
+set.bounds(lprec, lower = NULL, upper = NULL, columns = 1:n)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{lower}{a numeric vector of lower bounds to be set on the decision variables specified in \code{columns}. If \code{NULL} the lower bounds are not changed.}
   \item{upper}{a numeric vector of upper bounds to be set on the decision variables specified in \code{columns}. If \code{NULL} the upper bounds are not changed.}
   \item{columns}{a numeric vector of values from the set \code{\{1, \dots, n\}} specifying the columns to have their bounds set. If \code{NULL} all columns are set.}
@@ -36,4 +36,5 @@ set.bounds(lps.model, lower = rep(0.0, 4), upper = rep(1.0, 4))
 }
 
 \keyword{programming}
+
 

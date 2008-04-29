@@ -4,7 +4,7 @@
 \title{Name LP}
 
 \description{
-Set or retrieve the name of an lpSolve linear programming model.
+Set or retrieve the name of an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,16 +12,16 @@ name.lp(lprec, name)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{name}{an optional character string giving a new name for \code{lprec}.}
 }
 
 \details{
-If \code{name} is provided then this function sets the name of the lpSolve linear programming model. If \code{name} is missing then this function retrieves the name from \code{lprec}.
+If \code{name} is provided then this function sets the name of the lpSolve linear program model object. If \code{name} is missing then this function retrieves the name from \code{lprec}.
 }
 
 \value{
-if \code{name} is given, a logical value indicating whether the name was successfully set. Otherwise a character string containing the name of the lpSolve linear programming model.
+if \code{name} is given, a logical value indicating whether the name was successfully set. Otherwise a character string containing the name of the lpSolve linear program model object.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
@@ -43,4 +43,5 @@ name.lp(lps.model)
 }
 
 \keyword{programming}
+
 

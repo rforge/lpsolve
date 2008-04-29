@@ -4,20 +4,20 @@
 \title{Get Right-Hand-Side}
 
 \description{
-Retrieve right-hand-side values from an lpSolve linear programming model.
+Retrieve right-hand-side values from an lpSolve linear program model object.
 }
 
 \usage{
-get.rhs(lprec, rows = NULL)
+get.rhs(lprec, constraints = 1:m)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
-  \item{rows}{a numeric vector of unique values from the set \code{\{1, \dots, m\}} specifying the rows for which the right-hand-side values will be retrieved. If \code{NULL} the right-hand-side values are retrieved for all rows.}
+  \item{lprec}{an lpSolve linear program model object.}
+  \item{constraints}{a numeric vector of unique values from the set \code{\{1, \dots, m\}} specifying the constraints for which the right-hand-side values should be retrieved.}
 }
 
 \value{
-a numeric vector containing the right-hand-side values specified by \code{rows}.
+a numeric vector containing the right-hand-side values specified by \code{constraints}.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
@@ -38,4 +38,5 @@ get.rhs(lps.model)
 }
 
 \keyword{programming}
+
 

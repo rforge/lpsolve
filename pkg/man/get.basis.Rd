@@ -4,7 +4,7 @@
 \title{Get Basis}
 
 \description{
-Retrieve the basis from a solved lpSolve linear programming model.
+Retrieve the basis from a solved lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.basis(lprec, nonbasic = FALSE)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{nonbasic}{a logical value. If \code{TRUE}, the nonbasic variables are returned as well.}
 }
 
@@ -31,4 +31,5 @@ get.basis(lps.model)
 }
 
 \keyword{programming}
+
 

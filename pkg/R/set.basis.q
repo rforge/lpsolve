@@ -18,3 +18,4 @@ set.basis <- function(lprec, basis, nonbasic = FALSE, default = FALSE)
                    as.logical(nonbasic), PACKAGE = "lpSolve"))
 }
 
+

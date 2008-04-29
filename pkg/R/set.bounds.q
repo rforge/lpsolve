@@ -1,7 +1,6 @@
-set.bounds <- function(lprec, lower = NULL, upper = NULL, columns = NULL)
+set.bounds <- function(lprec, lower = NULL, upper = NULL, columns = 1:n)
 {
-  if(is.null(columns))
-    columns <- 1:dim(lprec)[2]
+  n <- dim(lprec)[2]
 
   ncol <- length(columns)
   ans <- list()
@@ -26,4 +25,5 @@ set.bounds <- function(lprec, lower = NULL, upper = NULL, columns = NULL)
 
   invisible(ans)
 }
+
 

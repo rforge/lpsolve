@@ -4,16 +4,16 @@
 \title{Get Constraint Type}
 
 \description{
-Retrieve the constraint types from an lpSolve linear programming model.
+Retrieve the constraint types from an lpSolve linear program model object.
 }
 
 \usage{
-get.constr.type(lprec, constraints = NULL, as.char = TRUE)
+get.constr.type(lprec, constraints = 1:m, as.char = TRUE)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
-  \item{constraints}{a numeric vector of unique values from the set \code{\{1, \dots, m\}} (where \code{m} is the number of constraints in \code{lprec}) specifying the constraints for which the types will be retrieved. If \code{NULL} the types are retrieved for all constraints.}
+  \item{lprec}{an lpSolve linear program model object.}
+  \item{constraints}{a numeric vector of unique values from the set \code{\{1, \dots, m\}} (where \code{m} is the number of constraints in \code{lprec}) specifying the constraints for which the types will be retrieved.}
   \item{as.char}{a logical value. If \code{TRUE} the constraint type is returned as a character string, otherwise the integer code used internally by lpSolve is returned.}
 }
 
@@ -41,4 +41,5 @@ get.constr.type(lps.model)
 }
 
 \keyword{programming}
+
 

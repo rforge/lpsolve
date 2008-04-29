@@ -4,7 +4,7 @@
 \title{Resize LP}
 
 \description{
-Resize the data structures in an lpSolve linear programming model.
+Resize the data structures in an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,9 +12,9 @@ resize.lp(lprec, nrow, ncol)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
-  \item{nrow}{a single nonnegative integer value specifying the new number of rows for the lpSolve linear programming model.}
-  \item{ncol}{a single nonnegative integer value specifying the new number of rows for the lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
+  \item{nrow}{a single nonnegative integer value specifying the new number of rows for the lpSolve linear program model object.}
+  \item{ncol}{a single nonnegative integer value specifying the new number of rows for the lpSolve linear program model object.}
 }
 
 \details{
@@ -42,4 +42,5 @@ add.column(lps.model, y, ind)
 }
 
 \keyword{programming}
+
 

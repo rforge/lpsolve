@@ -4,20 +4,20 @@
 \title{Get Bounds}
 
 \description{
-Retrieve the bounds on the decision variables from an lpSolve linear programming model.
+Retrieve the bounds on the decision variables from an lpSolve linear program model object.
 }
 
 \usage{
-get.bounds(lprec, columns = NULL)
+get.bounds(lprec, columns = 1:n)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
-  \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying for which decision variables the bounds should be retrieved. If \code{NULL}, the bounds are retrieved for all the decision variables.}
+  \item{lprec}{an lpSolve linear program model object.}
+  \item{columns}{a numeric vector of unique values from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying the decision variables for which the bounds should be retrieved.}
 }
 
 \value{
-  a list with components \code{columns}, \code{lower} and \code{upper}.  The bounds on the decision variable in \code{columns[j]} are \code{lower[j]} and \code{upper[j]}.
+  a list with components \code{lower} and \code{upper}.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
@@ -30,4 +30,5 @@ get.bounds(lps.model)
 }
 
 \keyword{programming}
+
 

@@ -1,4 +1,5 @@
-get.mat <- function(lprec, row, column)
-  .Call("RlpSolve_get_mat", lprec, as.integer(row), as.integer(column),
+get.mat <- function(lprec, i, j)
+  .Call("RlpSolve_get_mat", lprec, as.integer(i), as.integer(j),
          PACKAGE = "lpSolve")
+
 

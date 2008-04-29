@@ -4,7 +4,7 @@
 \title{Add A Special Ordered Set Constraint}
 
 \description{
-Add a Special Ordered Set (SOS) constraint to an lpSolve linear programming model.
+Add a Special Ordered Set (SOS) constraint to an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ add.SOS(lprec, name, type, priority, columns, weights)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{name}{a character string specifying a name for the SOS constraint.}
   \item{type}{a positive integer specifying the type of the SOS constraint.}
   \item{priority}{an integer specifying the priority of the SOS constraint.}
@@ -29,4 +29,5 @@ If the operation was successful: a single integer value containing the list inde
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
 \keyword{programming}
+
 

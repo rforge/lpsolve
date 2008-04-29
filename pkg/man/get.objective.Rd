@@ -4,7 +4,7 @@
 \title{Get Objective}
 
 \description{
-Retrieve the value of the objective function from a successfully solved lpSolve linear programming model.
+Retrieve the value of the objective function from a successfully solved lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.objective(lprec)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
 }
 
 \value{
@@ -38,4 +38,5 @@ get.objective(lps.model)
 }
 
 \keyword{programming}
+
 

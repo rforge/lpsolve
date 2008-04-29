@@ -4,17 +4,17 @@
 \title{Set Objective Function}
 
 \description{
-Set the objective function in an lpSolve linear programming model.
+Set the objective function in an lpSolve linear program model object.
 }
 
 \usage{
-set.objfn(lprec, obj, columns = NULL)
+set.objfn(lprec, obj, indices = 1:n)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
-  \item{obj}{a numeric vector of length \code{n} (where n is the number of decision variables in \code{lprec}) containing the coefficients of the objective function. Alternatively, if \code{columns} is also provided, a numeric vector of the same length as \code{columns} containing only the nonzero coefficients.}
-  \item{columns}{a numeric vector containing unique elements from the set \{1, \dots, n\} (where n is the number of decision variables in \code{lprec}) identifying the nonzero coefficients in the objective function. If \code{NULL} all of the objective function coefficients are assumed to be nonzero.}
+  \item{lprec}{an lpSolve linear program model object.}
+  \item{obj}{a numeric vector of length \code{n} (where n is the number of decision variables in \code{lprec}) containing the coefficients of the objective function. Alternatively, if \code{indices} is also provided, a numeric vector of the same length as \code{indices} containing only the nonzero coefficients.}
+  \item{indices}{a numeric vector containing unique elements from the set \{1, \dots, n\} (where n is the number of decision variables in \code{lprec}) identifying the nonzero coefficients in the objective function.  Coefficients not specified in \code{indices} are set to zero.}
 }
 
 \value{
@@ -39,4 +39,5 @@ set.objfn(lps.model, c(-3, -4))
 }
 
 \keyword{programming}
+
 

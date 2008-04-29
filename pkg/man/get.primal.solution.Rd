@@ -4,7 +4,7 @@
 \title{Get Primal Solution}
 
 \description{
-Retrieve the values of the primal variables from a successfully solved lpSolve linear programming model.
+Retrieve the values of the primal variables from a successfully solved lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.primal.solution(lprec)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
 }
 
 \value{
@@ -38,4 +38,5 @@ get.primal.solution(lps.model)
 }
 
 \keyword{programming}
+
 

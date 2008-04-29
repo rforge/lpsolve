@@ -33,9 +33,10 @@
 		0E9AA01B0D622B8400426ADF /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lp.control.q; sourceTree = "<group>"; };
 		0E9B6DB20DA76684003356E5 /* row.add.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = row.add.mode.q; sourceTree = "<group>"; };
 		0E9B6DB30DA76B66003356E5 /* row.add.mode.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = row.add.mode.Rd; sourceTree = "<group>"; };
+		0E9D0A3B0DBA5D49007E96B8 /* delete.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = delete.lp.q; sourceTree = "<group>"; };
+		0E9D0A3D0DBA716D007E96B8 /* delete.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.lp.Rd; path = man/delete.lp.Rd; sourceTree = SOURCE_ROOT; };
 		0EA084D70D93CEE0007DBBD5 /* lp.control.options.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.control.options.Rd; path = man/lp.control.options.Rd; sourceTree = SOURCE_ROOT; };
 		0EA4F05B0D7ECA480010FBA9 /* get.kind.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.kind.q; sourceTree = "<group>"; };
-		0EA6F46C0D631EE200496510 /* get.presolveloops.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.presolveloops.q; sourceTree = "<group>"; };
 		0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.q; sourceTree = "<group>"; };
 		0EABBD790D59D0A600CF7B0C /* make.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.Rd; sourceTree = "<group>"; };
 		0EABBD7A0D59E82A00CF7B0C /* add.constraint.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = add.constraint.q; sourceTree = "<group>"; };
@@ -86,7 +87,6 @@
 		0ED798A60D83F28F004836E1 /* get.kind.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.kind.Rd; path = man/get.kind.Rd; sourceTree = SOURCE_ROOT; };
 		0ED798A70D83F28F004836E1 /* get.mat.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.mat.Rd; path = man/get.mat.Rd; sourceTree = SOURCE_ROOT; };
 		0ED798A80D83F28F004836E1 /* get.objective.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.objective.Rd; path = man/get.objective.Rd; sourceTree = SOURCE_ROOT; };
-		0ED798A90D83F28F004836E1 /* get.presolveloops.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.presolveloops.Rd; path = man/get.presolveloops.Rd; sourceTree = SOURCE_ROOT; };
 		0ED798AA0D83F28F004836E1 /* get.primal.solution.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.primal.solution.Rd; path = man/get.primal.solution.Rd; sourceTree = SOURCE_ROOT; };
 		0ED798AB0D83F28F004836E1 /* get.rhs.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.rhs.Rd; path = man/get.rhs.Rd; sourceTree = SOURCE_ROOT; };
 		0ED798AC0D83F28F004836E1 /* get.sensitivity.obj.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.sensitivity.obj.Rd; path = man/get.sensitivity.obj.Rd; sourceTree = SOURCE_ROOT; };
@@ -343,6 +343,7 @@
 				0E99A1550D7DD2FE00F4A4CC /* add.SOS.q */,
 				0ECCA9210D8532E20093DFAC /* delete.column.q */,
 				0ED7988D0D83EC09004836E1 /* delete.constraint.q */,
+				0E9D0A3B0DBA5D49007E96B8 /* delete.lp.q */,
 				0E09FE610D6A6E0E0090E7A0 /* dim.lpExtPtr.q */,
 				0E09FE620D6A6E0E0090E7A0 /* dimnames.lpExtPtr.q */,
 				0E98F97F0D8048C400C06D67 /* get.basis.q */,
@@ -355,7 +356,6 @@
 				0EA4F05B0D7ECA480010FBA9 /* get.kind.q */,
 				0EABBD800D59E82A00CF7B0C /* get.mat.q */,
 				0E9875600D7B423800E6EA75 /* get.objective.q */,
-				0EA6F46C0D631EE200496510 /* get.presolveloops.q */,
 				0ECDCA2D0D7C2CBB0000AFC4 /* get.primal.solution.q */,
 				0EABBD810D59E82A00CF7B0C /* get.rhs.q */,
 				0ECDCA3A0D7C310D0000AFC4 /* get.sensitivity.obj.q */,
@@ -400,6 +400,7 @@
 				0ED7989A0D83F28F004836E1 /* add.SOS.Rd */,
 				0ECCA9220D85330B0093DFAC /* delete.column.Rd */,
 				0ED7989C0D83F28F004836E1 /* delete.constraint.Rd */,
+				0E9D0A3D0DBA716D007E96B8 /* delete.lp.Rd */,
 				0ED7989D0D83F28F004836E1 /* dim.lpExtPtr.Rd */,
 				0ED7989E0D83F28F004836E1 /* dimnames.lpExtPtr.Rd */,
 				0ED7989F0D83F28F004836E1 /* get.basis.Rd */,
@@ -412,7 +413,6 @@
 				0ED798A60D83F28F004836E1 /* get.kind.Rd */,
 				0ED798A70D83F28F004836E1 /* get.mat.Rd */,
 				0ED798A80D83F28F004836E1 /* get.objective.Rd */,
-				0ED798A90D83F28F004836E1 /* get.presolveloops.Rd */,
 				0ED798AA0D83F28F004836E1 /* get.primal.solution.Rd */,
 				0ED798AB0D83F28F004836E1 /* get.rhs.Rd */,
 				0ED798AC0D83F28F004836E1 /* get.sensitivity.obj.Rd */,

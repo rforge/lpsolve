@@ -271,9 +271,10 @@ lp.control <- function(lprec, ..., reset = FALSE)
           presolve <- sum(idx[presolve])
         }
 
+        loops <- .Call("RlpSolve_get_presolveloops", lprec, PACKAGE = "lpSolve")
         status[["presolve"]] <- .Call("RlpSolve_set_presolve", lprec,
                                        as.integer(presolve),
-                                       as.integer(get.presolveloops(lprec)),
+                                       as.integer(loops),
                                        PACKAGE = "lpSolve")
       },
 

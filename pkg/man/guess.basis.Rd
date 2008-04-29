@@ -12,7 +12,7 @@ guess.basis(lprec, guess)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{guess}{a numeric vector of length \code{n} (the number of decision variables in \code{lprec}) containing a feasible point.}
 }
 
@@ -27,4 +27,5 @@ if successful, a numeric vector containing the indices of a starting basis. This
 \seealso{\code{\link{set.basis}}}
 
 \keyword{programming}
+
 

@@ -4,7 +4,7 @@
 \title{Get Sensitivity: Right-Hand-Side}
 
 \description{
-Retrieve the sensitivity of the constraints from a successfully solved lpSolve linear programming model.
+Retrieve the sensitivity of the constraints from a successfully solved lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ get.sensitivity.rhs(lprec)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
 }
 
 \value{
@@ -44,4 +44,5 @@ get.sensitivity.rhs(lps.model)
 }
 
 \keyword{programming}
+
 

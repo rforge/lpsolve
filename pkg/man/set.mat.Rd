@@ -4,17 +4,17 @@
 \title{Set Matrix Element}
 
 \description{
-Set the value of a single matrix element in an lpSolve linear programming model.
+Set the value of a single matrix element in an lpSolve linear program model object.
 }
 
 \usage{
-set.mat(lprec, row, column, value)
+set.mat(lprec, i, j, value)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
-  \item{row}{a single numeric value from the set \code{\{1, \dots, m\}} (where \code{m} is the number of constraints in \code{lprec}) specifying the row of the matrix.}
-  \item{column}{a single numeric value from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying the column of the matrix.}
+  \item{lprec}{an lpSolve linear program model object.}
+  \item{i}{a single numeric value from the set \code{\{1, \dots, m\}} (where \code{m} is the number of constraints in \code{lprec}) specifying the row of the matrix.}
+  \item{j}{a single numeric value from the set \code{\{1, \dots, n\}} (where \code{n} is the number of decision variables in \code{lprec}) specifying the column of the matrix.}
   \item{value}{a single numeric value.}
 }
 
@@ -41,4 +41,5 @@ set.mat(lps.model, 3, 2, 4.5)
 }
 
 \keyword{programming}
+
 

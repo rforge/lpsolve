@@ -4,7 +4,7 @@
 \title{Delete Constraint}
 
 \description{
-Delete a constraint from an lpSolve linear programming model.
+Delete a constraint from an lpSolve linear program model object.
 }
 
 \usage{
@@ -12,7 +12,7 @@ delete.constraint(lprec, constraints)
 }
 
 \arguments{
-  \item{lprec}{an lpSolve linear programming model.}
+  \item{lprec}{an lpSolve linear program model object.}
   \item{constraints}{a numeric vector of unique values from the set \code{\{1, \dots, m\}} (where \code{m} is the number of constraints in \code{lprec}) specifying which constraints should be deleted.}
 }
 
@@ -39,4 +39,5 @@ delete.constraint(lps.model, 1)
 }
 
 \keyword{programming}
+
 
