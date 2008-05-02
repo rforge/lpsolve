@@ -4,7 +4,7 @@
 \title{Get Constraint Type}
 
 \description{
-Retrieve the constraint types from an lpSolve linear program model object.
+Retrieve constraint types from an lpSolve linear program model object.
 }
 
 \usage{
