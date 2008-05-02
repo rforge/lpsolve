@@ -1,19 +1,36 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
+
 	<HEAD>
 		<TITLE>Using lp_solve in R</TITLE>
 		<style TYPE="text/css"> BODY { font-family:verdana,arial,helvetica; margin:15; }
 	</style>
 	</HEAD>
-	<BODY>
 
+<BODY>
 <h1 align="left"><u>Using lp_solve in R</u></h1>
 
-Description of R and how to install the lpSolve package.
+<p>
+R is a language and environment for statistical computing and graphics. It is a GNU project which is similar to the S language and environment which was developed at Bell Laboratories (formerly AT&T, now Lucent Technologies) by John Chambers and colleagues. R can be considered as a different implementation of S. There are some important differences, but much code written for S runs unaltered under R.  For more information or to download R please visit the R <a href="http://www.r-project.org">website</a>.
+</p>
+
+<h5>Installation</h5>
+
+<p>
+Installing the package takes a single command:
+
+<pre>
+  &gt; install.packages("lpSolve", repos = "http://r-forge.r-project.org")
+</pre>
+
+Note that there is also an lpSolve package available on CRAN.  The CRAN version of the package is based on lp_solve version 5.5.0.8 and does not include the API.
+</p>
 
 <h5>Note</h5>
-In the following text, the <tt>&gt;</tt> shown before each R command is the R prompt.  Only the text after <tt>&gt;</tt> must be entered.
 
+<p>
+The <tt>&gt;</tt> shown before each R command is the R prompt.  Only the text after <tt>&gt;</tt> must be entered.
+</p>
 
 
 <h3>Getting Help</h3>

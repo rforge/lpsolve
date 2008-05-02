@@ -27,28 +27,18 @@ print.lpExtPtr <- function(x, ...)
                 justify = "right")
   sense <- ifelse(control$sense == "minimize", "Minimize", "Maximize")
 
-  rhs <- get.rhs(x, lhs = TRUE)
-  lhs <- rhs$lhs
-  rhs <- rhs$rhs
+  lhs <- get.constr.value(x, side = "lhs")
+  rhs <- get.constr.value(x, side = "rhs")
 
-  if(m > 0) {
-    rowNames <- format(c("", sense, dimnames(x)[[1]], "Type", "upper", "lower"))
-    constrs <- format(c("", "", get.constr.type(x), "", "", ""),
-                      justify = "right")
-    rhs <- format(c("", "",  as.character(rhs), "", "", ""),
-                  justify = "right")
-    print.lhs <- any(!is.infinite(lhs[is.element(get.constr.type(x,
-                     as.char = FALSE), c(1,2))]))
-    lhs <- format(c("", "",  as.character(lhs), "", "", ""),
-                  justify = "right")
-  }
-
-  else {
-    rowNames <- format(c("", sense, "Type", "upper", "lower"))
-    constrs <- format(c("", "", "", "", ""), justify = "right")
-    rhs <- format(c("", "", "", "", ""), justify = "right")
-    print.lhs <- FALSE
-  }
+  rowNames <- format(c("", sense, dimnames(x)[[1]], "Type", "Upper", "Lower"))
+  constrs <- format(c("", "", get.constr.type(x), "", "", ""),
+                    justify = "right")
+  rhs <- format(c("", "",  as.character(rhs), "", "", ""),
+				justify = "right")
+  print.lhs <- any(!is.infinite(lhs[is.element(get.constr.type(x,
+                   as.char = FALSE), c(1,2))]))
+  lhs <- format(c("", "",  as.character(lhs), "", "", ""),
+                justify = "right")
 
   if(print.lhs)
     ans <- cbind(rowNames, lhs, constrs, ans, constrs, rhs)
