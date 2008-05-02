@@ -33,9 +33,14 @@
 		0E9AA01B0D622B8400426ADF /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lp.control.q; sourceTree = "<group>"; };
 		0E9B6DB20DA76684003356E5 /* row.add.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = row.add.mode.q; sourceTree = "<group>"; };
 		0E9B6DB30DA76B66003356E5 /* row.add.mode.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = row.add.mode.Rd; sourceTree = "<group>"; };
+		0E9C194B0DCA211500903F21 /* set.constr.value.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.constr.value.q; sourceTree = "<group>"; };
+		0E9C194C0DCA29A800903F21 /* get.constr.value.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.constr.value.q; sourceTree = "<group>"; };
+		0E9C194D0DCA365700903F21 /* set.constr.value.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.constr.value.Rd; path = man/set.constr.value.Rd; sourceTree = SOURCE_ROOT; };
+		0E9C194E0DCA367900903F21 /* get.constr.value.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.constr.value.Rd; path = man/get.constr.value.Rd; sourceTree = SOURCE_ROOT; };
 		0E9D0A3B0DBA5D49007E96B8 /* delete.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = delete.lp.q; sourceTree = "<group>"; };
 		0E9D0A3D0DBA716D007E96B8 /* delete.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.lp.Rd; path = man/delete.lp.Rd; sourceTree = SOURCE_ROOT; };
 		0EA084D70D93CEE0007DBBD5 /* lp.control.options.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.control.options.Rd; path = man/lp.control.options.Rd; sourceTree = SOURCE_ROOT; };
+		0EA34CB10DC8E2970009A020 /* Rpackage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Rpackage.html; sourceTree = "<group>"; };
 		0EA4F05B0D7ECA480010FBA9 /* get.kind.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.kind.q; sourceTree = "<group>"; };
 		0EABBD6D0D59CD6C00CF7B0C /* make.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.q; sourceTree = "<group>"; };
 		0EABBD790D59D0A600CF7B0C /* make.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = make.lp.Rd; sourceTree = "<group>"; };
@@ -288,6 +293,7 @@
 				0EABBD6A0D59CD4500CF7B0C /* R */,
 				0EABBD6B0D59CD5000CF7B0C /* man */,
 				0E3F54710D536C9400617C9D /* src */,
+				0EA34CB00DC8E2970009A020 /* html */,
 				0E16C0080D64831600EE878E /* tests */,
 			);
 			sourceTree = "<group>";
@@ -304,6 +310,14 @@
 				0E219F030D576D93003CEC7F /* lp_solve */,
 			);
 			name = src;
+			sourceTree = "<group>";
+		};
+		0EA34CB00DC8E2970009A020 /* html */ = {
+			isa = PBXGroup;
+			children = (
+				0EA34CB10DC8E2970009A020 /* Rpackage.html */,
+			);
+			path = html;
 			sourceTree = "<group>";
 		};
 		0EABBD6A0D59CD4500CF7B0C /* R */ = {
@@ -351,6 +365,7 @@
 				0EBC20290D806D7500DD261B /* get.branch.mode.q */,
 				0EABBD970D59E8A100CF7B0C /* get.column.q */,
 				0ED798960D83ED34004836E1 /* get.constr.type.q */,
+				0E9C194C0DCA29A800903F21 /* get.constr.value.q */,
 				0E9875850D7B443B00E6EA75 /* get.constraints.q */,
 				0ECDCA390D7C310D0000AFC4 /* get.dual.solution.q */,
 				0EA4F05B0D7ECA480010FBA9 /* get.kind.q */,
@@ -380,6 +395,7 @@
 				0EBC202A0D806EBF00DD261B /* set.branch.weights.q */,
 				0EABBD980D59E8A100CF7B0C /* set.column.q */,
 				0EFEA4400D884CE10053E8F9 /* set.constr.type.q */,
+				0E9C194B0DCA211500903F21 /* set.constr.value.q */,
 				0EABBD910D59E82A00CF7B0C /* set.mat.q */,
 				0EABBD920D59E82A00CF7B0C /* set.objfn.q */,
 				0EABBD930D59E82A00CF7B0C /* set.rhs.q */,
@@ -408,6 +424,7 @@
 				0ED798A10D83F28F004836E1 /* get.branch.mode.Rd */,
 				0ED798A20D83F28F004836E1 /* get.column.Rd */,
 				0ED798A30D83F28F004836E1 /* get.constr.type.Rd */,
+				0E9C194E0DCA367900903F21 /* get.constr.value.Rd */,
 				0ED798A40D83F28F004836E1 /* get.constraints.Rd */,
 				0ED798A50D83F28F004836E1 /* get.dual.solution.Rd */,
 				0ED798A60D83F28F004836E1 /* get.kind.Rd */,
@@ -438,6 +455,7 @@
 				0EFEA4590D884F570053E8F9 /* set.branch.weights.Rd */,
 				0EFEA45A0D884F570053E8F9 /* set.column.Rd */,
 				0EFEA45B0D884F570053E8F9 /* set.constr.type.Rd */,
+				0E9C194D0DCA365700903F21 /* set.constr.value.Rd */,
 				0EFEA45C0D884F570053E8F9 /* set.mat.Rd */,
 				0EFEA45D0D884F570053E8F9 /* set.objfn.Rd */,
 				0EFEA45E0D884F570053E8F9 /* set.rhs.Rd */,

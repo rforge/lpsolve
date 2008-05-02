@@ -22,6 +22,7 @@ SEXP RlpSolve_make_lp(SEXP Srows, SEXP Scolumns)
   if(lp) {
     /*put_abortfunc(lp, RlpSolveAbortFunction, NULL);*/
     set_verbose(lp, NEUTRAL);
+    set_infinite(lp, R_PosInf);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
     /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
@@ -53,6 +54,8 @@ SEXP RlpSolve_read_LP(SEXP Sfilename)
   lprec* lp = read_LP((char *) CHAR(asChar(Sfilename)), NEUTRAL, NULL);
 
   if(lp) {
+    set_verbose(lp, NEUTRAL);
+    set_infinite(lp, R_PosInf);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
     /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
@@ -70,6 +73,8 @@ SEXP RlpSolve_read_MPS(SEXP Sfilename)
   lprec* lp = read_MPS((char *) CHAR(asChar(Sfilename)), NEUTRAL);
 
   if(lp) {
+    set_verbose(lp, NEUTRAL);
+    set_infinite(lp, R_PosInf);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
     /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
@@ -84,6 +89,8 @@ SEXP RlpSolve_read_freeMPS(SEXP Sfilename)
   lprec* lp = read_freeMPS((char *) CHAR(asChar(Sfilename)), NEUTRAL);
 
   if(lp) {
+    set_verbose(lp, NEUTRAL);
+    set_infinite(lp, R_PosInf);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
     /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
@@ -168,8 +175,8 @@ SEXP RlpSolve_get_columnex(SEXP Slp, SEXP Scol_nr)
        names = R_NilValue;
   int nrow = -1;
   lprec* lp = lprecPointerFromSEXP(Slp);
-  PROTECT(Scolumn = allocVector(REALSXP, get_Nrows(lp)));
-  PROTECT(Snzrow = allocVector(INTSXP, get_Nrows(lp)));
+  PROTECT(Scolumn = allocVector(REALSXP, 1 + get_Nrows(lp)));
+  PROTECT(Snzrow = allocVector(INTSXP, 1 + get_Nrows(lp)));
 
   nrow = get_columnex(lp, INTEGER(Scol_nr)[0], REAL(Scolumn), INTEGER(Snzrow));
 

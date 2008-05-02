@@ -8,15 +8,16 @@ Add a constraint to an lpSolve linear program model object.
 }
 
 \usage{
-add.constraint(lprec, xt, type = c("<=", "=", ">="), b, indices = 1:n)
+add.constraint(lprec, xt, type = c("<=", "=", ">="), rhs, indices = 1:n, lhs)
 }
 
 \arguments{
   \item{lprec}{an lpSolve linear program model object.}
   \item{xt}{a numeric vector containing the constraint coefficients (only the nonzero coefficients if \code{indices} is also given). The length of \code{xt} must be equal to the number of decision variables in \code{lprec} unless \code{indices} is provided.}
   \item{type}{a numeric or character value from the set \code{\{1 = "<=", 2 = ">=", 3 = "="\}} specifying the type of the constraint.}
-  \item{b}{a single numeric value specifying the right-hand-side of the constraint.}
+  \item{rhs}{a single numeric value specifying the right-hand-side of the constraint.}
   \item{indices}{a numeric vector the same length as \code{xt} of unique values from the set \{1, \dots, n\} where n is the number of decision variables in \code{lprec}; \code{xt[j]} becomes the constraint coefficient for variable \code{indices[j]}. The constraint coefficients for the decision variables not in \code{indices} are set to zero.}
+  \item{lhs}{optional. A single numeric value specifying the left-hand-side of the constraint.}
 }
 
 \details{

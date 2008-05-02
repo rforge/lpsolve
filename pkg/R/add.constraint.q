@@ -1,5 +1,5 @@
-add.constraint <- function(lprec, xt, type = c("<=", "=", ">="), b,
-                           indices = 1:n)
+add.constraint <- function(lprec, xt, type = c("<=", "=", ">="), rhs,
+                           indices = 1:n, lhs)
 {
   n <- dim(lprec)[2]
 
@@ -11,9 +11,18 @@ add.constraint <- function(lprec, xt, type = c("<=", "=", ">="), b,
     type <- match(type, c("<=", ">=", "="))
   }
 
-  invisible(.Call("RlpSolve_add_constraintex", lprec, as.double(xt),
-                   as.integer(indices), as.integer(type), as.double(b),
-                   PACKAGE = "lpSolve"))
+  status <- .Call("RlpSolve_add_constraintex", lprec, as.double(xt),
+                   as.integer(indices), as.integer(type), as.double(rhs),
+                   PACKAGE = "lpSolve")
+
+  if(!missing(lhs)) {
+    range <- abs(rhs - lhs)
+    status <- status && .Call("RlpSolve_set_rh_range", lprec,
+                              as.integer(dim(lprec)[1]), as.double(range),
+                              PACKAGE = "lpSolve")
+  }
+
+  invisible(status)
 }
 
 

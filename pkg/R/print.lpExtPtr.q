@@ -22,28 +22,29 @@ print.lpExtPtr <- function(x, ...)
   types[types == "real"] <- "Real"
   bounds <- get.bounds(x)
   upper <- bounds$upper
-  upper[upper >= control$infinite] <- Inf
   lower <- bounds$lower
-  lower[lower <= -control$infinite] <- -Inf
   ans <- format(rbind(dimnames(x)[[2]], ans, types, upper, lower),
                 justify = "right")
   sense <- ifelse(control$sense == "minimize", "Minimize", "Maximize")
 
-  if(m > 0) {
-    rowNames <- format(c("", sense, dimnames(x)[[1]], "Type", "upbo", "lowbo"))
-    constrs <- format(c("", "", get.constr.type(x), "", "", ""),
-                      justify = "right")
-    rhs <- format(c("", "",  as.character(get.rhs(x)), "", "", ""),
-                  justify = "right")
-  }
+  lhs <- get.constr.value(x, side = "lhs")
+  rhs <- get.constr.value(x, side = "rhs")
 
-  else {
-    rowNames <- format(c("", sense, "Type", "upper", "lower"))
-    constrs <- format(c("", "", "", "", ""), justify = "right")
-    rhs <- format(c("", "", "", "", ""), justify = "right")
-  }
+  rowNames <- format(c("", sense, dimnames(x)[[1]], "Type", "Upper", "Lower"))
+  constrs <- format(c("", "", get.constr.type(x), "", "", ""),
+                    justify = "right")
+  rhs <- format(c("", "",  as.character(rhs), "", "", ""),
+				justify = "right")
+  print.lhs <- any(!is.infinite(lhs[is.element(get.constr.type(x,
+                   as.char = FALSE), c(1,2))]))
+  lhs <- format(c("", "",  as.character(lhs), "", "", ""),
+                justify = "right")
 
-  ans <- cbind(rowNames, ans, constrs, rhs)
+  if(print.lhs)
+    ans <- cbind(rowNames, lhs, constrs, ans, constrs, rhs)
+  else
+    ans <- cbind(rowNames, ans, constrs, rhs)
+
   ans <- apply(ans, 1, paste, collapse = "  ")
   ans <- paste(ans, collapse = "\n")
   model.name <- paste("Model name: ", name.lp(x), "\n", sep = "")
