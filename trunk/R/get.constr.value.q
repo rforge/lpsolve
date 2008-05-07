@@ -10,7 +10,7 @@ get.constr.value <- function(lprec, side = c("rhs", "lhs"), constraints = 1:m)
                   PACKAGE = "lpSolve")
 
   if(side == "lhs") {
-    constr.types <- get.constr.type(mps, constraints = constraints,
+    constr.types <- get.constr.type(lprec, constraints = constraints,
                                     as.char = FALSE)
     range <- .Call("RlpSolve_get_rh_range", lprec, as.integer(constraints),
                     PACKAGE = "lpSolve")
