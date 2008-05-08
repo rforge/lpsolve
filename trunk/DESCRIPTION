@@ -1,12 +1,11 @@
 Package: lpSolve
 Version: 5.5.0.12
-Date: 2008-04-12
+Date: 2008-05-08
 Title: Interface to lp_solve v. 5.5
 Author: lp_solve <http://lpsolve.sourceforge.net/>,
-        Sam Buttrey <sebuttre@nps.edu>,
         Kjell Konis <kjell.konis@epfl.ch>.
 Maintainer: Kjell Konis <kjell.konis@epfl.ch>
-Depends: R (>= 2.6.2)
+Depends: R (>= 2.7.0)
 Description: The lpSolve package provides an R interface to the lp_solve
     library - lp_solve is a Mixed Integer Linear Programming (MILP) solver
     with support for pure linear, (mixed) integer/binary, semi-continuous
