@@ -11,7 +11,7 @@ lp.control <- function(lprec, ..., reset = FALSE)
                 "epsb", "epsd", "epsel", "epsint", "epsperturb", "epspivot",
                 "improve", "infinite", "maxpivot", "mip.gap", "negrange",
                 "obj.in.basis", "pivoting", "presolve", "scalelimit", "scaling",
-                "sense", "simplextype", "solutionlimit", "timeout", "use.names")
+                "sense", "simplextype", "timeout", "use.names")
   dot.names <- match.arg(dot.names, controls, several.ok = TRUE)
 
   for(dot.name in dot.names) {

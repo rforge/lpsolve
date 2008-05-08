@@ -192,6 +192,8 @@
 		0EFEA4610D884F570053E8F9 /* set.type.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.type.Rd; path = man/set.type.Rd; sourceTree = SOURCE_ROOT; };
 		0EFEA4620D884F570053E8F9 /* solve.lpExtPtr.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = solve.lpExtPtr.Rd; path = man/solve.lpExtPtr.Rd; sourceTree = SOURCE_ROOT; };
 		0EFEA4630D884F570053E8F9 /* write.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = write.lp.Rd; path = man/write.lp.Rd; sourceTree = SOURCE_ROOT; };
+		DAD5A7260DD3617A0076C6E2 /* select.solution.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = select.solution.q; sourceTree = "<group>"; };
+		DAD5A7280DD363DD0076C6E2 /* select.solution.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = select.solution.Rd; path = man/select.solution.Rd; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -371,6 +373,7 @@
 				0E16C06C0D64906900EE878E /* read.lp.q */,
 				0EABBD8A0D59E82A00CF7B0C /* resize.lp.q */,
 				0E9B6DB20DA76684003356E5 /* row.add.mode.q */,
+				DAD5A7260DD3617A0076C6E2 /* select.solution.q */,
 				0E98F97E0D8048B900C06D67 /* set.basis.q */,
 				0EABBD8C0D59E82A00CF7B0C /* set.bounds.q */,
 				0EBC20280D806D6300DD261B /* set.branch.mode.q */,
@@ -431,6 +434,7 @@
 				0EFEA4540D884F570053E8F9 /* read.lp.Rd */,
 				0EFEA4550D884F570053E8F9 /* resize.lp.Rd */,
 				0E9B6DB30DA76B66003356E5 /* row.add.mode.Rd */,
+				DAD5A7280DD363DD0076C6E2 /* select.solution.Rd */,
 				0EFEA4560D884F570053E8F9 /* set.basis.Rd */,
 				0EFEA4570D884F570053E8F9 /* set.bounds.Rd */,
 				0EFEA4580D884F570053E8F9 /* set.branch.mode.Rd */,
