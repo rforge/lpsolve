@@ -5,7 +5,7 @@ set.branch.weights <- function(lprec, weights)
          " of columns in the model")
 
   .Call("RlpSolve_set_var_weights", lprec, as.double(weights),
-         PACKAGE = "lpSolve")
+         PACKAGE = "lpSolveAPI")
 }
 
 

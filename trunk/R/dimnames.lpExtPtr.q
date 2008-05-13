@@ -4,13 +4,13 @@ dimnames.lpExtPtr <- function(x)
 
   if(lp.size[1] >= 1)
     rowNames <- .Call("RlpSolve_get_origrow_names", x, as.integer(1:lp.size[1]),
-                       PACKAGE = "lpSolve")
+                       PACKAGE = "lpSolveAPI")
   else
     rowNames <- character(0)
 
   if(lp.size[2] >= 1)
     colNames <- .Call("RlpSolve_get_origcol_names", x, as.integer(1:lp.size[2]),
-                       PACKAGE = "lpSolve")
+                       PACKAGE = "lpSolveAPI")
   else
     colNames <- character(0)
 
@@ -29,10 +29,10 @@ dimnames.lpExtPtr <- function(x)
     stop(length(value[[2]]), " names provided for " , dx[2], " columns")
 
   .Call("RlpSolve_set_row_names", x, as.integer(1:dx[1]),
-         as.character(value[[1]]), PACKAGE = "lpSolve")
+         as.character(value[[1]]), PACKAGE = "lpSolveAPI")
 
   .Call("RlpSolve_set_col_names", x, as.integer(1:dx[2]),
-         as.character(value[[2]]), PACKAGE = "lpSolve")
+         as.character(value[[2]]), PACKAGE = "lpSolveAPI")
 
   x
 }

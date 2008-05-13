@@ -2,7 +2,7 @@ set.basis <- function(lprec, basis, nonbasic = FALSE, default = FALSE)
 {
   if(default)
     return(invisible(.Call("RlpSolve_default_basis", lprec,
-                            PACKAGE = "lpSolve")))
+                            PACKAGE = "lpSolveAPI")))
 
   if(nonbasic)
     if(length(basis) != sum(dim(lprec)))
@@ -15,7 +15,7 @@ set.basis <- function(lprec, basis, nonbasic = FALSE, default = FALSE)
            " of columns in the model")
 
   invisible(.Call("RlpSolve_set_basis", lprec, as.integer(c(0, basis)),
-                   as.logical(nonbasic), PACKAGE = "lpSolve"))
+                   as.logical(nonbasic), PACKAGE = "lpSolveAPI"))
 }
 
 

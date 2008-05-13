@@ -22,7 +22,7 @@ int __WINAPI RlpSolveAbortFunction(lprec *lp, void *userhandle)
 }
 
 
-void R_init_lpSolve(DllInfo *info)
+void R_init_lpSolveAPI(DllInfo *info)
 {
   RlpSolve_lprec_tag = install("RLPSOLVE_LPREC_TAG");
 

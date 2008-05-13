@@ -10,7 +10,7 @@ set.constr.type <- function(lprec, types, constraints = 1:m)
     types <- match(types, c("<=", ">=", "="), nomatch = 0)
 
   invisible(.Call("RlpSolve_set_constr_type", lprec, as.integer(constraints),
-                   as.integer(types), PACKAGE = "lpSolve"))
+                   as.integer(types), PACKAGE = "lpSolveAPI"))
 }
 
 

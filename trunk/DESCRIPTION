@@ -6,7 +6,7 @@ Author: lp_solve <http://lpsolve.sourceforge.net/>,
         Kjell Konis <kjell.konis@epfl.ch>.
 Maintainer: Kjell Konis <kjell.konis@epfl.ch>
 Depends: R (>= 2.6.2)
-Description: The lpSolve package provides an R interface to the lp_solve
+Description: The lpSolveAPI package provides an R interface to the lp_solve
     library - lp_solve is a Mixed Integer Linear Programming (MILP) solver
     with support for pure linear, (mixed) integer/binary, semi-continuous
     and special ordered sets (SOS) models.

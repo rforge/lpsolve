@@ -11,7 +11,7 @@ set.bounds <- function(lprec, lower = NULL, upper = NULL, columns = 1:n)
            " in the model")
 
     ans$lower <- .Call("RlpSolve_set_lowbo", lprec, as.integer(columns),
-                        as.double(lower), PACKAGE = "lpSolve")
+                        as.double(lower), PACKAGE = "lpSolveAPI")
   }
 
   if(!is.null(upper)) {
@@ -20,7 +20,7 @@ set.bounds <- function(lprec, lower = NULL, upper = NULL, columns = 1:n)
            " in the model")
 
     ans$upper <- .Call("RlpSolve_set_upbo", lprec, as.integer(columns),
-                        as.double(upper), PACKAGE = "lpSolve")
+                        as.double(upper), PACKAGE = "lpSolveAPI")
   }
 
   invisible(ans)

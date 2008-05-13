@@ -19,18 +19,18 @@ read.lp <- function(filename, type = c("lp", "mps", "freemps"))
 
   lprec <- switch(type,
     "lp" = .Call("RlpSolve_read_LP", as.character(filename),
-                  PACKAGE = "lpSolve"),
+                  PACKAGE = "lpSolveAPI"),
     "mps" = .Call("RlpSolve_read_MPS", as.character(filename),
-                   PACKAGE = "lpSolve"),
+                   PACKAGE = "lpSolveAPI"),
     "freemps" = .Call("RlpSolve_read_freeMPS", as.character(filename),
-                       PACKAGE = "lpSolve")
+                       PACKAGE = "lpSolveAPI")
   )
 
   if(is.null(lprec))
     stop("could not interpret ", basename(filename), " as an ", type, " file")
 
   else {
-    reg.finalizer(lprec, lpSolve::delete.lp, TRUE)
+    reg.finalizer(lprec, lpSolveAPI::delete.lp, TRUE)
     oldClass(lprec) <- "lpExtPtr"
   }
 

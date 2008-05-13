@@ -1,7 +1,7 @@
 get.basis <- function(lprec, nonbasic = FALSE)
 {
   basis <- .Call("RlpSolve_get_basis", lprec, as.logical(nonbasic),
-                  PACKAGE = "lpSolve")
+                  PACKAGE = "lpSolveAPI")
 
   if(basis[1] == 1)
     basis <- basis[-1]
