@@ -194,6 +194,7 @@
 		0EFEA4630D884F570053E8F9 /* write.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = write.lp.Rd; path = man/write.lp.Rd; sourceTree = SOURCE_ROOT; };
 		DAD5A7260DD3617A0076C6E2 /* select.solution.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = select.solution.q; sourceTree = "<group>"; };
 		DAD5A7280DD363DD0076C6E2 /* select.solution.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = select.solution.Rd; path = man/select.solution.Rd; sourceTree = SOURCE_ROOT; };
+		DADA677F0DD98D9F00512383 /* Makevars.win */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Makevars.win; path = src/Makevars.win; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -295,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				0EF13F2D0D5C918A00F77D3C /* Makevars */,
+				DADA677F0DD98D9F00512383 /* Makevars.win */,
 				0EF13F5A0D5C9F9100F77D3C /* lpSolve.c */,
 				0E3F54C50D536DB400617C9D /* RlpSolve.c */,
 				0E3F54C60D536DB400617C9D /* RlpSolve.h */,
