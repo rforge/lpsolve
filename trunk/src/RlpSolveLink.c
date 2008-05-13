@@ -20,9 +20,9 @@ SEXP RlpSolve_make_lp(SEXP Srows, SEXP Scolumns)
   lprec* lp = make_lp(INTEGER(Srows)[0], INTEGER(Scolumns)[0]);
 
   if(lp) {
-    /*put_abortfunc(lp, RlpSolveAbortFunction, NULL);*/
     set_verbose(lp, NEUTRAL);
     set_infinite(lp, R_PosInf);
+    put_abortfunc(lp, RlpSolveAbortFunction, NULL);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
     /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
@@ -56,6 +56,7 @@ SEXP RlpSolve_read_LP(SEXP Sfilename)
   if(lp) {
     set_verbose(lp, NEUTRAL);
     set_infinite(lp, R_PosInf);
+    put_abortfunc(lp, RlpSolveAbortFunction, NULL);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
     /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
@@ -75,6 +76,7 @@ SEXP RlpSolve_read_MPS(SEXP Sfilename)
   if(lp) {
     set_verbose(lp, NEUTRAL);
     set_infinite(lp, R_PosInf);
+    put_abortfunc(lp, RlpSolveAbortFunction, NULL);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
     /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
@@ -91,6 +93,7 @@ SEXP RlpSolve_read_freeMPS(SEXP Sfilename)
   if(lp) {
     set_verbose(lp, NEUTRAL);
     set_infinite(lp, R_PosInf);
+    put_abortfunc(lp, RlpSolveAbortFunction, NULL);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
     /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }

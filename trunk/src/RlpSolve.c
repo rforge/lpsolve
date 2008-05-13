@@ -17,8 +17,10 @@ lprec* lprecPointerFromSEXP(SEXP Slprec)
 
 int __WINAPI RlpSolveAbortFunction(lprec *lp, void *userhandle)
 {
-  R_CheckUserInterrupt();
-  return(FALSE);
+  if(R_interrupts_pending)
+    return(1);
+
+  return(0);
 }
 
 
