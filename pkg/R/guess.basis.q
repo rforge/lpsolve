@@ -5,7 +5,7 @@ guess.basis <- function(lprec, guess)
          " of columns and constraints in the model")
 
   basis <- .Call("RlpSolve_guess_basis", lprec, as.double(guess),
-                  PACKAGE = "lpSolve")
+                  PACKAGE = "lpSolveAPI")
 
   if(basis[1] == 1)
     basis <- basis[-1]

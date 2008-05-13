@@ -6,7 +6,7 @@ add.column <- function(lprec, x, indices = 1:m)
     stop(sQuote("x"), " and ", sQuote("indices"), " are not the same length")
 
   invisible(.Call("RlpSolve_add_columnex", lprec, as.double(x),
-                   as.integer(indices), PACKAGE = "lpSolve"))
+                   as.integer(indices), PACKAGE = "lpSolveAPI"))
 }
 
 

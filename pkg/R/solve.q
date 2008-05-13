@@ -1,4 +1,4 @@
 solve.lpExtPtr <- function(a, b, ...)
-  .Call("RlpSolve_solve", a, PACKAGE = "lpSolve")
+  .Call("RlpSolve_solve", a, PACKAGE = "lpSolveAPI")
 
 

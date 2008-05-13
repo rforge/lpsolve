@@ -8,11 +8,11 @@ get.kind <- function(lprec, columns = 1:n)
   ans <- rep("standard", length(columns))
 
   idx <- .Call("RlpSolve_is_semicont", lprec, as.integer(columns),
-                PACKAGE = "lpSolve")
+                PACKAGE = "lpSolveAPI")
   ans[idx] <- "semi-continuous"
 
   idx <- .Call("RlpSolve_is_SOS_var", lprec, as.integer(columns),
-                PACKAGE = "lpSolve")
+                PACKAGE = "lpSolveAPI")
   ans[idx] <- "SOS"
 
   ans

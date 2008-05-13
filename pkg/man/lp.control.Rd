@@ -25,6 +25,8 @@ a list containing all of the control parameters as set internally in \code{lprec
 
 \author{Kjell Konis \email{kjell.konis@epfl.ch}}
 
+\seealso{\code{\link{lp.control.options}}}
+
 \keyword{programming}
 
 

@@ -1,7 +1,7 @@
 lp.control <- function(lprec, ..., reset = FALSE)
 {
   if(reset)
-    .Call("RlpSolve_reset_params", lprec, PACKAGE = "lpSolve")
+    .Call("RlpSolve_reset_params", lprec, PACKAGE = "lpSolveAPI")
 
   status <- list()
   dots <- list(...)
@@ -11,7 +11,7 @@ lp.control <- function(lprec, ..., reset = FALSE)
                 "epsb", "epsd", "epsel", "epsint", "epsperturb", "epspivot",
                 "improve", "infinite", "maxpivot", "mip.gap", "negrange",
                 "obj.in.basis", "pivoting", "presolve", "scalelimit", "scaling",
-                "sense", "simplextype", "solutionlimit", "timeout", "use.names")
+                "sense", "simplextype", "timeout", "use.names")
   dot.names <- match.arg(dot.names, controls, several.ok = TRUE)
 
   for(dot.name in dot.names) {
@@ -35,7 +35,7 @@ lp.control <- function(lprec, ..., reset = FALSE)
 
         status[["anti.degen"]] <- .Call("RlpSolve_set_anti_degen", lprec,
                                          as.integer(anti.degen),
-                                         PACKAGE = "lpSolve")
+                                         PACKAGE = "lpSolveAPI")
       },
 
       "basis.crash" = {
@@ -49,14 +49,14 @@ lp.control <- function(lprec, ..., reset = FALSE)
 
         status[["basis.crash"]] <- .Call("RlpSolve_set_basiscrash", lprec,
                                           as.integer(basis.crash),
-                                          PACKAGE = "lpSolve")
+                                          PACKAGE = "lpSolveAPI")
       },
 
       "bb.depthlimit" = {
         bb.depthlimit <- dots[[dot.name]]
         status[["bb.depthlimit"]] <- .Call("RlpSolve_set_bb_depthlimit", lprec,
                                             as.integer(bb.depthlimit),
-                                            PACKAGE = "lpSolve")
+                                            PACKAGE = "lpSolveAPI")
       },
 
       "bb.floorfirst" = {
@@ -70,7 +70,7 @@ lp.control <- function(lprec, ..., reset = FALSE)
 
         status[["bb.floorfirst"]] <- .Call("RlpSolve_set_bb_floorfirst", lprec,
                                             as.integer(bb.floorfirst),
-                                            PACKAGE = "lpSolve")
+                                            PACKAGE = "lpSolveAPI")
       },
 
       "bb.rule" = {
@@ -99,21 +99,22 @@ lp.control <- function(lprec, ..., reset = FALSE)
 
         bb.rule <- sum(c(rule, values))
         status[["bb.rule"]] <- .Call("RlpSolve_set_bb_rule", lprec,
-                                      as.integer(bb.rule), PACKAGE = "lpSolve")
+                                      as.integer(bb.rule),
+                                      PACKAGE = "lpSolveAPI")
       },
 
       "break.at.first" = {
         break.at.first <- dots[[dot.name]]
         status[["break.at.first"]] <- .Call("RlpSolve_set_break_at_first",
                                              lprec, as.logical(break.at.first),
-                                             PACKAGE = "lpSolve")
+                                             PACKAGE = "lpSolveAPI")
       },
 
       "break.at.value" = {
         break.at.value <- dots[[dot.name]]
         status[["break.at.value"]] <- .Call("RlpSolve_set_break_at_value",
                                              lprec, as.double(break.at.value),
-                                             PACKAGE = "lpSolve")
+                                             PACKAGE = "lpSolveAPI")
       },
 
       "epslevel" = {
@@ -127,44 +128,45 @@ lp.control <- function(lprec, ..., reset = FALSE)
 
         status[["epslevel"]] <- .Call("RlpSolve_set_epslevel", lprec,
                                        as.integer(epslevel),
-                                       PACKAGE = "lpSolve")
+                                       PACKAGE = "lpSolveAPI")
       },
 
       "epsb" = {
         epsb <- dots[[dot.name]]
         status[["epsb"]] <- .Call("RlpSolve_set_epsb", lprec, as.double(epsb),
-                                   PACKAGE = "lpSolve")
+                                   PACKAGE = "lpSolveAPI")
       },
 
       "epsd" = {
         epsd <- dots[[dot.name]]
         status[["epsd"]] <- .Call("RlpSolve_set_epsd", lprec, as.double(epsd),
-                                   PACKAGE = "lpSolve")
+                                   PACKAGE = "lpSolveAPI")
       },
 
       "epsel" = {
         epsel <- dots[[dot.name]]
         status[["epsel"]] <- .Call("RlpSolve_set_epsel", lprec,
-                                    as.double(epsel), PACKAGE = "lpSolve")
+                                    as.double(epsel), PACKAGE = "lpSolveAPI")
       },
 
       "epsint" = {
         epsint <- dots[[dot.name]]
         status[["epsint"]] <- .Call("RlpSolve_set_epsint", lprec,
-                                     as.double(epsint), PACKAGE = "lpSolve")
+                                     as.double(epsint), PACKAGE = "lpSolveAPI")
       },
 
       "epsperturb" = {
         epsperturb <- dots[[dot.name]]
         status[["epsperturb"]] <- .Call("RlpSolve_set_epsperturb", lprec,
                                          as.double(epsperturb),
-                                         PACKAGE = "lpSolve")
+                                         PACKAGE = "lpSolveAPI")
       },
 
       "epspivot" = {
         epspivot <- dots[[dot.name]]
         status[["epspivot"]] <- .Call("RlpSolve_set_epspivot", lprec,
-                                       as.double(epspivot), PACKAGE = "lpSolve")
+                                       as.double(epspivot),
+                                       PACKAGE = "lpSolveAPI")
       },
 
       "improve" = {
@@ -181,20 +183,22 @@ lp.control <- function(lprec, ..., reset = FALSE)
         }
 
         status[["improve"]] <- .Call("RlpSolve_set_improve", lprec,
-                                      as.integer(improve), PACKAGE = "lpSolve")
+                                      as.integer(improve),
+                                      PACKAGE = "lpSolveAPI")
       },
 
       "infinite" = {
         infinite <- dots[[dot.name]]
         status[["infinite"]] <- .Call("RlpSolve_set_infinite", lprec,
-                                       as.double(infinite), PACKAGE = "lpSolve")
+                                       as.double(infinite),
+                                       PACKAGE = "lpSolveAPI")
       },
 
       "maxpivot" = {
         maxpivot <- dots[[dot.name]]
         status[["maxpivot"]] <- .Call("RlpSolve_set_maxpivot", lprec,
                                        as.integer(maxpivot),
-                                       PACKAGE = "lpSolve")
+                                       PACKAGE = "lpSolveAPI")
       },
 
       "mip.gap" = {
@@ -203,26 +207,28 @@ lp.control <- function(lprec, ..., reset = FALSE)
         if(length(mip.gap) != 2)
           mip.gap <- rep(mip.gap[1], 2)
 
-        status[["mip.gap"]] <- c(.Call("RlpSolve_set_mip_gap", lprec, as.logical(TRUE),
+        status[["mip.gap"]] <- c(.Call("RlpSolve_set_mip_gap",
+                                        lprec, as.logical(TRUE),
                                         as.double(mip.gap[1]),
-                                        PACKAGE = "lpSolve"),
-                                 .Call("RlpSolve_set_mip_gap", lprec, as.logical(FALSE),
+                                        PACKAGE = "lpSolveAPI"),
+                                 .Call("RlpSolve_set_mip_gap", lprec,
+                                        as.logical(FALSE),
                                         as.double(mip.gap[2]),
-                                        PACKAGE = "lpSolve"))
+                                        PACKAGE = "lpSolveAPI"))
       },
 
       "negrange" = {
         negrange <- dots[[dot.name]]
         status[["negrange"]] <- .Call("RlpSolve_set_negrange", lprec,
                                        as.double(negrange),
-                                       PACKAGE = "lpSolve")
+                                       PACKAGE = "lpSolveAPI")
       },
 
       "obj.in.basis" = {
         obj.in.basis <- dots[[dot.name]]
         status[["obj.in.basis"]] <- .Call("RlpSolve_set_obj_in_basis", lprec,
                                            as.logical(obj.in.basis),
-                                           PACKAGE = "lpSolve")
+                                           PACKAGE = "lpSolveAPI")
       },
 
       "pivoting" = {
@@ -250,7 +256,7 @@ lp.control <- function(lprec, ..., reset = FALSE)
         pivoting <- sum(c(rule, modes))
         status[["pivoting"]] <- .Call("RlpSolve_set_pivoting", lprec,
                                        as.integer(pivoting),
-                                       PACKAGE = "lpSolve")
+                                       PACKAGE = "lpSolveAPI")
       },
 
       "presolve" = {
@@ -271,18 +277,19 @@ lp.control <- function(lprec, ..., reset = FALSE)
           presolve <- sum(idx[presolve])
         }
 
-        loops <- .Call("RlpSolve_get_presolveloops", lprec, PACKAGE = "lpSolve")
+        loops <- .Call("RlpSolve_get_presolveloops", lprec,
+                        PACKAGE = "lpSolveAPI")
         status[["presolve"]] <- .Call("RlpSolve_set_presolve", lprec,
                                        as.integer(presolve),
                                        as.integer(loops),
-                                       PACKAGE = "lpSolve")
+                                       PACKAGE = "lpSolveAPI")
       },
 
       "scalelimit" = {
         scalelimit <- dots[[dot.name]]
         status[["scalelimit"]] <- .Call("RlpSolve_set_scalelimit", lprec,
                                          as.double(scalelimit),
-                                         PACKAGE = "lpSolve")
+                                         PACKAGE = "lpSolveAPI")
       },
 
       "scaling" = {
@@ -316,7 +323,8 @@ lp.control <- function(lprec, ..., reset = FALSE)
         }
 
         status[["scaling"]] <- .Call("RlpSolve_set_scaling", lprec,
-                                      as.integer(scaling), PACKAGE = "lpSolve")
+                                      as.integer(scaling),
+                                      PACKAGE = "lpSolveAPI")
       },
 
       "sense" = {
@@ -324,7 +332,7 @@ lp.control <- function(lprec, ..., reset = FALSE)
         sense <- match.arg(sense, c("minimize", "maximize"))
         sense <- sense == "maximize"
         status[["sense"]] <- .Call("RlpSolve_set_sense", lprec,
-                                    as.logical(sense), PACKAGE = "lpSolve")
+                                    as.logical(sense), PACKAGE = "lpSolveAPI")
       },
 
       "simplextype" = {
@@ -349,35 +357,37 @@ lp.control <- function(lprec, ..., reset = FALSE)
 
         status[["simplextype"]] <- .Call("RlpSolve_set_simplextype", lprec,
                                           as.integer(simplextype),
-                                          PACKAGE = "lpSolve")
+                                          PACKAGE = "lpSolveAPI")
       },
 
       "timeout" = {
         timeout <- dots[[dot.name]]
         status[["timeout"]] <- .Call("RlpSolve_set_timeout", lprec,
-                                      as.integer(timeout), PACKAGE = "lpSolve")
+                                      as.integer(timeout),
+                                      PACKAGE = "lpSolveAPI")
       }
     )
   }
 
   anti.degen <- .Call("RlpSolve_is_anti_degen", lprec,
                        as.integer(c(0,1,2,4,8,16,32,64,128,256,512)),
-                       PACKAGE = "lpSolve")
+                       PACKAGE = "lpSolveAPI")
   anti.degen <- c("none", "fixedvars", "columncheck", "stalling", "numfailure",
                   "lostfeas", "infeasible", "dynamic", "duringbb", "rhsperturb",
                   "boundflip")[anti.degen]
 
-  basis.crash <- .Call("RlpSolve_get_basiscrash", lprec, PACKAGE = "lpSolve")
+  basis.crash <- .Call("RlpSolve_get_basiscrash", lprec, PACKAGE = "lpSolveAPI")
   basis.crash <- c("none", "NOT USED", "mostfeasible",
                    "leastdegenerate")[1 + basis.crash]
 
-  bb.depthlimit <- .Call("RlpSolve_get_bb_depthlimit", lprec, PACKAGE = "lpSolve")
+  bb.depthlimit <- .Call("RlpSolve_get_bb_depthlimit", lprec,
+                          PACKAGE = "lpSolveAPI")
 
   bb.floorfirst <- .Call("RlpSolve_get_bb_floorfirst", lprec,
-                          PACKAGE = "lpSolve")
+                          PACKAGE = "lpSolveAPI")
   bb.floorfirst <- c("ceiling", "floor", "automatic")[1 + bb.floorfirst]
 
-  bb.rule.index <- .Call("RlpSolve_get_bb_rule", lprec, PACKAGE = "lpSolve")
+  bb.rule.index <- .Call("RlpSolve_get_bb_rule", lprec, PACKAGE = "lpSolveAPI")
   bb.rule <- bb.rule.index %% 8
   bb.rule <- c("first", "gap", "range", "fraction", "pseudocost",
                "pseudononint", "pseudoratio", "user")[1 + bb.rule]
@@ -398,22 +408,23 @@ lp.control <- function(lprec, ..., reset = FALSE)
                "stronginit")[bb.value.index - 2])
 
   break.at.first <- .Call("RlpSolve_is_break_at_first", lprec,
-                           PACKAGE = "lpSolve")
+                           PACKAGE = "lpSolveAPI")
 
   break.at.value <- .Call("RlpSolve_get_break_at_value", lprec,
-                           PACKAGE = "lpSolve")
+                           PACKAGE = "lpSolveAPI")
 
-  epsilon <- c(epsb = .Call("RlpSolve_get_epsb", lprec, PACKAGE = "lpSolve"),
-               epsd = .Call("RlpSolve_get_epsd", lprec, PACKAGE = "lpSolve"),
-               epsel = .Call("RlpSolve_get_epsel", lprec, PACKAGE = "lpSolve"),
+  epsilon <- c(epsb = .Call("RlpSolve_get_epsb", lprec, PACKAGE = "lpSolveAPI"),
+               epsd = .Call("RlpSolve_get_epsd", lprec, PACKAGE = "lpSolveAPI"),
+               epsel = .Call("RlpSolve_get_epsel", lprec,
+                              PACKAGE = "lpSolveAPI"),
                epsint = .Call("RlpSolve_get_epsint", lprec,
-                               PACKAGE = "lpSolve"),
+                               PACKAGE = "lpSolveAPI"),
                epsperturb = .Call("RlpSolve_get_epsperturb", lprec,
-                                   PACKAGE = "lpSolve"),
+                                   PACKAGE = "lpSolveAPI"),
                epspivot = .Call("RlpSolve_get_epspivot", lprec,
-                                 PACKAGE = "lpSolve"))
+                                 PACKAGE = "lpSolveAPI"))
 
-  improve <- .Call("RlpSolve_get_improve", lprec, PACKAGE = "lpSolve")
+  improve <- .Call("RlpSolve_get_improve", lprec, PACKAGE = "lpSolveAPI")
   improve.index <- integer(0)
 
   for(i in 3:0) {
@@ -430,61 +441,63 @@ lp.control <- function(lprec, ..., reset = FALSE)
   else
     improve <- "none"
 
-  infinite <- .Call("RlpSolve_get_infinite", lprec, PACKAGE = "lpSolve")
+  infinite <- .Call("RlpSolve_get_infinite", lprec, PACKAGE = "lpSolveAPI")
 
-  maxpivot <- .Call("RlpSolve_get_maxpivot", lprec, PACKAGE = "lpSolve")
+  maxpivot <- .Call("RlpSolve_get_maxpivot", lprec, PACKAGE = "lpSolveAPI")
 
   mip.gap <- c(absolute = .Call("RlpSolve_get_mip_gap", lprec, TRUE,
-                                 PACKAGE = "lpSolve"),
+                                 PACKAGE = "lpSolveAPI"),
                relative = .Call("RlpSolve_get_mip_gap", lprec, FALSE,
-                                 PACKAGE = "lpSolve"))
+                                 PACKAGE = "lpSolveAPI"))
 
-  negrange <- .Call("RlpSolve_get_negrange", lprec, PACKAGE = "lpSolve")
+  negrange <- .Call("RlpSolve_get_negrange", lprec, PACKAGE = "lpSolveAPI")
 
-  obj.in.basis <- .Call("RlpSolve_is_obj_in_basis", lprec, PACKAGE = "lpSolve")
+  obj.in.basis <- .Call("RlpSolve_is_obj_in_basis", lprec,
+                         PACKAGE = "lpSolveAPI")
 
   pivot.rule <- .Call("RlpSolve_is_piv_rule", lprec, as.integer(0:3),
-                       PACKAGE = "lpSolve")
+                       PACKAGE = "lpSolveAPI")
   pivot.rule <- c("firstindex", "dantzig", "devex", "steepestedge")[pivot.rule]
   pivot.mode <- .Call("RlpSolve_is_piv_mode", lprec,
                        as.integer(c(2^(2:5), 128, 2^(9:12), 16384)),
-                       PACKAGE = "lpSolve")
+                       PACKAGE = "lpSolveAPI")
   pivot.mode <- c("primalfallback", "multiple", "partial", "adaptive",
                   "randomize", "autopartial", "loopleft", "loopalternate",
                   "harristwopass", "truenorminit")[pivot.mode]
   pivoting <- c(pivot.rule, pivot.mode)
 
   presolve <- .Call("RlpSolve_is_presolve", lprec,
-                     as.integer(c(0, 2^(0:2), 2^(5:20))), PACKAGE = "lpSolve")
+                     as.integer(c(0, 2^(0:2), 2^(5:20))),
+                     PACKAGE = "lpSolveAPI")
   presolve <- c("none", "cols", "rows", "lindep", "sos", "reducemip",
                 "knapsack", "elimeq2", "impliedfree", "reducedgcd", "probefix",
                 "probereduce", "rowdominate", "coldominate", "mergerows",
                 "impliedslk", "colfixdual", "bounds", "duals",
                 "sensduals")[presolve]
 
-  scalelimit <- .Call("RlpSolve_get_scalelimit", lprec, PACKAGE = "lpSolve")
+  scalelimit <- .Call("RlpSolve_get_scalelimit", lprec, PACKAGE = "lpSolveAPI")
 
   scale.type <- .Call("RlpSolve_is_scaletype", lprec,
-                       as.integer(c(0, 1,2,3,4,7)), PACKAGE = "lpSolve")
+                       as.integer(c(0, 1,2,3,4,7)), PACKAGE = "lpSolveAPI")
   scale.type <- c("none", "extreme", "range", "mean", "geometric",
                   "curtisreid")[scale.type]
   scale.mode <- .Call("RlpSolve_is_scalemode", lprec,
-                       as.integer(c(8, 16, 2^(5:10))), PACKAGE = "lpSolve")
+                       as.integer(c(8, 16, 2^(5:10))), PACKAGE = "lpSolveAPI")
   scale.mode <- c("quadratic", "logarithmic", "power2", "equilibrate",
                   "integers", "dynupdate", "rowsonly", "colsonly")[scale.mode]
   scaling <- c(scale.type, scale.mode)
 
-  sense <- ifelse(.Call("RlpSolve_is_maxim", lprec, PACKAGE = "lpSolve"),
+  sense <- ifelse(.Call("RlpSolve_is_maxim", lprec, PACKAGE = "lpSolveAPI"),
                   "maximize", "minimize")
 
   simplextype <- switch(as.character(.Call("RlpSolve_get_simplextype", lprec,
-                                            PACKAGE = "lpSolve")),
+                                            PACKAGE = "lpSolveAPI")),
                          "5" = c("primal", "primal"),
                          "6" = c("dual", "primal"),
                          "9" = c("primal", "dual"),
                         "10" = c("dual", "dual"))
 
-  timeout <- .Call("RlpSolve_get_timeout", lprec, PACKAGE = "lpSolve")
+  timeout <- .Call("RlpSolve_get_timeout", lprec, PACKAGE = "lpSolveAPI")
 
   list(anti.degen = anti.degen, basis.crash = basis.crash,
        bb.depthlimit = bb.depthlimit, bb.floorfirst = bb.floorfirst,

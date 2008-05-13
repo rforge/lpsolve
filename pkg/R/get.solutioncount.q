@@ -1,4 +1,4 @@
 get.solutioncount <- function(lprec)
-  .Call("RlpSolve_get_solutioncount", lprec, PACKAGE = "lpSolve")
+  .Call("RlpSolve_get_solutioncount", lprec, PACKAGE = "lpSolveAPI")
 
 

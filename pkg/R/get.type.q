@@ -6,7 +6,7 @@ get.type <- function(lprec, columns = 1:n, as.char = TRUE)
     columns <- integer(0)
 
   ind <- .Call("RlpSolve_is_int", lprec, as.integer(columns),
-                PACKAGE = "lpSolve")
+                PACKAGE = "lpSolveAPI")
 
   if(as.char) {
     types <- rep("real", length(columns))

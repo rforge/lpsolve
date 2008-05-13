@@ -7,13 +7,13 @@ get.constr.value <- function(lprec, side = c("rhs", "lhs"), constraints = 1:m)
     constraints <- integer(0)
 
   value <- .Call("RlpSolve_get_rh", lprec, as.integer(constraints),
-                  PACKAGE = "lpSolve")
+                  PACKAGE = "lpSolveAPI")
 
   if(side == "lhs") {
     constr.types <- get.constr.type(lprec, constraints = constraints,
                                     as.char = FALSE)
     range <- .Call("RlpSolve_get_rh_range", lprec, as.integer(constraints),
-                    PACKAGE = "lpSolve")
+                    PACKAGE = "lpSolveAPI")
     range[constr.types == 1] <- -range[constr.types == 1]
     value <- value + range
   }

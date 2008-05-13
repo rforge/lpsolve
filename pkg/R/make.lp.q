@@ -1,10 +1,10 @@
 make.lp <- function(nrow = 0, ncol = 0)
 {
   lprec <- .Call("RlpSolve_make_lp", as.integer(nrow), as.integer(ncol),
-                  PACKAGE = "lpSolve")
+                  PACKAGE = "lpSolveAPI")
 
-  if(!is.null(lp)) {
-    reg.finalizer(lprec, lpSolve::delete.lp, TRUE)
+  if(!is.null(lprec)) {
+    reg.finalizer(lprec, lpSolveAPI::delete.lp, TRUE)
     oldClass(lprec) <- "lpExtPtr"
   }
 

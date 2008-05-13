@@ -32,6 +32,7 @@ void lpSolve(double* obj, double* A, int* pldA, int* pp, int* peq, double* b,
     error("unable to create linear program");
 
   set_verbose(lp, NEUTRAL);
+  set_infinite(lp, R_PosInf);
 
   for(j = 0; j < p; j++) {
     set_columnex(lp, j+1, ldA, A+j*ldA, rowno);
@@ -46,18 +47,8 @@ void lpSolve(double* obj, double* A, int* pldA, int* pp, int* peq, double* b,
   for(i = eq; i <= ldA; i++)
     set_constr_type(lp, i, EQ);
 
-  lpsInfinity = get_infinite(lp);
-  for(j = 0; j < p; j++) {
-    if(lb[j] == R_NegInf && ub[j] == R_PosInf)
-      set_unbounded(lp, j+1);
-    else {
-      if(ub[j] == R_PosInf)
-        ub[j] = lpsInfinity;
-      else if(lb[j] == R_NegInf)
-        lb[j] = -1.0 * lpsInfinity;
-      set_bounds(lp, j+1, lb[j], ub[j]);
-    }
-  }
+  for(j = 0; j < p; j++)
+    set_bounds(lp, j+1, lb[j], ub[j]);
 
   for(j = 0; j < nInts; j++)
     set_int(lp, intvec[j], TRUE);

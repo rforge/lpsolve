@@ -64,8 +64,6 @@ lpSolve(obj, A, b, Aeq = NULL, beq = NULL, lb = 0, ub = Inf,
   }
 }
 
-\seealso{\code{\link{lp}}}
-
 \examples{
   # maximize:
   #   x1 + 9 x2 +   x3 

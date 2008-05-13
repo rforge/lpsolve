@@ -6,7 +6,7 @@ get.branch.mode <- function(lprec, columns = 1:n, as.char = TRUE)
     columns <- integer(0)
 
   modes <- .Call("RlpSolve_get_var_branch", lprec, as.integer(columns),
-                  PACKAGE = "lpSolve")
+                  PACKAGE = "lpSolveAPI")
 
   if(as.char)
     modes <- c("ceiling", "floor", "auto", "default")[1 + modes]
