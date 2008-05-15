@@ -1,5 +1,6 @@
 #include "R.h"
 #include "lp_lib.h"
+#include "RlpSolve.h"
 
 void lpSolve(double* obj, double* A, int* pldA, int* pp, int* peq, double* b,
              double* lb, double* ub, int* pnInts, int* intvec,
@@ -33,6 +34,7 @@ void lpSolve(double* obj, double* A, int* pldA, int* pp, int* peq, double* b,
 
   set_verbose(lp, NEUTRAL);
   set_infinite(lp, R_PosInf);
+  put_abortfunc(lp, RlpSolveAbortFunction, NULL);
 
   for(j = 0; j < p; j++) {
     set_columnex(lp, j+1, ldA, A+j*ldA, rowno);
