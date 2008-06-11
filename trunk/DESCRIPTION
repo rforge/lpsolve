@@ -1,6 +1,6 @@
 Package: lpSolveAPI
 Version: 5.5.0.12
-Date: 2008-05-08
+Date: 2008-06-11
 Title: Interface to lp_solve v. 5.5
 Author: lp_solve <http://lpsolve.sourceforge.net/>,
         Kjell Konis <kjell.konis@epfl.ch>.

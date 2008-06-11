@@ -60,7 +60,6 @@
 		0EBC20280D806D6300DD261B /* set.branch.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.branch.mode.q; sourceTree = "<group>"; };
 		0EBC20290D806D7500DD261B /* get.branch.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.branch.mode.q; sourceTree = "<group>"; };
 		0EBC202A0D806EBF00DD261B /* set.branch.weights.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.branch.weights.q; sourceTree = "<group>"; };
-		0EC5CD3D0D6073BA00958B10 /* lpSolve.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolve.Rd; path = man/lpSolve.Rd; sourceTree = SOURCE_ROOT; };
 		0ECCA9210D8532E20093DFAC /* delete.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.column.q; path = R/delete.column.q; sourceTree = SOURCE_ROOT; };
 		0ECCA9220D85330B0093DFAC /* delete.column.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.column.Rd; path = man/delete.column.Rd; sourceTree = SOURCE_ROOT; };
 		0ECDCA2D0D7C2CBB0000AFC4 /* get.primal.solution.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = get.primal.solution.q; sourceTree = "<group>"; };
@@ -170,8 +169,6 @@
 		0EF13F310D5C918A00F77D3C /* myblas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myblas.h; path = src/myblas.h; sourceTree = SOURCE_ROOT; };
 		0EF13F320D5C918A00F77D3C /* yacc_read.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = yacc_read.c; path = src/yacc_read.c; sourceTree = SOURCE_ROOT; };
 		0EF13F330D5C918A00F77D3C /* yacc_read.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yacc_read.h; path = src/yacc_read.h; sourceTree = SOURCE_ROOT; };
-		0EF13F5A0D5C9F9100F77D3C /* lpSolve.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpSolve.c; path = src/lpSolve.c; sourceTree = SOURCE_ROOT; };
-		0EF13F5B0D5C9FA600F77D3C /* lpSolve.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolve.q; path = R/lpSolve.q; sourceTree = SOURCE_ROOT; };
 		0EFEA4400D884CE10053E8F9 /* set.constr.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = set.constr.type.q; sourceTree = "<group>"; };
 		0EFEA4420D884D8B0053E8F9 /* solve.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = solve.q; path = R/solve.q; sourceTree = SOURCE_ROOT; };
 		0EFEA4520D884F570053E8F9 /* name.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = name.lp.Rd; path = man/name.lp.Rd; sourceTree = SOURCE_ROOT; };
@@ -297,7 +294,6 @@
 			children = (
 				0EF13F2D0D5C918A00F77D3C /* Makevars */,
 				DADA677F0DD98D9F00512383 /* Makevars.win */,
-				0EF13F5A0D5C9F9100F77D3C /* lpSolve.c */,
 				0E3F54C50D536DB400617C9D /* RlpSolve.c */,
 				0E3F54C60D536DB400617C9D /* RlpSolve.h */,
 				0E3F54C70D536DB400617C9D /* RlpSolveLink.c */,
@@ -318,7 +314,6 @@
 		0EABBD6A0D59CD4500CF7B0C /* R */ = {
 			isa = PBXGroup;
 			children = (
-				0EF13F5B0D5C9FA600F77D3C /* lpSolve.q */,
 				0E16C0490D648A6B00EE878E /* library.q */,
 				0EF13F550D5C9EDD00F77D3C /* R API */,
 			);
@@ -328,7 +323,6 @@
 		0EABBD6B0D59CD5000CF7B0C /* man */ = {
 			isa = PBXGroup;
 			children = (
-				0EC5CD3D0D6073BA00958B10 /* lpSolve.Rd */,
 				0ECECA800D897CEE000DC3A1 /* undocumented.Rd */,
 				0EF13F780D5CA9DA00F77D3C /* R API */,
 			);
