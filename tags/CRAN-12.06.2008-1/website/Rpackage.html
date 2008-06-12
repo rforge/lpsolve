@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+
+	<HEAD>
+		<TITLE>Using lp_solve in R</TITLE>
+		<style TYPE="text/css"> BODY { font-family:verdana,arial,helvetica; margin:15; }
+	</style>
+	</HEAD>
+
+<BODY>
+<h1 align="left"><u>Using lp_solve in R</u></h1>
+
+<p>
+R is a language and environment for statistical computing and graphics. It is a GNU project which is similar to the S language and environment which was developed at Bell Laboratories (formerly AT&T, now Lucent Technologies) by John Chambers and colleagues. R can be considered as a different implementation of S. There are some important differences, but much code written for S runs unaltered under R.  For more information or to download R please visit the R <a href="http://www.r-project.org">website</a>.
+</p>
+
+<h5>Installation</h5>
+
+<p>
+Installing the package takes a single command:
+
+<pre>
+  &gt; install.packages("lpSolve", repos = "http://r-forge.r-project.org")
+</pre>
+
+Note that there is also an lpSolve package available on CRAN.  The CRAN version of the package is based on lp_solve version 5.5.0.8 and does not include the API.
+</p>
+
+<h5>Note</h5>
+
+<p>
+The <tt>&gt;</tt> shown before each R command is the R prompt.  Only the text after <tt>&gt;</tt> must be entered.
+</p>
+
+
+<h3>Getting Help</h3>
+
+<p>
+Documentation is provided for each function in the lpSolve package using R's built-in help system.  For example, the command
+
+<pre>
+  &gt; ?add.constraint
+</pre>
+
+will display the documentation for the <tt>add.constraint</tt> function.
+</p>
+
+<h3>Building and Solving Linear Programs Using the lpSolve R Package</h3>
+
+<p>
+The lpSolve package implements two general approaches to solving linear programs.
+</p>
+
+<p>
+The first approach is provided by the functions <tt>lpSolve</tt>, <tt>lp</tt>, <tt>lp.transport</tt> and <tt>lp.assign</tt>.  These functions allow a linear program (and transport and assignment problems) to be defined and solved using a single command.  For example, the command
+
+<pre>
+  > result <- lpSolve(obj, A, b)   
+</pre>
+
+solves the linear program
+
+<pre>
+         min:  obj * x
+  subject to:  A %*% x <= b
+               x >= 0   
+</pre>
+
+and stores the results in an R list named <tt>result</tt>.  The individual components of the result (e.g., the optimal value of the objective function, the decision variables, etc.) can be retrieved from this list.  This approach is practical for small linear programs and dense linear programs.
+</p>
+
+<p>
+Alternatively, the lpSolve package provides an API for building and solving linear programs that mimics the lp_solve C API.  This approach allows much greater flexibility but also has a few caveats.  The most important is that the <i>lpSolve linear program model objects</i> created by <tt>make.lp</tt> and <tt>read.lp</tt> are not actually R objects but external pointers to lp_solve 'lprec' structures.  R does not know how to deal with these structures.  In particular, R cannot duplicate them.  Thus one must never assign an existing lpSolve linear program model object in R code.
+</p>
+
+<p>
+Consider the following example.  First we create an empty model x.
+
+<pre>
+  &gt; x <- make.lp(2, 2)
+</pre>
+
+Then we assign x to y.
+
+<pre>
+  &gt; y <- x
+</pre>
+
+Next we set some columns in x.
+
+<pre>
+  &gt; set.column(x, 1, c(1, 2))
+  &gt; set.column(x, 2, c(3, 4))
+</pre> 
+
+And finally, take a look at y.
+
+<pre>
+  &gt; y
+  Model name: 
+              C1    C2         
+  Minimize     0     0         
+  R1           1     3  free  0
+  R2           2     4  free  0
+  Type      Real  Real         
+  upbo       Inf   Inf         
+  lowbo        0     0         
+</pre>
+
+The changes we made in x appear in y as well.  Although x and y are two distinct objects in R, they both refer to the <b>same</b> lp_solve 'lprec' structure.
+</p>
+
+<p>
+The safest way to use the lpSolve API is inside an R function - do not return the lpSolve linear program model object.  See the code for the functions <tt>lp</tt> and <tt>lp.transport</tt> for examples.
+</p>
+
+<h5>Learning by Example</h5>
+
+<pre>
+  &gt; lprec <- make.lp(0, 4)
+  &gt; set.objfn(lprec, c(1, 3, 6.24, 0.1))
+  &gt; add.constraint(lprec, c(0, 78.26, 0, 2.9), ">=", 92.3)
+  &gt; add.constraint(lprec, c(0.24, 0, 11.31, 0), "<=", 14.8)
+  &gt; add.constraint(lprec, c(12.68, 0, 0.08, 0.9), ">=", 4)
+  &gt; set.bounds(lprec, lower = c(28.6, 18), columns = c(1, 4))
+  &gt; set.bounds(lprec, upper = 48.98, columns = 4)
+  &gt; RowNames <- c("THISROW", "THATROW", "LASTROW")
+  &gt; ColNames <- c("COLONE", "COLTWO", "COLTHREE", "COLFOUR")
+  &gt; dimnames(lprec) <- list(RowNames, ColNames)</pre>
+
+Lets take a look at what we have done so far.
+
+<pre>
+  &gt; lprec  # or equivalently print(lprec)
+  Model name: 
+              COLONE    COLTWO  COLTHREE   COLFOUR          
+  Minimize         1         3      6.24       0.1          
+  THISROW          0     78.26         0       2.9  >=  92.3
+  THATROW       0.24         0     11.31         0  <=  14.8
+  LASTROW      12.68         0      0.08       0.9  >=     4
+  Type          Real      Real      Real      Real          
+  upbo           Inf       Inf       Inf     48.98          
+  lowbo         28.6         0         0        18
+</pre>
+
+Now lets solve the model.
+
+<pre>
+  &gt; solve(lprec)
+  [1] 0
+
+  &gt; get.objective(lprec)
+  [1] 31.78276
+
+  &gt; get.variables(lprec)
+  [1] 28.60000  0.00000  0.00000 31.82759
+
+  &gt; get.constraints(lprec)
+  [1]  92.3000   6.8640 391.2928
+</pre>
+
+<p>
+Note that there are some commands that return an answer.  For the accessor functions (generally named get.*) the output should be clear.  For other functions (e.g., <tt>solve</tt>), the interpretation of the returned value is described in the documentation.  Since <tt>solve</tt> is generic in R, use the command
+
+<pre>
+  &gt; ?solve.lpExtPtr
+</pre>
+
+to view the appropriate documentation.  The assignment functions (generally named set.*) also have a return value - often a logical value indicating whether the command was successful - that is returned invisibly.  Invisible values can be assigned but are not echoed to the console.  For example,
+
+<pre>
+  &gt; status <- add.constraint(lprec, c(12.68, 0, 0.08, 0.9), ">=", 4)
+  &gt; status
+  [1] TRUE
+</pre>
+
+indicates that the operation was successful.  Invisible values can also be used in flow control.
+</p>
+
+</BODY>
+</html>
