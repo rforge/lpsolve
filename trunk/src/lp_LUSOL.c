@@ -34,8 +34,8 @@
 #endif
 
 /* Include routines common to factorization engine implementations */
-#include "lp_BFP1.CFILE"
-#include "lp_BFP2.CFILE"
+#include "lp_BFP1.c"
+#include "lp_BFP2.c"
 
 
 /* MUST MODIFY */
