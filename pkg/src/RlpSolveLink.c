@@ -190,8 +190,8 @@ SEXP RlpSolve_get_columnex(SEXP Slp, SEXP Scol_nr)
     SET_VECTOR_ELT(ret, 0, Scolumn);
     SET_VECTOR_ELT(ret, 1, Snzrow);
     PROTECT(names = allocVector(STRSXP, 2));
-    SET_VECTOR_ELT(names, 0, mkChar("column"));
-    SET_VECTOR_ELT(names, 1, mkChar("nzrow"));
+    SET_STRING_ELT(names, 0, mkChar("column"));
+    SET_STRING_ELT(names, 1, mkChar("nzrow"));
     setAttrib(ret, R_NamesSymbol, names);
     UNPROTECT(2);
   }
@@ -363,8 +363,8 @@ SEXP RlpSolve_get_rowex(SEXP Slp, SEXP Srow_nr)
     SET_VECTOR_ELT(ret, 0, Srow);
     SET_VECTOR_ELT(ret, 1, Scolno);
     PROTECT(names = allocVector(STRSXP, 2));
-    SET_VECTOR_ELT(names, 0, mkChar("row"));
-    SET_VECTOR_ELT(names, 1, mkChar("colno"));
+    SET_STRING_ELT(names, 0, mkChar("row"));
+    SET_STRING_ELT(names, 1, mkChar("colno"));
     setAttrib(ret, R_NamesSymbol, names);
     UNPROTECT(2);
   }
@@ -2030,8 +2030,8 @@ SEXP RlpSolve_get_sensitivity_obj(SEXP Slp)
     SET_VECTOR_ELT(ret, 0, Sobjfrom);
     SET_VECTOR_ELT(ret, 1, Sobjtill);
     PROTECT(names = allocVector(STRSXP, 2));
-    SET_VECTOR_ELT(names, 0, mkChar("objfrom"));
-    SET_VECTOR_ELT(names, 1, mkChar("objtill"));
+    SET_STRING_ELT(names, 0, mkChar("objfrom"));
+    SET_STRING_ELT(names, 1, mkChar("objtill"));
     setAttrib(ret, R_NamesSymbol, names);
     UNPROTECT(2);
   }
@@ -2067,10 +2067,10 @@ SEXP RlpSolve_get_sensitivity_objex(SEXP Slp)
     SET_VECTOR_ELT(ret, 2, Sobjfromvalue);
     SET_VECTOR_ELT(ret, 3, Sobjtillvalue);
     PROTECT(names = allocVector(STRSXP, 4));
-    SET_VECTOR_ELT(names, 0, mkChar("objfrom"));
-    SET_VECTOR_ELT(names, 1, mkChar("objtill"));
-    SET_VECTOR_ELT(names, 2, mkChar("objfromvalue"));
-    SET_VECTOR_ELT(names, 3, mkChar("objtillvalue"));
+    SET_STRING_ELT(names, 0, mkChar("objfrom"));
+    SET_STRING_ELT(names, 1, mkChar("objtill"));
+    SET_STRING_ELT(names, 2, mkChar("objfromvalue"));
+    SET_STRING_ELT(names, 3, mkChar("objtillvalue"));
     setAttrib(ret, R_NamesSymbol, names);
     UNPROTECT(2);
   }
@@ -2103,9 +2103,9 @@ SEXP RlpSolve_get_sensitivity_rhs(SEXP Slp)
     SET_VECTOR_ELT(ret, 1, Sdualsfrom);
     SET_VECTOR_ELT(ret, 2, Sdualstill);
     PROTECT(names = allocVector(STRSXP, 3));
-    SET_VECTOR_ELT(names, 0, mkChar("duals"));
-    SET_VECTOR_ELT(names, 1, mkChar("dualsfrom"));
-    SET_VECTOR_ELT(names, 2, mkChar("dualstill"));
+    SET_STRING_ELT(names, 0, mkChar("duals"));
+    SET_STRING_ELT(names, 1, mkChar("dualsfrom"));
+    SET_STRING_ELT(names, 2, mkChar("dualstill"));
     setAttrib(ret, R_NamesSymbol, names);
     UNPROTECT(2);
   }
@@ -2446,10 +2446,10 @@ SEXP RlpSolve_lp_solve_version()
   lp_solve_version(INTEGER(ret), INTEGER(ret) + 1, INTEGER(ret) + 2,
                    INTEGER(ret) + 3);
   PROTECT(names = allocVector(STRSXP, 4));
-  SET_VECTOR_ELT(names, 0, mkChar("major"));
-  SET_VECTOR_ELT(names, 1, mkChar("minor"));
-  SET_VECTOR_ELT(names, 2, mkChar("release"));
-  SET_VECTOR_ELT(names, 3, mkChar("build"));
+  SET_STRING_ELT(names, 0, mkChar("major"));
+  SET_STRING_ELT(names, 1, mkChar("minor"));
+  SET_STRING_ELT(names, 2, mkChar("release"));
+  SET_STRING_ELT(names, 3, mkChar("build"));
   setAttrib(ret, R_NamesSymbol, names);
   UNPROTECT(2);
 
