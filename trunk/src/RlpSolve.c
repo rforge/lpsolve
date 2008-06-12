@@ -18,8 +18,7 @@ lprec* lprecPointerFromSEXP(SEXP Slprec)
 int __WINAPI RlpSolveAbortFunction(lprec *lp, void *userhandle)
 {
   int abort = 0;
-  /*return(R_ToplevelExec((void *) R_CheckUserInterrupt, NULL) ? 0 : 1);*/
-  if(R_ToplevelExec((void *) R_CheckUserInterrupt, NULL)) {
+  /*if(R_ToplevelExec((void *) R_CheckUserInterrupt, NULL)) {
     Rprintf("R_CheckUserInterrupt returned successfully.\n");
     abort = 0;
   }
@@ -28,8 +27,7 @@ int __WINAPI RlpSolveAbortFunction(lprec *lp, void *userhandle)
     Rprintf("R_CheckUserInterrupt failed to return.");
     Rprintf("\n*************************************************\n");
     abort = 1;
-  }
-
+  }*/
   return(abort);
 }
 
