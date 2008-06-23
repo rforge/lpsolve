@@ -34,18 +34,28 @@ Kjell Konis \\
 \setcounter{page}{1}
 \section{Introduction}
 
-\subsection{Installation}
-
-Installing the package takes a single command:
-
-<<eval=FALSE>>=
-install.packages("lpSolve", repos = "http://r-forge.r-project.org")
-@
 
 Note that there is also an lpSolve package available on CRAN. The CRAN version of the package is based on lp\_solve version 5.5.0.8 and does not include the API.
 Note
 
 The~\texttt{>} shown before each R command is the R prompt. Only the text after~\texttt{>} must be entered.
+
+
+\subsection{Installation}
+
+Use the following command to install the package 
+
+<<eval=FALSE>>=
+install.packages("lpSolveAPI")
+@
+
+then load it into your R session.
+
+<<>>=
+library(lpSolveAPI)
+@
+
+
 
 \subsection{Getting Help}
 
@@ -57,14 +67,64 @@ help(add.constraint)
 
 will display the documentation for the add.constraint function.
 
-\subsection{Building and Solving Linear Programs Using the lpSolveAPI R Package}
 
-The lpSolveAPI package provides an API for building and solving linear programs that mimics the lp\_solve C API. This approach allows much greater flexibility but also has a few caveats. The most important is that the lpSolve linear program model objects created by make.lp and read.lp are not actually R objects but external pointers to lp\_solve 'lprec' structures. R does not know how to deal with these structures. In particular, R cannot duplicate them. Thus one must never assign an existing lpSolve linear program model object in R code.
+\subsection{Conventions used in the lpSolveAPI Package}
+
+The syntax used to program lp\_solve via the lpSolveAPI package is different from that normally used in R.  The general approach used in the lpSolveAPI package is to create an \textit{lpSolve linear program model object} (LPMO), use the set accessor methods to define the linear program in that object, solve the linear program and finally use the get accessor methods to retrieve elements of the solution.  The first argument to almost all of the functions in the lpSolveAPI package is therefore the lpSolve linear program model object that the function is meant to operate on.
+
+
+A new lpSolve linear program model object with $m$ constraints and $n$ decision variables can be created using the \texttt{make.lp} function.  For example, the following command creates an lpSolve linear program model object with $3$ constraints and $2$ decision variables.
+
+<<>>=
+my.lp <- make.lp(3, 2)
+@
+
+The number of constraints $m$ and the number of decision variables $n$ can be retrieved using the generic \texttt{dim} function.  Note that the objective function and right-hand-side are not counted in the dimension of the LPMO.  Assignment via the \texttt{dim} function is not supported; to change the dimension of an LPMO it is necessary to use the \texttt{resize.lp} function.
+
+The LPMO is now initialized but contains no data.
+
+\singlespacing
+<<>>=
+my.lp
+@
+\onehalfspacing
+
+The next step is to use the set accessor methods to define a linear programming problem.  Suppose we wish to solve the following linear program
+
+\singlespacing
+$$\begin{array}{rrcrcl}
+\mbox{minimize:}   & -2x_{1} & - &   x_{2} & & \\
+\mbox{subject to:} &   x_{1} & + & 3 x_{2} & \leq & 4 \\
+                   &   x_{1} & + &   x_{2} & \leq & 2 \\
+                   &  2x_{1} & + &         & \leq & 3 \\
+\end{array}$$
+\onehalfspacing
+
+with $x_{1} \geq 0$ and $x_{2} \geq 0$.  The best way to build a model in lp\_solve is columnwise; that is to set the columns then the objective function, constraint types and right-hand-side.  For example,
+
+\singlespacing
+<<>>=
+set.column(my.lp, 1, c(1, 1, 2))
+set.column(my.lp, 2, c(3, 1, 0))
+set.objfn(my.lp, c(-2, -1))
+set.constr.type(my.lp, rep("<=", 3))
+set.rhs(my.lp, c(4, 2, 3))
+my.lp
+@
+\onehalfspacing
+
+
+The set accessor methods (the functions with names beginning with set) operate directly on a lpSolve linear program model object.  Do not assign the output of a set accessor method and expect an lpSolve linear program model object.  The (invisible) return value of these functions is generally a logical status code indicating whether the function executed sucessfully.
+
+
+
+\subsection{Caveats}
+
+The lpSolveAPI package provides an API for building and solving linear programs that mimics the lp\_solve C API. This approach allows much greater flexibility but also has a few caveats. The most important is that the lpSolve linear program model objects created by make.lp and read.lp are not actually R objects but external pointers to lp\_solve 'lprec' structures. R does not know how to deal with these structures. In particular, R cannot duplicate them. Thus you must never assign an existing lpSolve linear program model object in R code.
 
 Consider the following example. First we create an empty model \texttt{x}.
 
 <<>>=
-library(lpSolveAPI)
 x <- make.lp(2, 2)
 @
 
