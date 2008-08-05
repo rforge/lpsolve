@@ -189,7 +189,7 @@
 #define MAJORVERSION             5
 #define MINORVERSION             5
 #define RELEASE                  0
-#define BUILD                   11
+#define BUILD                   13
 #define BFPVERSION              12       /* Checked against bfp_compatible() */
 #define XLIVERSION              12       /* Checked against xli_compatible() */
 /* Note that both BFPVERSION and XLIVERSION typically have to be incremented
@@ -246,7 +246,7 @@
 #define SIMPLEX_DEFAULT         (SIMPLEX_DUAL_PRIMAL)
 
 /* Variable codes (internal) */
-#define ISLPSREAL                   0
+#define ISREAL                   0
 #define ISINTEGER                1
 #define ISSEMI                   2
 #define ISSOS                    4
@@ -373,7 +373,7 @@
 /* MIP constraint classes */
 #define ROWCLASS_Unknown         0   /* Undefined/unknown */
 #define ROWCLASS_Objective       1   /* The objective function */
-#define ROWCLASS_GeneralLPSREAL     2   /* General real-values constraint */
+#define ROWCLASS_GeneralREAL     2   /* General real-values constraint */
 #define ROWCLASS_GeneralMIP      3   /* General mixed integer/binary and real valued constraint */
 #define ROWCLASS_GeneralINT      4   /* General integer-only constraint */
 #define ROWCLASS_GeneralBIN      5   /* General binary-only constraint */
@@ -484,7 +484,7 @@
                                   PRICE_FORCEFULL + PRICE_TRUENORMINIT)
 
 /* B&B active variable codes (internal) */
-#define BB_LPSREAL                  0
+#define BB_REAL                  0
 #define BB_INT                   1
 #define BB_SC                    2
 #define BB_SOS                   3
@@ -751,8 +751,8 @@ typedef struct _presolveundorec
                                    that the constraint or variable was removed */
   int       *orig_to_var;       /* sum_alloc+1 : Mapping from original variable index to
                                    current / working index number */
-  LPSREAL      *fixed_rhs;         /* rows_alloc+1 : Storage of values of presolved fixed colums */
-  LPSREAL      *fixed_obj;         /* columns_alloc+1: Storage of values of presolved fixed rows */
+  REAL      *fixed_rhs;         /* rows_alloc+1 : Storage of values of presolved fixed colums */
+  REAL      *fixed_obj;         /* columns_alloc+1: Storage of values of presolved fixed rows */
   DeltaVrec *deletedA;          /* A matrix of eliminated data from matA */
   DeltaVrec *primalundo;        /* Affine translation vectors for eliminated primal variables */
   DeltaVrec *dualundo;          /* Affine translation vectors for eliminated dual variables */
@@ -766,7 +766,7 @@ typedef struct _BBPSrec
   int       pseodotype;
   int       updatelimit;
   int       updatesfinished;
-  LPSREAL      restartlimit;
+  REAL      restartlimit;
   MATitem   *UPcost;
   MATitem   *LOcost;
   struct   _BBPSrec *secondary;
@@ -806,13 +806,13 @@ typedef int    (__WINAPI lphandleint_intfunc)(lprec *lp, void *userhandle, int m
 
 /* API typedef definitions                                                   */
 /* ------------------------------------------------------------------------- */
-typedef MYBOOL (__WINAPI add_column_func)(lprec *lp, LPSREAL *column);
-typedef MYBOOL (__WINAPI add_columnex_func)(lprec *lp, int count, LPSREAL *column, int *rowno);
-typedef MYBOOL (__WINAPI add_constraint_func)(lprec *lp, LPSREAL *row, int constr_type, LPSREAL rh);
-typedef MYBOOL (__WINAPI add_constraintex_func)(lprec *lp, int count, LPSREAL *row, int *colno, int constr_type, LPSREAL rh);
-typedef MYBOOL (__WINAPI add_lag_con_func)(lprec *lp, LPSREAL *row, int con_type, LPSREAL rhs);
-typedef int (__WINAPI add_SOS_func)(lprec *lp, char *name, int sostype, int priority, int count, int *sosvars, LPSREAL *weights);
-typedef int (__WINAPI column_in_lp_func)(lprec *lp, LPSREAL *column);
+typedef MYBOOL (__WINAPI add_column_func)(lprec *lp, REAL *column);
+typedef MYBOOL (__WINAPI add_columnex_func)(lprec *lp, int count, REAL *column, int *rowno);
+typedef MYBOOL (__WINAPI add_constraint_func)(lprec *lp, REAL *row, int constr_type, REAL rh);
+typedef MYBOOL (__WINAPI add_constraintex_func)(lprec *lp, int count, REAL *row, int *colno, int constr_type, REAL rh);
+typedef MYBOOL (__WINAPI add_lag_con_func)(lprec *lp, REAL *row, int con_type, REAL rhs);
+typedef int (__WINAPI add_SOS_func)(lprec *lp, char *name, int sostype, int priority, int count, int *sosvars, REAL *weights);
+typedef int (__WINAPI column_in_lp_func)(lprec *lp, REAL *column);
 typedef lprec * (__WINAPI copy_lp_func)(lprec *lp);
 typedef void (__WINAPI default_basis_func)(lprec *lp);
 typedef MYBOOL (__WINAPI del_column_func)(lprec *lp, int colnr);
@@ -827,44 +827,44 @@ typedef int (__WINAPI get_bb_depthlimit_func)(lprec *lp);
 typedef int (__WINAPI get_bb_floorfirst_func)(lprec *lp);
 typedef int (__WINAPI get_bb_rule_func)(lprec *lp);
 typedef MYBOOL (__WINAPI get_bounds_tighter_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_break_at_value_func)(lprec *lp);
+typedef REAL (__WINAPI get_break_at_value_func)(lprec *lp);
 typedef char * (__WINAPI get_col_name_func)(lprec *lp, int colnr);
-typedef MYBOOL (__WINAPI get_column_func)(lprec *lp, int colnr, LPSREAL *column);
-typedef int (__WINAPI get_columnex_func)(lprec *lp, int colnr, LPSREAL *column, int *nzrow);
+typedef MYBOOL (__WINAPI get_column_func)(lprec *lp, int colnr, REAL *column);
+typedef int (__WINAPI get_columnex_func)(lprec *lp, int colnr, REAL *column, int *nzrow);
 typedef int (__WINAPI get_constr_type_func)(lprec *lp, int rownr);
-typedef LPSREAL (__WINAPI get_constr_value_func)(lprec *lp, int rownr, int count, LPSREAL *primsolution, int *nzindex);
-typedef MYBOOL (__WINAPI get_constraints_func)(lprec *lp, LPSREAL *constr);
-typedef MYBOOL (__WINAPI get_dual_solution_func)(lprec *lp, LPSREAL *rc);
-typedef LPSREAL (__WINAPI get_epsb_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_epsd_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_epsel_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_epsint_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_epsperturb_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_epspivot_func)(lprec *lp);
+typedef REAL (__WINAPI get_constr_value_func)(lprec *lp, int rownr, int count, REAL *primsolution, int *nzindex);
+typedef MYBOOL (__WINAPI get_constraints_func)(lprec *lp, REAL *constr);
+typedef MYBOOL (__WINAPI get_dual_solution_func)(lprec *lp, REAL *rc);
+typedef REAL (__WINAPI get_epsb_func)(lprec *lp);
+typedef REAL (__WINAPI get_epsd_func)(lprec *lp);
+typedef REAL (__WINAPI get_epsel_func)(lprec *lp);
+typedef REAL (__WINAPI get_epsint_func)(lprec *lp);
+typedef REAL (__WINAPI get_epsperturb_func)(lprec *lp);
+typedef REAL (__WINAPI get_epspivot_func)(lprec *lp);
 typedef int (__WINAPI get_improve_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_infinite_func)(lprec *lp);
-typedef MYBOOL (__WINAPI get_lambda_func)(lprec *lp, LPSREAL *lambda);
-typedef LPSREAL (__WINAPI get_lowbo_func)(lprec *lp, int colnr);
+typedef REAL (__WINAPI get_infinite_func)(lprec *lp);
+typedef MYBOOL (__WINAPI get_lambda_func)(lprec *lp, REAL *lambda);
+typedef REAL (__WINAPI get_lowbo_func)(lprec *lp, int colnr);
 typedef int (__WINAPI get_lp_index_func)(lprec *lp, int orig_index);
 typedef char * (__WINAPI get_lp_name_func)(lprec *lp);
 typedef int (__WINAPI get_Lrows_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_mat_func)(lprec *lp, int rownr, int colnr);
-typedef LPSREAL (__WINAPI get_mat_byindex_func)(lprec *lp, int matindex, MYBOOL isrow, MYBOOL adjustsign);
+typedef REAL (__WINAPI get_mat_func)(lprec *lp, int rownr, int colnr);
+typedef REAL (__WINAPI get_mat_byindex_func)(lprec *lp, int matindex, MYBOOL isrow, MYBOOL adjustsign);
 typedef int (__WINAPI get_max_level_func)(lprec *lp);
 typedef int (__WINAPI get_maxpivot_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_mip_gap_func)(lprec *lp, MYBOOL absolute);
+typedef REAL (__WINAPI get_mip_gap_func)(lprec *lp, MYBOOL absolute);
 typedef int (__WINAPI get_multiprice_func)(lprec *lp, MYBOOL getabssize);
 typedef MYBOOL (__WINAPI is_use_names_func)(lprec *lp, MYBOOL isrow);
 typedef void (__WINAPI set_use_names_func)(lprec *lp, MYBOOL isrow, MYBOOL use_names);
 typedef int (__WINAPI get_nameindex_func)(lprec *lp, char *varname, MYBOOL isrow);
 typedef int (__WINAPI get_Ncolumns_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_negrange_func)(lprec *lp);
+typedef REAL (__WINAPI get_negrange_func)(lprec *lp);
 typedef int (__WINAPI get_nz_func)(lprec *lp);
 typedef int (__WINAPI get_Norig_columns_func)(lprec *lp);
 typedef int (__WINAPI get_Norig_rows_func)(lprec *lp);
 typedef int (__WINAPI get_Nrows_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_obj_bound_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_objective_func)(lprec *lp);
+typedef REAL (__WINAPI get_obj_bound_func)(lprec *lp);
+typedef REAL (__WINAPI get_objective_func)(lprec *lp);
 typedef int (__WINAPI get_orig_index_func)(lprec *lp, int lp_index);
 typedef char * (__WINAPI get_origcol_name_func)(lprec *lp, int colnr);
 typedef char * (__WINAPI get_origrow_name_func)(lprec *lp, int rownr);
@@ -872,27 +872,27 @@ typedef void (__WINAPI get_partialprice_func)(lprec *lp, int *blockcount, int *b
 typedef int (__WINAPI get_pivoting_func)(lprec *lp);
 typedef int (__WINAPI get_presolve_func)(lprec *lp);
 typedef int (__WINAPI get_presolveloops_func)(lprec *lp);
-typedef MYBOOL (__WINAPI get_primal_solution_func)(lprec *lp, LPSREAL *pv);
+typedef MYBOOL (__WINAPI get_primal_solution_func)(lprec *lp, REAL *pv);
 typedef int (__WINAPI get_print_sol_func)(lprec *lp);
-typedef MYBOOL (__WINAPI get_pseudocosts_func)(lprec *lp, LPSREAL *clower, LPSREAL *cupper, int *updatelimit);
-typedef MYBOOL (__WINAPI get_ptr_constraints_func)(lprec *lp, LPSREAL **constr);
-typedef MYBOOL (__WINAPI get_ptr_dual_solution_func)(lprec *lp, LPSREAL **rc);
-typedef MYBOOL (__WINAPI get_ptr_lambda_func)(lprec *lp, LPSREAL **lambda);
-typedef MYBOOL (__WINAPI get_ptr_primal_solution_func)(lprec *lp, LPSREAL **pv);
-typedef MYBOOL (__WINAPI get_ptr_sensitivity_obj_func)(lprec *lp, LPSREAL **objfrom, LPSREAL **objtill);
-typedef MYBOOL (__WINAPI get_ptr_sensitivity_objex_func)(lprec *lp, LPSREAL **objfrom, LPSREAL **objtill, LPSREAL **objfromvalue, LPSREAL **objtillvalue);
-typedef MYBOOL (__WINAPI get_ptr_sensitivity_rhs_func)(lprec *lp, LPSREAL **duals, LPSREAL **dualsfrom, LPSREAL **dualstill);
-typedef MYBOOL (__WINAPI get_ptr_variables_func)(lprec *lp, LPSREAL **var);
-typedef LPSREAL (__WINAPI get_rh_func)(lprec *lp, int rownr);
-typedef LPSREAL (__WINAPI get_rh_range_func)(lprec *lp, int rownr);
-typedef int (__WINAPI get_rowex_func)(lprec *lp, int rownr, LPSREAL *row, int *colno);
-typedef MYBOOL (__WINAPI get_row_func)(lprec *lp, int rownr, LPSREAL *row);
+typedef MYBOOL (__WINAPI get_pseudocosts_func)(lprec *lp, REAL *clower, REAL *cupper, int *updatelimit);
+typedef MYBOOL (__WINAPI get_ptr_constraints_func)(lprec *lp, REAL **constr);
+typedef MYBOOL (__WINAPI get_ptr_dual_solution_func)(lprec *lp, REAL **rc);
+typedef MYBOOL (__WINAPI get_ptr_lambda_func)(lprec *lp, REAL **lambda);
+typedef MYBOOL (__WINAPI get_ptr_primal_solution_func)(lprec *lp, REAL **pv);
+typedef MYBOOL (__WINAPI get_ptr_sensitivity_obj_func)(lprec *lp, REAL **objfrom, REAL **objtill);
+typedef MYBOOL (__WINAPI get_ptr_sensitivity_objex_func)(lprec *lp, REAL **objfrom, REAL **objtill, REAL **objfromvalue, REAL **objtillvalue);
+typedef MYBOOL (__WINAPI get_ptr_sensitivity_rhs_func)(lprec *lp, REAL **duals, REAL **dualsfrom, REAL **dualstill);
+typedef MYBOOL (__WINAPI get_ptr_variables_func)(lprec *lp, REAL **var);
+typedef REAL (__WINAPI get_rh_func)(lprec *lp, int rownr);
+typedef REAL (__WINAPI get_rh_range_func)(lprec *lp, int rownr);
+typedef int (__WINAPI get_rowex_func)(lprec *lp, int rownr, REAL *row, int *colno);
+typedef MYBOOL (__WINAPI get_row_func)(lprec *lp, int rownr, REAL *row);
 typedef char * (__WINAPI get_row_name_func)(lprec *lp, int rownr);
-typedef LPSREAL (__WINAPI get_scalelimit_func)(lprec *lp);
+typedef REAL (__WINAPI get_scalelimit_func)(lprec *lp);
 typedef int (__WINAPI get_scaling_func)(lprec *lp);
-typedef MYBOOL (__WINAPI get_sensitivity_obj_func)(lprec *lp, LPSREAL *objfrom, LPSREAL *objtill);
-typedef MYBOOL (__WINAPI get_sensitivity_objex_func)(lprec *lp, LPSREAL *objfrom, LPSREAL *objtill, LPSREAL *objfromvalue, LPSREAL *objtillvalue);
-typedef MYBOOL (__WINAPI get_sensitivity_rhs_func)(lprec *lp, LPSREAL *duals, LPSREAL *dualsfrom, LPSREAL *dualstill);
+typedef MYBOOL (__WINAPI get_sensitivity_obj_func)(lprec *lp, REAL *objfrom, REAL *objtill);
+typedef MYBOOL (__WINAPI get_sensitivity_objex_func)(lprec *lp, REAL *objfrom, REAL *objtill, REAL *objfromvalue, REAL *objtillvalue);
+typedef MYBOOL (__WINAPI get_sensitivity_rhs_func)(lprec *lp, REAL *duals, REAL *dualsfrom, REAL *dualstill);
 typedef int (__WINAPI get_simplextype_func)(lprec *lp);
 typedef int (__WINAPI get_solutioncount_func)(lprec *lp);
 typedef int (__WINAPI get_solutionlimit_func)(lprec *lp);
@@ -901,15 +901,15 @@ typedef char * (__WINAPI get_statustext_func)(lprec *lp, int statuscode);
 typedef long (__WINAPI get_timeout_func)(lprec *lp);
 typedef COUNTER (__WINAPI get_total_iter_func)(lprec *lp);
 typedef COUNTER (__WINAPI get_total_nodes_func)(lprec *lp);
-typedef LPSREAL (__WINAPI get_upbo_func)(lprec *lp, int colnr);
+typedef REAL (__WINAPI get_upbo_func)(lprec *lp, int colnr);
 typedef int (__WINAPI get_var_branch_func)(lprec *lp, int colnr);
-typedef LPSREAL (__WINAPI get_var_dualresult_func)(lprec *lp, int index);
-typedef LPSREAL (__WINAPI get_var_primalresult_func)(lprec *lp, int index);
+typedef REAL (__WINAPI get_var_dualresult_func)(lprec *lp, int index);
+typedef REAL (__WINAPI get_var_primalresult_func)(lprec *lp, int index);
 typedef int (__WINAPI get_var_priority_func)(lprec *lp, int colnr);
-typedef MYBOOL (__WINAPI get_variables_func)(lprec *lp, LPSREAL *var);
+typedef MYBOOL (__WINAPI get_variables_func)(lprec *lp, REAL *var);
 typedef int (__WINAPI get_verbose_func)(lprec *lp);
-typedef MYBOOL (__WINAPI guess_basis_func)(lprec *lp, LPSREAL *guessvector, int *basisvector);
-typedef LPSREAL (__WINAPI get_working_objective_func)(lprec *lp);
+typedef MYBOOL (__WINAPI guess_basis_func)(lprec *lp, REAL *guessvector, int *basisvector);
+typedef REAL (__WINAPI get_working_objective_func)(lprec *lp);
 typedef MYBOOL (__WINAPI has_BFP_func)(lprec *lp);
 typedef MYBOOL (__WINAPI has_XLI_func)(lprec *lp);
 typedef MYBOOL (__WINAPI is_add_rowmode_func)(lprec *lp);
@@ -918,9 +918,9 @@ typedef MYBOOL (__WINAPI is_binary_func)(lprec *lp, int colnr);
 typedef MYBOOL (__WINAPI is_break_at_first_func)(lprec *lp);
 typedef MYBOOL (__WINAPI is_constr_type_func)(lprec *lp, int rownr, int mask);
 typedef MYBOOL (__WINAPI is_debug_func)(lprec *lp);
-typedef MYBOOL (__WINAPI is_feasible_func)(lprec *lp, LPSREAL *values, LPSREAL threshold);
+typedef MYBOOL (__WINAPI is_feasible_func)(lprec *lp, REAL *values, REAL threshold);
 typedef MYBOOL (__WINAPI is_unbounded_func)(lprec *lp, int colnr);
-typedef MYBOOL (__WINAPI is_infinite_func)(lprec *lp, LPSREAL value);
+typedef MYBOOL (__WINAPI is_infinite_func)(lprec *lp, REAL value);
 typedef MYBOOL (__WINAPI is_int_func)(lprec *lp, int column);
 typedef MYBOOL (__WINAPI is_integerscaling_func)(lprec *lp);
 typedef MYBOOL (__WINAPI is_lag_trace_func)(lprec *lp);
@@ -971,40 +971,40 @@ typedef void (__WINAPI set_bb_floorfirst_func)(lprec *lp, int bb_floorfirst);
 typedef void (__WINAPI set_bb_rule_func)(lprec *lp, int bb_rule);
 typedef MYBOOL (__WINAPI set_BFP_func)(lprec *lp, char *filename);
 typedef MYBOOL (__WINAPI set_binary_func)(lprec *lp, int colnr, MYBOOL must_be_bin);
-typedef MYBOOL (__WINAPI set_bounds_func)(lprec *lp, int colnr, LPSREAL lower, LPSREAL upper);
+typedef MYBOOL (__WINAPI set_bounds_func)(lprec *lp, int colnr, REAL lower, REAL upper);
 typedef void (__WINAPI set_bounds_tighter_func)(lprec *lp, MYBOOL tighten);
 typedef void (__WINAPI set_break_at_first_func)(lprec *lp, MYBOOL break_at_first);
-typedef void (__WINAPI set_break_at_value_func)(lprec *lp, LPSREAL break_at_value);
-typedef MYBOOL (__WINAPI set_column_func)(lprec *lp, int colnr, LPSREAL *column);
-typedef MYBOOL (__WINAPI set_columnex_func)(lprec *lp, int colnr, int count, LPSREAL *column, int *rowno);
+typedef void (__WINAPI set_break_at_value_func)(lprec *lp, REAL break_at_value);
+typedef MYBOOL (__WINAPI set_column_func)(lprec *lp, int colnr, REAL *column);
+typedef MYBOOL (__WINAPI set_columnex_func)(lprec *lp, int colnr, int count, REAL *column, int *rowno);
 typedef MYBOOL (__WINAPI set_col_name_func)(lprec *lp, int colnr, char *new_name);
 typedef MYBOOL (__WINAPI set_constr_type_func)(lprec *lp, int rownr, int con_type);
 typedef void (__WINAPI set_debug_func)(lprec *lp, MYBOOL debug);
-typedef void (__WINAPI set_epsb_func)(lprec *lp, LPSREAL epsb);
-typedef void (__WINAPI set_epsd_func)(lprec *lp, LPSREAL epsd);
-typedef void (__WINAPI set_epsel_func)(lprec *lp, LPSREAL epsel);
-typedef void (__WINAPI set_epsint_func)(lprec *lp, LPSREAL epsint);
+typedef void (__WINAPI set_epsb_func)(lprec *lp, REAL epsb);
+typedef void (__WINAPI set_epsd_func)(lprec *lp, REAL epsd);
+typedef void (__WINAPI set_epsel_func)(lprec *lp, REAL epsel);
+typedef void (__WINAPI set_epsint_func)(lprec *lp, REAL epsint);
 typedef MYBOOL (__WINAPI set_epslevel_func)(lprec *lp, int epslevel);
-typedef void (__WINAPI set_epsperturb_func)(lprec *lp, LPSREAL epsperturb);
-typedef void (__WINAPI set_epspivot_func)(lprec *lp, LPSREAL epspivot);
+typedef void (__WINAPI set_epsperturb_func)(lprec *lp, REAL epsperturb);
+typedef void (__WINAPI set_epspivot_func)(lprec *lp, REAL epspivot);
 typedef MYBOOL (__WINAPI set_unbounded_func)(lprec *lp, int colnr);
 typedef void (__WINAPI set_improve_func)(lprec *lp, int improve);
-typedef void (__WINAPI set_infinite_func)(lprec *lp, LPSREAL infinite);
+typedef void (__WINAPI set_infinite_func)(lprec *lp, REAL infinite);
 typedef MYBOOL (__WINAPI set_int_func)(lprec *lp, int colnr, MYBOOL must_be_int);
 typedef void (__WINAPI set_lag_trace_func)(lprec *lp, MYBOOL lag_trace);
-typedef MYBOOL (__WINAPI set_lowbo_func)(lprec *lp, int colnr, LPSREAL value);
+typedef MYBOOL (__WINAPI set_lowbo_func)(lprec *lp, int colnr, REAL value);
 typedef MYBOOL (__WINAPI set_lp_name_func)(lprec *lp, char *lpname);
-typedef MYBOOL (__WINAPI set_mat_func)(lprec *lp, int row, int column, LPSREAL value);
+typedef MYBOOL (__WINAPI set_mat_func)(lprec *lp, int row, int column, REAL value);
 typedef void (__WINAPI set_maxim_func)(lprec *lp);
 typedef void (__WINAPI set_maxpivot_func)(lprec *lp, int max_num_inv);
 typedef void (__WINAPI set_minim_func)(lprec *lp);
-typedef void (__WINAPI set_mip_gap_func)(lprec *lp, MYBOOL absolute, LPSREAL mip_gap);
+typedef void (__WINAPI set_mip_gap_func)(lprec *lp, MYBOOL absolute, REAL mip_gap);
 typedef MYBOOL (__WINAPI set_multiprice_func)(lprec *lp, int multiblockdiv);
-typedef void (__WINAPI set_negrange_func)(lprec *lp, LPSREAL negrange);
-typedef MYBOOL (__WINAPI set_obj_func)(lprec *lp, int colnr, LPSREAL value);
-typedef void (__WINAPI set_obj_bound_func)(lprec *lp, LPSREAL obj_bound);
-typedef MYBOOL (__WINAPI set_obj_fn_func)(lprec *lp, LPSREAL *row);
-typedef MYBOOL (__WINAPI set_obj_fnex_func)(lprec *lp, int count, LPSREAL *row, int *colno);
+typedef void (__WINAPI set_negrange_func)(lprec *lp, REAL negrange);
+typedef MYBOOL (__WINAPI set_obj_func)(lprec *lp, int colnr, REAL value);
+typedef void (__WINAPI set_obj_bound_func)(lprec *lp, REAL obj_bound);
+typedef MYBOOL (__WINAPI set_obj_fn_func)(lprec *lp, REAL *row);
+typedef MYBOOL (__WINAPI set_obj_fnex_func)(lprec *lp, int count, REAL *row, int *colno);
 typedef void (__WINAPI set_obj_in_basis_func)(lprec *lp, MYBOOL obj_in_basis);
 typedef MYBOOL (__WINAPI set_outputfile_func)(lprec *lp, char *filename);
 typedef void (__WINAPI set_outputstream_func)(lprec *lp, FILE *stream);
@@ -1013,14 +1013,14 @@ typedef void (__WINAPI set_pivoting_func)(lprec *lp, int piv_rule);
 typedef void (__WINAPI set_preferdual_func)(lprec *lp, MYBOOL dodual);
 typedef void (__WINAPI set_presolve_func)(lprec *lp, int presolvemode, int maxloops);
 typedef void (__WINAPI set_print_sol_func)(lprec *lp, int print_sol);
-typedef MYBOOL (__WINAPI set_pseudocosts_func)(lprec *lp, LPSREAL *clower, LPSREAL *cupper, int *updatelimit);
-typedef MYBOOL (__WINAPI set_rh_func)(lprec *lp, int rownr, LPSREAL value);
-typedef MYBOOL (__WINAPI set_rh_range_func)(lprec *lp, int rownr, LPSREAL deltavalue);
-typedef void (__WINAPI set_rh_vec_func)(lprec *lp, LPSREAL *rh);
-typedef MYBOOL (__WINAPI set_row_func)(lprec *lp, int rownr, LPSREAL *row);
-typedef MYBOOL (__WINAPI set_rowex_func)(lprec *lp, int rownr, int count, LPSREAL *row, int *colno);
+typedef MYBOOL (__WINAPI set_pseudocosts_func)(lprec *lp, REAL *clower, REAL *cupper, int *updatelimit);
+typedef MYBOOL (__WINAPI set_rh_func)(lprec *lp, int rownr, REAL value);
+typedef MYBOOL (__WINAPI set_rh_range_func)(lprec *lp, int rownr, REAL deltavalue);
+typedef void (__WINAPI set_rh_vec_func)(lprec *lp, REAL *rh);
+typedef MYBOOL (__WINAPI set_row_func)(lprec *lp, int rownr, REAL *row);
+typedef MYBOOL (__WINAPI set_rowex_func)(lprec *lp, int rownr, int count, REAL *row, int *colno);
 typedef MYBOOL (__WINAPI set_row_name_func)(lprec *lp, int rownr, char *new_name);
-typedef void (__WINAPI set_scalelimit_func)(lprec *lp, LPSREAL scalelimit);
+typedef void (__WINAPI set_scalelimit_func)(lprec *lp, REAL scalelimit);
 typedef void (__WINAPI set_scaling_func)(lprec *lp, int scalemode);
 typedef MYBOOL (__WINAPI set_semicont_func)(lprec *lp, int colnr, MYBOOL must_be_sc);
 typedef void (__WINAPI set_sense_func)(lprec *lp, MYBOOL maximize);
@@ -1028,18 +1028,18 @@ typedef void (__WINAPI set_simplextype_func)(lprec *lp, int simplextype);
 typedef void (__WINAPI set_solutionlimit_func)(lprec *lp, int limit);
 typedef void (__WINAPI set_timeout_func)(lprec *lp, long sectimeout);
 typedef void (__WINAPI set_trace_func)(lprec *lp, MYBOOL trace);
-typedef MYBOOL (__WINAPI set_upbo_func)(lprec *lp, int colnr, LPSREAL value);
+typedef MYBOOL (__WINAPI set_upbo_func)(lprec *lp, int colnr, REAL value);
 typedef MYBOOL (__WINAPI set_var_branch_func)(lprec *lp, int colnr, int branch_mode);
-typedef MYBOOL (__WINAPI set_var_weights_func)(lprec *lp, LPSREAL *weights);
+typedef MYBOOL (__WINAPI set_var_weights_func)(lprec *lp, REAL *weights);
 typedef void (__WINAPI set_verbose_func)(lprec *lp, int verbose);
 typedef MYBOOL (__WINAPI set_XLI_func)(lprec *lp, char *filename);
 typedef int (__WINAPI solve_func)(lprec *lp);
 typedef MYBOOL (__WINAPI str_add_column_func)(lprec *lp, char *col_string);
-typedef MYBOOL (__WINAPI str_add_constraint_func)(lprec *lp, char *row_string ,int constr_type, LPSREAL rh);
-typedef MYBOOL (__WINAPI str_add_lag_con_func)(lprec *lp, char *row_string, int con_type, LPSREAL rhs);
+typedef MYBOOL (__WINAPI str_add_constraint_func)(lprec *lp, char *row_string ,int constr_type, REAL rh);
+typedef MYBOOL (__WINAPI str_add_lag_con_func)(lprec *lp, char *row_string, int con_type, REAL rhs);
 typedef MYBOOL (__WINAPI str_set_obj_fn_func)(lprec *lp, char *row_string);
 typedef MYBOOL (__WINAPI str_set_rh_vec_func)(lprec *lp, char *rh_string);
-typedef LPSREAL (__WINAPI time_elapsed_func)(lprec *lp);
+typedef REAL (__WINAPI time_elapsed_func)(lprec *lp);
 typedef void (__WINAPI unscale_func)(lprec *lp);
 typedef MYBOOL (__WINAPI write_lp_func)(lprec *lp, char *filename);
 typedef MYBOOL (__WINAPI write_LP_func)(lprec *lp, FILE *output);
@@ -1057,9 +1057,9 @@ typedef MYBOOL (__WINAPI write_params_func)(lprec *lp, char *filename, char *opt
 typedef MYBOOL (__WINAPI userabortfunc)(lprec *lp, int level);
 typedef void   (__VACALL reportfunc)(lprec *lp, int level, char *format, ...);
 typedef char * (__VACALL explainfunc)(lprec *lp, char *format, ...);
-typedef int    (__WINAPI getvectorfunc)(lprec *lp, int varin, LPSREAL *pcol, int *nzlist, int *maxabs);
+typedef int    (__WINAPI getvectorfunc)(lprec *lp, int varin, REAL *pcol, int *nzlist, int *maxabs);
 typedef int    (__WINAPI getpackedfunc)(lprec *lp, int j, int rn[], double bj[]);
-typedef LPSREAL    (__WINAPI get_OF_activefunc)(lprec *lp, int varnr, LPSREAL mult);
+typedef REAL    (__WINAPI get_OF_activefunc)(lprec *lp, int varnr, REAL mult);
 typedef int    (__WINAPI getMDOfunc)(lprec *lp, MYBOOL *usedpos, int *colorder, int *size, MYBOOL symmetric);
 typedef MYBOOL (__WINAPI invertfunc)(lprec *lp, MYBOOL shiftbounds, MYBOOL final);
 typedef void   (__WINAPI set_actionfunc)(int *actionvar, int actionmask);
@@ -1074,22 +1074,22 @@ typedef void   (BFP_CALLMODEL BFP_lp)(lprec *lp);
 typedef void   (BFP_CALLMODEL BFP_lpint)(lprec *lp, int newsize);
 typedef int    (BFP_CALLMODEL BFPint_lp)(lprec *lp);
 typedef int    (BFP_CALLMODEL BFPint_lpint)(lprec *lp, int kind);
-typedef LPSREAL   (BFP_CALLMODEL BFPreal_lp)(lprec *lp);
-typedef LPSREAL   *(BFP_CALLMODEL BFPrealp_lp)(lprec *lp);
+typedef REAL   (BFP_CALLMODEL BFPreal_lp)(lprec *lp);
+typedef REAL   *(BFP_CALLMODEL BFPrealp_lp)(lprec *lp);
 typedef void   (BFP_CALLMODEL BFP_lpbool)(lprec *lp, MYBOOL maximum);
 typedef int    (BFP_CALLMODEL BFPint_lpbool)(lprec *lp, MYBOOL maximum);
 typedef int    (BFP_CALLMODEL BFPint_lpintintboolbool)(lprec *lp, int uservars, int Bsize, MYBOOL *usedpos, MYBOOL final);
-typedef void   (BFP_CALLMODEL BFP_lprealint)(lprec *lp, LPSREAL *pcol, int *nzidx);
-typedef void   (BFP_CALLMODEL BFP_lprealintrealint)(lprec *lp, LPSREAL *prow, int *pnzidx, LPSREAL *drow, int *dnzidx);
+typedef void   (BFP_CALLMODEL BFP_lprealint)(lprec *lp, REAL *pcol, int *nzidx);
+typedef void   (BFP_CALLMODEL BFP_lprealintrealint)(lprec *lp, REAL *prow, int *pnzidx, REAL *drow, int *dnzidx);
 typedef MYBOOL (BFP_CALLMODEL BFPbool_lp)(lprec *lp);
 typedef MYBOOL (BFP_CALLMODEL BFPbool_lpbool)(lprec *lp, MYBOOL changesign);
 typedef MYBOOL (BFP_CALLMODEL BFPbool_lpint)(lprec *lp, int size);
 typedef MYBOOL (BFP_CALLMODEL BFPbool_lpintintchar)(lprec *lp, int size, int deltasize, char *options);
 typedef MYBOOL (BFP_CALLMODEL BFPbool_lpintintint)(lprec *lp, int size, int deltasize, int sizeofvar);
-typedef LLPSREAL  (BFP_CALLMODEL BFPlreal_lpintintreal)(lprec *lp, int row_nr, int col_nr, LPSREAL *pcol);
-typedef LPSREAL   (BFP_CALLMODEL BFPreal_lplrealreal)(lprec *lp, LLPSREAL theta, LPSREAL *pcol);
+typedef LREAL  (BFP_CALLMODEL BFPlreal_lpintintreal)(lprec *lp, int row_nr, int col_nr, REAL *pcol);
+typedef REAL   (BFP_CALLMODEL BFPreal_lplrealreal)(lprec *lp, LREAL theta, REAL *pcol);
 
-typedef int    (BFP_CALLMODEL getcolumnex_func)(lprec *lp, int colnr, LPSREAL *nzvalues, int *nzrows, int *mapin);
+typedef int    (BFP_CALLMODEL getcolumnex_func)(lprec *lp, int colnr, REAL *nzvalues, int *nzrows, int *mapin);
 typedef int    (BFP_CALLMODEL BFPint_lpintrealcbintint)(lprec *lp, int items, getcolumnex_func cb, int *maprow, int*mapcol);
 
 /* Prototypes for external language libraries                                */
@@ -1387,32 +1387,32 @@ struct _lprec
   int       solutioncount;      /* number of equal-valued solutions found (up to solutionlimit) */
   int       solutionlimit;      /* upper number of equal-valued solutions kept track of */
 
-  LPSREAL      real_solution;      /* Optimal non-MIP solution base */
-  LPSREAL      *solution;          /* sum_alloc+1 : Solution array of the next to optimal LP,
+  REAL      real_solution;      /* Optimal non-MIP solution base */
+  REAL      *solution;          /* sum_alloc+1 : Solution array of the next to optimal LP,
                                    Index   0           : Objective function value,
                                    Indeces 1..rows     : Slack variable values,
                                    Indeced rows+1..sum : Variable values */
-  LPSREAL      *best_solution;     /* sum_alloc+1 : Solution array of optimal 'Integer' LP,
+  REAL      *best_solution;     /* sum_alloc+1 : Solution array of optimal 'Integer' LP,
                                    structured as the solution array above */
-  LPSREAL      *full_solution;     /* sum_alloc+1 : Final solution array expanded for deleted variables */
-  LPSREAL      *edgeVector;        /* Array of reduced cost scaling norms (DEVEX and Steepest Edge) */
+  REAL      *full_solution;     /* sum_alloc+1 : Final solution array expanded for deleted variables */
+  REAL      *edgeVector;        /* Array of reduced cost scaling norms (DEVEX and Steepest Edge) */
 
-  LPSREAL      *drow;              /* sum+1: Reduced costs of the last simplex */
+  REAL      *drow;              /* sum+1: Reduced costs of the last simplex */
   int       *nzdrow;            /* sum+1: Indeces of non-zero reduced costs of the last simplex */
-  LPSREAL      *duals;             /* rows_alloc+1 : The dual variables of the last LP */
-  LPSREAL      *full_duals;        /* sum_alloc+1: Final duals array expanded for deleted variables */
-  LPSREAL      *dualsfrom;         /* sum_alloc+1 :The sensitivity on dual variables/reduced costs
+  REAL      *duals;             /* rows_alloc+1 : The dual variables of the last LP */
+  REAL      *full_duals;        /* sum_alloc+1: Final duals array expanded for deleted variables */
+  REAL      *dualsfrom;         /* sum_alloc+1 :The sensitivity on dual variables/reduced costs
                                    of the last LP */
-  LPSREAL      *dualstill;         /* sum_alloc+1 :The sensitivity on dual variables/reduced costs
+  REAL      *dualstill;         /* sum_alloc+1 :The sensitivity on dual variables/reduced costs
                                    of the last LP */
-  LPSREAL      *objfrom;           /* columns_alloc+1 :The sensitivity on objective function
+  REAL      *objfrom;           /* columns_alloc+1 :The sensitivity on objective function
                                    of the last LP */
-  LPSREAL      *objtill;           /* columns_alloc+1 :The sensitivity on objective function
+  REAL      *objtill;           /* columns_alloc+1 :The sensitivity on objective function
                                    of the last LP */
-  LPSREAL      *objfromvalue;      /* columns_alloc+1 :The value of the variables when objective value
+  REAL      *objfromvalue;      /* columns_alloc+1 :The value of the variables when objective value
                                    is at its from value of the last LP */
-  LPSREAL      *orig_obj;          /* Unused pointer - Placeholder for OF not part of B */
-  LPSREAL      *obj;               /* Special vector used to temporarily change the OF vector */
+  REAL      *orig_obj;          /* Unused pointer - Placeholder for OF not part of B */
+  REAL      *obj;               /* Special vector used to temporarily change the OF vector */
 
   COUNTER   current_iter;       /* Number of iterations in the current/last simplex */
   COUNTER   total_iter;         /* Number of iterations over all B&B steps */
@@ -1440,7 +1440,7 @@ struct _lprec
   MYBOOL    _piv_left_;         /* Internal variable indicating active pricing loop order */
   MYBOOL    BOOLfuture1;
 
-  LPSREAL      scalelimit;         /* Relative convergence criterion for iterated scaling */
+  REAL      scalelimit;         /* Relative convergence criterion for iterated scaling */
   int       scalemode;          /* OR-ed codes for data scaling */
   int       improve;            /* Set to non-zero for iterative improvement */
   int       anti_degen;         /* Anti-degen strategy (or none) TRUE to avoid cycling */
@@ -1471,7 +1471,7 @@ struct _lprec
   int       int_vars;           /* Number of variables required to be integer */
 
   int       sc_vars;            /* Number of semi-continuous variables */
-  LPSREAL      *sc_lobound;        /* sum_columns+1 : TRUE if variable is semi-continuous;
+  REAL      *sc_lobound;        /* sum_columns+1 : TRUE if variable is semi-continuous;
                                    value replaced by conventional lower bound during solve */
   int       *var_is_free;       /* columns+1: Index of twin variable if variable is free */
   int       *var_priority;      /* columns: Priority-mapping of variables */
@@ -1484,13 +1484,13 @@ struct _lprec
   int       *sos_priority;      /* Priority-sorted list of variables (no duplicates) */
 
   /* Optionally specify list of active rows/columns used in multiple pricing */
-  LPSREAL      *bsolveVal;         /* rows+1: bsolved solution vector for reduced costs */
+  REAL      *bsolveVal;         /* rows+1: bsolved solution vector for reduced costs */
   int       *bsolveIdx;         /* rows+1: Non-zero indeces of bsolveVal */
 
   /* RHS storage */
-  LPSREAL      *orig_rhs;          /* rows_alloc+1 : The RHS after scaling and sign
+  REAL      *orig_rhs;          /* rows_alloc+1 : The RHS after scaling and sign
                                    changing, but before 'Bound transformation' */
-  LLPSREAL     *rhs;               /* rows_alloc+1 : The RHS of the current simplex tableau */
+  LREAL     *rhs;               /* rows_alloc+1 : The RHS of the current simplex tableau */
 
   /* Row (constraint) parameters */
   int       *row_type;          /* rows_alloc+1 : Row/constraint type coding */
@@ -1499,10 +1499,10 @@ struct _lprec
   multirec  *longsteps;
 
   /* Original and working row and variable bounds */
-  LPSREAL      *orig_upbo;         /* sum_alloc+1 : Bound before transformations */
-  LPSREAL      *upbo;              /*  " " : Upper bound after transformation and B&B work */
-  LPSREAL      *orig_lowbo;        /*  "       "                                 */
-  LPSREAL      *lowbo;             /*  " " : Lower bound after transformation and B&B work */
+  REAL      *orig_upbo;         /* sum_alloc+1 : Bound before transformations */
+  REAL      *upbo;              /*  " " : Upper bound after transformation and B&B work */
+  REAL      *orig_lowbo;        /*  "       "                                 */
+  REAL      *lowbo;             /*  " " : Lower bound after transformation and B&B work */
 
   /* User data and basis factorization matrices (ETA or LU, product form) */
   MATrec    *matA;
@@ -1516,7 +1516,7 @@ struct _lprec
   OBJmonrec *monitor;           /* Objective monitoring record for stalling/degeneracy handling */
 
   /* Scaling parameters */
-  LPSREAL      *scalars;           /* sum_alloc+1:0..Rows the scaling of the rows,
+  REAL      *scalars;           /* sum_alloc+1:0..Rows the scaling of the rows,
                                    Rows+1..Sum the scaling of the columns */
   MYBOOL    scaling_used;       /* TRUE if scaling is used */
   MYBOOL    columns_scaled;     /* TRUE if the columns are scaled too */
@@ -1526,7 +1526,7 @@ struct _lprec
   MYBOOL    basis_valid;        /* TRUE is the basis is still valid */
   int       crashmode;          /* Basis crashing mode (or none) */
   int       *var_basic;         /* rows_alloc+1: The list of columns in the basis */
-  LPSREAL      *val_nonbasic;      /* Array to store current values of non-basic variables */
+  REAL      *val_nonbasic;      /* Array to store current values of non-basic variables */
   MYBOOL    *is_basic;          /* sum_alloc+1: TRUE if the column is in the basis */
   MYBOOL    *is_lower;          /*  "       " : TRUE if the variable is at its
                                    lower bound (or in the basis), FALSE otherwise */
@@ -1540,10 +1540,10 @@ struct _lprec
   int       bb_improvements;    /* The number of discrete B&B objective improvement steps */
 
   /* Solver working variables */
-  LPSREAL      rhsmax;             /* The maximum |value| of the rhs vector at any iteration */
-  LPSREAL      suminfeas;          /* The working sum of primal and dual infeasibilities */
-  LPSREAL      bigM;               /* Original objective weighting in primal phase 1 */
-  LPSREAL      P1extraVal;         /* Phase 1 OF/RHS offset for feasibility */
+  REAL      rhsmax;             /* The maximum |value| of the rhs vector at any iteration */
+  REAL      suminfeas;          /* The working sum of primal and dual infeasibilities */
+  REAL      bigM;               /* Original objective weighting in primal phase 1 */
+  REAL      P1extraVal;         /* Phase 1 OF/RHS offset for feasibility */
   int       P1extraDim;         /* Phase 1 additional columns/rows for feasibility */
   int       spx_action;         /* ACTION_ variables for the simplex routine */
   MYBOOL    spx_perturbed;      /* The variable bounds were relaxed/perturbed into this simplex */
@@ -1554,22 +1554,22 @@ struct _lprec
 
   /* Lagragean solver storage and parameters */
   MATrec    *matL;
-  LPSREAL      *lag_rhs;           /* Array of Lagrangean rhs vector */
+  REAL      *lag_rhs;           /* Array of Lagrangean rhs vector */
   int       *lag_con_type;      /* Array of GT, LT or EQ */
-  LPSREAL      *lambda;            /* Lambda values (Lagrangean multipliers) */
-  LPSREAL      lag_bound;          /* The Lagrangian lower OF bound */
-  LPSREAL      lag_accept;         /* The Lagrangian convergence criterion */
+  REAL      *lambda;            /* Lambda values (Lagrangean multipliers) */
+  REAL      lag_bound;          /* The Lagrangian lower OF bound */
+  REAL      lag_accept;         /* The Lagrangian convergence criterion */
 
   /* Solver thresholds */
-  LPSREAL      infinite;           /* Limit for dynamic range */
-  LPSREAL      negrange;           /* Limit for negative variable range */
-  LPSREAL      epsmachine;         /* Default machine accuracy */
-  LPSREAL      epsvalue;           /* Input data precision / rounding of data values to 0 */
-  LPSREAL      epsprimal;          /* For rounding RHS values to 0/infeasibility */
-  LPSREAL      epsdual;            /* For rounding reduced costs to zero */
-  LPSREAL      epspivot;           /* Pivot reject tolerance */
-  LPSREAL      epsperturb;         /* Perturbation scalar */
-  LPSREAL      epssolution;        /* The solution tolerance for final validation */
+  REAL      infinite;           /* Limit for dynamic range */
+  REAL      negrange;           /* Limit for negative variable range */
+  REAL      epsmachine;         /* Default machine accuracy */
+  REAL      epsvalue;           /* Input data precision / rounding of data values to 0 */
+  REAL      epsprimal;          /* For rounding RHS values to 0/infeasibility */
+  REAL      epsdual;            /* For rounding reduced costs to zero */
+  REAL      epspivot;           /* Pivot reject tolerance */
+  REAL      epsperturb;         /* Perturbation scalar */
+  REAL      epssolution;        /* The solution tolerance for final validation */
 
   /* Branch & Bound working parameters */
   int       bb_status;          /* Indicator that the last solvelp() gave an improved B&B solution */
@@ -1586,24 +1586,24 @@ struct _lprec
   DeltaVrec *bb_upperchange;    /* Changes to upper bounds during the B&B phase */
   DeltaVrec *bb_lowerchange;    /* Changes to lower bounds during the B&B phase */
 
-  LPSREAL      bb_deltaOF;         /* Minimum OF step value; computed at beginning of solve() */
+  REAL      bb_deltaOF;         /* Minimum OF step value; computed at beginning of solve() */
 
-  LPSREAL      bb_breakOF;         /* User-settable value for the objective function deemed
+  REAL      bb_breakOF;         /* User-settable value for the objective function deemed
                                to be sufficiently good in an integer problem */
-  LPSREAL      bb_limitOF;         /* "Dual" bound / limit to final optimal MIP solution */
-  LPSREAL      bb_heuristicOF;     /* Set initial "at least better than" guess for objective function
+  REAL      bb_limitOF;         /* "Dual" bound / limit to final optimal MIP solution */
+  REAL      bb_heuristicOF;     /* Set initial "at least better than" guess for objective function
                                (can significantly speed up B&B iterations) */
-  LPSREAL      bb_parentOF;        /* The OF value of the previous BB simplex */
-  LPSREAL      bb_workOF;          /* The unadjusted OF value for the current best solution */
+  REAL      bb_parentOF;        /* The OF value of the previous BB simplex */
+  REAL      bb_workOF;          /* The unadjusted OF value for the current best solution */
 
   /* Internal work arrays allocated as required */
   presolveundorec *presolve_undo;
   workarraysrec   *workarrays;
 
   /* MIP parameters */
-  LPSREAL      epsint;             /* Margin of error in determining if a float value is integer */
-  LPSREAL      mip_absgap;         /* Absolute MIP gap */
-  LPSREAL      mip_relgap;         /* Relative MIP gap */
+  REAL      epsint;             /* Margin of error in determining if a float value is integer */
+  REAL      mip_absgap;         /* Absolute MIP gap */
+  REAL      mip_relgap;         /* Relative MIP gap */
 
   /* Time/timer variables and extended status text */
   double    timecreate;
@@ -1699,6 +1699,8 @@ struct _lprec
   lphandleint_intfunc           *bb_usebranch;
     void                          *bb_branchhandle; /* User-specified "owner process ID" */
 
+  /* replacement of static variables */
+  char      *rowcol_name;       /* The name of a row/column */
 };
 
 
@@ -1745,9 +1747,9 @@ MYBOOL __EXPORT_TYPE __WINAPI is_nativeXLI(lprec *lp);
 MYBOOL __EXPORT_TYPE __WINAPI set_XLI(lprec *lp, char *filename);
 /* Set external language interface */
 
-MYBOOL __EXPORT_TYPE __WINAPI set_obj(lprec *lp, int colnr, LPSREAL value);
-MYBOOL __EXPORT_TYPE __WINAPI set_obj_fn(lprec *lp, LPSREAL *row);
-MYBOOL __EXPORT_TYPE __WINAPI set_obj_fnex(lprec *lp, int count, LPSREAL *row, int *colno);
+MYBOOL __EXPORT_TYPE __WINAPI set_obj(lprec *lp, int colnr, REAL value);
+MYBOOL __EXPORT_TYPE __WINAPI set_obj_fn(lprec *lp, REAL *row);
+MYBOOL __EXPORT_TYPE __WINAPI set_obj_fnex(lprec *lp, int count, REAL *row, int *colno);
 /* set the objective function (Row 0) of the matrix */
 MYBOOL __EXPORT_TYPE __WINAPI str_set_obj_fn(lprec *lp, char *row_string);
 /* The same, but with string input */
@@ -1757,28 +1759,28 @@ void __EXPORT_TYPE __WINAPI set_minim(lprec *lp);
 MYBOOL __EXPORT_TYPE __WINAPI is_maxim(lprec *lp);
 /* Set optimization direction for the objective function */
 
-MYBOOL __EXPORT_TYPE __WINAPI add_constraint(lprec *lp, LPSREAL *row, int constr_type, LPSREAL rh);
-MYBOOL __EXPORT_TYPE __WINAPI add_constraintex(lprec *lp, int count, LPSREAL *row, int *colno, int constr_type, LPSREAL rh);
+MYBOOL __EXPORT_TYPE __WINAPI add_constraint(lprec *lp, REAL *row, int constr_type, REAL rh);
+MYBOOL __EXPORT_TYPE __WINAPI add_constraintex(lprec *lp, int count, REAL *row, int *colno, int constr_type, REAL rh);
 MYBOOL __EXPORT_TYPE __WINAPI set_add_rowmode(lprec *lp, MYBOOL turnon);
 MYBOOL __EXPORT_TYPE __WINAPI is_add_rowmode(lprec *lp);
 /* Add a constraint to the problem, row is the constraint row, rh is the right hand side,
    constr_type is the type of constraint (LE (<=), GE(>=), EQ(=)) */
-MYBOOL __EXPORT_TYPE __WINAPI str_add_constraint(lprec *lp, char *row_string, int constr_type, LPSREAL rh);
+MYBOOL __EXPORT_TYPE __WINAPI str_add_constraint(lprec *lp, char *row_string, int constr_type, REAL rh);
 /* The same, but with string input */
 
-MYBOOL __EXPORT_TYPE __WINAPI set_row(lprec *lp, int rownr, LPSREAL *row);
-MYBOOL __EXPORT_TYPE __WINAPI set_rowex(lprec *lp, int rownr, int count, LPSREAL *row, int *colno);
-MYBOOL __EXPORT_TYPE __WINAPI get_row(lprec *lp, int rownr, LPSREAL *row);
-int __EXPORT_TYPE __WINAPI get_rowex(lprec *lp, int rownr, LPSREAL *row, int *colno);
+MYBOOL __EXPORT_TYPE __WINAPI set_row(lprec *lp, int rownr, REAL *row);
+MYBOOL __EXPORT_TYPE __WINAPI set_rowex(lprec *lp, int rownr, int count, REAL *row, int *colno);
+MYBOOL __EXPORT_TYPE __WINAPI get_row(lprec *lp, int rownr, REAL *row);
+int __EXPORT_TYPE __WINAPI get_rowex(lprec *lp, int rownr, REAL *row, int *colno);
 /* Fill row with the row row_nr from the problem */
 
 MYBOOL __EXPORT_TYPE __WINAPI del_constraint(lprec *lp, int rownr);
 STATIC MYBOOL del_constraintex(lprec *lp, LLrec *rowmap);
 /* Remove constrain nr del_row from the problem */
 
-MYBOOL __EXPORT_TYPE __WINAPI add_lag_con(lprec *lp, LPSREAL *row, int con_type, LPSREAL rhs);
+MYBOOL __EXPORT_TYPE __WINAPI add_lag_con(lprec *lp, REAL *row, int con_type, REAL rhs);
 /* add a Lagrangian constraint of form Row' x contype Rhs */
-MYBOOL __EXPORT_TYPE __WINAPI str_add_lag_con(lprec *lp, char *row_string, int con_type, LPSREAL rhs);
+MYBOOL __EXPORT_TYPE __WINAPI str_add_lag_con(lprec *lp, char *row_string, int con_type, REAL rhs);
 /* The same, but with string input */
 void __EXPORT_TYPE __WINAPI set_lag_trace(lprec *lp, MYBOOL lag_trace);
 MYBOOL __EXPORT_TYPE __WINAPI is_lag_trace(lprec *lp);
@@ -1786,61 +1788,61 @@ MYBOOL __EXPORT_TYPE __WINAPI is_lag_trace(lprec *lp);
 
 MYBOOL __EXPORT_TYPE __WINAPI set_constr_type(lprec *lp, int rownr, int con_type);
 int __EXPORT_TYPE __WINAPI get_constr_type(lprec *lp, int rownr);
-LPSREAL __EXPORT_TYPE __WINAPI get_constr_value(lprec *lp, int rownr, int count, LPSREAL *primsolution, int *nzindex);
+REAL __EXPORT_TYPE __WINAPI get_constr_value(lprec *lp, int rownr, int count, REAL *primsolution, int *nzindex);
 MYBOOL __EXPORT_TYPE __WINAPI is_constr_type(lprec *lp, int rownr, int mask);
 STATIC char *get_str_constr_type(lprec *lp, int con_type);
 STATIC int get_constr_class(lprec *lp, int rownr);
 STATIC char *get_str_constr_class(lprec *lp, int con_class);
 /* Set the type of constraint in row Row (LE, GE, EQ) */
 
-MYBOOL __EXPORT_TYPE __WINAPI set_rh(lprec *lp, int rownr, LPSREAL value);
-LPSREAL __EXPORT_TYPE __WINAPI get_rh(lprec *lp, int rownr);
+MYBOOL __EXPORT_TYPE __WINAPI set_rh(lprec *lp, int rownr, REAL value);
+REAL __EXPORT_TYPE __WINAPI get_rh(lprec *lp, int rownr);
 /* Set and get the right hand side of a constraint row */
-MYBOOL __EXPORT_TYPE __WINAPI set_rh_range(lprec *lp, int rownr, LPSREAL deltavalue);
-LPSREAL __EXPORT_TYPE __WINAPI get_rh_range(lprec *lp, int rownr);
+MYBOOL __EXPORT_TYPE __WINAPI set_rh_range(lprec *lp, int rownr, REAL deltavalue);
+REAL __EXPORT_TYPE __WINAPI get_rh_range(lprec *lp, int rownr);
 /* Set the RHS range; i.e. the lower and upper bounds of a constraint row */
-void __EXPORT_TYPE __WINAPI set_rh_vec(lprec *lp, LPSREAL *rh);
+void __EXPORT_TYPE __WINAPI set_rh_vec(lprec *lp, REAL *rh);
 /* Set the right hand side vector */
 MYBOOL __EXPORT_TYPE __WINAPI str_set_rh_vec(lprec *lp, char *rh_string);
 /* The same, but with string input */
 
-MYBOOL __EXPORT_TYPE __WINAPI add_column(lprec *lp, LPSREAL *column);
-MYBOOL __EXPORT_TYPE __WINAPI add_columnex(lprec *lp, int count, LPSREAL *column, int *rowno);
+MYBOOL __EXPORT_TYPE __WINAPI add_column(lprec *lp, REAL *column);
+MYBOOL __EXPORT_TYPE __WINAPI add_columnex(lprec *lp, int count, REAL *column, int *rowno);
 MYBOOL __EXPORT_TYPE __WINAPI str_add_column(lprec *lp, char *col_string);
 /* Add a column to the problem */
 
-MYBOOL __EXPORT_TYPE __WINAPI set_column(lprec *lp, int colnr, LPSREAL *column);
-MYBOOL __EXPORT_TYPE __WINAPI set_columnex(lprec *lp, int colnr, int count, LPSREAL *column, int *rowno);
+MYBOOL __EXPORT_TYPE __WINAPI set_column(lprec *lp, int colnr, REAL *column);
+MYBOOL __EXPORT_TYPE __WINAPI set_columnex(lprec *lp, int colnr, int count, REAL *column, int *rowno);
 /* Overwrite existing column data */
 
-int __EXPORT_TYPE __WINAPI column_in_lp(lprec *lp, LPSREAL *column);
+int __EXPORT_TYPE __WINAPI column_in_lp(lprec *lp, REAL *column);
 /* Returns the column index if column is already present in lp, otherwise 0.
    (Does not look at bounds and types, only looks at matrix values */
 
-int __EXPORT_TYPE __WINAPI get_columnex(lprec *lp, int colnr, LPSREAL *column, int *nzrow);
-MYBOOL __EXPORT_TYPE __WINAPI get_column(lprec *lp, int colnr, LPSREAL *column);
+int __EXPORT_TYPE __WINAPI get_columnex(lprec *lp, int colnr, REAL *column, int *nzrow);
+MYBOOL __EXPORT_TYPE __WINAPI get_column(lprec *lp, int colnr, REAL *column);
 /* Fill column with the column col_nr from the problem */
 
 MYBOOL __EXPORT_TYPE __WINAPI del_column(lprec *lp, int colnr);
 STATIC MYBOOL del_columnex(lprec *lp, LLrec *colmap);
 /* Delete a column */
 
-MYBOOL __EXPORT_TYPE __WINAPI set_mat(lprec *lp, int rownr, int colnr, LPSREAL value);
+MYBOOL __EXPORT_TYPE __WINAPI set_mat(lprec *lp, int rownr, int colnr, REAL value);
 /* Fill in element (Row,Column) of the matrix
    Row in [0..Rows] and Column in [1..Columns] */
-LPSREAL __EXPORT_TYPE __WINAPI get_mat(lprec *lp, int rownr, int colnr);
-LPSREAL __EXPORT_TYPE __WINAPI get_mat_byindex(lprec *lp, int matindex, MYBOOL isrow, MYBOOL adjustsign);
+REAL __EXPORT_TYPE __WINAPI get_mat(lprec *lp, int rownr, int colnr);
+REAL __EXPORT_TYPE __WINAPI get_mat_byindex(lprec *lp, int matindex, MYBOOL isrow, MYBOOL adjustsign);
 int __EXPORT_TYPE __WINAPI get_nonzeros(lprec *lp);
 /* get a single element from the matrix */  /* Name changed from "mat_elm" by KE */
 
 void __EXPORT_TYPE __WINAPI set_bounds_tighter(lprec *lp, MYBOOL tighten);
-MYBOOL get_bounds(lprec *lp, int column, LPSREAL *lower, LPSREAL *upper);
+MYBOOL get_bounds(lprec *lp, int column, REAL *lower, REAL *upper);
 MYBOOL __EXPORT_TYPE __WINAPI get_bounds_tighter(lprec *lp);
-MYBOOL __EXPORT_TYPE __WINAPI set_upbo(lprec *lp, int colnr, LPSREAL value);
-LPSREAL __EXPORT_TYPE __WINAPI get_upbo(lprec *lp, int colnr);
-MYBOOL __EXPORT_TYPE __WINAPI set_lowbo(lprec *lp, int colnr, LPSREAL value);
-LPSREAL __EXPORT_TYPE __WINAPI get_lowbo(lprec *lp, int colnr);
-MYBOOL __EXPORT_TYPE __WINAPI set_bounds(lprec *lp, int colnr, LPSREAL lower, LPSREAL upper);
+MYBOOL __EXPORT_TYPE __WINAPI set_upbo(lprec *lp, int colnr, REAL value);
+REAL __EXPORT_TYPE __WINAPI get_upbo(lprec *lp, int colnr);
+MYBOOL __EXPORT_TYPE __WINAPI set_lowbo(lprec *lp, int colnr, REAL value);
+REAL __EXPORT_TYPE __WINAPI get_lowbo(lprec *lp, int colnr);
+MYBOOL __EXPORT_TYPE __WINAPI set_bounds(lprec *lp, int colnr, REAL lower, REAL upper);
 MYBOOL __EXPORT_TYPE __WINAPI set_unbounded(lprec *lp, int colnr);
 MYBOOL __EXPORT_TYPE __WINAPI is_unbounded(lprec *lp, int colnr);
 /* Set the upper and lower bounds of a variable */
@@ -1852,17 +1854,17 @@ MYBOOL __EXPORT_TYPE __WINAPI is_binary(lprec *lp, int colnr);
 MYBOOL __EXPORT_TYPE __WINAPI set_semicont(lprec *lp, int colnr, MYBOOL must_be_sc);
 MYBOOL __EXPORT_TYPE __WINAPI is_semicont(lprec *lp, int colnr);
 MYBOOL __EXPORT_TYPE __WINAPI is_negative(lprec *lp, int colnr);
-MYBOOL __EXPORT_TYPE __WINAPI set_var_weights(lprec *lp, LPSREAL *weights);
+MYBOOL __EXPORT_TYPE __WINAPI set_var_weights(lprec *lp, REAL *weights);
 int __EXPORT_TYPE __WINAPI get_var_priority(lprec *lp, int colnr);
 /* Set the type of variable */
 
-MYBOOL __EXPORT_TYPE __WINAPI set_pseudocosts(lprec *lp, LPSREAL *clower, LPSREAL *cupper, int *updatelimit);
-MYBOOL __EXPORT_TYPE __WINAPI get_pseudocosts(lprec *lp, LPSREAL *clower, LPSREAL *cupper, int *updatelimit);
+MYBOOL __EXPORT_TYPE __WINAPI set_pseudocosts(lprec *lp, REAL *clower, REAL *cupper, int *updatelimit);
+MYBOOL __EXPORT_TYPE __WINAPI get_pseudocosts(lprec *lp, REAL *clower, REAL *cupper, int *updatelimit);
 /* Set initial values for, or get computed pseudocost vectors;
    note that setting of pseudocosts can only happen in response to a
    call-back function optionally requesting this */
 
-int  __EXPORT_TYPE __WINAPI add_SOS(lprec *lp, char *name, int sostype, int priority, int count, int *sosvars, LPSREAL *weights);
+int  __EXPORT_TYPE __WINAPI add_SOS(lprec *lp, char *name, int sostype, int priority, int count, int *sosvars, REAL *weights);
 MYBOOL __EXPORT_TYPE __WINAPI is_SOS_var(lprec *lp, int colnr);
 /* Add SOS constraints */
 
@@ -1892,15 +1894,15 @@ MYBOOL __EXPORT_TYPE __WINAPI set_basis(lprec *lp, int *bascolumn, MYBOOL nonbas
 MYBOOL __EXPORT_TYPE __WINAPI get_basis(lprec *lp, int *bascolumn, MYBOOL nonbasic);
 void __EXPORT_TYPE __WINAPI reset_basis(lprec *lp);
 /* Set/Get basis for a re-solved system */  /* Added by KE */
-MYBOOL __EXPORT_TYPE __WINAPI guess_basis(lprec *lp, LPSREAL *guessvector, int *basisvector);
+MYBOOL __EXPORT_TYPE __WINAPI guess_basis(lprec *lp, REAL *guessvector, int *basisvector);
 
-MYBOOL __EXPORT_TYPE __WINAPI is_feasible(lprec *lp, LPSREAL *values, LPSREAL threshold);
+MYBOOL __EXPORT_TYPE __WINAPI is_feasible(lprec *lp, REAL *values, REAL threshold);
 /* returns TRUE if the vector in values is a feasible solution to the lp */
 
 int __EXPORT_TYPE __WINAPI solve(lprec *lp);
 /* Solve the problem */
 
-LPSREAL __EXPORT_TYPE __WINAPI time_elapsed(lprec *lp);
+REAL __EXPORT_TYPE __WINAPI time_elapsed(lprec *lp);
 /* Return the number of seconds since start of solution process */
 
 void __EXPORT_TYPE __WINAPI put_bb_nodefunc(lprec *lp, lphandleint_intfunc newnode, void *bbnodehandle);
@@ -1916,12 +1918,12 @@ void __EXPORT_TYPE __WINAPI put_logfunc(lprec *lp, lphandlestr_func newlog, void
 void __EXPORT_TYPE __WINAPI put_msgfunc(lprec *lp, lphandleint_func newmsg, void *msghandle, int mask);
 /* Allow the user to define an event-driven message/reporting */
 
-MYBOOL __EXPORT_TYPE __WINAPI get_primal_solution(lprec *lp, LPSREAL *pv);
-MYBOOL __EXPORT_TYPE __WINAPI get_ptr_primal_solution(lprec *lp, LPSREAL **pv);
-MYBOOL __EXPORT_TYPE __WINAPI get_dual_solution(lprec *lp, LPSREAL *rc);
-MYBOOL __EXPORT_TYPE __WINAPI get_ptr_dual_solution(lprec *lp, LPSREAL **rc);
-MYBOOL __EXPORT_TYPE __WINAPI get_lambda(lprec *lp, LPSREAL *lambda);
-MYBOOL __EXPORT_TYPE __WINAPI get_ptr_lambda(lprec *lp, LPSREAL **lambda);
+MYBOOL __EXPORT_TYPE __WINAPI get_primal_solution(lprec *lp, REAL *pv);
+MYBOOL __EXPORT_TYPE __WINAPI get_ptr_primal_solution(lprec *lp, REAL **pv);
+MYBOOL __EXPORT_TYPE __WINAPI get_dual_solution(lprec *lp, REAL *rc);
+MYBOOL __EXPORT_TYPE __WINAPI get_ptr_dual_solution(lprec *lp, REAL **rc);
+MYBOOL __EXPORT_TYPE __WINAPI get_lambda(lprec *lp, REAL *lambda);
+MYBOOL __EXPORT_TYPE __WINAPI get_ptr_lambda(lprec *lp, REAL **lambda);
 /* Get the primal, dual/reduced costs and Lambda vectors */
 
 /* Read an MPS file */
@@ -2006,11 +2008,11 @@ int __EXPORT_TYPE __WINAPI get_lp_index(lprec *lp, int orig_index);
 void __EXPORT_TYPE __WINAPI set_maxpivot(lprec *lp, int max_num_inv);
 int __EXPORT_TYPE __WINAPI get_maxpivot(lprec *lp);
 
-void __EXPORT_TYPE __WINAPI set_obj_bound(lprec *lp, LPSREAL obj_bound);
-LPSREAL __EXPORT_TYPE __WINAPI get_obj_bound(lprec *lp);
+void __EXPORT_TYPE __WINAPI set_obj_bound(lprec *lp, REAL obj_bound);
+REAL __EXPORT_TYPE __WINAPI get_obj_bound(lprec *lp);
 
-void __EXPORT_TYPE __WINAPI set_mip_gap(lprec *lp, MYBOOL absolute, LPSREAL mip_gap);
-LPSREAL __EXPORT_TYPE __WINAPI get_mip_gap(lprec *lp, MYBOOL absolute);
+void __EXPORT_TYPE __WINAPI set_mip_gap(lprec *lp, MYBOOL absolute, REAL mip_gap);
+REAL __EXPORT_TYPE __WINAPI get_mip_gap(lprec *lp, MYBOOL absolute);
 
 void __EXPORT_TYPE __WINAPI set_bb_rule(lprec *lp, int bb_rule);
 int __EXPORT_TYPE __WINAPI get_bb_rule(lprec *lp);
@@ -2018,21 +2020,21 @@ int __EXPORT_TYPE __WINAPI get_bb_rule(lprec *lp);
 MYBOOL __EXPORT_TYPE __WINAPI set_var_branch(lprec *lp, int colnr, int branch_mode);
 int __EXPORT_TYPE __WINAPI get_var_branch(lprec *lp, int colnr);
 
-MYBOOL __EXPORT_TYPE __WINAPI is_infinite(lprec *lp, LPSREAL value);
-void __EXPORT_TYPE __WINAPI set_infinite(lprec *lp, LPSREAL infinite);
-LPSREAL __EXPORT_TYPE __WINAPI get_infinite(lprec *lp);
+MYBOOL __EXPORT_TYPE __WINAPI is_infinite(lprec *lp, REAL value);
+void __EXPORT_TYPE __WINAPI set_infinite(lprec *lp, REAL infinite);
+REAL __EXPORT_TYPE __WINAPI get_infinite(lprec *lp);
 
-void __EXPORT_TYPE __WINAPI set_epsint(lprec *lp, LPSREAL epsint);
-LPSREAL __EXPORT_TYPE __WINAPI get_epsint(lprec *lp);
+void __EXPORT_TYPE __WINAPI set_epsint(lprec *lp, REAL epsint);
+REAL __EXPORT_TYPE __WINAPI get_epsint(lprec *lp);
 
-void __EXPORT_TYPE __WINAPI set_epsb(lprec *lp, LPSREAL epsb);
-LPSREAL __EXPORT_TYPE __WINAPI get_epsb(lprec *lp);
+void __EXPORT_TYPE __WINAPI set_epsb(lprec *lp, REAL epsb);
+REAL __EXPORT_TYPE __WINAPI get_epsb(lprec *lp);
 
-void __EXPORT_TYPE __WINAPI set_epsd(lprec *lp, LPSREAL epsd);
-LPSREAL __EXPORT_TYPE __WINAPI get_epsd(lprec *lp);
+void __EXPORT_TYPE __WINAPI set_epsd(lprec *lp, REAL epsd);
+REAL __EXPORT_TYPE __WINAPI get_epsd(lprec *lp);
 
-void __EXPORT_TYPE __WINAPI set_epsel(lprec *lp, LPSREAL epsel);
-LPSREAL __EXPORT_TYPE __WINAPI get_epsel(lprec *lp);
+void __EXPORT_TYPE __WINAPI set_epsel(lprec *lp, REAL epsel);
+REAL __EXPORT_TYPE __WINAPI get_epsel(lprec *lp);
 
 MYBOOL __EXPORT_TYPE __WINAPI set_epslevel(lprec *lp, int epslevel);
 
@@ -2041,8 +2043,8 @@ int __EXPORT_TYPE __WINAPI get_scaling(lprec *lp);
 MYBOOL __EXPORT_TYPE __WINAPI is_scalemode(lprec *lp, int testmask);
 MYBOOL __EXPORT_TYPE __WINAPI is_scaletype(lprec *lp, int scaletype);
 MYBOOL __EXPORT_TYPE __WINAPI is_integerscaling(lprec *lp);
-void __EXPORT_TYPE __WINAPI set_scalelimit(lprec *lp, LPSREAL scalelimit);
-LPSREAL __EXPORT_TYPE __WINAPI get_scalelimit(lprec *lp);
+void __EXPORT_TYPE __WINAPI set_scalelimit(lprec *lp, REAL scalelimit);
+REAL __EXPORT_TYPE __WINAPI get_scalelimit(lprec *lp);
 
 void __EXPORT_TYPE __WINAPI set_improve(lprec *lp, int improve);
 int __EXPORT_TYPE __WINAPI get_improve(lprec *lp);
@@ -2072,41 +2074,41 @@ int __EXPORT_TYPE __WINAPI get_bb_floorfirst(lprec *lp);
 void __EXPORT_TYPE __WINAPI set_bb_depthlimit(lprec *lp, int bb_maxlevel);
 int __EXPORT_TYPE __WINAPI get_bb_depthlimit(lprec *lp);
 
-void __EXPORT_TYPE __WINAPI set_break_at_value(lprec *lp, LPSREAL break_at_value);
-LPSREAL __EXPORT_TYPE __WINAPI get_break_at_value(lprec *lp);
+void __EXPORT_TYPE __WINAPI set_break_at_value(lprec *lp, REAL break_at_value);
+REAL __EXPORT_TYPE __WINAPI get_break_at_value(lprec *lp);
 
-void __EXPORT_TYPE __WINAPI set_negrange(lprec *lp, LPSREAL negrange);
-LPSREAL __EXPORT_TYPE __WINAPI get_negrange(lprec *lp);
+void __EXPORT_TYPE __WINAPI set_negrange(lprec *lp, REAL negrange);
+REAL __EXPORT_TYPE __WINAPI get_negrange(lprec *lp);
 
-void __EXPORT_TYPE __WINAPI set_epsperturb(lprec *lp, LPSREAL epsperturb);
-LPSREAL __EXPORT_TYPE __WINAPI get_epsperturb(lprec *lp);
+void __EXPORT_TYPE __WINAPI set_epsperturb(lprec *lp, REAL epsperturb);
+REAL __EXPORT_TYPE __WINAPI get_epsperturb(lprec *lp);
 
-void __EXPORT_TYPE __WINAPI set_epspivot(lprec *lp, LPSREAL epspivot);
-LPSREAL __EXPORT_TYPE __WINAPI get_epspivot(lprec *lp);
+void __EXPORT_TYPE __WINAPI set_epspivot(lprec *lp, REAL epspivot);
+REAL __EXPORT_TYPE __WINAPI get_epspivot(lprec *lp);
 
 int __EXPORT_TYPE __WINAPI get_max_level(lprec *lp);
 COUNTER __EXPORT_TYPE __WINAPI get_total_nodes(lprec *lp);
 COUNTER __EXPORT_TYPE __WINAPI get_total_iter(lprec *lp);
 
-LPSREAL __EXPORT_TYPE __WINAPI get_objective(lprec *lp);
-LPSREAL __EXPORT_TYPE __WINAPI get_working_objective(lprec *lp);
+REAL __EXPORT_TYPE __WINAPI get_objective(lprec *lp);
+REAL __EXPORT_TYPE __WINAPI get_working_objective(lprec *lp);
 
-LPSREAL __EXPORT_TYPE __WINAPI get_var_primalresult(lprec *lp, int index);
-LPSREAL __EXPORT_TYPE __WINAPI get_var_dualresult(lprec *lp, int index);
+REAL __EXPORT_TYPE __WINAPI get_var_primalresult(lprec *lp, int index);
+REAL __EXPORT_TYPE __WINAPI get_var_dualresult(lprec *lp, int index);
 
-MYBOOL __EXPORT_TYPE __WINAPI get_variables(lprec *lp, LPSREAL *var);
-MYBOOL __EXPORT_TYPE __WINAPI get_ptr_variables(lprec *lp, LPSREAL **var);
+MYBOOL __EXPORT_TYPE __WINAPI get_variables(lprec *lp, REAL *var);
+MYBOOL __EXPORT_TYPE __WINAPI get_ptr_variables(lprec *lp, REAL **var);
 
-MYBOOL __EXPORT_TYPE __WINAPI get_constraints(lprec *lp, LPSREAL *constr);
-MYBOOL __EXPORT_TYPE __WINAPI get_ptr_constraints(lprec *lp, LPSREAL **constr);
+MYBOOL __EXPORT_TYPE __WINAPI get_constraints(lprec *lp, REAL *constr);
+MYBOOL __EXPORT_TYPE __WINAPI get_ptr_constraints(lprec *lp, REAL **constr);
 
-MYBOOL __EXPORT_TYPE __WINAPI get_sensitivity_rhs(lprec *lp, LPSREAL *duals, LPSREAL *dualsfrom, LPSREAL *dualstill);
-MYBOOL __EXPORT_TYPE __WINAPI get_ptr_sensitivity_rhs(lprec *lp, LPSREAL **duals, LPSREAL **dualsfrom, LPSREAL **dualstill);
+MYBOOL __EXPORT_TYPE __WINAPI get_sensitivity_rhs(lprec *lp, REAL *duals, REAL *dualsfrom, REAL *dualstill);
+MYBOOL __EXPORT_TYPE __WINAPI get_ptr_sensitivity_rhs(lprec *lp, REAL **duals, REAL **dualsfrom, REAL **dualstill);
 
-MYBOOL __EXPORT_TYPE __WINAPI get_sensitivity_obj(lprec *lp, LPSREAL *objfrom, LPSREAL *objtill);
-MYBOOL __EXPORT_TYPE __WINAPI get_sensitivity_objex(lprec *lp, LPSREAL *objfrom, LPSREAL *objtill, LPSREAL *objfromvalue, LPSREAL *objtillvalue);
-MYBOOL __EXPORT_TYPE __WINAPI get_ptr_sensitivity_obj(lprec *lp, LPSREAL **objfrom, LPSREAL **objtill);
-MYBOOL __EXPORT_TYPE __WINAPI get_ptr_sensitivity_objex(lprec *lp, LPSREAL **objfrom, LPSREAL **objtill, LPSREAL **objfromvalue, LPSREAL **objtillvalue);
+MYBOOL __EXPORT_TYPE __WINAPI get_sensitivity_obj(lprec *lp, REAL *objfrom, REAL *objtill);
+MYBOOL __EXPORT_TYPE __WINAPI get_sensitivity_objex(lprec *lp, REAL *objfrom, REAL *objtill, REAL *objfromvalue, REAL *objtillvalue);
+MYBOOL __EXPORT_TYPE __WINAPI get_ptr_sensitivity_obj(lprec *lp, REAL **objfrom, REAL **objtill);
+MYBOOL __EXPORT_TYPE __WINAPI get_ptr_sensitivity_objex(lprec *lp, REAL **objfrom, REAL **objtill, REAL **objfromvalue, REAL **objtillvalue);
 
 void __EXPORT_TYPE __WINAPI set_solutionlimit(lprec *lp, int limit);
 int __EXPORT_TYPE __WINAPI get_solutionlimit(lprec *lp);
@@ -2150,10 +2152,10 @@ STATIC MYBOOL shift_coldata(lprec *lp, int base, int delta, LLrec *usedmap);
 STATIC MYBOOL inc_lag_space(lprec *lp, int deltarows, MYBOOL ignoreMAT);
 lprec *make_lag(lprec *server);
 
-LPSREAL get_rh_upper(lprec *lp, int rownr);
-LPSREAL get_rh_lower(lprec *lp, int rownr);
-MYBOOL set_rh_upper(lprec *lp, int rownr, LPSREAL value);
-MYBOOL set_rh_lower(lprec *lp, int rownr, LPSREAL value);
+REAL get_rh_upper(lprec *lp, int rownr);
+REAL get_rh_lower(lprec *lp, int rownr);
+MYBOOL set_rh_upper(lprec *lp, int rownr, REAL value);
+MYBOOL set_rh_lower(lprec *lp, int rownr, REAL value);
 STATIC int bin_count(lprec *lp, MYBOOL working);
 STATIC int MIP_count(lprec *lp);
 STATIC int SOS_count(lprec *lp);
@@ -2162,14 +2164,14 @@ STATIC int identify_GUB(lprec *lp, MYBOOL mark);
 STATIC int prepare_GUB(lprec *lp);
 
 STATIC MYBOOL refactRecent(lprec *lp);
-STATIC MYBOOL check_if_less(lprec *lp, LPSREAL x, LPSREAL y, int variable);
-STATIC MYBOOL feasiblePhase1(lprec *lp, LPSREAL epsvalue);
+STATIC MYBOOL check_if_less(lprec *lp, REAL x, REAL y, int variable);
+STATIC MYBOOL feasiblePhase1(lprec *lp, REAL epsvalue);
 STATIC void free_duals(lprec *lp);
 STATIC void initialize_solution(lprec *lp, MYBOOL shiftbounds);
 STATIC void recompute_solution(lprec *lp, MYBOOL shiftbounds);
 STATIC int verify_solution(lprec *lp, MYBOOL reinvert, char *info);
-STATIC int check_solution(lprec *lp, int  lastcolumn, LPSREAL *solution,
-                          LPSREAL *upbo, LPSREAL *lowbo, LPSREAL tolerance);
+STATIC int check_solution(lprec *lp, int  lastcolumn, REAL *solution,
+                          REAL *upbo, REAL *lowbo, REAL tolerance);
 /* INLINE */ MYBOOL is_fixedvar(lprec *lp, int variable);
 /* INLINE */ MYBOOL is_splitvar(lprec *lp, int colnr);
 
@@ -2187,10 +2189,10 @@ STATIC int find_sos_bbvar(lprec *lp, int *count, MYBOOL intsos);
 STATIC int find_int_bbvar(lprec *lp, int *count, BBrec *BB, MYBOOL *isfeasible);
 
 /* Solution-related functions */
-STATIC LPSREAL compute_dualslacks(lprec *lp, int target, LPSREAL **dvalues, int **nzdvalues, MYBOOL dosum);
+STATIC REAL compute_dualslacks(lprec *lp, int target, REAL **dvalues, int **nzdvalues, MYBOOL dosum);
 STATIC MYBOOL solution_is_int(lprec *lp, int index, MYBOOL checkfixed);
 STATIC MYBOOL bb_better(lprec *lp, int target, int mode);
-STATIC void construct_solution(lprec *lp, LPSREAL *target);
+STATIC void construct_solution(lprec *lp, REAL *target);
 STATIC void transfer_solution_var(lprec *lp, int uservar);
 STATIC MYBOOL construct_duals(lprec *lp);
 STATIC MYBOOL construct_sensitivity_duals(lprec *lp);
@@ -2207,28 +2209,28 @@ STATIC MYBOOL verify_basis(lprec *lp);
 STATIC int unload_basis(lprec *lp, MYBOOL restorelast);
 
 STATIC int perturb_bounds(lprec *lp, BBrec *perturbed, MYBOOL doRows, MYBOOL doCols, MYBOOL includeFIXED);
-STATIC MYBOOL validate_bounds(lprec *lp, LPSREAL *upbo, LPSREAL *lowbo);
-STATIC MYBOOL impose_bounds(lprec *lp, LPSREAL * upbo, LPSREAL *lowbo);
+STATIC MYBOOL validate_bounds(lprec *lp, REAL *upbo, REAL *lowbo);
+STATIC MYBOOL impose_bounds(lprec *lp, REAL * upbo, REAL *lowbo);
 STATIC int unload_BB(lprec *lp);
 
-STATIC LPSREAL feasibilityOffset(lprec *lp, MYBOOL isdual);
+STATIC REAL feasibilityOffset(lprec *lp, MYBOOL isdual);
 STATIC MYBOOL isP1extra(lprec *lp);
-STATIC LPSREAL get_refactfrequency(lprec *lp, MYBOOL final);
+STATIC REAL get_refactfrequency(lprec *lp, MYBOOL final);
 STATIC int findBasicFixedvar(lprec *lp, int afternr, MYBOOL slacksonly);
-STATIC MYBOOL isBasisVarFeasible(lprec *lp, LPSREAL tol, int basis_row);
-STATIC MYBOOL isPrimalFeasible(lprec *lp, LPSREAL tol, int infeasibles[], LPSREAL *feasibilitygap);
-STATIC MYBOOL isDualFeasible(lprec *lp, LPSREAL tol, int *boundflips, int infeasibles[], LPSREAL *feasibilitygap);
+STATIC MYBOOL isBasisVarFeasible(lprec *lp, REAL tol, int basis_row);
+STATIC MYBOOL isPrimalFeasible(lprec *lp, REAL tol, int infeasibles[], REAL *feasibilitygap);
+STATIC MYBOOL isDualFeasible(lprec *lp, REAL tol, int *boundflips, int infeasibles[], REAL *feasibilitygap);
 
 /* Main simplex driver routines */
 STATIC int preprocess(lprec *lp);
 STATIC void postprocess(lprec *lp);
-STATIC MYBOOL performiteration(lprec *lp, int rownr, int varin, LLPSREAL theta, MYBOOL primal, MYBOOL allowminit, LPSREAL *prow, int *nzprow, LPSREAL *pcol, int *nzpcol, int *boundswaps);
+STATIC MYBOOL performiteration(lprec *lp, int rownr, int varin, LREAL theta, MYBOOL primal, MYBOOL allowminit, REAL *prow, int *nzprow, REAL *pcol, int *nzpcol, int *boundswaps);
 STATIC void transfer_solution_var(lprec *lp, int uservar);
 STATIC void transfer_solution(lprec *lp, MYBOOL dofinal);
 
 /* Scaling utilities */
-STATIC LPSREAL scaled_floor(lprec *lp, int colnr, LPSREAL value, LPSREAL epsscale);
-STATIC LPSREAL scaled_ceil(lprec *lp, int colnr, LPSREAL value, LPSREAL epsscale);
+STATIC REAL scaled_floor(lprec *lp, int colnr, REAL value, REAL epsscale);
+STATIC REAL scaled_ceil(lprec *lp, int colnr, REAL value, REAL epsscale);
 
 /* Variable mapping utility routines */
 STATIC void varmap_lock(lprec *lp);
@@ -2244,27 +2246,27 @@ STATIC MYBOOL del_varnameex(lprec *lp, hashelem **namelist, hashtable *ht, int v
 /* Pseudo-cost routines (internal) */
 STATIC BBPSrec *init_pseudocost(lprec *lp, int pseudotype);
 STATIC void free_pseudocost(lprec *lp);
-STATIC LPSREAL get_pseudorange(BBPSrec *pc, int mipvar, int varcode);
-STATIC void update_pseudocost(BBPSrec *pc, int mipvar, int varcode, MYBOOL capupper, LPSREAL varsol);
-STATIC LPSREAL get_pseudobranchcost(BBPSrec *pc, int mipvar, MYBOOL dofloor);
-STATIC LPSREAL get_pseudonodecost(BBPSrec *pc, int mipvar, int vartype, LPSREAL varsol);
+STATIC REAL get_pseudorange(BBPSrec *pc, int mipvar, int varcode);
+STATIC void update_pseudocost(BBPSrec *pc, int mipvar, int varcode, MYBOOL capupper, REAL varsol);
+STATIC REAL get_pseudobranchcost(BBPSrec *pc, int mipvar, MYBOOL dofloor);
+STATIC REAL get_pseudonodecost(BBPSrec *pc, int mipvar, int vartype, REAL varsol);
 
 /* Matrix access and equation solving routines */
-STATIC void set_OF_override(lprec *lp, LPSREAL *ofVector);
-STATIC void set_OF_p1extra(lprec *lp, LPSREAL p1extra);
+STATIC void set_OF_override(lprec *lp, REAL *ofVector);
+STATIC void set_OF_p1extra(lprec *lp, REAL p1extra);
 STATIC void unset_OF_p1extra(lprec *lp);
-MYBOOL modifyOF1(lprec *lp, int index, LPSREAL *ofValue, LPSREAL mult);
-LPSREAL __WINAPI get_OF_active(lprec *lp, int varnr, LPSREAL mult);
+MYBOOL modifyOF1(lprec *lp, int index, REAL *ofValue, REAL mult);
+REAL __WINAPI get_OF_active(lprec *lp, int varnr, REAL mult);
 STATIC MYBOOL is_OF_nz(lprec *lp, int colnr);
 
-STATIC int get_basisOF(lprec *lp, int coltarget[], LPSREAL crow[], int colno[]);
+STATIC int get_basisOF(lprec *lp, int coltarget[], REAL crow[], int colno[]);
 int    __WINAPI get_basiscolumn(lprec *lp, int j, int rn[], double bj[]);
-int    __WINAPI obtain_column(lprec *lp, int varin, LPSREAL *pcol, int *nzlist, int *maxabs);
-STATIC int compute_theta(lprec *lp, int rownr, LLPSREAL *theta, int isupbound, LPSREAL HarrisScalar, MYBOOL primal);
+int    __WINAPI obtain_column(lprec *lp, int varin, REAL *pcol, int *nzlist, int *maxabs);
+STATIC int compute_theta(lprec *lp, int rownr, LREAL *theta, int isupbound, REAL HarrisScalar, MYBOOL primal);
 
 /* Pivot utility routines */
 STATIC int findBasisPos(lprec *lp, int notint, int *var_basic);
-STATIC MYBOOL check_degeneracy(lprec *lp, LPSREAL *pcol, int *degencount);
+STATIC MYBOOL check_degeneracy(lprec *lp, REAL *pcol, int *degencount);
 
 typedef int (__WINAPI read_modeldata_func)(void *userhandle, char *buf, int max_size);
 typedef int (__WINAPI write_modeldata_func)(void *userhandle, char *buf);

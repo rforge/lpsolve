@@ -43,9 +43,9 @@ int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_memallocated)(lprec *lp);
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_preparefactorization)(lprec *lp);
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_factorize)(lprec *lp, int uservars, int Bsize, MYBOOL *usedpos, MYBOOL final);
 MYBOOL __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_finishupdate)(lprec *lp, MYBOOL changesign);
-void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_ftran_normal)(lprec *lp, LPSREAL *pcol, int *nzidx);
-void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_ftran_prepare)(lprec *lp, LPSREAL *pcol, int *nzidx);
-void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_btran_normal)(lprec *lp, LPSREAL *prow, int *nzidx);
+void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_ftran_normal)(lprec *lp, REAL *pcol, int *nzidx);
+void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_ftran_prepare)(lprec *lp, REAL *pcol, int *nzidx);
+void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_btran_normal)(lprec *lp, REAL *prow, int *nzidx);
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_status)(lprec *lp);
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_findredundant)(lprec *lp, int items, getcolumnex_func cb, int *maprow, int*mapcol);
 
@@ -56,8 +56,8 @@ MYBOOL __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_compatible)(lprec *lp, int bfpversio
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_indexbase)(lprec *lp);
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_rowoffset)(lprec *lp);
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_pivotmax)(lprec *lp);
-LPSREAL   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_efficiency)(lprec *lp);
-LPSREAL   __BFP_EXPORT_TYPE *(BFP_CALLMODEL bfp_pivotvector)(lprec *lp);
+REAL   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_efficiency)(lprec *lp);
+REAL   __BFP_EXPORT_TYPE *(BFP_CALLMODEL bfp_pivotvector)(lprec *lp);
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_pivotcount)(lprec *lp);
 MYBOOL __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_mustrefactorize)(lprec *lp);
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_refactcount)(lprec *lp, int kind);
@@ -76,7 +76,7 @@ MYBOOL __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_pivotalloc)(lprec *lp, int newsize);
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_colcount)(lprec *lp);
 MYBOOL __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_canresetbasis)(lprec *lp);
 void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_finishfactorization)(lprec *lp);
-LLPSREAL  __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_prepareupdate)(lprec *lp, int row_nr, int col_nr, LPSREAL *pcol);
-LPSREAL   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_pivotRHS)(lprec *lp, LLPSREAL theta, LPSREAL *pcol);
-void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_btran_double)(lprec *lp, LPSREAL *prow, int *pnzidx, LPSREAL *drow, int *dnzidx);
+LREAL  __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_prepareupdate)(lprec *lp, int row_nr, int col_nr, REAL *pcol);
+REAL   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_pivotRHS)(lprec *lp, LREAL theta, REAL *pcol);
+void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_btran_double)(lprec *lp, REAL *prow, int *pnzidx, REAL *drow, int *dnzidx);
 

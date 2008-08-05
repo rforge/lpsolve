@@ -57,7 +57,7 @@ MYBOOL BFP_CALLMODEL bfp_resize(lprec *lp, int newsize)
   lu->dimalloc = newsize;
 
   /* Allocate index tracker arrays, LU matrices and various work vectors */
-  if(!allocLPSREAL(lp, &(lu->value), newsize+MATINDEXBASE, AUTOMATIC))
+  if(!allocREAL(lp, &(lu->value), newsize+MATINDEXBASE, AUTOMATIC))
     return( FALSE );
 
   /* Data specific to the factorization engine */
@@ -71,7 +71,7 @@ MYBOOL BFP_CALLMODEL bfp_resize(lprec *lp, int newsize)
   }
   else if(newsize > 0) {
     int  asize;
-    LPSREAL bsize;
+    REAL bsize;
 
     lu->LUSOL = LUSOL_create(NULL, 0, LUSOL_PIVMOD_TPP, bfp_pivotmax(lp)*0);
 
@@ -108,7 +108,7 @@ MYBOOL BFP_CALLMODEL bfp_resize(lprec *lp, int newsize)
 #endif
 
     /* Try to minimize memory allocation if we have a large number of unit columns */
-    bsize = (LPSREAL) lp->get_nonzeros(lp);
+    bsize = (REAL) lp->get_nonzeros(lp);
     if(newsize > lp->columns)
       bsize += newsize;
     else
@@ -168,14 +168,14 @@ int BFP_CALLMODEL bfp_memallocated(lprec *lp)
   int      mem;
   LUSOLrec *LUSOL = lp->invB->LUSOL;
 
-  mem = sizeof(LPSREAL) * (LUSOL->lena+LUSOL->maxm+LUSOL_RP_LASTITEM);
+  mem = sizeof(REAL) * (LUSOL->lena+LUSOL->maxm+LUSOL_RP_LASTITEM);
   mem += sizeof(int) * (2*LUSOL->lena+5*LUSOL->maxm+5*LUSOL->maxn+LUSOL_IP_LASTITEM);
   if(LUSOL->luparm[LUSOL_IP_PIVOTTYPE] == LUSOL_PIVMOD_TCP)
-    mem += sizeof(LPSREAL) * LUSOL->maxn + 2*sizeof(LPSREAL)*LUSOL->maxn;
+    mem += sizeof(REAL) * LUSOL->maxn + 2*sizeof(REAL)*LUSOL->maxn;
   else if(LUSOL->luparm[LUSOL_IP_PIVOTTYPE] == LUSOL_PIVMOD_TRP)
-    mem += sizeof(LPSREAL) * LUSOL->maxn;
+    mem += sizeof(REAL) * LUSOL->maxn;
   if(!LUSOL->luparm[LUSOL_IP_KEEPLU])
-    mem += sizeof(LPSREAL) * LUSOL->maxn;
+    mem += sizeof(REAL) * LUSOL->maxn;
   return( mem );
 }
 
@@ -321,7 +321,7 @@ void bfp_LUSOLtighten(lprec *lp)
     case FALSE: lp->report(lp, infolevel, "bfp_factorize: Very hard numerics, but cannot tighten LUSOL thresholds further.\n");
                  break;
     case TRUE:  lp->report(lp, infolevel, "bfp_factorize: Frequent refact pivot count %d at iter %.0f; tightened thresholds.\n",
-                                           lp->invB->num_pivots, (LPSREAL) lp->get_total_iter(lp));
+                                           lp->invB->num_pivots, (REAL) lp->get_total_iter(lp));
                  break;
     default:    lp->report(lp, infolevel, "bfp_factorize: LUSOL switched to %s pivoting model to enhance stability.\n",
                                            LUSOL_pivotLabel(lp->invB->LUSOL));
@@ -380,7 +380,7 @@ int BFP_CALLMODEL bfp_factorize(lprec *lp, int uservars, int Bsize, MYBOOL *used
   if(inform != LUSOL_INFORM_LUSUCCESS) {
     int  singularcols,
          replacedcols = 0;
-    LPSREAL hold;
+    REAL hold;
 
     /* Make sure we do not tighten factorization pivot criteria too often, and simply
        accept the substitution of slack columns into the basis */
@@ -394,7 +394,7 @@ int BFP_CALLMODEL bfp_factorize(lprec *lp, int uservars, int Bsize, MYBOOL *used
 
       singularities++;
       singularcols = LUSOL->luparm[LUSOL_IP_SINGULARITIES];
-      hold = (LPSREAL) lp->get_total_iter(lp);
+      hold = (REAL) lp->get_total_iter(lp);
       lp->report(lp, NORMAL, "bfp_factorize: Resolving %d singularit%s at refact %d, iter %.0f\n",
                              singularcols, my_plural_y(singularcols), lp->invB->num_refact, hold);
 
@@ -475,7 +475,7 @@ MYBOOL BFP_CALLMODEL bfp_finishupdate(lprec *lp, MYBOOL changesign)
 /* Was addetacol() in versions of lp_solve before 4.0.1.8 - KE */
 {
   int      i, k, kcol, deltarows = bfp_rowoffset(lp);
-  LPSREAL     DIAG, VNORM;
+  REAL     DIAG, VNORM;
   INVrec   *lu = lp->invB;
   LUSOLrec *LUSOL = lu->LUSOL;
 
@@ -498,7 +498,7 @@ MYBOOL BFP_CALLMODEL bfp_finishupdate(lprec *lp, MYBOOL changesign)
 #ifdef LUSOLSafeFastUpdate      /* NB! Defined in lusol.h */
   if(TRUE || !changesign) {
     if(changesign) {
-      LPSREAL *temp = LUSOL->vLU6L;
+      REAL *temp = LUSOL->vLU6L;
       for(i = 1, temp++; i <= lp->rows+deltarows; i++, temp++)
         if(*temp != 0)
           *temp = -(*temp);
@@ -536,7 +536,7 @@ MYBOOL BFP_CALLMODEL bfp_finishupdate(lprec *lp, MYBOOL changesign)
     /* Additional KE logic to reduce maximum pivot count based on the density of B */
     if(!lu->force_refact) {
       VNORM = lp->rows+1;
-      VNORM = 1.0 - pow((LPSREAL) LUSOL->nelem/VNORM/VNORM, 0.2);
+      VNORM = 1.0 - pow((REAL) LUSOL->nelem/VNORM/VNORM, 0.2);
       lu->force_refact = (MYBOOL) (lu->num_pivots > VNORM*lp->bfp_pivotmax(lp));
     }
 #endif
@@ -547,12 +547,12 @@ MYBOOL BFP_CALLMODEL bfp_finishupdate(lprec *lp, MYBOOL changesign)
 /*    int infolevel = NORMAL; */
     int infolevel = DETAILED;
     lp->report(lp, infolevel, "bfp_finishupdate: Failed at iter %.0f, pivot %d;\n%s\n",
-                   (LPSREAL) (lp->total_iter+lp->current_iter), lu->num_pivots, LUSOL_informstr(LUSOL, i));
+                   (REAL) (lp->total_iter+lp->current_iter), lu->num_pivots, LUSOL_informstr(LUSOL, i));
     if(i == LUSOL_INFORM_ANEEDMEM) {       /* To compress used memory and realloc, if necessary */
       lp->invert(lp, INITSOL_USEZERO, FALSE);
       if(i != LUSOL_INFORM_LUSUCCESS)
         lp->report(lp, NORMAL, "bfp_finishupdate: Insufficient memory at iter %.0f;\n%s\n",
-                       (LPSREAL) (lp->total_iter+lp->current_iter), LUSOL_informstr(LUSOL, i));
+                       (REAL) (lp->total_iter+lp->current_iter), LUSOL_informstr(LUSOL, i));
     }
     else if(i == LUSOL_INFORM_RANKLOSS) {  /* To fix rank loss and clear cumulative errors */
 #if 0
@@ -568,7 +568,7 @@ MYBOOL BFP_CALLMODEL bfp_finishupdate(lprec *lp, MYBOOL changesign)
       i = LUSOL->luparm[LUSOL_IP_INFORM];
       if(i != LUSOL_INFORM_LUSUCCESS)
         lp->report(lp, NORMAL, "bfp_finishupdate: Recovery attempt unsuccessful at iter %.0f;\n%s\n",
-                       (LPSREAL) (lp->total_iter+lp->current_iter), LUSOL_informstr(LUSOL, i));
+                       (REAL) (lp->total_iter+lp->current_iter), LUSOL_informstr(LUSOL, i));
       else
         lp->report(lp, infolevel, "bfp_finishupdate: Correction or recovery was successful.\n");
     }
@@ -579,7 +579,7 @@ MYBOOL BFP_CALLMODEL bfp_finishupdate(lprec *lp, MYBOOL changesign)
 
 
 /* MUST MODIFY */
-void BFP_CALLMODEL bfp_ftran_normal(lprec *lp, LPSREAL *pcol, int *nzidx)
+void BFP_CALLMODEL bfp_ftran_normal(lprec *lp, REAL *pcol, int *nzidx)
 {
   int    i;
   INVrec *lu;
@@ -591,13 +591,13 @@ void BFP_CALLMODEL bfp_ftran_normal(lprec *lp, LPSREAL *pcol, int *nzidx)
   if(i != LUSOL_INFORM_LUSUCCESS) {
     lu->status = BFP_STATUS_ERROR;
     lp->report(lp, NORMAL, "bfp_ftran_normal: Failed at iter %.0f, pivot %d;\n%s\n",
-                   (LPSREAL) (lp->total_iter+lp->current_iter), lu->num_pivots, LUSOL_informstr(lu->LUSOL, i));
+                   (REAL) (lp->total_iter+lp->current_iter), lu->num_pivots, LUSOL_informstr(lu->LUSOL, i));
   }
 }
 
 
 /* MAY MODIFY */
-void BFP_CALLMODEL bfp_ftran_prepare(lprec *lp, LPSREAL *pcol, int *nzidx)
+void BFP_CALLMODEL bfp_ftran_prepare(lprec *lp, REAL *pcol, int *nzidx)
 {
   int    i;
   INVrec *lu;
@@ -609,13 +609,13 @@ void BFP_CALLMODEL bfp_ftran_prepare(lprec *lp, LPSREAL *pcol, int *nzidx)
   if(i != LUSOL_INFORM_LUSUCCESS) {
     lu->status = BFP_STATUS_ERROR;
     lp->report(lp, NORMAL, "bfp_ftran_prepare: Failed at iter %.0f, pivot %d;\n%s\n",
-                   (LPSREAL) (lp->total_iter+lp->current_iter), lu->num_pivots, LUSOL_informstr(lu->LUSOL, i));
+                   (REAL) (lp->total_iter+lp->current_iter), lu->num_pivots, LUSOL_informstr(lu->LUSOL, i));
   }
 }
 
 
 /* MUST MODIFY */
-void BFP_CALLMODEL bfp_btran_normal(lprec *lp, LPSREAL *prow, int *nzidx)
+void BFP_CALLMODEL bfp_btran_normal(lprec *lp, REAL *prow, int *nzidx)
 {
   int    i;
   INVrec *lu;
@@ -627,7 +627,7 @@ void BFP_CALLMODEL bfp_btran_normal(lprec *lp, LPSREAL *prow, int *nzidx)
   if(i != LUSOL_INFORM_LUSUCCESS) {
     lu->status = BFP_STATUS_ERROR;
     lp->report(lp, NORMAL, "bfp_btran_normal: Failed at iter %.0f, pivot %d;\n%s\n",
-                   (LPSREAL) (lp->total_iter+lp->current_iter), lu->num_pivots, LUSOL_informstr(lu->LUSOL, i));
+                   (REAL) (lp->total_iter+lp->current_iter), lu->num_pivots, LUSOL_informstr(lu->LUSOL, i));
   }
 
   /* Check performance data */
@@ -635,13 +635,13 @@ void BFP_CALLMODEL bfp_btran_normal(lprec *lp, LPSREAL *prow, int *nzidx)
   if(lu->num_pivots == 1) {
     if(lu->LUSOL->luparm[LUSOL_IP_ACCELERATION] > 0)
       lp->report(lp, NORMAL, "RowL0 R:%10.7f  C:%10.7f  NZ:%10.7f\n",
-                             (LPSREAL) lu->LUSOL->luparm[LUSOL_IP_ROWCOUNT_L0] / lu->LUSOL->m,
-                             (LPSREAL) lu->LUSOL->luparm[LUSOL_IP_COLCOUNT_L0] / lu->LUSOL->m,
-                             (LPSREAL) lu->LUSOL->luparm[LUSOL_IP_NONZEROS_L0] / pow((LPSREAL) lu->LUSOL->m, 2));
+                             (REAL) lu->LUSOL->luparm[LUSOL_IP_ROWCOUNT_L0] / lu->LUSOL->m,
+                             (REAL) lu->LUSOL->luparm[LUSOL_IP_COLCOUNT_L0] / lu->LUSOL->m,
+                             (REAL) lu->LUSOL->luparm[LUSOL_IP_NONZEROS_L0] / pow((REAL) lu->LUSOL->m, 2));
     else
       lp->report(lp, NORMAL, "ColL0 C:%10.7f  NZ:%10.7f\n",
-                             (LPSREAL) lu->LUSOL->luparm[LUSOL_IP_COLCOUNT_L0] / lu->LUSOL->m,
-                             (LPSREAL) lu->LUSOL->luparm[LUSOL_IP_NONZEROS_L0] / pow((LPSREAL) lu->LUSOL->m, 2));
+                             (REAL) lu->LUSOL->luparm[LUSOL_IP_COLCOUNT_L0] / lu->LUSOL->m,
+                             (REAL) lu->LUSOL->luparm[LUSOL_IP_NONZEROS_L0] / pow((REAL) lu->LUSOL->m, 2));
   }
 #endif
 
@@ -651,7 +651,7 @@ void BFP_CALLMODEL bfp_btran_normal(lprec *lp, LPSREAL *prow, int *nzidx)
 int BFP_CALLMODEL bfp_findredundant(lprec *lp, int items, getcolumnex_func cb, int *maprow, int *mapcol)
 {
   int       i, j, nz = 0, m = 0, n = 0, *nzrows = NULL;
-  LPSREAL      *nzvalues = NULL, *arraymax = NULL;
+  REAL      *nzvalues = NULL, *arraymax = NULL;
   LUSOLrec  *LUSOL;
 
   /* Are we capable of finding redundancy with this BFP? */
@@ -660,7 +660,7 @@ int BFP_CALLMODEL bfp_findredundant(lprec *lp, int items, getcolumnex_func cb, i
 
   /* If so, initialize memory structures */
   if(!allocINT(lp, &nzrows, items, FALSE) ||
-     !allocLPSREAL(lp, &nzvalues, items, FALSE))
+     !allocREAL(lp, &nzvalues, items, FALSE))
     return( n );
 
   /* Compute the number of non-empty columns */
@@ -702,7 +702,7 @@ int BFP_CALLMODEL bfp_findredundant(lprec *lp, int items, getcolumnex_func cb, i
   }
 
   /* Scale rows to prevent numerical problems */
-  if((lp->scalemode != SCALE_NONE) && allocLPSREAL(lp, &arraymax, items+1, TRUE)) {
+  if((lp->scalemode != SCALE_NONE) && allocREAL(lp, &arraymax, items+1, TRUE)) {
     for(i = 1; i <= nz; i++) {
       SETMAX(arraymax[LUSOL->indc[i]], fabs(LUSOL->a[i]));
     }

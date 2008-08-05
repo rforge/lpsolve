@@ -26,9 +26,9 @@
   int       col_enter;              /* The full index of the entering column */
   int       col_leave;              /* The full index of the leaving column */
   int       col_pos;                /* The B column to be changed at the next update using data in value[.]*/
-  LPSREAL      *value;
-  LPSREAL      *pcol;                  /* Reference to the elimination vector */
-  LPSREAL      theta_enter;            /* Value of the entering column theta */
+  REAL      *value;
+  REAL      *pcol;                  /* Reference to the elimination vector */
+  REAL      theta_enter;            /* Value of the entering column theta */
 
   int       max_Bsize;              /* The largest B matrix of user variables */
   int       max_colcount;           /* The maximum number of user columns in LU */

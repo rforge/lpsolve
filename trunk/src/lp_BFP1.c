@@ -16,7 +16,7 @@ MYBOOL BFP_CALLMODEL bfp_compatible(lprec *lp, int bfpversion, int lpversion, in
 {
   MYBOOL status = FALSE;
 
-  if((lp != NULL) && (bfpversion == BFPVERSION) && (sizeof(LPSREAL) == sizeofvar)) {
+  if((lp != NULL) && (bfpversion == BFPVERSION) && (sizeof(REAL) == sizeofvar)) {
 #if 0
     if(lpversion == MAJORVERSION)  /* Forces BFP renewal at lp_solve major version changes */
 #endif
@@ -56,15 +56,15 @@ int BFP_CALLMODEL bfp_pivotmax(lprec *lp)
 }
 
 /* DON'T MODIFY */
-LPSREAL * BFP_CALLMODEL bfp_pivotvector(lprec *lp)
+REAL * BFP_CALLMODEL bfp_pivotvector(lprec *lp)
 {
   return( lp->invB->pcol );
 }
 
 /* DON'T MODIFY */
-LPSREAL BFP_CALLMODEL bfp_efficiency(lprec *lp)
+REAL BFP_CALLMODEL bfp_efficiency(lprec *lp)
 {
-  LPSREAL hold;
+  REAL hold;
 
   hold = lp->bfp_nonzeros(lp, AUTOMATIC);
   if(hold == 0)
@@ -99,11 +99,11 @@ MYBOOL BFP_CALLMODEL bfp_mustrefactorize(lprec *lp)
 {
   MYBOOL test = lp->is_action(lp->spx_action, ACTION_REINVERT | ACTION_TIMEDREINVERT);
   if(!test) {
-    LPSREAL   f;
+    REAL   f;
     INVrec *lu = lp->invB;
 
     if(lu->num_pivots > 0)
-      f = (timeNow()-lu->time_refactstart) / (LPSREAL) lu->num_pivots;
+      f = (timeNow()-lu->time_refactstart) / (REAL) lu->num_pivots;
     else
       f = 0;
 

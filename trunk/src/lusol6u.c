@@ -39,7 +39,7 @@ MYBOOL LU1U0(LUSOLrec *LUSOL, LUSOLmat **mat, int *inform)
 
   /* Check if we should apply "smarts" before proceeding to the column matrix creation */
   if((LUSOL->luparm[LUSOL_IP_ACCELERATION] & LUSOL_AUTOORDER) &&
-     ((LPSREAL) sqrt((LPSREAL) NUMU/LENU) > LUSOL->parmlu[LUSOL_RP_SMARTRATIO]))
+     ((REAL) sqrt((REAL) NUMU/LENU) > LUSOL->parmlu[LUSOL_RP_SMARTRATIO]))
     goto Finish;
 
   /* We are Ok to create the new matrix object */
@@ -92,16 +92,16 @@ Finish:
 }
 
 /* Solve U w = v based on column-based version of U, constructed by LU1U0 */
-void LU6U0_v(LUSOLrec *LUSOL, LUSOLmat *mat, LPSREAL V[], LPSREAL W[], int NZidx[], int *INFORM)
+void LU6U0_v(LUSOLrec *LUSOL, LUSOLmat *mat, REAL V[], REAL W[], int NZidx[], int *INFORM)
 {
 #ifdef DoTraceU0
-  LPSREAL TEMP;
+  REAL TEMP;
 #endif
   int  LEN, I, K, L, L1, NRANK, NRANK1, KLAST;
-  LPSREAL SMALL;
-  register LPSREAL T;
+  REAL SMALL;
+  register REAL T;
 #if (defined xxLUSOLFastSolve) && !(defined DoTraceU0)
-  LPSREAL *aptr;
+  REAL *aptr;
   int  *jptr;
 #else
   int  J;
@@ -172,5 +172,5 @@ void LU6U0_v(LUSOLrec *LUSOL, LUSOLmat *mat, LPSREAL V[], LPSREAL W[], int NZidx
   if(T>ZERO)
     *INFORM = LUSOL_INFORM_LUSINGULAR;
   LUSOL->luparm[LUSOL_IP_INFORM]     = *INFORM;
-  LUSOL->parmlu[LUSOL_RP_RESIDUAL_U] = (LPSREAL) T;
+  LUSOL->parmlu[LUSOL_RP_RESIDUAL_U] = (REAL) T;
 }

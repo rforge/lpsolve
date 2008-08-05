@@ -39,10 +39,10 @@
    05 May 2002: Change input paramter k to kk to stop k being output.
    05 May 2002: Current version of Hdown.
    ================================================================== */
-void HDOWN(LPSREAL HA[], int HJ[], int HK[], int N, int K, int *HOPS)
+void HDOWN(REAL HA[], int HJ[], int HK[], int N, int K, int *HOPS)
 {
   int  J, JJ, JV, N2;
-  LPSREAL V;
+  REAL V;
 
   *HOPS = 0;
   V = HA[K];
@@ -82,10 +82,10 @@ x200:
    05 May 2002: Change input paramter k to kk to stop k being output.
    05 May 2002: Current version of Hup.
    ================================================================== */
-void HUP(LPSREAL HA[], int HJ[], int HK[], int K, int *HOPS)
+void HUP(REAL HA[], int HJ[], int HK[], int K, int *HOPS)
 {
   int  J, JV, K2;
-  LPSREAL V;
+  REAL V;
 
   *HOPS = 0;
   V = HA[K];
@@ -123,8 +123,8 @@ x200:
    07 May 2002: Protect input parameters N, Nk.
    07 May 2002: Current version of Hinsert.
    ================================================================== */
-void HINSERT(LPSREAL HA[], int HJ[], int HK[], int N,
-             LPSREAL V, int JV, int *HOPS)
+void HINSERT(REAL HA[], int HJ[], int HK[], int N,
+             REAL V, int JV, int *HOPS)
 {
   HA[N] = V;
   HJ[N] = JV;
@@ -139,10 +139,10 @@ void HINSERT(LPSREAL HA[], int HJ[], int HK[], int N,
    07 May 2002: Protect input parameters N, Nk, k.
    07 May 2002: Current version of Hchange.
    ================================================================== */
-void HCHANGE(LPSREAL HA[], int HJ[], int HK[], int N, int K,
-             LPSREAL V, int JV, int *HOPS)
+void HCHANGE(REAL HA[], int HJ[], int HK[], int N, int K,
+             REAL V, int JV, int *HOPS)
 {
-  LPSREAL V1;
+  REAL V1;
 
   V1 = HA[K];
   HA[K] = V;
@@ -162,11 +162,11 @@ void HCHANGE(LPSREAL HA[], int HJ[], int HK[], int N, int K,
    07 May 2002: Protect input parameters N, Nk, k.
    07 May 2002: Current version of Hdelete.
    ================================================================== */
-void HDELETE(LPSREAL HA[], int HJ[], int HK[], int *N, int K, int *HOPS)
+void HDELETE(REAL HA[], int HJ[], int HK[], int *N, int K, int *HOPS)
 {
 
   int  JV, NX;
-  LPSREAL V;
+  REAL V;
 
   NX = *N;
   V = HA[NX];
@@ -188,10 +188,10 @@ void HDELETE(LPSREAL HA[], int HJ[], int HK[], int *N, int K, int *HOPS)
    07 May 2002: ftnchek wants us to protect Nk, Ha(k), Hj(k) too.
    07 May 2002: Current version of Hbuild.
    ================================================================== */
-void HBUILD(LPSREAL HA[], int HJ[], int HK[], int N, int *HOPS)
+void HBUILD(REAL HA[], int HJ[], int HK[], int N, int *HOPS)
 {
   int  H, JV, K, KK;
-  LPSREAL V;
+  REAL V;
 
   *HOPS = 0;
   for(K = 1; K <= N; K++) {

@@ -54,9 +54,9 @@ MYBOOL crash_basis(lprec *lp)
     /* The logic here follows Maros */
     LLrec   *rowLL = NULL, *colLL = NULL;
     int     ii, rx, cx, ix, nz;
-    LPSREAL    wx, tx, *rowMAX = NULL, *colMAX = NULL;
+    REAL    wx, tx, *rowMAX = NULL, *colMAX = NULL;
     int     *rowNZ = NULL, *colNZ = NULL, *rowWT = NULL, *colWT = NULL;
-    LPSREAL    *value;
+    REAL    *value;
     int     *rownr, *colnr;
 
     report(lp, NORMAL, "crash_basis: 'Most feasible' basis crashing selected\n");
@@ -64,8 +64,8 @@ MYBOOL crash_basis(lprec *lp)
     /* Tally row and column non-zero counts */
     ok = allocINT(lp,  &rowNZ, lp->rows+1,     TRUE) &&
          allocINT(lp,  &colNZ, lp->columns+1,  TRUE) &&
-         allocLPSREAL(lp, &rowMAX, lp->rows+1,    FALSE) &&
-         allocLPSREAL(lp, &colMAX, lp->columns+1, FALSE);
+         allocREAL(lp, &rowMAX, lp->rows+1,    FALSE) &&
+         allocREAL(lp, &colMAX, lp->columns+1, FALSE);
     if(!ok)
       goto Finish;
 
@@ -235,15 +235,15 @@ Finish:
     /* The logic here follows Maros */
     LLrec   *rowLL = NULL, *colLL = NULL;
     int     ii, rx, cx, ix, nz, *merit = NULL;
-    LPSREAL    *value, wx, hold, *rhs = NULL, *eta = NULL;
+    REAL    *value, wx, hold, *rhs = NULL, *eta = NULL;
     int     *rownr, *colnr;
 
     report(lp, NORMAL, "crash_basis: 'Least degenerate' basis crashing selected\n");
 
     /* Create temporary arrays */
     ok = allocINT(lp,  &merit, lp->columns + 1, FALSE) &&
-         allocLPSREAL(lp, &eta, lp->rows + 1, FALSE) &&
-         allocLPSREAL(lp, &rhs, lp->rows + 1, FALSE);
+         allocREAL(lp, &eta, lp->rows + 1, FALSE) &&
+         allocREAL(lp, &rhs, lp->rows + 1, FALSE);
     createLink(lp->columns, &colLL, NULL);
     createLink(lp->rows, &rowLL, NULL);
     ok &= (colLL != NULL) && (rowLL != NULL);
@@ -335,10 +335,10 @@ FinishLD:
 }
 
 #if 0
-MYBOOL __WINAPI guess_basis(lprec *lp, LPSREAL *guessvector, int *basisvector)
+MYBOOL __WINAPI guess_basis(lprec *lp, REAL *guessvector, int *basisvector)
 {
   MYBOOL status = FALSE;
-  LPSREAL   *values = NULL, *violation = NULL,
+  REAL   *values = NULL, *violation = NULL,
          *value, error, upB, loB, sortorder = 1.0;
   int    i, n, *rownr, *colnr;
   MATrec *mat = lp->matA;
@@ -347,8 +347,8 @@ MYBOOL __WINAPI guess_basis(lprec *lp, LPSREAL *guessvector, int *basisvector)
     return( status );
 
   /* Create helper arrays */
-  if(!allocLPSREAL(lp, &values, lp->sum+1, TRUE) ||
-     !allocLPSREAL(lp, &violation, lp->sum+1, TRUE))
+  if(!allocREAL(lp, &values, lp->sum+1, TRUE) ||
+     !allocREAL(lp, &violation, lp->sum+1, TRUE))
     goto Finish;
 
   /* Compute values of slack variables for given guess vector */
@@ -411,7 +411,7 @@ MYBOOL __WINAPI guess_basis(lprec *lp, LPSREAL *guessvector, int *basisvector)
 
   /* Sort decending by violation; this means that variables with
      the largest violations will be designated as basic */
-  sortByLPSREAL(basisvector, violation, lp->sum, 1, FALSE);
+  sortByREAL(basisvector, violation, lp->sum, 1, FALSE);
 
   /* Adjust the non-basic indeces for the (proximal) bound state */
   error = lp->epsprimal;
@@ -437,10 +437,10 @@ Finish:
 #endif
 
 #if 0
-MYBOOL __WINAPI guess_basis(lprec *lp, LPSREAL *guessvector, int *basisvector)
+MYBOOL __WINAPI guess_basis(lprec *lp, REAL *guessvector, int *basisvector)
 {
   MYBOOL *isnz, status = FALSE;
-  LPSREAL   *values = NULL, *violation = NULL,
+  REAL   *values = NULL, *violation = NULL,
          eps = lp->epsprimal,
          *value, error, upB, loB, sortorder = 1.0;
   int    i, j, n, *rownr, *colnr, *slkpos,
@@ -451,8 +451,8 @@ MYBOOL __WINAPI guess_basis(lprec *lp, LPSREAL *guessvector, int *basisvector)
     return( status );
 
   /* Create helper arrays */
-  if(!allocLPSREAL(lp, &values, lp->sum+1, TRUE) ||
-     !allocLPSREAL(lp, &violation, lp->sum+1, TRUE))
+  if(!allocREAL(lp, &values, lp->sum+1, TRUE) ||
+     !allocREAL(lp, &violation, lp->sum+1, TRUE))
     goto Finish;
 
   /* Compute values of slack variables for given guess vector */
@@ -515,7 +515,7 @@ MYBOOL __WINAPI guess_basis(lprec *lp, LPSREAL *guessvector, int *basisvector)
 
   /* Sort decending by violation; this means that variables with
      the largest violations will be designated as basic */
-  sortByLPSREAL(basisvector, violation, lp->sum, 1, FALSE);
+  sortByREAL(basisvector, violation, lp->sum, 1, FALSE);
   error = violation[1];
 
   /* Adjust the non-basic indeces for the (proximal) bound state */
@@ -580,10 +580,10 @@ Finish:
 }
 #endif
 
-MYBOOL __WINAPI guess_basis(lprec *lp, LPSREAL *guessvector, int *basisvector)
+MYBOOL __WINAPI guess_basis(lprec *lp, REAL *guessvector, int *basisvector)
 {
   MYBOOL *isnz, status = FALSE;
-  LPSREAL   *values = NULL, *violation = NULL,
+  REAL   *values = NULL, *violation = NULL,
          eps = lp->epsprimal,
          *value, error, upB, loB, sortorder = 1.0;
   int    i, j, jj, n, *rownr, *colnr, *slkpos,
@@ -594,8 +594,8 @@ MYBOOL __WINAPI guess_basis(lprec *lp, LPSREAL *guessvector, int *basisvector)
     return( status );
 
   /* Create helper arrays */
-  if(!allocLPSREAL(lp, &values, lp->sum+1, TRUE) ||
-     !allocLPSREAL(lp, &violation, lp->sum+1, TRUE))
+  if(!allocREAL(lp, &values, lp->sum+1, TRUE) ||
+     !allocREAL(lp, &violation, lp->sum+1, TRUE))
     goto Finish;
 
   /* Compute values of slack variables for given guess vector */
@@ -658,7 +658,7 @@ MYBOOL __WINAPI guess_basis(lprec *lp, LPSREAL *guessvector, int *basisvector)
 
   /* Sort decending by violation; this means that variables with
      the largest violations will be designated as basic */
-  sortByLPSREAL(basisvector, violation, lp->sum, 1, FALSE);
+  sortByREAL(basisvector, violation, lp->sum, 1, FALSE);
   error = violation[1];
 
   /* Adjust the non-basic indeces for the (proximal) bound state */

@@ -449,7 +449,7 @@ STATIC int scan_lineFREE(lprec *lp, int section, char* line, char *field1, char 
 }
 
 STATIC int addmpscolumn(lprec *lp, MYBOOL Int_section, MYBOOL *Column_ready,
-                        int *count, LPSREAL *Last_column, int *Last_columnno, char *Last_col_name)
+                        int *count, REAL *Last_column, int *Last_columnno, char *Last_col_name)
 {
   int ok = TRUE;
 
@@ -467,7 +467,7 @@ STATIC int addmpscolumn(lprec *lp, MYBOOL Int_section, MYBOOL *Column_ready,
 }
 
 #if 0
-STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], LPSREAL rowValue[])
+STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], REAL rowValue[])
 {
   int i = *count;
 
@@ -476,7 +476,7 @@ STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], LPSREAL rowValue[])
 
   while((i > 0) && (rowIndex[i] < rowIndex[i-1])) {
     swapINT (rowIndex+i, rowIndex+i-1);
-    swapLPSREAL(rowValue+i, rowValue+i-1);
+    swapREAL(rowValue+i, rowValue+i-1);
     i--;
   }
   (*count)++;
@@ -484,7 +484,7 @@ STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], LPSREAL rowValue[])
 }
 #endif
 
-STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], LPSREAL rowValue[])
+STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], REAL rowValue[])
 {
   int i = *count;
 
@@ -495,7 +495,7 @@ STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], LPSREAL rowValue[])
   /* Move the element so that the index list is sorted ascending */
   while((i > 0) && (rowIndex[i] < rowIndex[i-1])) {
     swapINT (rowIndex+i, rowIndex+i-1);
-    swapLPSREAL(rowValue+i, rowValue+i-1);
+    swapREAL(rowValue+i, rowValue+i-1);
     i--;
   }
 
@@ -548,7 +548,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
   MYBOOL Int_section, Column_ready, Column_ready1,
          Unconstrained_rows_found = FALSE, OF_found = FALSE, CompleteStatus = FALSE;
   double field4, field6;
-  LPSREAL   *Last_column = NULL;
+  REAL   *Last_column = NULL;
   int    count = 0, *Last_columnno = NULL;
   int    OBJSENSE = ROWTYPE_EMPTY;
   lprec  *lp;
@@ -624,7 +624,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
           report(lp, FULL, "Switching to ROWS section\n");
         }
         else if(strcmp(tmp, "COLUMNS") == 0) {
-          allocLPSREAL(lp, &Last_column, lp->rows + 1, TRUE);
+          allocREAL(lp, &Last_column, lp->rows + 1, TRUE);
           allocINT(lp, &Last_columnno, lp->rows + 1, TRUE);
           count = 0;
           if ((Last_column == NULL) || (Last_columnno == NULL))
@@ -793,7 +793,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
               if(row > lp->rows)
                 report(lp, CRITICAL, "Invalid row %s encountered in the MPS file\n", field3);
               Last_columnno[count] = row;
-              Last_column[count] = (LPSREAL)field4;
+              Last_column[count] = (REAL)field4;
               if(appendmpsitem(&count, Last_columnno, Last_column)) {
                 NZ++;
                 Column_ready = TRUE;
@@ -805,7 +805,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
               if(row > lp->rows)
                 report(lp, CRITICAL, "Invalid row %s encountered in the MPS file\n", field5);
               Last_columnno[count] = row;
-              Last_column[count] = (LPSREAL)field6;
+              Last_column[count] = (REAL)field6;
               if(appendmpsitem(&count, Last_columnno, Last_column)) {
                 NZ++;
                 Column_ready = TRUE;
@@ -837,12 +837,12 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
           }
 
           if((row = find_row(lp, field3, Unconstrained_rows_found)) >= 0) {
-            set_rh(lp, row, (LPSREAL)field4);
+            set_rh(lp, row, (REAL)field4);
           }
 
           if(items == 6) {
             if((row = find_row(lp, field5, Unconstrained_rows_found)) >= 0) {
-              set_rh(lp, row, (LPSREAL)field6);
+              set_rh(lp, row, (REAL)field6);
             }
           }
 
@@ -1140,7 +1140,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
   return( CompleteStatus );
 }
 
-static void number(char *str,LPSREAL value)
+static void number(char *str,REAL value)
  {
   char __str[80], *_str;
   int  i;
@@ -1230,9 +1230,7 @@ static void number(char *str,LPSREAL value)
   strncpy(str,_str,12);
  }
 
-static char numberbuffer[15];
-
-static char *formatnumber12(double a)
+static char *formatnumber12(char *numberbuffer, double a)
 {
 #if 0
   return(sprintf(numberbuffer, "%12g", a));
@@ -1242,18 +1240,16 @@ static char *formatnumber12(double a)
 #endif
 }
 
-STATIC char *MPSnameFIXED(char *name)
+STATIC char *MPSnameFIXED(char *name0, char *name)
 {
-  static char name0[9];
-
   sprintf(name0, "%-8.8s", name);
   return(name0);
 }
 
-STATIC char *MPSnameFREE(char *name)
+STATIC char *MPSnameFREE(char *name0, char *name)
 {
   if(strlen(name) < 8)
-    return(MPSnameFIXED(name));
+    return(MPSnameFIXED(name0, name));
   else
     return(name);
 }
@@ -1273,8 +1269,10 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
 {
   int    i, j, jj, je, k, marker, putheader, ChangeSignObj = FALSE, *idx, *idx1;
   MYBOOL ok = TRUE, names_used;
-  LPSREAL   a, *val, *val1;
-  char * (*MPSname)(char *name);
+  REAL   a, *val, *val1;
+  char * (*MPSname)(char *name0, char *name);
+  char numberbuffer[15];
+  char name0[9];
 
   if(lp->matA->is_roworder) {
     report(lp, IMPORTANT, "MPS_writefile: Cannot write to MPS file while in row entry mode.\n");
@@ -1311,6 +1309,9 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
     lp->names_used = FALSE;
     ok = TRUE;
   }
+
+  memset(numberbuffer, 0, sizeof(numberbuffer));
+
   marker = 0;
 
   /* First write metadata in structured comment form (lp_solve style) */
@@ -1328,7 +1329,7 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
   write_data(userhandle, write_modeldata, "*\n");
 
   /* Write the MPS content */
-  write_data(userhandle, write_modeldata, "NAME          %s\n", MPSname(get_lp_name(lp)));
+  write_data(userhandle, write_modeldata, "NAME          %s\n", MPSname(name0, get_lp_name(lp)));
   if((typeMPS == MPSFREE) && (is_maxim(lp)))
     write_data(userhandle, write_modeldata, "OBJSENSE\n MAX\n");
   write_data(userhandle, write_modeldata, "ROWS\n");
@@ -1343,10 +1344,10 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
     }
     else
       write_data(userhandle, write_modeldata, " E  ");
-    write_data(userhandle, write_modeldata, "%s\n", MPSname(get_row_name(lp, i)));
+    write_data(userhandle, write_modeldata, "%s\n", MPSname(name0, get_row_name(lp, i)));
   }
 
-  allocLPSREAL(lp, &val, 1 + lp->rows, TRUE);
+  allocREAL(lp, &val, 1 + lp->rows, TRUE);
   allocINT(lp, &idx, 1 + lp->rows, TRUE);
   write_data(userhandle, write_modeldata, "COLUMNS\n");
   for(i = 1; i <= lp->columns; i++) {
@@ -1370,17 +1371,17 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
         a = *(val1++);
         if (k == 0) {
           write_data(userhandle, write_modeldata, "    %s",
-                          MPSname(get_col_name(lp, i)));
+                          MPSname(name0, get_col_name(lp, i)));
           write_data(userhandle, write_modeldata, "  %s  %s",
-                          MPSname(get_row_name(lp, j)),
-/*                          formatnumber12((double) a)); */
-                          formatnumber12((double) (a * (j == 0 && ChangeSignObj ? -1 : 1))));
+                          MPSname(name0, get_row_name(lp, j)),
+/*                          formatnumber12(numberbuffer, (double) a)); */
+                          formatnumber12(numberbuffer, (double) (a * (j == 0 && ChangeSignObj ? -1 : 1))));
     }
         else
           write_data(userhandle, write_modeldata, "   %s  %s\n",
-                          MPSname(get_row_name(lp, j)),
-                          formatnumber12((double) (a * (j == 0 && ChangeSignObj ? -1 : 1))));
-/*                          formatnumber12((double) a)); */
+                          MPSname(name0, get_row_name(lp, j)),
+                          formatnumber12(numberbuffer, (double) (a * (j == 0 && ChangeSignObj ? -1 : 1))));
+/*                          formatnumber12(numberbuffer, (double) a)); */
       }
       if(k == 0)
         write_data(userhandle, write_modeldata, "\n");
@@ -1404,12 +1405,12 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
       k = 1 - k;
       if(k == 0)
         write_data(userhandle, write_modeldata, "    RHS       %s  %s",
-                        MPSname(get_row_name(lp, i)),
-                        formatnumber12((double)a));
+                        MPSname(name0, get_row_name(lp, i)),
+                        formatnumber12(numberbuffer, (double)a));
       else
         write_data(userhandle, write_modeldata, "   %s  %s\n",
-                        MPSname(get_row_name(lp, i)),
-                        formatnumber12((double)a));
+                        MPSname(name0, get_row_name(lp, i)),
+                        formatnumber12(numberbuffer, (double)a));
     }
   }
   if(k == 0)
@@ -1429,12 +1430,12 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
       k = 1 - k;
       if(k == 0)
         write_data(userhandle, write_modeldata, "    RGS       %s  %s",
-                        MPSname(get_row_name(lp, i)),
-                        formatnumber12((double)a));
+                        MPSname(name0, get_row_name(lp, i)),
+                        formatnumber12(numberbuffer, (double)a));
       else
         write_data(userhandle, write_modeldata, "   %s  %s\n",
-                        MPSname(get_row_name(lp, i)),
-                        formatnumber12((double)a));
+                        MPSname(name0, get_row_name(lp, i)),
+                        formatnumber12(numberbuffer, (double)a));
     }
   }
   if(k == 0)
@@ -1453,8 +1454,8 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
           putheader = FALSE;
         }
         write_data(userhandle, write_modeldata, " FX BND       %s  %s\n",
-                        MPSname(get_col_name(lp, j)),
-                        formatnumber12((double)a));
+                        MPSname(name0, get_col_name(lp, j)),
+                        formatnumber12(numberbuffer, (double)a));
       }
       else if(is_binary(lp, j)) {
         if(putheader) {
@@ -1462,7 +1463,7 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
           putheader = FALSE;
         }
         write_data(userhandle, write_modeldata, " BV BND       %s\n",
-                        MPSname(get_col_name(lp, j)));
+                        MPSname(name0, get_col_name(lp, j)));
       }
       else if(is_unbounded(lp, j)) {
         if(putheader) {
@@ -1470,7 +1471,7 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
           putheader = FALSE;
         }
         write_data(userhandle, write_modeldata, " FR BND       %s\n",
-                        MPSname(get_col_name(lp, j)));
+                        MPSname(name0, get_col_name(lp, j)));
       }
       else {
         if((lp->orig_upbo[i] < lp->infinite) || (is_semicont(lp, j))) {
@@ -1484,17 +1485,17 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
           if(is_semicont(lp, j)) {
             if(is_int(lp, j))
               write_data(userhandle, write_modeldata, " SI BND       %s  %s\n",
-                              MPSname(get_col_name(lp, j)),
-                  (a < lp->infinite) ? formatnumber12((double)a) : "            ");
+                              MPSname(name0, get_col_name(lp, j)),
+                  (a < lp->infinite) ? formatnumber12(numberbuffer, (double)a) : "            ");
             else
               write_data(userhandle, write_modeldata, " SC BND       %s  %s\n",
-                              MPSname(get_col_name(lp, j)),
-                              (a < lp->infinite) ? formatnumber12((double)a) : "            ");
+                              MPSname(name0, get_col_name(lp, j)),
+                              (a < lp->infinite) ? formatnumber12(numberbuffer, (double)a) : "            ");
           }
           else
             write_data(userhandle, write_modeldata, " UP BND       %s  %s\n",
-                            MPSname(get_col_name(lp, j)),
-                            formatnumber12((double)a));
+                            MPSname(name0, get_col_name(lp, j)),
+                            formatnumber12(numberbuffer, (double)a));
         }
         if(lp->orig_lowbo[i] != 0) {
           a = lp->orig_lowbo[i];
@@ -1505,11 +1506,11 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
           }
           if(lp->orig_lowbo[i] != -lp->infinite)
             write_data(userhandle, write_modeldata, " LO BND       %s  %s\n",
-                            MPSname(get_col_name(lp, j)),
-                            formatnumber12((double)a));
+                            MPSname(name0, get_col_name(lp, j)),
+                            formatnumber12(numberbuffer, (double)a));
           else
             write_data(userhandle, write_modeldata, " MI BND       %s\n",
-                            MPSname(get_col_name(lp, j)));
+                            MPSname(name0, get_col_name(lp, j)));
         }
       }
     }
@@ -1525,12 +1526,12 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
     }
     write_data(userhandle, write_modeldata, " S%1d SOS       %s  %s\n",
                     SOS->sos_list[i]->type,
-                    MPSname(SOS->sos_list[i]->name),
-                    formatnumber12((double) SOS->sos_list[i]->priority));
+                    MPSname(name0, SOS->sos_list[i]->name),
+                    formatnumber12(numberbuffer, (double) SOS->sos_list[i]->priority));
     for(j = 1; j <= SOS->sos_list[i]->size; j++) {
       write_data(userhandle, write_modeldata, "    SOS       %s  %s\n",
-                      MPSname(get_col_name(lp, SOS->sos_list[i]->members[j])),
-                      formatnumber12((double) SOS->sos_list[i]->weights[j]));
+                      MPSname(name0, get_col_name(lp, SOS->sos_list[i]->members[j])),
+                      formatnumber12(numberbuffer, (double) SOS->sos_list[i]->weights[j]));
     }
   }
 
@@ -1764,7 +1765,8 @@ MYBOOL MPS_writeBAS(lprec *lp, int typeMPS, char *filename)
   MYBOOL ok;
   char   name1[100], name2[100];
   FILE   *output = stdout;
-  char * (*MPSname)(char *name);
+  char * (*MPSname)(char *name0, char *name);
+  char name0[9];
 
   /* Set name formatter */
   switch(typeMPS) {
@@ -1806,16 +1808,16 @@ MYBOOL MPS_writeBAS(lprec *lp, int typeMPS, char *filename)
 
     /* Check if we have a basic/non-basic variable pair */
     if((ib <= lp->sum) && (in <= lp->sum)) {
-      strcpy(name1, MPSname((ib <= lp->rows ? get_row_name(lp, ib) :
+      strcpy(name1, MPSname(name0, (ib <= lp->rows ? get_row_name(lp, ib) :
                                               get_col_name(lp, ib-lp->rows))));
-      strcpy(name2, MPSname((in <= lp->rows ? get_row_name(lp, in) :
+      strcpy(name2, MPSname(name0, (in <= lp->rows ? get_row_name(lp, in) :
                                               get_col_name(lp, in-lp->rows))));
       fprintf(output, " %2s %s  %s\n", (lp->is_lower[in] ? "XL" : "XU"), name1, name2);
     }
 
     /* Otherwise just write the bound state of the non-basic variable */
     else if(in <= lp->sum) {
-      strcpy(name1, MPSname((in <= lp->rows ? get_row_name(lp, in) :
+      strcpy(name1, MPSname(name0, (in <= lp->rows ? get_row_name(lp, in) :
                                               get_col_name(lp, in-lp->rows))));
       fprintf(output, " %2s %s\n", (lp->is_lower[in] ? "LL" : "UL"), name1);
     }

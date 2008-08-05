@@ -39,7 +39,7 @@
 #endif
 
 
-STATIC void stallMonitor_update(lprec *lp, LPSREAL newOF)
+STATIC void stallMonitor_update(lprec *lp, REAL newOF)
 {
   int newpos;
   OBJmonrec *monitor = lp->monitor;
@@ -59,7 +59,7 @@ STATIC MYBOOL stallMonitor_creepingObj(lprec *lp)
   OBJmonrec *monitor = lp->monitor;
 
   if(monitor->countstep > 1) {
-    LPSREAL deltaOF = (monitor->objstep[monitor->currentstep] -
+    REAL deltaOF = (monitor->objstep[monitor->currentstep] -
                     monitor->objstep[monitor->startstep]) / monitor->countstep;
     deltaOF /= MAX(1, (monitor->idxstep[monitor->currentstep] -
                        monitor->idxstep[monitor->startstep]));
@@ -75,7 +75,7 @@ STATIC MYBOOL stallMonitor_shortSteps(lprec *lp)
   OBJmonrec *monitor = lp->monitor;
 
   if(monitor->countstep == OBJ_STEPS) {
-    LPSREAL deltaOF = MAX(1, (monitor->idxstep[monitor->currentstep] -
+    REAL deltaOF = MAX(1, (monitor->idxstep[monitor->currentstep] -
                            monitor->idxstep[monitor->startstep])) / monitor->countstep;
     deltaOF = pow(deltaOF*OBJ_STEPS, 0.66);
     return( (MYBOOL) (deltaOF > monitor->limitstall[TRUE]) );
@@ -119,7 +119,7 @@ STATIC MYBOOL stallMonitor_create(lprec *lp, MYBOOL isdual, char *funcname)
     monitor->limitstall[FALSE] = 0;
   else
     monitor->limitstall[FALSE] = MAX(MAX_STALLCOUNT,
-                                     (int) pow((LPSREAL) (lp->rows+lp->columns)/2, 0.667));
+                                     (int) pow((REAL) (lp->rows+lp->columns)/2, 0.667));
 #if 1
   monitor->limitstall[FALSE] *= 2+2;  /* Expand degeneracy/stalling tolerance range */
 #endif
@@ -149,7 +149,7 @@ STATIC MYBOOL stallMonitor_check(lprec *lp, int rownr, int colnr, int lastnr,
 #else
          msglevel = DETAILED;
 #endif
-  LPSREAL   deltaobj = lp->suminfeas;
+  REAL   deltaobj = lp->suminfeas;
 
   /* Accept unconditionally if this is the first or second call */
   monitor->active = FALSE;
@@ -181,7 +181,7 @@ STATIC MYBOOL stallMonitor_check(lprec *lp, int rownr, int colnr, int lastnr,
 
   /* Also require that we have a measure of infeasibility-stalling */
   if(isStalled) {
-    LPSREAL testvalue, refvalue = monitor->epsvalue;
+    REAL testvalue, refvalue = monitor->epsvalue;
 #if 1
     if(monitor->isdual)
       refvalue *= 1000*log10(9.0+lp->rows);
@@ -339,7 +339,7 @@ STATIC void stallMonitor_finish(lprec *lp)
 }
 
 
-STATIC MYBOOL add_artificial(lprec *lp, int forrownr, LPSREAL *nzarray, int *idxarray)
+STATIC MYBOOL add_artificial(lprec *lp, int forrownr, REAL *nzarray, int *idxarray)
 /* This routine is called for each constraint at the start of
    primloop and the primal problem is infeasible. Its
    purpose is to add artificial variables and associated
@@ -353,7 +353,7 @@ STATIC MYBOOL add_artificial(lprec *lp, int forrownr, LPSREAL *nzarray, int *idx
 
   if(add) {
     int    *rownr = NULL, i, bvar, ii;
-    LPSREAL   *avalue = NULL, rhscoef, acoef;
+    REAL   *avalue = NULL, rhscoef, acoef;
     MATrec *mat = lp->matA;
 
     /* Check the simple case where a slack is basic */
@@ -405,7 +405,7 @@ STATIC MYBOOL add_artificial(lprec *lp, int forrownr, LPSREAL *nzarray, int *idx
 
      /* Create temporary sparse array storage */
       if(nzarray == NULL)
-        allocLPSREAL(lp, &avalue, 2, FALSE);
+        allocREAL(lp, &avalue, 2, FALSE);
       else
         avalue = nzarray;
       if(idxarray == NULL)
@@ -503,7 +503,7 @@ STATIC int findBasicArtificial(lprec *lp, int before)
   return(i);
 }
 
-STATIC void eliminate_artificials(lprec *lp, LPSREAL *prow)
+STATIC void eliminate_artificials(lprec *lp, REAL *prow)
 {
   int   i, j, colnr, rownr, P1extraDim = abs(lp->P1extraDim);
 
@@ -560,14 +560,14 @@ STATIC void clear_artificials(lprec *lp)
 }
 
 
-STATIC int primloop(lprec *lp, MYBOOL primalfeasible, LPSREAL primaloffset)
+STATIC int primloop(lprec *lp, MYBOOL primalfeasible, REAL primaloffset)
 {
   MYBOOL primal = TRUE, bfpfinal = FALSE, changedphase = FALSE, forceoutEQ = AUTOMATIC,
          primalphase1, pricerCanChange, minit, stallaccept, pendingunbounded;
   int    i, j, k, colnr = 0, rownr = 0, lastnr = 0,
          candidatecount = 0, minitcount = 0, ok = TRUE;
-  LLPSREAL  theta = 0.0;
-  LPSREAL   epsvalue, xviolated, cviolated,
+  LREAL  theta = 0.0;
+  REAL   epsvalue, xviolated, cviolated,
          *prow = NULL, *pcol = NULL,
          *drow = lp->drow;
   int    *workINT = NULL,
@@ -605,7 +605,7 @@ STATIC int primloop(lprec *lp, MYBOOL primalfeasible, LPSREAL primaloffset)
 #if 1 /* v5.1 code: Not really necessary since we do not price the artificial
         variables (stored at the end of the column list, they are initially
         basic and are never allowed to enter the basis, once they exit) */
-      ok = allocLPSREAL(lp, &(lp->drow), lp->sum+1, AUTOMATIC) &&
+      ok = allocREAL(lp, &(lp->drow), lp->sum+1, AUTOMATIC) &&
            allocINT(lp, &(lp->nzdrow), lp->sum+1, AUTOMATIC);
       if(!ok)
         goto Finish;
@@ -628,9 +628,9 @@ STATIC int primloop(lprec *lp, MYBOOL primalfeasible, LPSREAL primaloffset)
   }
 
   /* Create work arrays and optionally the multiple pricing structure */
-  ok = allocLPSREAL(lp, &(lp->bsolveVal), lp->rows + 1, FALSE) &&
-       allocLPSREAL(lp, &prow, lp->sum + 1, TRUE) &&
-       allocLPSREAL(lp, &pcol, lp->rows + 1, TRUE);
+  ok = allocREAL(lp, &(lp->bsolveVal), lp->rows + 1, FALSE) &&
+       allocREAL(lp, &prow, lp->sum + 1, TRUE) &&
+       allocREAL(lp, &pcol, lp->rows + 1, TRUE);
   if(is_piv_mode(lp, PRICE_MULTIPLE) && (lp->multiblockdiv > 1)) {
     lp->multivars = multi_create(lp, FALSE);
     ok &= (lp->multivars != NULL) &&
@@ -981,7 +981,7 @@ Finish:
   return(ok);
 } /* primloop */
 
-STATIC int dualloop(lprec *lp, MYBOOL dualfeasible, int dualinfeasibles[], LPSREAL dualoffset)
+STATIC int dualloop(lprec *lp, MYBOOL dualfeasible, int dualinfeasibles[], REAL dualoffset)
 {
   MYBOOL primal = FALSE, inP1extra, dualphase1 = FALSE, changedphase = TRUE,
          pricerCanChange, minit, stallaccept, longsteps,
@@ -993,8 +993,8 @@ STATIC int dualloop(lprec *lp, MYBOOL dualfeasible, int dualinfeasibles[], LPSRE
 #endif
          ok = TRUE;
   int    *boundswaps = NULL;
-  LLPSREAL  theta = 0.0;
-  LPSREAL   epsvalue, xviolated, cviolated,
+  LREAL  theta = 0.0;
+  REAL   epsvalue, xviolated, cviolated,
          *prow = NULL, *pcol = NULL,
          *drow = lp->drow;
   int    *nzprow = NULL, *workINT = NULL,
@@ -1005,9 +1005,9 @@ STATIC int dualloop(lprec *lp, MYBOOL dualfeasible, int dualinfeasibles[], LPSRE
                          my_boolstr(dualfeasible));
 
   /* Allocate work arrays */
-  ok = allocLPSREAL(lp, &prow,   lp->sum + 1,  TRUE) &&
+  ok = allocREAL(lp, &prow,   lp->sum + 1,  TRUE) &&
        allocINT (lp, &nzprow, lp->sum + 1,  FALSE) &&
-       allocLPSREAL(lp, &pcol,   lp->rows + 1, TRUE);
+       allocREAL(lp, &pcol,   lp->rows + 1, TRUE);
   if(!ok)
     goto Finish;
 
@@ -1526,7 +1526,7 @@ STATIC int spx_run(lprec *lp, MYBOOL validInvB)
 {
   int    i, j, singular_count, lost_feas_count, *infeasibles = NULL, *boundflip_count;
   MYBOOL primalfeasible, dualfeasible, lost_feas_state, isbb;
-  LPSREAL   primaloffset = 0, dualoffset = 0;
+  REAL   primaloffset = 0, dualoffset = 0;
 
   lp->current_iter  = 0;
   lp->current_bswap = 0;
@@ -1700,7 +1700,7 @@ lprec *make_lag(lprec *lpserver)
   int    i;
   lprec  *hlp;
   MYBOOL ret;
-  LPSREAL   *duals;
+  REAL   *duals;
 
   /* Create a Lagrangean solver instance */
   hlp = make_lp(0, lpserver->columns);
@@ -1764,13 +1764,13 @@ STATIC int heuristics(lprec *lp, int mode)
   return( status );
 }
 
-STATIC int lag_solve(lprec *lp, LPSREAL start_bound, int num_iter)
+STATIC int lag_solve(lprec *lp, REAL start_bound, int num_iter)
 {
   int    i, j, citer, nochange, oldpresolve;
   MYBOOL LagFeas, AnyFeas, Converged, same_basis;
-  LPSREAL   *OrigObj, *ModObj, *SubGrad, *BestFeasSol;
-  LPSREAL   Zub, Zlb, Znow, Zprev, Zbest, rhsmod, hold;
-  LPSREAL   Phi, StepSize = 0.0, SqrsumSubGrad;
+  REAL   *OrigObj, *ModObj, *SubGrad, *BestFeasSol;
+  REAL   Zub, Zlb, Znow, Zprev, Zbest, rhsmod, hold;
+  REAL   Phi, StepSize = 0.0, SqrsumSubGrad;
 
   /* Make sure we have something to work with */
   if(lp->spx_status != OPTIMAL) {
@@ -1779,10 +1779,10 @@ STATIC int lag_solve(lprec *lp, LPSREAL start_bound, int num_iter)
   }
 
   /* Allocate iteration arrays */
-  if(!allocLPSREAL(lp, &OrigObj, lp->columns + 1, FALSE) ||
-     !allocLPSREAL(lp, &ModObj,  lp->columns + 1, TRUE) ||
-     !allocLPSREAL(lp, &SubGrad, get_Lrows(lp) + 1, TRUE) ||
-     !allocLPSREAL(lp, &BestFeasSol, lp->sum + 1, TRUE)) {
+  if(!allocREAL(lp, &OrigObj, lp->columns + 1, FALSE) ||
+     !allocREAL(lp, &ModObj,  lp->columns + 1, TRUE) ||
+     !allocREAL(lp, &SubGrad, get_Lrows(lp) + 1, TRUE) ||
+     !allocREAL(lp, &BestFeasSol, lp->sum + 1, TRUE)) {
     lp->lag_status = NOMEMORY;
      return( lp->lag_status );
   }
@@ -2094,15 +2094,15 @@ Leave:
 
   if((lp->lag_status != RUNNING) && (lp->invB != NULL)) {
     int       itemp;
-    LPSREAL      test;
+    REAL      test;
 
     itemp = lp->bfp_nonzeros(lp, TRUE);
     test = 100;
     if(lp->total_iter > 0)
-      test *= (LPSREAL) lp->total_bswap/lp->total_iter;
+      test *= (REAL) lp->total_bswap/lp->total_iter;
     report(lp, NORMAL, "\n ");
-    report(lp, NORMAL, "MEMO: lp_solve version %d.%d.%d.%d for %d bit OS, with %d bit LPSREAL variables.\n",
-                        MAJORVERSION, MINORVERSION, RELEASE, BUILD, 8*sizeof(void *), 8*sizeof(LPSREAL));
+    report(lp, NORMAL, "MEMO: lp_solve version %d.%d.%d.%d for %d bit OS, with %d bit REAL variables.\n",
+                        MAJORVERSION, MINORVERSION, RELEASE, BUILD, 8*sizeof(void *), 8*sizeof(REAL));
     report(lp, NORMAL, "      In the total iteration count %.0f, %.0f (%.1f%%) were bound flips.\n",
                         (double) lp->total_iter, (double) lp->total_bswap, test);
     report(lp, NORMAL, "      There were %d refactorizations, %d triggered by time and %d by density.\n",

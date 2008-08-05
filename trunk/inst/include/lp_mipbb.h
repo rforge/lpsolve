@@ -18,11 +18,11 @@ typedef struct _BBrec
   int       nodesleft;
   int       nodessolved;
   int       nodestatus;
-  LPSREAL      noderesult;
-  LPSREAL      lastsolution;          /* Optimal solution of the previous branch */
-  LPSREAL      sc_bound;
-  LPSREAL      *upbo,   *lowbo;
-  LPSREAL      UPbound, LObound;
+  REAL      noderesult;
+  REAL      lastsolution;          /* Optimal solution of the previous branch */
+  REAL      sc_bound;
+  REAL      *upbo,   *lowbo;
+  REAL      UPbound, LObound;
   int       UBtrack, LBtrack;      /* Signals that incoming bounds were changed */
   MYBOOL    contentmode;           /* Flag indicating if we "own" the bound vectors */
   MYBOOL    sc_canset;
@@ -48,7 +48,7 @@ STATIC int updatecuts_BB(lprec *lp);
 STATIC MYBOOL freecuts_BB(lprec *lp);
 STATIC BBrec *findself_BB(BBrec *BB);
 STATIC int solve_LP(lprec *lp, BBrec *BB);
-STATIC int rcfbound_BB(BBrec *BB, int varno, MYBOOL isINT, LPSREAL *newbound, MYBOOL *isfeasible);
+STATIC int rcfbound_BB(BBrec *BB, int varno, MYBOOL isINT, REAL *newbound, MYBOOL *isfeasible);
 STATIC MYBOOL findnode_BB(BBrec *BB, int *varno, int *vartype, int *varcus);
 STATIC int solve_BB(BBrec *BB);
 STATIC MYBOOL free_BB(BBrec **BB);

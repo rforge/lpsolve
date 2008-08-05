@@ -1,9 +1,8 @@
 PKG_CPPFLAGS=-I../inst/include -DYY_NEVER_INTERACTIVE -DPARSER_LP \
              -DINVERSE_ACTIVE=INVERSE_LUSOL -DRoleIsExternalInvEngine
-OBJECTS=colamd.o lp_lib.o lp_params.o lp_scale.o mmio.o commonlib.o \
-        lp_LUSOL.o lp_presolve.o lp_simplex.o myblas.o lp_matrix.o lp_price.o \
-        lp_SOS.o RlpSolveLink.o ini.o lp_MDO.o lp_pricePSE.o lp_utils.o \
-        RlpSolve.o lp_crash.o lp_mipbb.o lp_report.o lp_wlp.o yacc_read.o \
-        lp_Hash.o lp_MPS.o lp_rlp.o lusol.o
+OBJECTS=lp_MDO.o commonlib.o colamd.o mmio.o myblas.o ini.o lp_rlp.o \
+        lp_crash.o lp_LUSOL.o lusol.o lp_Hash.o lp_lib.o lp_wlp.o lp_matrix.o \
+        lp_mipbb.o lp_MPS.o lp_params.o lp_presolve.o lp_price.o lp_pricePSE.o \
+        lp_report.o lp_scale.o lp_simplex.o lp_SOS.o lp_utils.o yacc_read.o
 
 

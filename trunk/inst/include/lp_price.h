@@ -36,26 +36,26 @@ STATIC MYBOOL validSubstitutionVar(pricerec *candidate);
 /* Row+column selection routines */
 STATIC MYBOOL findImprovementVar(pricerec *current, pricerec *candidate, MYBOOL collectMP, int *candidatecount);
 STATIC MYBOOL findSubstitutionVar(pricerec *current, pricerec *candidate, int *candidatecount);
-INLINE LPSREAL normalizeEdge(lprec *lp, int item, LPSREAL edge, MYBOOL isdual);
+INLINE REAL normalizeEdge(lprec *lp, int item, REAL edge, MYBOOL isdual);
 STATIC void makePriceLoop(lprec *lp, int *start, int *end, int *delta);
 
 /* Computation of reduced costs */
-STATIC void update_reducedcosts(lprec *lp, MYBOOL isdual, int leave_nr, int enter_nr, LPSREAL *prow, LPSREAL *drow);
+STATIC void update_reducedcosts(lprec *lp, MYBOOL isdual, int leave_nr, int enter_nr, REAL *prow, REAL *drow);
 STATIC void compute_reducedcosts(lprec *lp, MYBOOL isdual, int row_nr, int *coltarget, MYBOOL dosolve,
-                                                            LPSREAL *prow, int *nzprow,
-                                                            LPSREAL *drow, int *nzdrow,
+                                                            REAL *prow, int *nzprow,
+                                                            REAL *drow, int *nzdrow,
                                                             int roundmode);
 
 /* Leaving variable selection and entering column pricing loops */
-STATIC int find_rowReplacement(lprec *lp, int rownr, LPSREAL *prow, int *nzprow);
-STATIC int colprim(lprec *lp, LPSREAL *drow, int *nzdrow,
-                              MYBOOL skipupdate, int partialloop, int *candidatecount, MYBOOL updateinfeas, LPSREAL *xviol);
-STATIC int rowprim(lprec *lp, int colnr, LLPSREAL *theta, LPSREAL *pcol, int *nzpcol, MYBOOL forceoutEQ, LPSREAL *xviol);
-STATIC int rowdual(lprec *lp, LPSREAL *rhvec, MYBOOL forceoutEQ, MYBOOL updateinfeas, LPSREAL *xviol);
+STATIC int find_rowReplacement(lprec *lp, int rownr, REAL *prow, int *nzprow);
+STATIC int colprim(lprec *lp, REAL *drow, int *nzdrow,
+                              MYBOOL skipupdate, int partialloop, int *candidatecount, MYBOOL updateinfeas, REAL *xviol);
+STATIC int rowprim(lprec *lp, int colnr, LREAL *theta, REAL *pcol, int *nzpcol, MYBOOL forceoutEQ, REAL *xviol);
+STATIC int rowdual(lprec *lp, REAL *rhvec, MYBOOL forceoutEQ, MYBOOL updateinfeas, REAL *xviol);
 STATIC int coldual(lprec *lp, int row_nr,
-                              LPSREAL *prow, int *nzprow, LPSREAL *drow, int *nzdrow,
+                              REAL *prow, int *nzprow, REAL *drow, int *nzdrow,
                               MYBOOL dualphase1, MYBOOL skipupdate,
-                              int *candidatecount, LPSREAL *xviol);
+                              int *candidatecount, REAL *xviol);
 
 /* Partial pricing management routines */
 STATIC partialrec *partial_createBlocks(lprec *lp, MYBOOL isrow);
@@ -80,14 +80,14 @@ STATIC int multi_size(multirec *multi);
 STATIC int multi_used(multirec *multi);
 STATIC MYBOOL multi_truncatingvar(multirec *multi, int varnr);
 STATIC MYBOOL multi_mustupdate(multirec *multi);
-STATIC void multi_valueInit(multirec *multi, LPSREAL step_base, LPSREAL obj_base);
-STATIC LPSREAL *multi_valueList(multirec *multi);
+STATIC void multi_valueInit(multirec *multi, REAL step_base, REAL obj_base);
+STATIC REAL *multi_valueList(multirec *multi);
 STATIC int *multi_indexSet(multirec *multi, MYBOOL regenerate);
 STATIC int multi_getvar(multirec *multi, int item);
 STATIC MYBOOL multi_recompute(multirec *multi, int index, MYBOOL isphase2, MYBOOL fullupdate);
 STATIC MYBOOL multi_removevar(multirec *multi, int varnr);
 STATIC int multi_enteringvar(multirec *multi, pricerec *current, int priority);
-STATIC LPSREAL multi_enteringtheta(multirec *multi);
+STATIC REAL multi_enteringtheta(multirec *multi);
 STATIC void multi_free(multirec **multi);
 STATIC int multi_populateSet(multirec *multi, int **list, int excludenr);
 

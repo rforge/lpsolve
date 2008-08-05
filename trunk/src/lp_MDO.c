@@ -62,8 +62,8 @@ STATIC int prepareMDO(lprec *lp, MYBOOL *usedpos, int *colorder, int *data, int 
   int     offset = 0, Bnz = 0, Tnz;
   MYBOOL  dotally = (MYBOOL) (rowmap == NULL);
   MATrec  *mat = lp->matA;
-  LPSREAL    hold;
-  LPSREAL    *value;
+  REAL    hold;
+  REAL    *value;
   int     *rownr;
 
   if(dotally)

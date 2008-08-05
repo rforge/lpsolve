@@ -165,13 +165,13 @@ MYBOOL unload_BLAS(void)
 /* ************************************************************************ */
 /* Now define the unoptimized local BLAS functions                          */
 /* ************************************************************************ */
-void daxpy( int n, LPSREAL da, LPSREAL *dx, int incx, LPSREAL *dy, int incy)
+void daxpy( int n, REAL da, REAL *dx, int incx, REAL *dy, int incy)
 {
   dx++;
   dy++;
   BLAS_daxpy( &n, &da, dx, &incx, dy, &incy);
 }
-void BLAS_CALLMODEL my_daxpy( int *_n, LPSREAL *_da, LPSREAL *dx, int *_incx, LPSREAL *dy, int *_incy)
+void BLAS_CALLMODEL my_daxpy( int *_n, REAL *_da, REAL *dx, int *_incx, REAL *dy, int *_incy)
 {
 
 /* constant times a vector plus a vector.
@@ -179,9 +179,12 @@ void BLAS_CALLMODEL my_daxpy( int *_n, LPSREAL *_da, LPSREAL *dx, int *_incx, LP
    jack dongarra, linpack, 3/11/78.
    modified 12/3/93, array[1] declarations changed to array[*] */
 
-  int      i, ix, iy, m, mp1;
-  register LPSREAL rda;
-  LPSREAL     da = *_da;
+  int      i, ix, iy;
+#if !defined DOFASTMATH
+  int      m, mp1;
+#endif
+  register REAL rda;
+  REAL     da = *_da;
   int      n = *_n, incx = *_incx, incy = *_incy;
 
   if (n <= 0) return;
@@ -200,7 +203,7 @@ void BLAS_CALLMODEL my_daxpy( int *_n, LPSREAL *_da, LPSREAL *dx, int *_incx, LP
 /* CPU intensive loop; option to do pointer arithmetic */
 #if defined DOFASTMATH
   {
-    LPSREAL *xptr, *yptr;
+    REAL *xptr, *yptr;
     for (i = 1, xptr = dx + ix, yptr = dy + iy;
          i <= n; i++, xptr += incx, yptr += incy)
       (*yptr) += rda*(*xptr);
@@ -240,14 +243,14 @@ x40:
 
 
 /* ************************************************************************ */
-void dcopy( int n, LPSREAL *dx, int incx, LPSREAL *dy, int incy)
+void dcopy( int n, REAL *dx, int incx, REAL *dy, int incy)
 {
   dx++;
   dy++;
   BLAS_dcopy( &n, dx, &incx, dy, &incy);
 }
 
-void BLAS_CALLMODEL my_dcopy (int *_n, LPSREAL *dx, int *_incx, LPSREAL *dy, int *_incy)
+void BLAS_CALLMODEL my_dcopy (int *_n, REAL *dx, int *_incx, REAL *dy, int *_incy)
 {
 
 /* copies a vector, x, to a vector, y.
@@ -255,7 +258,10 @@ void BLAS_CALLMODEL my_dcopy (int *_n, LPSREAL *dx, int *_incx, LPSREAL *dy, int
    jack dongarra, linpack, 3/11/78.
    modified 12/3/93, array[1] declarations changed to array[*] */
 
-  int      i, ix, iy, m, mp1;
+  int      i, ix, iy;
+#if !defined DOFASTMATH
+  int      m, mp1;
+#endif
   int      n = *_n, incx = *_incx, incy = *_incy;
 
   if (n<=0) return;
@@ -273,7 +279,7 @@ void BLAS_CALLMODEL my_dcopy (int *_n, LPSREAL *dx, int *_incx, LPSREAL *dy, int
 /* CPU intensive loop; option to do pointer arithmetic */
 #if defined DOFASTMATH
   {
-    LPSREAL *xptr, *yptr;
+    REAL *xptr, *yptr;
     for (i = 1, xptr = dx + ix, yptr = dy + iy;
          i <= n; i++, xptr += incx, yptr += incy)
       (*yptr) = (*xptr);
@@ -325,13 +331,13 @@ x40:
 
 /* ************************************************************************ */
 
-void dscal (int n, LPSREAL da, LPSREAL *dx, int incx)
+void dscal (int n, REAL da, REAL *dx, int incx)
 {
   dx++;
   BLAS_dscal (&n, &da, dx, &incx);
 }
 
-void BLAS_CALLMODEL my_dscal (int *_n, LPSREAL *_da, LPSREAL *dx, int *_incx)
+void BLAS_CALLMODEL my_dscal (int *_n, REAL *_da, REAL *dx, int *_incx)
 {
 
 /* Multiply a vector by a constant.
@@ -349,9 +355,12 @@ void BLAS_CALLMODEL my_dscal (int *_n, LPSREAL *_da, LPSREAL *dx, int *_incx)
      For I = 0 to N-1, replace DX(IX+I*INCX) with  DA * DX(IX+I*INCX),
      where IX = 1 if INCX .GE. 0, else IX = 1+(1-N)*INCX. */
 
-  int      i, ix, m, mp1;
-  register LPSREAL rda;
-  LPSREAL      da = *_da;
+  int      i;
+#if !defined DOFASTMATH
+  int      ix, m, mp1;
+#endif
+  register REAL rda;
+  REAL      da = *_da;
   int      n = *_n, incx = *_incx;
 
   if (n <= 0)
@@ -363,7 +372,7 @@ void BLAS_CALLMODEL my_dscal (int *_n, LPSREAL *_da, LPSREAL *dx, int *_incx)
 /* Optionally do fast pointer arithmetic */
 #if defined DOFASTMATH
   {
-    LPSREAL *xptr;
+    REAL *xptr;
     for (i = 1, xptr = dx + 1; i <= n; i++, xptr += incx)
       (*xptr) *= rda;
     return;
@@ -405,14 +414,14 @@ x40:
 
 /* ************************************************************************ */
 
-LPSREAL ddot(int n, LPSREAL *dx, int incx, LPSREAL *dy, int incy)
+REAL ddot(int n, REAL *dx, int incx, REAL *dy, int incy)
 {
   dx++;
   dy++;
   return( BLAS_ddot (&n, dx, &incx, dy, &incy) );
 }
 
-LPSREAL BLAS_CALLMODEL my_ddot(int *_n, LPSREAL *dx, int *_incx, LPSREAL *dy, int *_incy)
+REAL BLAS_CALLMODEL my_ddot(int *_n, REAL *dx, int *_incx, REAL *dy, int *_incy)
 {
 
 /* forms the dot product of two vectors.
@@ -420,13 +429,16 @@ LPSREAL BLAS_CALLMODEL my_ddot(int *_n, LPSREAL *dx, int *_incx, LPSREAL *dy, in
    jack dongarra, linpack, 3/11/78.
    modified 12/3/93, array[1] declarations changed to array[*] */
 
-  register LPSREAL dtemp;
-  int      i, ix, iy, m, mp1;
+  register REAL dtemp;
+  int      i, ix, iy;
+#if !defined DOFASTMATH
+  int      m, mp1;
+#endif
   int      n = *_n, incx = *_incx, incy = *_incy;
 
   dtemp = 0.0;
   if (n<=0)
-    return( (LPSREAL) dtemp);
+    return( (REAL) dtemp);
 
   dx--;
   dy--;
@@ -441,7 +453,7 @@ LPSREAL BLAS_CALLMODEL my_ddot(int *_n, LPSREAL *dx, int *_incx, LPSREAL *dy, in
 
 #if defined DOFASTMATH
   {
-    LPSREAL *xptr, *yptr;
+    REAL *xptr, *yptr;
     for (i = 1, xptr = dx + ix, yptr = dy + iy;
          i <= n; i++, xptr += incx, yptr += incy)
       dtemp+= (*yptr)*(*xptr);
@@ -485,17 +497,21 @@ x60:
 
 /* ************************************************************************ */
 
-void dswap( int n, LPSREAL *dx, int incx, LPSREAL *dy, int incy )
+void dswap( int n, REAL *dx, int incx, REAL *dy, int incy )
 {
   dx++;
   dy++;
   BLAS_dswap( &n, dx, &incx, dy, &incy );
 }
 
-void BLAS_CALLMODEL my_dswap( int *_n, LPSREAL *dx, int *_incx, LPSREAL *dy, int *_incy )
+void BLAS_CALLMODEL my_dswap( int *_n, REAL *dx, int *_incx, REAL *dy, int *_incy )
 {
-  int   i, ix, iy, m, mp1, ns;
-  LPSREAL  dtemp1, dtemp2, dtemp3;
+  int   i, ix, iy;
+#if !defined DOFASTMATH
+  int   m, mp1, ns;
+  REAL  dtemp2, dtemp3;
+#endif
+  REAL  dtemp1;
   int   n = *_n, incx = *_incx, incy = *_incy;
 
   if (n <= 0) return;
@@ -512,7 +528,7 @@ void BLAS_CALLMODEL my_dswap( int *_n, LPSREAL *dx, int *_incx, LPSREAL *dy, int
 /* CPU intensive loop; option to do pointer arithmetic */
 #if defined DOFASTMATH
   {
-    LPSREAL *xptr, *yptr;
+    REAL *xptr, *yptr;
     for (i = 1, xptr = dx + ix, yptr = dy + iy;
          i <= n; i++, xptr += incx, yptr += incy) {
       dtemp1 = (*xptr);
@@ -581,13 +597,13 @@ x60:
 
 /* ************************************************************************ */
 
-void dload(int n, LPSREAL da, LPSREAL *dx, int incx)
+void dload(int n, REAL da, REAL *dx, int incx)
 {
   dx++;
   BLAS_dload (&n, &da, dx, &incx);
 }
 
-void BLAS_CALLMODEL my_dload (int *_n, LPSREAL *_da, LPSREAL *dx, int *_incx)
+void BLAS_CALLMODEL my_dload (int *_n, REAL *_da, REAL *dx, int *_incx)
 {
 /* copies a scalar, a, to a vector, x.
    uses unrolled loops when incx equals one.
@@ -608,7 +624,7 @@ void BLAS_CALLMODEL my_dload (int *_n, LPSREAL *_da, LPSREAL *dx, int *_incx)
     the append and delete operations in these instructions. */
 
   int    i, ix, m, mp1;
-  LPSREAL   da = *_da;
+  REAL   da = *_da;
   int    n = *_n, incx = *_incx;
 
   if (n<=0) return;
@@ -649,15 +665,15 @@ x40:
 }
 
 /* ************************************************************************ */
-int idamax( int n, LPSREAL *x, int is )
+int idamax( int n, REAL *x, int is )
 {
   x++;
   return ( BLAS_idamax( &n, x, &is ) );
 }
 
-int BLAS_CALLMODEL my_idamax( int *_n, LPSREAL *x, int *_is )
+int BLAS_CALLMODEL my_idamax( int *_n, REAL *x, int *_is )
 {
-  register LPSREAL xmax, xtest;
+  register REAL xmax, xtest;
   int    i, imax = 0;
 #if !defined DOFASTMATH
   int    ii;
@@ -696,19 +712,19 @@ int BLAS_CALLMODEL my_idamax( int *_n, LPSREAL *x, int *_is )
 
 
 /* ************************************************************************ */
-LPSREAL dnormi( int n, LPSREAL *x )
+REAL dnormi( int n, REAL *x )
 {
   x++;
   return( BLAS_dnormi( &n, x ) );
 }
 
-LPSREAL BLAS_CALLMODEL my_dnormi( int *_n, LPSREAL *x )
+REAL BLAS_CALLMODEL my_dnormi( int *_n, REAL *x )
 {
 /* ===============================================================
    dnormi  returns the infinity-norm of the vector x.
    =============================================================== */
    int      j;
-   register LPSREAL hold, absval;
+   register REAL hold, absval;
    int      n = *_n;
 
    x--;
@@ -756,7 +772,7 @@ void randomseed(int seeds[])
   seeds[3] = 345678;
 }
 
-void randomdens( int n, LPSREAL *x, LPSREAL r1, LPSREAL r2, LPSREAL densty, int *seeds )
+void randomdens( int n, REAL *x, REAL r1, REAL r2, REAL densty, int *seeds )
 {
 /* ------------------------------------------------------------------
    random  generates a vector x[*] of random numbers
@@ -765,9 +781,9 @@ void randomdens( int n, LPSREAL *x, LPSREAL r1, LPSREAL r2, LPSREAL densty, int 
    ------------------------------------------------------------------ */
 
   int   i;
-  LPSREAL  *y;
+  REAL  *y;
 
-  y = (LPSREAL *) malloc(sizeof(*y) * (n+1));
+  y = (REAL *) malloc(sizeof(*y) * (n+1));
   ddrand( n, x, 1, seeds );
   ddrand( n, y, 1, seeds );
 
@@ -783,7 +799,7 @@ void randomdens( int n, LPSREAL *x, LPSREAL r1, LPSREAL r2, LPSREAL densty, int 
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
-void ddrand( int n, LPSREAL *x, int incx, int *seeds )
+void ddrand( int n, REAL *x, int incx, int *seeds )
 {
 
 /* ------------------------------------------------------------------
@@ -814,9 +830,9 @@ void ddrand( int n, LPSREAL *x, int incx, int *seeds )
      if (seeds[2] < 0) seeds[2] = seeds[2] + 30307;
      if (seeds[3] < 0) seeds[3] = seeds[3] + 30323;
 
-	 x[ix]  = ((LPSREAL) seeds[1])/30269.0 +
-             ((LPSREAL) seeds[2])/30307.0 +
-             ((LPSREAL) seeds[3])/30323.0;
+	 x[ix]  = ((REAL) seeds[1])/30269.0 +
+             ((REAL) seeds[2])/30307.0 +
+             ((REAL) seeds[3])/30323.0;
      xix    = (int) x[ix];
 	 x[ix]  = fabs(x[ix] - xix);
    }

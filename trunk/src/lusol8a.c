@@ -45,12 +45,12 @@
    16 Oct 2000: Added test for instability (inform = 2).
    ================================================================== */
 void LU8RPC(LUSOLrec *LUSOL, int MODE1, int MODE2,
-            int JREP, LPSREAL V[], LPSREAL W[],
-            int *INFORM, LPSREAL *DIAG, LPSREAL *VNORM)
+            int JREP, REAL V[], REAL W[],
+            int *INFORM, REAL *DIAG, REAL *VNORM)
 {
   MYBOOL SINGLR;
   int    LPRINT, NRANK, LENL, LENU, LROW, NRANK0, KREP, KLAST, IW, L1, J1, JSING;
-  LPSREAL   UTOL1, UTOL2;
+  REAL   UTOL1, UTOL2;
 
   LPRINT = LUSOL->luparm[LUSOL_IP_PRINTLEVEL];
   NRANK  = LUSOL->luparm[LUSOL_IP_RANK_U];

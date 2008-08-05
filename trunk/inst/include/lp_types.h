@@ -21,23 +21,23 @@
   #define COUNTER LLONG
 #endif
 
-#ifndef LPSREAL
-  #define LPSREAL    double
+#ifndef REAL
+  #define REAL    double
 #endif
 
-#ifndef LPSREALXP
+#ifndef REALXP
   #if 1
-    #define LPSREALXP long double  /* Set local accumulation variable as long double */
+    #define REALXP long double  /* Set local accumulation variable as long double */
   #else
-    #define LPSREALXP LPSREAL          /* Set local accumulation as default precision */
+    #define REALXP REAL          /* Set local accumulation as default precision */
   #endif
 #endif
 
-#ifndef LLPSREAL
+#ifndef LREAL
   #if 0
-    #define LLPSREAL long double   /* Set global solution update variable as long double */
+    #define LREAL long double   /* Set global solution update variable as long double */
   #else
-    #define LLPSREAL LPSREAL           /* Set global solution update variable as default precision */
+    #define LREAL REAL           /* Set global solution update variable as default precision */
   #endif
 #endif
 
@@ -202,9 +202,9 @@
 #else
   #define my_chsign(t, x)       ( (2*((t) == 0) - 1) * (x) )  /* "Pipelined" */
 #endif
-#define my_flipsign(x)          ( fabs((LPSREAL) (x)) == 0 ? 0 : -(x) )
-#define my_roundzero(val, eps)  if (fabs((LPSREAL) (val)) < eps) val = 0
-#define my_avoidtiny(val, eps)  (fabs((LPSREAL) (val)) < eps ? 0 : val)
+#define my_flipsign(x)          ( fabs((REAL) (x)) == 0 ? 0 : -(x) )
+#define my_roundzero(val, eps)  if (fabs((REAL) (val)) < eps) val = 0
+#define my_avoidtiny(val, eps)  (fabs((REAL) (val)) < eps ? 0 : val)
 
 #if 1
   #define my_infinite(lp, val)  ( (MYBOOL) (fabs(val) >= lp->infinite) )
@@ -213,11 +213,11 @@
 #endif
 #define my_inflimit(lp, val)    ( my_infinite(lp, val) ? lp->infinite * my_sign(val) : (val) )
 #if 0
-  #define my_precision(val, eps) ((fabs((LPSREAL) (val))) < (eps) ? 0 : (val))
+  #define my_precision(val, eps) ((fabs((REAL) (val))) < (eps) ? 0 : (val))
 #else
   #define my_precision(val, eps) restoreINT(val, eps)
 #endif
-#define my_reldiff(x, y)       (((x) - (y)) / (1.0 + fabs((LPSREAL) (y))))
+#define my_reldiff(x, y)       (((x) - (y)) / (1.0 + fabs((REAL) (y))))
 #define my_boundstr(x)         (fabs(x) < lp->infinite ? sprintf("%g",x) : ((x) < 0 ? "-Inf" : "Inf") )
 #ifndef my_boolstr
   #define my_boolstr(x)          (!(x) ? "FALSE" : "TRUE")
@@ -264,7 +264,7 @@ typedef struct _B4rec
   int  *var_B4;  /* Variable in the B4 basis */
   int  *B4_row;  /* B4 position of the i'th row */
   int  *row_B4;  /* Original position of the i'th row */
-  LPSREAL *wcol;
+  REAL *wcol;
   int  *nzwcol;
 } B4rec;
 
@@ -276,7 +276,7 @@ typedef struct _OBJmonrec {
          limitstall[2], limitruleswitches,
          idxstep[OBJ_STEPS], countstep, startstep, currentstep,
          Rcycle, Ccycle, Ncycle, Mcycle, Icount;
-  LPSREAL   thisobj, prevobj,
+  REAL   thisobj, prevobj,
          objstep[OBJ_STEPS],
          thisinfeas, previnfeas,
          epsvalue;
@@ -288,14 +288,14 @@ typedef struct _OBJmonrec {
 
 typedef struct _edgerec
 {
-  LPSREAL      *edgeVector;
+  REAL      *edgeVector;
 } edgerec;
 
 typedef struct _pricerec
 {
-  LPSREAL   theta;
-  LPSREAL   pivot;
-  LPSREAL   epspivot;
+  REAL   theta;
+  REAL   pivot;
+  REAL   epspivot;
   int    varno;
   lprec  *lp;
   MYBOOL isdual;
@@ -309,18 +309,18 @@ typedef struct _multirec
   pricerec *items;                /* Array of best multiply priced rows/columns */
   int      *freeList;             /* The indeces of available positions in "items" */
   UNIONTYPE QSORTrec *sortedList; /* List of pointers to "pricerec" items in sorted order */
-  LPSREAL     *stepList;             /* Working array (values in sortedList order) */
-  LPSREAL     *valueList;            /* Working array (values in sortedList order) */
+  REAL     *stepList;             /* Working array (values in sortedList order) */
+  REAL     *valueList;            /* Working array (values in sortedList order) */
   int      *indexSet;             /* The final exported index list of pivot variables */
   int      active;                /* Index of currently active multiply priced row/column */
   int      retries;
-  LPSREAL     step_base;
-  LPSREAL     step_last;
-  LPSREAL     obj_base;
-  LPSREAL     obj_last;
-  LPSREAL     epszero;
-  LPSREAL     maxpivot;
-  LPSREAL     maxbound;
+  REAL     step_base;
+  REAL     step_last;
+  REAL     obj_base;
+  REAL     obj_last;
+  REAL     epszero;
+  REAL     maxpivot;
+  REAL     maxbound;
   MYBOOL   sorted;
   MYBOOL   truncinf;
   MYBOOL   objcheck;

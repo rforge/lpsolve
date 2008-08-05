@@ -48,14 +48,14 @@ STATIC BBrec *create_BB(lprec *lp, BBrec *parentBB, MYBOOL dofullcopy)
   if(newBB != NULL) {
 
     if(parentBB == NULL) {
-      allocLPSREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
-      allocLPSREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
+      allocREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
+      allocREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
       MEMCOPY(newBB->upbo,  lp->orig_upbo,  lp->sum + 1);
       MEMCOPY(newBB->lowbo, lp->orig_lowbo, lp->sum + 1);
     }
     else if(dofullcopy) {
-      allocLPSREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
-      allocLPSREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
+      allocREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
+      allocREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
       MEMCOPY(newBB->upbo,  parentBB->upbo,  lp->sum + 1);
       MEMCOPY(newBB->lowbo, parentBB->lowbo, lp->sum + 1);
     }
@@ -100,7 +100,7 @@ STATIC BBrec *push_BB(lprec *lp, BBrec *parentBB, int varno, int vartype, int va
     if((parentBB != NULL) && (parentBB->lastrcf > 0)) {
       MYBOOL isINT;
       int    k, ii, nfixed = 0, ntighten = 0;
-      LPSREAL   deltaUL;
+      REAL   deltaUL;
 
       for(k = 1; k <= lp->nzdrow[0]; k++) {
         ii = lp->nzdrow[k];
@@ -275,10 +275,10 @@ STATIC BBrec *pop_BB(BBrec *BB)
     2. A presolve routine to fix other variables and detect infeasibility
 
    THIS IS INACTIVE CODE, PLACEHOLDERS FOR FUTURE DEVELOPMENT!!! */
-STATIC LPSREAL probe_BB(BBrec *BB)
+STATIC REAL probe_BB(BBrec *BB)
 {
   int  i, ii;
-  LPSREAL coefOF, sum = 0;
+  REAL coefOF, sum = 0;
   lprec *lp = BB->lp;
 
   /* Loop over all ints to see if the best possible solution
@@ -304,7 +304,7 @@ STATIC LPSREAL probe_BB(BBrec *BB)
   return( sum );
 }
 
-STATIC LPSREAL presolve_BB(BBrec *BB)
+STATIC REAL presolve_BB(BBrec *BB)
 {
   return( 0 );
 }
@@ -312,7 +312,7 @@ STATIC LPSREAL presolve_BB(BBrec *BB)
 /* Node and branch management routines */
 STATIC MYBOOL initbranches_BB(BBrec *BB)
 {
-  LPSREAL   new_bound, temp;
+  REAL   new_bound, temp;
   int    k;
   lprec  *lp = BB->lp;
 
@@ -322,7 +322,7 @@ STATIC MYBOOL initbranches_BB(BBrec *BB)
   push_basis(lp, NULL, NULL, NULL);
 
  /* Set default number of branches at the current B&B branch */
-  if(BB->vartype == BB_LPSREAL)
+  if(BB->vartype == BB_REAL)
     BB->nodesleft = 1;
 
   else {
@@ -429,8 +429,8 @@ STATIC MYBOOL initbranches_BB(BBrec *BB)
 STATIC MYBOOL fillbranches_BB(BBrec *BB)
 {
   int    K, k;
-  LPSREAL   ult_upbo, ult_lowbo;
-  LPSREAL   new_bound, SC_bound, intmargin = BB->lp->epsprimal;
+  REAL   ult_upbo, ult_lowbo;
+  REAL   new_bound, SC_bound, intmargin = BB->lp->epsprimal;
   lprec  *lp = BB->lp;
   MYBOOL OKstatus = FALSE;
 
@@ -762,7 +762,7 @@ STATIC MYBOOL freecuts_BB(lprec *lp)
 STATIC int solve_LP(lprec *lp, BBrec *BB)
 {
   int    tilted, restored, status;
-  LPSREAL   testOF, *upbo = BB->upbo, *lowbo = BB->lowbo;
+  REAL   testOF, *upbo = BB->upbo, *lowbo = BB->lowbo;
   BBrec  *perturbed = NULL;
 
   if(lp->bb_break)
@@ -962,11 +962,11 @@ STATIC BBrec *findself_BB(BBrec *BB)
 /* Function to determine the opportunity for variable fixing and bound
    tightening based on a previous best MILP solution and a variable's
    reduced cost at the current relaxation - inspired by Wolsley */
-STATIC int rcfbound_BB(BBrec *BB, int varno, MYBOOL isINT, LPSREAL *newbound, MYBOOL *isfeasible)
+STATIC int rcfbound_BB(BBrec *BB, int varno, MYBOOL isINT, REAL *newbound, MYBOOL *isfeasible)
 {
   int   i = FR;
   lprec *lp = BB->lp;
-  LPSREAL  deltaRC, rangeLU, deltaOF, lowbo, upbo;
+  REAL  deltaRC, rangeLU, deltaOF, lowbo, upbo;
 
   /* Make sure we only accept non-basic variables */
   if(lp->is_basic[varno])
@@ -1036,13 +1036,13 @@ STATIC int rcfbound_BB(BBrec *BB, int varno, MYBOOL isINT, LPSREAL *newbound, MY
 STATIC MYBOOL findnode_BB(BBrec *BB, int *varno, int *vartype, int *varcus)
 {
   int    countsossc, countnint, k;
-  LPSREAL   varsol;
+  REAL   varsol;
   MYBOOL is_better = FALSE, is_equal = FALSE, is_feasible = TRUE;
   lprec  *lp = BB->lp;
 
   /* Initialize result and return variables */
   *varno    = 0;
-  *vartype  = BB_LPSREAL;
+  *vartype  = BB_REAL;
   *varcus   = 0;
   countnint = 0;
   BB->nodestatus = lp->spx_status;
@@ -1386,7 +1386,7 @@ STATIC int run_BB(lprec *lp)
 #endif
   lp->bb_upperchange = createUndoLadder(lp, varno, 2*MIP_count(lp));
   lp->bb_lowerchange = createUndoLadder(lp, varno, 2*MIP_count(lp));
-  lp->rootbounds = currentBB = push_BB(lp, NULL, 0, BB_LPSREAL, 0);
+  lp->rootbounds = currentBB = push_BB(lp, NULL, 0, BB_REAL, 0);
 
   /* Perform the branch & bound loop */
   while(lp->bb_level > 0) {

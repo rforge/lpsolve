@@ -104,10 +104,10 @@ void BFP_CALLMODEL bfp_finishfactorization(lprec *lp)
 
 
 /* DON'T MODIFY */
-LLPSREAL BFP_CALLMODEL bfp_prepareupdate(lprec *lp, int row_nr, int col_nr, LPSREAL *pcol)
+LREAL BFP_CALLMODEL bfp_prepareupdate(lprec *lp, int row_nr, int col_nr, REAL *pcol)
 /* Was condensecol() in versions of lp_solve before 4.0.1.8 - KE */
 {
-  LLPSREAL  pivValue;
+  LREAL  pivValue;
   INVrec *lu;
 
   lu = lp->invB;
@@ -134,7 +134,7 @@ LLPSREAL BFP_CALLMODEL bfp_prepareupdate(lprec *lp, int row_nr, int col_nr, LPSR
 
 
 /* DON'T MODIFY */
-LPSREAL BFP_CALLMODEL bfp_pivotRHS(lprec *lp, LLPSREAL theta, LPSREAL *pcol)
+REAL BFP_CALLMODEL bfp_pivotRHS(lprec *lp, LREAL theta, REAL *pcol)
 /* This function is used to adjust the RHS in bound swap operations as
    well as handling the updating of the RHS for normal basis changes.
    Was rhsmincol(), ie. "rhs minus column" in versions of lp_solve before 4.0.1.8 - KE */
@@ -148,8 +148,8 @@ LPSREAL BFP_CALLMODEL bfp_pivotRHS(lprec *lp, LLPSREAL theta, LPSREAL *pcol)
 
   if(theta != 0) {
     register int    i, n = lp->rows;
-    register LLPSREAL  roundzero = lp->epsvalue;
-    register LLPSREAL  *rhs = lp->rhs, rhsmax = 0;
+    register LREAL  roundzero = lp->epsvalue;
+    register LREAL  *rhs = lp->rhs, rhsmax = 0;
 
     for(i = 0; i <= n; i++, rhs++, pcol++) {
       (*rhs) -= theta * (*pcol);
@@ -167,7 +167,7 @@ LPSREAL BFP_CALLMODEL bfp_pivotRHS(lprec *lp, LLPSREAL theta, LPSREAL *pcol)
 
 
 /* DON'T MODIFY */
-void BFP_CALLMODEL bfp_btran_double(lprec *lp, LPSREAL *prow, int *pnzidx, LPSREAL *drow, int *dnzidx)
+void BFP_CALLMODEL bfp_btran_double(lprec *lp, REAL *prow, int *pnzidx, REAL *drow, int *dnzidx)
 {
   if(prow != NULL)
     lp->bfp_btran_normal(lp, prow, pnzidx);

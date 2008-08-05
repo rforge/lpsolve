@@ -157,7 +157,6 @@
 		DA7F17890E01145000F34E9B /* lp_simplex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_simplex.c; sourceTree = "<group>"; };
 		DA7F178A0E01145000F34E9B /* lp_Hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_Hash.c; sourceTree = "<group>"; };
 		DA7F178B0E01145000F34E9B /* commonlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = commonlib.c; sourceTree = "<group>"; };
-		DA7F178D0E01145000F34E9B /* fortify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fortify.c; sourceTree = "<group>"; };
 		DA7F17900E01145000F34E9B /* RlpSolveLink.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RlpSolveLink.c; path = src/RlpSolveLink.c; sourceTree = SOURCE_ROOT; };
 		DA7F17930E01145000F34E9B /* Makevars */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Makevars; path = src/Makevars; sourceTree = SOURCE_ROOT; };
 		DA7F17950E01145000F34E9B /* lp_LUSOL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_LUSOL.c; sourceTree = "<group>"; };
@@ -167,7 +166,6 @@
 		DA7F17A10E0115C900F34E9B /* Rpackage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Rpackage.html; path = website/Rpackage.html; sourceTree = SOURCE_ROOT; };
 		DA9674FA0E02D2C800989378 /* colamd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = colamd.h; path = inst/include/colamd.h; sourceTree = SOURCE_ROOT; };
 		DA9674FB0E02D2C800989378 /* commonlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = commonlib.h; path = inst/include/commonlib.h; sourceTree = SOURCE_ROOT; };
-		DA9674FC0E02D2C800989378 /* fortify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fortify.h; path = inst/include/fortify.h; sourceTree = SOURCE_ROOT; };
 		DA9674FD0E02D2C800989378 /* ini.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ini.h; path = inst/include/ini.h; sourceTree = SOURCE_ROOT; };
 		DA9674FE0E02D2C800989378 /* lp_BFP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_BFP.h; path = inst/include/lp_BFP.h; sourceTree = SOURCE_ROOT; };
 		DA9674FF0E02D2C800989378 /* lp_crash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_crash.h; path = inst/include/lp_crash.h; sourceTree = SOURCE_ROOT; };
@@ -397,7 +395,6 @@
 				DA7F17890E01145000F34E9B /* lp_simplex.c */,
 				DA7F178A0E01145000F34E9B /* lp_Hash.c */,
 				DA7F178B0E01145000F34E9B /* commonlib.c */,
-				DA7F178D0E01145000F34E9B /* fortify.c */,
 				DA7F17950E01145000F34E9B /* lp_LUSOL.c */,
 				DA3A89B60E0136BD003FE8A4 /* lp_BFP1.c */,
 				DA3A89B70E0136BD003FE8A4 /* lp_BFP2.c */,
@@ -425,7 +422,6 @@
 			children = (
 				DA9674FA0E02D2C800989378 /* colamd.h */,
 				DA9674FB0E02D2C800989378 /* commonlib.h */,
-				DA9674FC0E02D2C800989378 /* fortify.h */,
 				DA9674FD0E02D2C800989378 /* ini.h */,
 				DA9674FE0E02D2C800989378 /* lp_BFP.h */,
 				DA9674FF0E02D2C800989378 /* lp_crash.h */,
