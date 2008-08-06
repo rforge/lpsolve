@@ -189,7 +189,7 @@
 #define MAJORVERSION             5
 #define MINORVERSION             5
 #define RELEASE                  0
-#define BUILD                   11
+#define BUILD                   13
 #define BFPVERSION              12       /* Checked against bfp_compatible() */
 #define XLIVERSION              12       /* Checked against xli_compatible() */
 /* Note that both BFPVERSION and XLIVERSION typically have to be incremented
@@ -1699,6 +1699,8 @@ struct _lprec
   lphandleint_intfunc           *bb_usebranch;
     void                          *bb_branchhandle; /* User-specified "owner process ID" */
 
+  /* replacement of static variables */
+  char      *rowcol_name;       /* The name of a row/column */
 };
 
 

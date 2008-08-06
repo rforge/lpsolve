@@ -575,7 +575,7 @@ STATIC MYBOOL isINT(lprec *lp, LPSREAL value)
   value = fabs(value)+lp->epsint;
   return( (MYBOOL) (my_reldiff(value, floor(value)) < 2*lp->epsint) );
 #elif 0
-  static LPSREAL hold;
+  LPSREAL hold;
   value = fabs(value);
   hold = pow(10, MIN(-2, log10(value+1)+log10(lp->epsint)));
   return( (MYBOOL) (modf(value+lp->epsint, &value) < 2*hold) );
@@ -613,7 +613,7 @@ STATIC void chsign_bounds(LPSREAL *lobound, LPSREAL *upbound)
 /* ---------------------------------------------------------------------------------- */
 STATIC LPSREAL rand_uniform(lprec *lp, LPSREAL range)
 {
-  static MYBOOL randomized = FALSE;
+  MYBOOL randomized = FALSE;
 
   if(!randomized) {
     srand((unsigned) time( NULL ));

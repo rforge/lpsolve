@@ -179,7 +179,10 @@ void BLAS_CALLMODEL my_daxpy( int *_n, LPSREAL *_da, LPSREAL *dx, int *_incx, LP
    jack dongarra, linpack, 3/11/78.
    modified 12/3/93, array[1] declarations changed to array[*] */
 
-  int      i, ix, iy, m, mp1;
+  int      i, ix, iy;
+#if !defined DOFASTMATH
+  int      m, mp1;
+#endif
   register LPSREAL rda;
   LPSREAL     da = *_da;
   int      n = *_n, incx = *_incx, incy = *_incy;
@@ -255,7 +258,10 @@ void BLAS_CALLMODEL my_dcopy (int *_n, LPSREAL *dx, int *_incx, LPSREAL *dy, int
    jack dongarra, linpack, 3/11/78.
    modified 12/3/93, array[1] declarations changed to array[*] */
 
-  int      i, ix, iy, m, mp1;
+  int      i, ix, iy;
+#if !defined DOFASTMATH
+  int      m, mp1;
+#endif
   int      n = *_n, incx = *_incx, incy = *_incy;
 
   if (n<=0) return;
@@ -349,7 +355,10 @@ void BLAS_CALLMODEL my_dscal (int *_n, LPSREAL *_da, LPSREAL *dx, int *_incx)
      For I = 0 to N-1, replace DX(IX+I*INCX) with  DA * DX(IX+I*INCX),
      where IX = 1 if INCX .GE. 0, else IX = 1+(1-N)*INCX. */
 
-  int      i, ix, m, mp1;
+  int      i;
+#if !defined DOFASTMATH
+  int      ix, m, mp1;
+#endif
   register LPSREAL rda;
   LPSREAL      da = *_da;
   int      n = *_n, incx = *_incx;
@@ -421,7 +430,10 @@ LPSREAL BLAS_CALLMODEL my_ddot(int *_n, LPSREAL *dx, int *_incx, LPSREAL *dy, in
    modified 12/3/93, array[1] declarations changed to array[*] */
 
   register LPSREAL dtemp;
-  int      i, ix, iy, m, mp1;
+  int      i, ix, iy;
+#if !defined DOFASTMATH
+  int      m, mp1;
+#endif
   int      n = *_n, incx = *_incx, incy = *_incy;
 
   dtemp = 0.0;
@@ -494,8 +506,12 @@ void dswap( int n, LPSREAL *dx, int incx, LPSREAL *dy, int incy )
 
 void BLAS_CALLMODEL my_dswap( int *_n, LPSREAL *dx, int *_incx, LPSREAL *dy, int *_incy )
 {
-  int   i, ix, iy, m, mp1, ns;
-  LPSREAL  dtemp1, dtemp2, dtemp3;
+  int   i, ix, iy;
+#if !defined DOFASTMATH
+  int   m, mp1, ns;
+  LPSREAL  dtemp2, dtemp3;
+#endif
+  LPSREAL  dtemp1;
   int   n = *_n, incx = *_incx, incy = *_incy;
 
   if (n <= 0) return;

@@ -7,6 +7,64 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		0EA670410E0D33430075A859 /* plot.lpExtPtr.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = plot.lpExtPtr.Rd; path = man/plot.lpExtPtr.Rd; sourceTree = SOURCE_ROOT; };
+		0EA670430E0D35850075A859 /* lpSolveAPI.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = lpSolveAPI.pdf; path = inst/doc/lpSolveAPI.pdf; sourceTree = SOURCE_ROOT; };
+		0EA670440E0D35850075A859 /* lpSolveAPI.Rnw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolveAPI.Rnw; path = inst/doc/lpSolveAPI.Rnw; sourceTree = SOURCE_ROOT; };
+		0EA670620E0D524C0075A859 /* add.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.column.q; path = R/add.column.q; sourceTree = SOURCE_ROOT; };
+		0EA670630E0D524C0075A859 /* add.constraint.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.constraint.q; path = R/add.constraint.q; sourceTree = SOURCE_ROOT; };
+		0EA670640E0D524C0075A859 /* add.SOS.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.SOS.q; path = R/add.SOS.q; sourceTree = SOURCE_ROOT; };
+		0EA670650E0D524C0075A859 /* delete.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.column.q; path = R/delete.column.q; sourceTree = SOURCE_ROOT; };
+		0EA670660E0D524C0075A859 /* delete.constraint.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.constraint.q; path = R/delete.constraint.q; sourceTree = SOURCE_ROOT; };
+		0EA670670E0D524C0075A859 /* delete.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.lp.q; path = R/delete.lp.q; sourceTree = SOURCE_ROOT; };
+		0EA670680E0D524C0075A859 /* dim.lpExtPtr.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dim.lpExtPtr.q; path = R/dim.lpExtPtr.q; sourceTree = SOURCE_ROOT; };
+		0EA670690E0D524C0075A859 /* dimnames.lpExtPtr.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dimnames.lpExtPtr.q; path = R/dimnames.lpExtPtr.q; sourceTree = SOURCE_ROOT; };
+		0EA6706A0E0D524C0075A859 /* get.basis.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.basis.q; path = R/get.basis.q; sourceTree = SOURCE_ROOT; };
+		0EA6706B0E0D524C0075A859 /* get.bounds.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.bounds.q; path = R/get.bounds.q; sourceTree = SOURCE_ROOT; };
+		0EA6706C0E0D524C0075A859 /* get.branch.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.branch.mode.q; path = R/get.branch.mode.q; sourceTree = SOURCE_ROOT; };
+		0EA6706D0E0D524C0075A859 /* get.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.column.q; path = R/get.column.q; sourceTree = SOURCE_ROOT; };
+		0EA6706E0E0D524C0075A859 /* get.constr.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.constr.type.q; path = R/get.constr.type.q; sourceTree = SOURCE_ROOT; };
+		0EA6706F0E0D524C0075A859 /* get.constr.value.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.constr.value.q; path = R/get.constr.value.q; sourceTree = SOURCE_ROOT; };
+		0EA670700E0D524C0075A859 /* get.constraints.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.constraints.q; path = R/get.constraints.q; sourceTree = SOURCE_ROOT; };
+		0EA670710E0D524C0075A859 /* get.dual.solution.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.dual.solution.q; path = R/get.dual.solution.q; sourceTree = SOURCE_ROOT; };
+		0EA670720E0D524C0075A859 /* get.kind.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.kind.q; path = R/get.kind.q; sourceTree = SOURCE_ROOT; };
+		0EA670730E0D524C0075A859 /* get.mat.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.mat.q; path = R/get.mat.q; sourceTree = SOURCE_ROOT; };
+		0EA670740E0D524C0075A859 /* get.objective.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.objective.q; path = R/get.objective.q; sourceTree = SOURCE_ROOT; };
+		0EA670750E0D524C0075A859 /* get.primal.solution.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.primal.solution.q; path = R/get.primal.solution.q; sourceTree = SOURCE_ROOT; };
+		0EA670760E0D524C0075A859 /* get.rhs.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.rhs.q; path = R/get.rhs.q; sourceTree = SOURCE_ROOT; };
+		0EA670770E0D524C0075A859 /* get.sensitivity.obj.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.sensitivity.obj.q; path = R/get.sensitivity.obj.q; sourceTree = SOURCE_ROOT; };
+		0EA670780E0D524C0075A859 /* get.sensitivity.objex.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.sensitivity.objex.q; path = R/get.sensitivity.objex.q; sourceTree = SOURCE_ROOT; };
+		0EA670790E0D524C0075A859 /* get.sensitivity.rhs.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.sensitivity.rhs.q; path = R/get.sensitivity.rhs.q; sourceTree = SOURCE_ROOT; };
+		0EA6707A0E0D524C0075A859 /* get.solutioncount.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.solutioncount.q; path = R/get.solutioncount.q; sourceTree = SOURCE_ROOT; };
+		0EA6707B0E0D524C0075A859 /* get.total.iter.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.total.iter.q; path = R/get.total.iter.q; sourceTree = SOURCE_ROOT; };
+		0EA6707C0E0D524C0075A859 /* get.total.nodes.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.total.nodes.q; path = R/get.total.nodes.q; sourceTree = SOURCE_ROOT; };
+		0EA6707D0E0D524C0075A859 /* get.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.type.q; path = R/get.type.q; sourceTree = SOURCE_ROOT; };
+		0EA6707E0E0D524C0075A859 /* get.variables.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.variables.q; path = R/get.variables.q; sourceTree = SOURCE_ROOT; };
+		0EA6707F0E0D524C0075A859 /* guess.basis.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = guess.basis.q; path = R/guess.basis.q; sourceTree = SOURCE_ROOT; };
+		0EA670800E0D524D0075A859 /* library.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = library.q; path = R/library.q; sourceTree = SOURCE_ROOT; };
+		0EA670810E0D524D0075A859 /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.control.q; path = R/lp.control.q; sourceTree = SOURCE_ROOT; };
+		0EA670820E0D524D0075A859 /* make.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = make.lp.q; path = R/make.lp.q; sourceTree = SOURCE_ROOT; };
+		0EA670830E0D524D0075A859 /* name.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = name.lp.q; path = R/name.lp.q; sourceTree = SOURCE_ROOT; };
+		0EA670840E0D524D0075A859 /* plot.lpExtPtr.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = plot.lpExtPtr.q; path = R/plot.lpExtPtr.q; sourceTree = SOURCE_ROOT; };
+		0EA670850E0D524D0075A859 /* print.lpExtPtr.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = print.lpExtPtr.q; path = R/print.lpExtPtr.q; sourceTree = SOURCE_ROOT; };
+		0EA670860E0D524D0075A859 /* read.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = read.lp.q; path = R/read.lp.q; sourceTree = SOURCE_ROOT; };
+		0EA670870E0D524D0075A859 /* resize.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = resize.lp.q; path = R/resize.lp.q; sourceTree = SOURCE_ROOT; };
+		0EA670880E0D524D0075A859 /* row.add.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = row.add.mode.q; path = R/row.add.mode.q; sourceTree = SOURCE_ROOT; };
+		0EA670890E0D524D0075A859 /* select.solution.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = select.solution.q; path = R/select.solution.q; sourceTree = SOURCE_ROOT; };
+		0EA6708A0E0D524D0075A859 /* set.basis.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.basis.q; path = R/set.basis.q; sourceTree = SOURCE_ROOT; };
+		0EA6708B0E0D524D0075A859 /* set.bounds.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.bounds.q; path = R/set.bounds.q; sourceTree = SOURCE_ROOT; };
+		0EA6708C0E0D524D0075A859 /* set.branch.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.branch.mode.q; path = R/set.branch.mode.q; sourceTree = SOURCE_ROOT; };
+		0EA6708D0E0D524D0075A859 /* set.branch.weights.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.branch.weights.q; path = R/set.branch.weights.q; sourceTree = SOURCE_ROOT; };
+		0EA6708E0E0D524D0075A859 /* set.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.column.q; path = R/set.column.q; sourceTree = SOURCE_ROOT; };
+		0EA6708F0E0D524D0075A859 /* set.constr.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.constr.type.q; path = R/set.constr.type.q; sourceTree = SOURCE_ROOT; };
+		0EA670900E0D524D0075A859 /* set.constr.value.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.constr.value.q; path = R/set.constr.value.q; sourceTree = SOURCE_ROOT; };
+		0EA670910E0D524D0075A859 /* set.mat.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.mat.q; path = R/set.mat.q; sourceTree = SOURCE_ROOT; };
+		0EA670920E0D524D0075A859 /* set.objfn.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.objfn.q; path = R/set.objfn.q; sourceTree = SOURCE_ROOT; };
+		0EA670930E0D524D0075A859 /* set.rhs.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.rhs.q; path = R/set.rhs.q; sourceTree = SOURCE_ROOT; };
+		0EA670940E0D524D0075A859 /* set.row.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.row.q; path = R/set.row.q; sourceTree = SOURCE_ROOT; };
+		0EA670950E0D524D0075A859 /* set.semicont.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.semicont.q; path = R/set.semicont.q; sourceTree = SOURCE_ROOT; };
+		0EA670960E0D524D0075A859 /* set.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.type.q; path = R/set.type.q; sourceTree = SOURCE_ROOT; };
+		0EA670970E0D524D0075A859 /* solve.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = solve.q; path = R/solve.q; sourceTree = SOURCE_ROOT; };
+		0EA670980E0D524D0075A859 /* write.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = write.lp.q; path = R/write.lp.q; sourceTree = SOURCE_ROOT; };
 		DA3A89B60E0136BD003FE8A4 /* lp_BFP1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lp_BFP1.c; path = src/lp_BFP1.c; sourceTree = SOURCE_ROOT; };
 		DA3A89B70E0136BD003FE8A4 /* lp_BFP2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lp_BFP2.c; path = src/lp_BFP2.c; sourceTree = SOURCE_ROOT; };
 		DA3A89B80E0136BD003FE8A4 /* lusol1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lusol1.c; path = src/lusol1.c; sourceTree = SOURCE_ROOT; };
@@ -72,135 +130,90 @@
 		DA7F17140E01144E00F34E9B /* get.total.nodes.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.total.nodes.Rd; path = man/get.total.nodes.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F17150E01144E00F34E9B /* get.bounds.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.bounds.Rd; path = man/get.bounds.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F17160E01144E00F34E9B /* set.branch.mode.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.branch.mode.Rd; path = man/set.branch.mode.Rd; sourceTree = SOURCE_ROOT; };
-		DA7F17180E01144E00F34E9B /* row.add.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = row.add.mode.q; path = R/row.add.mode.q; sourceTree = SOURCE_ROOT; };
-		DA7F17190E01144E00F34E9B /* set.constr.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.constr.type.q; path = R/set.constr.type.q; sourceTree = SOURCE_ROOT; };
-		DA7F171A0E01144E00F34E9B /* get.constraints.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.constraints.q; path = R/get.constraints.q; sourceTree = SOURCE_ROOT; };
-		DA7F171B0E01144E00F34E9B /* guess.basis.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = guess.basis.q; path = R/guess.basis.q; sourceTree = SOURCE_ROOT; };
-		DA7F171C0E01144E00F34E9B /* get.variables.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.variables.q; path = R/get.variables.q; sourceTree = SOURCE_ROOT; };
-		DA7F171D0E01144E00F34E9B /* set.rhs.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.rhs.q; path = R/set.rhs.q; sourceTree = SOURCE_ROOT; };
-		DA7F171E0E01144E00F34E9B /* make.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = make.lp.q; path = R/make.lp.q; sourceTree = SOURCE_ROOT; };
-		DA7F171F0E01144E00F34E9B /* set.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.column.q; path = R/set.column.q; sourceTree = SOURCE_ROOT; };
-		DA7F17200E01144F00F34E9B /* get.objective.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.objective.q; path = R/get.objective.q; sourceTree = SOURCE_ROOT; };
-		DA7F17210E01144F00F34E9B /* set.objfn.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.objfn.q; path = R/set.objfn.q; sourceTree = SOURCE_ROOT; };
-		DA7F17220E01144F00F34E9B /* dim.lpExtPtr.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dim.lpExtPtr.q; path = R/dim.lpExtPtr.q; sourceTree = SOURCE_ROOT; };
-		DA7F17230E01144F00F34E9B /* name.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = name.lp.q; path = R/name.lp.q; sourceTree = SOURCE_ROOT; };
-		DA7F17240E01144F00F34E9B /* select.solution.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = select.solution.q; path = R/select.solution.q; sourceTree = SOURCE_ROOT; };
-		DA7F17250E01144F00F34E9B /* add.SOS.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.SOS.q; path = R/add.SOS.q; sourceTree = SOURCE_ROOT; };
-		DA7F17260E01144F00F34E9B /* set.basis.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.basis.q; path = R/set.basis.q; sourceTree = SOURCE_ROOT; };
-		DA7F17270E01144F00F34E9B /* get.branch.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.branch.mode.q; path = R/get.branch.mode.q; sourceTree = SOURCE_ROOT; };
-		DA7F17280E01144F00F34E9B /* get.mat.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.mat.q; path = R/get.mat.q; sourceTree = SOURCE_ROOT; };
-		DA7F17290E01144F00F34E9B /* set.branch.weights.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.branch.weights.q; path = R/set.branch.weights.q; sourceTree = SOURCE_ROOT; };
-		DA7F172A0E01144F00F34E9B /* get.solutioncount.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.solutioncount.q; path = R/get.solutioncount.q; sourceTree = SOURCE_ROOT; };
-		DA7F172B0E01144F00F34E9B /* get.total.nodes.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.total.nodes.q; path = R/get.total.nodes.q; sourceTree = SOURCE_ROOT; };
-		DA7F172C0E01144F00F34E9B /* get.bounds.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.bounds.q; path = R/get.bounds.q; sourceTree = SOURCE_ROOT; };
-		DA7F172D0E01144F00F34E9B /* set.branch.mode.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.branch.mode.q; path = R/set.branch.mode.q; sourceTree = SOURCE_ROOT; };
-		DA7F172E0E01144F00F34E9B /* add.constraint.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.constraint.q; path = R/add.constraint.q; sourceTree = SOURCE_ROOT; };
-		DA7F172F0E01144F00F34E9B /* resize.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = resize.lp.q; path = R/resize.lp.q; sourceTree = SOURCE_ROOT; };
-		DA7F17300E01144F00F34E9B /* set.mat.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.mat.q; path = R/set.mat.q; sourceTree = SOURCE_ROOT; };
-		DA7F17310E01144F00F34E9B /* get.sensitivity.objex.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.sensitivity.objex.q; path = R/get.sensitivity.objex.q; sourceTree = SOURCE_ROOT; };
-		DA7F17320E01144F00F34E9B /* dimnames.lpExtPtr.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dimnames.lpExtPtr.q; path = R/dimnames.lpExtPtr.q; sourceTree = SOURCE_ROOT; };
-		DA7F17330E01144F00F34E9B /* get.dual.solution.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.dual.solution.q; path = R/get.dual.solution.q; sourceTree = SOURCE_ROOT; };
-		DA7F17340E01144F00F34E9B /* get.sensitivity.obj.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.sensitivity.obj.q; path = R/get.sensitivity.obj.q; sourceTree = SOURCE_ROOT; };
-		DA7F17350E01144F00F34E9B /* add.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.column.q; path = R/add.column.q; sourceTree = SOURCE_ROOT; };
-		DA7F17360E01144F00F34E9B /* set.bounds.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.bounds.q; path = R/set.bounds.q; sourceTree = SOURCE_ROOT; };
-		DA7F17370E01144F00F34E9B /* delete.constraint.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.constraint.q; path = R/delete.constraint.q; sourceTree = SOURCE_ROOT; };
-		DA7F17380E01144F00F34E9B /* read.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = read.lp.q; path = R/read.lp.q; sourceTree = SOURCE_ROOT; };
-		DA7F17390E01144F00F34E9B /* solve.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = solve.q; path = R/solve.q; sourceTree = SOURCE_ROOT; };
-		DA7F173A0E01144F00F34E9B /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.control.q; path = R/lp.control.q; sourceTree = SOURCE_ROOT; };
-		DA7F173B0E01144F00F34E9B /* delete.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.column.q; path = R/delete.column.q; sourceTree = SOURCE_ROOT; };
-		DA7F173C0E01144F00F34E9B /* get.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.type.q; path = R/get.type.q; sourceTree = SOURCE_ROOT; };
-		DA7F173D0E01144F00F34E9B /* get.constr.value.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.constr.value.q; path = R/get.constr.value.q; sourceTree = SOURCE_ROOT; };
-		DA7F173E0E01145000F34E9B /* set.row.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.row.q; path = R/set.row.q; sourceTree = SOURCE_ROOT; };
-		DA7F173F0E01145000F34E9B /* get.total.iter.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.total.iter.q; path = R/get.total.iter.q; sourceTree = SOURCE_ROOT; };
-		DA7F17400E01145000F34E9B /* get.sensitivity.rhs.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.sensitivity.rhs.q; path = R/get.sensitivity.rhs.q; sourceTree = SOURCE_ROOT; };
-		DA7F17410E01145000F34E9B /* get.kind.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.kind.q; path = R/get.kind.q; sourceTree = SOURCE_ROOT; };
-		DA7F17420E01145000F34E9B /* library.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = library.q; path = R/library.q; sourceTree = SOURCE_ROOT; };
-		DA7F17430E01145000F34E9B /* write.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = write.lp.q; path = R/write.lp.q; sourceTree = SOURCE_ROOT; };
-		DA7F17440E01145000F34E9B /* get.constr.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.constr.type.q; path = R/get.constr.type.q; sourceTree = SOURCE_ROOT; };
-		DA7F17450E01145000F34E9B /* get.rhs.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.rhs.q; path = R/get.rhs.q; sourceTree = SOURCE_ROOT; };
-		DA7F17460E01145000F34E9B /* get.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.column.q; path = R/get.column.q; sourceTree = SOURCE_ROOT; };
-		DA7F17470E01145000F34E9B /* set.semicont.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.semicont.q; path = R/set.semicont.q; sourceTree = SOURCE_ROOT; };
-		DA7F17480E01145000F34E9B /* set.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.type.q; path = R/set.type.q; sourceTree = SOURCE_ROOT; };
-		DA7F17490E01145000F34E9B /* delete.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.lp.q; path = R/delete.lp.q; sourceTree = SOURCE_ROOT; };
-		DA7F174A0E01145000F34E9B /* get.primal.solution.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.primal.solution.q; path = R/get.primal.solution.q; sourceTree = SOURCE_ROOT; };
-		DA7F174B0E01145000F34E9B /* print.lpExtPtr.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = print.lpExtPtr.q; path = R/print.lpExtPtr.q; sourceTree = SOURCE_ROOT; };
-		DA7F174C0E01145000F34E9B /* set.constr.value.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.constr.value.q; path = R/set.constr.value.q; sourceTree = SOURCE_ROOT; };
-		DA7F174D0E01145000F34E9B /* get.basis.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.basis.q; path = R/get.basis.q; sourceTree = SOURCE_ROOT; };
-		DA7F174F0E01145000F34E9B /* lp_LUSOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_LUSOL.h; sourceTree = "<group>"; };
 		DA7F17500E01145000F34E9B /* colamd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = colamd.c; sourceTree = "<group>"; };
 		DA7F17510E01145000F34E9B /* lp_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_lib.c; sourceTree = "<group>"; };
-		DA7F17520E01145000F34E9B /* colamd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = colamd.h; sourceTree = "<group>"; };
-		DA7F17530E01145000F34E9B /* lp_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_lib.h; sourceTree = "<group>"; };
-		DA7F17540E01145000F34E9B /* lp_BFP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_BFP.h; sourceTree = "<group>"; };
 		DA7F17550E01145000F34E9B /* lp_MDO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_MDO.c; sourceTree = "<group>"; };
 		DA7F17570E01145000F34E9B /* ini.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ini.c; sourceTree = "<group>"; };
-		DA7F17580E01145000F34E9B /* lp_MDO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_MDO.h; sourceTree = "<group>"; };
 		DA7F17590E01145000F34E9B /* lp_scale.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_scale.c; sourceTree = "<group>"; };
-		DA7F175A0E01145000F34E9B /* ini.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ini.h; sourceTree = "<group>"; };
 		DA7F175B0E01145000F34E9B /* Makevars.win */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Makevars.win; path = src/Makevars.win; sourceTree = SOURCE_ROOT; };
-		DA7F175E0E01145000F34E9B /* lp_scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_scale.h; sourceTree = "<group>"; };
 		DA7F175F0E01145000F34E9B /* lp_MPS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_MPS.c; sourceTree = "<group>"; };
 		DA7F17600E01145000F34E9B /* lp_matrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_matrix.c; sourceTree = "<group>"; };
-		DA7F17610E01145000F34E9B /* lp_MPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_MPS.h; sourceTree = "<group>"; };
-		DA7F17620E01145000F34E9B /* lp_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_types.h; sourceTree = "<group>"; };
-		DA7F17630E01145000F34E9B /* lp_matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_matrix.h; sourceTree = "<group>"; };
 		DA7F17650E01145000F34E9B /* lp_params.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_params.c; sourceTree = "<group>"; };
 		DA7F17670E01145000F34E9B /* lp_rlp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_rlp.c; sourceTree = "<group>"; };
 		DA7F17680E01145000F34E9B /* lp_presolve.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_presolve.c; sourceTree = "<group>"; };
 		DA7F17690E01145000F34E9B /* lp_wlp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_wlp.c; sourceTree = "<group>"; };
-		DA7F176A0E01145000F34E9B /* lp_rlp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_rlp.h; sourceTree = "<group>"; };
 		DA7F176B0E01145000F34E9B /* lusol.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lusol.c; sourceTree = "<group>"; };
-		DA7F176C0E01145000F34E9B /* lp_presolve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_presolve.h; sourceTree = "<group>"; };
 		DA7F176D0E01145000F34E9B /* lp_SOS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_SOS.c; sourceTree = "<group>"; };
 		DA7F176E0E01145000F34E9B /* mmio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mmio.c; sourceTree = "<group>"; };
-		DA7F176F0E01145000F34E9B /* lp_wlp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_wlp.h; sourceTree = "<group>"; };
-		DA7F17700E01145000F34E9B /* lusol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lusol.h; sourceTree = "<group>"; };
-		DA7F17710E01145000F34E9B /* lp_SOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_SOS.h; sourceTree = "<group>"; };
-		DA7F17720E01145000F34E9B /* mmio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mmio.h; sourceTree = "<group>"; };
 		DA7F17730E01145000F34E9B /* yacc_read.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yacc_read.c; sourceTree = "<group>"; };
-		DA7F17740E01145000F34E9B /* yacc_read.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yacc_read.h; sourceTree = "<group>"; };
 		DA7F17770E01145000F34E9B /* lp_mipbb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_mipbb.c; sourceTree = "<group>"; };
 		DA7F17790E01145000F34E9B /* myblas.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = myblas.c; sourceTree = "<group>"; };
-		DA7F177A0E01145000F34E9B /* lpkit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lpkit.h; sourceTree = "<group>"; };
-		DA7F177B0E01145000F34E9B /* lp_mipbb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_mipbb.h; sourceTree = "<group>"; };
 		DA7F177C0E01145000F34E9B /* lp_utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_utils.c; sourceTree = "<group>"; };
 		DA7F177D0E01145000F34E9B /* lp_crash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_crash.c; sourceTree = "<group>"; };
-		DA7F177E0E01145000F34E9B /* myblas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myblas.h; sourceTree = "<group>"; };
 		DA7F177F0E01145000F34E9B /* lp_price.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_price.c; sourceTree = "<group>"; };
-		DA7F17800E01145000F34E9B /* lp_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_utils.h; sourceTree = "<group>"; };
-		DA7F17810E01145000F34E9B /* lp_crash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_crash.h; sourceTree = "<group>"; };
-		DA7F17820E01145000F34E9B /* lp_price.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_price.h; sourceTree = "<group>"; };
 		DA7F17830E01145000F34E9B /* lp_pricePSE.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_pricePSE.c; sourceTree = "<group>"; };
 		DA7F17840E01145000F34E9B /* lp_report.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_report.c; sourceTree = "<group>"; };
 		DA7F17850E01145000F34E9B /* RlpSolve.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RlpSolve.c; path = src/RlpSolve.c; sourceTree = SOURCE_ROOT; };
-		DA7F17860E01145000F34E9B /* lp_pricePSE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_pricePSE.h; sourceTree = "<group>"; };
-		DA7F17870E01145000F34E9B /* lp_report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_report.h; sourceTree = "<group>"; };
-		DA7F17880E01145000F34E9B /* RlpSolve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolve.h; path = src/RlpSolve.h; sourceTree = SOURCE_ROOT; };
 		DA7F17890E01145000F34E9B /* lp_simplex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_simplex.c; sourceTree = "<group>"; };
 		DA7F178A0E01145000F34E9B /* lp_Hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_Hash.c; sourceTree = "<group>"; };
 		DA7F178B0E01145000F34E9B /* commonlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = commonlib.c; sourceTree = "<group>"; };
-		DA7F178C0E01145000F34E9B /* lp_simplex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_simplex.h; sourceTree = "<group>"; };
-		DA7F178D0E01145000F34E9B /* fortify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fortify.c; sourceTree = "<group>"; };
-		DA7F178E0E01145000F34E9B /* lp_Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lp_Hash.h; sourceTree = "<group>"; };
-		DA7F178F0E01145000F34E9B /* commonlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commonlib.h; sourceTree = "<group>"; };
 		DA7F17900E01145000F34E9B /* RlpSolveLink.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RlpSolveLink.c; path = src/RlpSolveLink.c; sourceTree = SOURCE_ROOT; };
-		DA7F17920E01145000F34E9B /* fortify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fortify.h; sourceTree = "<group>"; };
 		DA7F17930E01145000F34E9B /* Makevars */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Makevars; path = src/Makevars; sourceTree = SOURCE_ROOT; };
-		DA7F17940E01145000F34E9B /* RlpSolveLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolveLink.h; path = src/RlpSolveLink.h; sourceTree = SOURCE_ROOT; };
 		DA7F17950E01145000F34E9B /* lp_LUSOL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_LUSOL.c; sourceTree = "<group>"; };
 		DA7F17990E01145000F34E9B /* testmodel.lp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; name = testmodel.lp; path = tests/testmodel.lp; sourceTree = SOURCE_ROOT; };
 		DA7F179A0E01145000F34E9B /* test.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test.q; path = tests/test.q; sourceTree = SOURCE_ROOT; };
 		DA7F179B0E01145000F34E9B /* testmodel.mps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = testmodel.mps; path = tests/testmodel.mps; sourceTree = SOURCE_ROOT; };
 		DA7F17A10E0115C900F34E9B /* Rpackage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Rpackage.html; path = website/Rpackage.html; sourceTree = SOURCE_ROOT; };
+		DA9674FA0E02D2C800989378 /* colamd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = colamd.h; path = inst/include/colamd.h; sourceTree = SOURCE_ROOT; };
+		DA9674FB0E02D2C800989378 /* commonlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = commonlib.h; path = inst/include/commonlib.h; sourceTree = SOURCE_ROOT; };
+		DA9674FD0E02D2C800989378 /* ini.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ini.h; path = inst/include/ini.h; sourceTree = SOURCE_ROOT; };
+		DA9674FE0E02D2C800989378 /* lp_BFP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_BFP.h; path = inst/include/lp_BFP.h; sourceTree = SOURCE_ROOT; };
+		DA9674FF0E02D2C800989378 /* lp_crash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_crash.h; path = inst/include/lp_crash.h; sourceTree = SOURCE_ROOT; };
+		DA9675000E02D2C800989378 /* lp_Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_Hash.h; path = inst/include/lp_Hash.h; sourceTree = SOURCE_ROOT; };
+		DA9675010E02D2C800989378 /* lp_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_lib.h; path = inst/include/lp_lib.h; sourceTree = SOURCE_ROOT; };
+		DA9675020E02D2C800989378 /* lp_LUSOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_LUSOL.h; path = inst/include/lp_LUSOL.h; sourceTree = SOURCE_ROOT; };
+		DA9675030E02D2C800989378 /* lp_matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_matrix.h; path = inst/include/lp_matrix.h; sourceTree = SOURCE_ROOT; };
+		DA9675040E02D2C800989378 /* lp_MDO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_MDO.h; path = inst/include/lp_MDO.h; sourceTree = SOURCE_ROOT; };
+		DA9675050E02D2C800989378 /* lp_mipbb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_mipbb.h; path = inst/include/lp_mipbb.h; sourceTree = SOURCE_ROOT; };
+		DA9675060E02D2C800989378 /* lp_MPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_MPS.h; path = inst/include/lp_MPS.h; sourceTree = SOURCE_ROOT; };
+		DA9675070E02D2C800989378 /* lp_presolve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_presolve.h; path = inst/include/lp_presolve.h; sourceTree = SOURCE_ROOT; };
+		DA9675080E02D2C800989378 /* lp_price.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_price.h; path = inst/include/lp_price.h; sourceTree = SOURCE_ROOT; };
+		DA9675090E02D2C800989378 /* lp_pricePSE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_pricePSE.h; path = inst/include/lp_pricePSE.h; sourceTree = SOURCE_ROOT; };
+		DA96750A0E02D2C800989378 /* lp_report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_report.h; path = inst/include/lp_report.h; sourceTree = SOURCE_ROOT; };
+		DA96750B0E02D2C800989378 /* lp_rlp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_rlp.h; path = inst/include/lp_rlp.h; sourceTree = SOURCE_ROOT; };
+		DA96750C0E02D2C800989378 /* lp_scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_scale.h; path = inst/include/lp_scale.h; sourceTree = SOURCE_ROOT; };
+		DA96750D0E02D2C800989378 /* lp_simplex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_simplex.h; path = inst/include/lp_simplex.h; sourceTree = SOURCE_ROOT; };
+		DA96750E0E02D2C800989378 /* lp_SOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_SOS.h; path = inst/include/lp_SOS.h; sourceTree = SOURCE_ROOT; };
+		DA96750F0E02D2C800989378 /* lp_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_types.h; path = inst/include/lp_types.h; sourceTree = SOURCE_ROOT; };
+		DA9675100E02D2C800989378 /* lp_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_utils.h; path = inst/include/lp_utils.h; sourceTree = SOURCE_ROOT; };
+		DA9675110E02D2C800989378 /* lp_wlp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lp_wlp.h; path = inst/include/lp_wlp.h; sourceTree = SOURCE_ROOT; };
+		DA9675120E02D2C800989378 /* lpkit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lpkit.h; path = inst/include/lpkit.h; sourceTree = SOURCE_ROOT; };
+		DA9675130E02D2C800989378 /* lusol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lusol.h; path = inst/include/lusol.h; sourceTree = SOURCE_ROOT; };
+		DA9675140E02D2C800989378 /* mmio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mmio.h; path = inst/include/mmio.h; sourceTree = SOURCE_ROOT; };
+		DA9675150E02D2C800989378 /* myblas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myblas.h; path = inst/include/myblas.h; sourceTree = SOURCE_ROOT; };
+		DA9675160E02D2C800989378 /* RlpSolve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolve.h; path = inst/include/RlpSolve.h; sourceTree = SOURCE_ROOT; };
+		DA9675170E02D2C800989378 /* RlpSolveLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolveLink.h; path = inst/include/RlpSolveLink.h; sourceTree = SOURCE_ROOT; };
+		DA9675180E02D2C800989378 /* yacc_read.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yacc_read.h; path = inst/include/yacc_read.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		0EA670420E0D35670075A859 /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				0EA670440E0D35850075A859 /* lpSolveAPI.Rnw */,
+				0EA670430E0D35850075A859 /* lpSolveAPI.pdf */,
+			);
+			name = doc;
+			sourceTree = "<group>";
+		};
 		DA7F16CE0E01140F00F34E9B = {
 			isa = PBXGroup;
 			children = (
 				DA7F16DC0E01144D00F34E9B /* DESCRIPTION */,
 				DA7F17170E01144E00F34E9B /* R */,
 				DA7F16DF0E01144D00F34E9B /* man */,
+				0EA670420E0D35670075A859 /* doc */,
+				DA9674F80E02D29D00989378 /* include */,
 				DA7F174E0E01145000F34E9B /* src */,
 				DA7F17980E01145000F34E9B /* tests */,
 				DA7F17A00E0115B300F34E9B /* website */,
@@ -210,6 +223,7 @@
 		DA7F16DF0E01144D00F34E9B /* man */ = {
 			isa = PBXGroup;
 			children = (
+				0EA670410E0D33430075A859 /* plot.lpExtPtr.Rd */,
 				DA7F16E00E01144D00F34E9B /* get.column.Rd */,
 				DA7F16E10E01144D00F34E9B /* set.semicont.Rd */,
 				DA7F16E20E01144D00F34E9B /* set.type.Rd */,
@@ -272,60 +286,61 @@
 		DA7F17170E01144E00F34E9B /* R */ = {
 			isa = PBXGroup;
 			children = (
-				DA7F17180E01144E00F34E9B /* row.add.mode.q */,
-				DA7F17190E01144E00F34E9B /* set.constr.type.q */,
-				DA7F171A0E01144E00F34E9B /* get.constraints.q */,
-				DA7F171B0E01144E00F34E9B /* guess.basis.q */,
-				DA7F171C0E01144E00F34E9B /* get.variables.q */,
-				DA7F171D0E01144E00F34E9B /* set.rhs.q */,
-				DA7F171E0E01144E00F34E9B /* make.lp.q */,
-				DA7F171F0E01144E00F34E9B /* set.column.q */,
-				DA7F17200E01144F00F34E9B /* get.objective.q */,
-				DA7F17210E01144F00F34E9B /* set.objfn.q */,
-				DA7F17220E01144F00F34E9B /* dim.lpExtPtr.q */,
-				DA7F17230E01144F00F34E9B /* name.lp.q */,
-				DA7F17240E01144F00F34E9B /* select.solution.q */,
-				DA7F17250E01144F00F34E9B /* add.SOS.q */,
-				DA7F17260E01144F00F34E9B /* set.basis.q */,
-				DA7F17270E01144F00F34E9B /* get.branch.mode.q */,
-				DA7F17280E01144F00F34E9B /* get.mat.q */,
-				DA7F17290E01144F00F34E9B /* set.branch.weights.q */,
-				DA7F172A0E01144F00F34E9B /* get.solutioncount.q */,
-				DA7F172B0E01144F00F34E9B /* get.total.nodes.q */,
-				DA7F172C0E01144F00F34E9B /* get.bounds.q */,
-				DA7F172D0E01144F00F34E9B /* set.branch.mode.q */,
-				DA7F172E0E01144F00F34E9B /* add.constraint.q */,
-				DA7F172F0E01144F00F34E9B /* resize.lp.q */,
-				DA7F17300E01144F00F34E9B /* set.mat.q */,
-				DA7F17310E01144F00F34E9B /* get.sensitivity.objex.q */,
-				DA7F17320E01144F00F34E9B /* dimnames.lpExtPtr.q */,
-				DA7F17330E01144F00F34E9B /* get.dual.solution.q */,
-				DA7F17340E01144F00F34E9B /* get.sensitivity.obj.q */,
-				DA7F17350E01144F00F34E9B /* add.column.q */,
-				DA7F17360E01144F00F34E9B /* set.bounds.q */,
-				DA7F17370E01144F00F34E9B /* delete.constraint.q */,
-				DA7F17380E01144F00F34E9B /* read.lp.q */,
-				DA7F17390E01144F00F34E9B /* solve.q */,
-				DA7F173A0E01144F00F34E9B /* lp.control.q */,
-				DA7F173B0E01144F00F34E9B /* delete.column.q */,
-				DA7F173C0E01144F00F34E9B /* get.type.q */,
-				DA7F173D0E01144F00F34E9B /* get.constr.value.q */,
-				DA7F173E0E01145000F34E9B /* set.row.q */,
-				DA7F173F0E01145000F34E9B /* get.total.iter.q */,
-				DA7F17400E01145000F34E9B /* get.sensitivity.rhs.q */,
-				DA7F17410E01145000F34E9B /* get.kind.q */,
-				DA7F17420E01145000F34E9B /* library.q */,
-				DA7F17430E01145000F34E9B /* write.lp.q */,
-				DA7F17440E01145000F34E9B /* get.constr.type.q */,
-				DA7F17450E01145000F34E9B /* get.rhs.q */,
-				DA7F17460E01145000F34E9B /* get.column.q */,
-				DA7F17470E01145000F34E9B /* set.semicont.q */,
-				DA7F17480E01145000F34E9B /* set.type.q */,
-				DA7F17490E01145000F34E9B /* delete.lp.q */,
-				DA7F174A0E01145000F34E9B /* get.primal.solution.q */,
-				DA7F174B0E01145000F34E9B /* print.lpExtPtr.q */,
-				DA7F174C0E01145000F34E9B /* set.constr.value.q */,
-				DA7F174D0E01145000F34E9B /* get.basis.q */,
+				0EA670620E0D524C0075A859 /* add.column.q */,
+				0EA670630E0D524C0075A859 /* add.constraint.q */,
+				0EA670640E0D524C0075A859 /* add.SOS.q */,
+				0EA670650E0D524C0075A859 /* delete.column.q */,
+				0EA670660E0D524C0075A859 /* delete.constraint.q */,
+				0EA670670E0D524C0075A859 /* delete.lp.q */,
+				0EA670680E0D524C0075A859 /* dim.lpExtPtr.q */,
+				0EA670690E0D524C0075A859 /* dimnames.lpExtPtr.q */,
+				0EA6706A0E0D524C0075A859 /* get.basis.q */,
+				0EA6706B0E0D524C0075A859 /* get.bounds.q */,
+				0EA6706C0E0D524C0075A859 /* get.branch.mode.q */,
+				0EA6706D0E0D524C0075A859 /* get.column.q */,
+				0EA6706E0E0D524C0075A859 /* get.constr.type.q */,
+				0EA6706F0E0D524C0075A859 /* get.constr.value.q */,
+				0EA670700E0D524C0075A859 /* get.constraints.q */,
+				0EA670710E0D524C0075A859 /* get.dual.solution.q */,
+				0EA670720E0D524C0075A859 /* get.kind.q */,
+				0EA670730E0D524C0075A859 /* get.mat.q */,
+				0EA670740E0D524C0075A859 /* get.objective.q */,
+				0EA670750E0D524C0075A859 /* get.primal.solution.q */,
+				0EA670760E0D524C0075A859 /* get.rhs.q */,
+				0EA670770E0D524C0075A859 /* get.sensitivity.obj.q */,
+				0EA670780E0D524C0075A859 /* get.sensitivity.objex.q */,
+				0EA670790E0D524C0075A859 /* get.sensitivity.rhs.q */,
+				0EA6707A0E0D524C0075A859 /* get.solutioncount.q */,
+				0EA6707B0E0D524C0075A859 /* get.total.iter.q */,
+				0EA6707C0E0D524C0075A859 /* get.total.nodes.q */,
+				0EA6707D0E0D524C0075A859 /* get.type.q */,
+				0EA6707E0E0D524C0075A859 /* get.variables.q */,
+				0EA6707F0E0D524C0075A859 /* guess.basis.q */,
+				0EA670800E0D524D0075A859 /* library.q */,
+				0EA670810E0D524D0075A859 /* lp.control.q */,
+				0EA670820E0D524D0075A859 /* make.lp.q */,
+				0EA670830E0D524D0075A859 /* name.lp.q */,
+				0EA670840E0D524D0075A859 /* plot.lpExtPtr.q */,
+				0EA670850E0D524D0075A859 /* print.lpExtPtr.q */,
+				0EA670860E0D524D0075A859 /* read.lp.q */,
+				0EA670870E0D524D0075A859 /* resize.lp.q */,
+				0EA670880E0D524D0075A859 /* row.add.mode.q */,
+				0EA670890E0D524D0075A859 /* select.solution.q */,
+				0EA6708A0E0D524D0075A859 /* set.basis.q */,
+				0EA6708B0E0D524D0075A859 /* set.bounds.q */,
+				0EA6708C0E0D524D0075A859 /* set.branch.mode.q */,
+				0EA6708D0E0D524D0075A859 /* set.branch.weights.q */,
+				0EA6708E0E0D524D0075A859 /* set.column.q */,
+				0EA6708F0E0D524D0075A859 /* set.constr.type.q */,
+				0EA670900E0D524D0075A859 /* set.constr.value.q */,
+				0EA670910E0D524D0075A859 /* set.mat.q */,
+				0EA670920E0D524D0075A859 /* set.objfn.q */,
+				0EA670930E0D524D0075A859 /* set.rhs.q */,
+				0EA670940E0D524D0075A859 /* set.row.q */,
+				0EA670950E0D524D0075A859 /* set.semicont.q */,
+				0EA670960E0D524D0075A859 /* set.type.q */,
+				0EA670970E0D524D0075A859 /* solve.q */,
+				0EA670980E0D524D0075A859 /* write.lp.q */,
 			);
 			path = R;
 			sourceTree = SOURCE_ROOT;
@@ -336,9 +351,7 @@
 				DA7F17930E01145000F34E9B /* Makevars */,
 				DA7F175B0E01145000F34E9B /* Makevars.win */,
 				DA7F17850E01145000F34E9B /* RlpSolve.c */,
-				DA7F17880E01145000F34E9B /* RlpSolve.h */,
 				DA7F17900E01145000F34E9B /* RlpSolveLink.c */,
-				DA7F17940E01145000F34E9B /* RlpSolveLink.h */,
 				DA7F179C0E0114F700F34E9B /* lp_solve */,
 			);
 			path = src;
@@ -357,61 +370,31 @@
 		DA7F179C0E0114F700F34E9B /* lp_solve */ = {
 			isa = PBXGroup;
 			children = (
-				DA7F174F0E01145000F34E9B /* lp_LUSOL.h */,
 				DA7F17500E01145000F34E9B /* colamd.c */,
 				DA7F17510E01145000F34E9B /* lp_lib.c */,
-				DA7F17520E01145000F34E9B /* colamd.h */,
-				DA7F17530E01145000F34E9B /* lp_lib.h */,
-				DA7F17540E01145000F34E9B /* lp_BFP.h */,
 				DA7F17550E01145000F34E9B /* lp_MDO.c */,
 				DA7F17570E01145000F34E9B /* ini.c */,
-				DA7F17580E01145000F34E9B /* lp_MDO.h */,
 				DA7F17590E01145000F34E9B /* lp_scale.c */,
-				DA7F175A0E01145000F34E9B /* ini.h */,
-				DA7F175E0E01145000F34E9B /* lp_scale.h */,
 				DA7F175F0E01145000F34E9B /* lp_MPS.c */,
 				DA7F17600E01145000F34E9B /* lp_matrix.c */,
-				DA7F17610E01145000F34E9B /* lp_MPS.h */,
-				DA7F17620E01145000F34E9B /* lp_types.h */,
-				DA7F17630E01145000F34E9B /* lp_matrix.h */,
 				DA7F17650E01145000F34E9B /* lp_params.c */,
 				DA7F17670E01145000F34E9B /* lp_rlp.c */,
 				DA7F17680E01145000F34E9B /* lp_presolve.c */,
 				DA7F17690E01145000F34E9B /* lp_wlp.c */,
-				DA7F176A0E01145000F34E9B /* lp_rlp.h */,
 				DA7F176B0E01145000F34E9B /* lusol.c */,
-				DA7F176C0E01145000F34E9B /* lp_presolve.h */,
 				DA7F176D0E01145000F34E9B /* lp_SOS.c */,
 				DA7F176E0E01145000F34E9B /* mmio.c */,
-				DA7F176F0E01145000F34E9B /* lp_wlp.h */,
-				DA7F17700E01145000F34E9B /* lusol.h */,
-				DA7F17710E01145000F34E9B /* lp_SOS.h */,
-				DA7F17720E01145000F34E9B /* mmio.h */,
 				DA7F17730E01145000F34E9B /* yacc_read.c */,
-				DA7F17740E01145000F34E9B /* yacc_read.h */,
 				DA7F17770E01145000F34E9B /* lp_mipbb.c */,
 				DA7F17790E01145000F34E9B /* myblas.c */,
-				DA7F177A0E01145000F34E9B /* lpkit.h */,
-				DA7F177B0E01145000F34E9B /* lp_mipbb.h */,
 				DA7F177C0E01145000F34E9B /* lp_utils.c */,
 				DA7F177D0E01145000F34E9B /* lp_crash.c */,
-				DA7F177E0E01145000F34E9B /* myblas.h */,
 				DA7F177F0E01145000F34E9B /* lp_price.c */,
-				DA7F17800E01145000F34E9B /* lp_utils.h */,
-				DA7F17810E01145000F34E9B /* lp_crash.h */,
-				DA7F17820E01145000F34E9B /* lp_price.h */,
 				DA7F17830E01145000F34E9B /* lp_pricePSE.c */,
 				DA7F17840E01145000F34E9B /* lp_report.c */,
-				DA7F17860E01145000F34E9B /* lp_pricePSE.h */,
-				DA7F17870E01145000F34E9B /* lp_report.h */,
 				DA7F17890E01145000F34E9B /* lp_simplex.c */,
 				DA7F178A0E01145000F34E9B /* lp_Hash.c */,
 				DA7F178B0E01145000F34E9B /* commonlib.c */,
-				DA7F178C0E01145000F34E9B /* lp_simplex.h */,
-				DA7F178D0E01145000F34E9B /* fortify.c */,
-				DA7F178E0E01145000F34E9B /* lp_Hash.h */,
-				DA7F178F0E01145000F34E9B /* commonlib.h */,
-				DA7F17920E01145000F34E9B /* fortify.h */,
 				DA7F17950E01145000F34E9B /* lp_LUSOL.c */,
 				DA3A89B60E0136BD003FE8A4 /* lp_BFP1.c */,
 				DA3A89B70E0136BD003FE8A4 /* lp_BFP2.c */,
@@ -432,6 +415,43 @@
 				DA7F17A10E0115C900F34E9B /* Rpackage.html */,
 			);
 			name = website;
+			sourceTree = "<group>";
+		};
+		DA9674F80E02D29D00989378 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				DA9674FA0E02D2C800989378 /* colamd.h */,
+				DA9674FB0E02D2C800989378 /* commonlib.h */,
+				DA9674FD0E02D2C800989378 /* ini.h */,
+				DA9674FE0E02D2C800989378 /* lp_BFP.h */,
+				DA9674FF0E02D2C800989378 /* lp_crash.h */,
+				DA9675000E02D2C800989378 /* lp_Hash.h */,
+				DA9675010E02D2C800989378 /* lp_lib.h */,
+				DA9675020E02D2C800989378 /* lp_LUSOL.h */,
+				DA9675030E02D2C800989378 /* lp_matrix.h */,
+				DA9675040E02D2C800989378 /* lp_MDO.h */,
+				DA9675050E02D2C800989378 /* lp_mipbb.h */,
+				DA9675060E02D2C800989378 /* lp_MPS.h */,
+				DA9675070E02D2C800989378 /* lp_presolve.h */,
+				DA9675080E02D2C800989378 /* lp_price.h */,
+				DA9675090E02D2C800989378 /* lp_pricePSE.h */,
+				DA96750A0E02D2C800989378 /* lp_report.h */,
+				DA96750B0E02D2C800989378 /* lp_rlp.h */,
+				DA96750C0E02D2C800989378 /* lp_scale.h */,
+				DA96750D0E02D2C800989378 /* lp_simplex.h */,
+				DA96750E0E02D2C800989378 /* lp_SOS.h */,
+				DA96750F0E02D2C800989378 /* lp_types.h */,
+				DA9675100E02D2C800989378 /* lp_utils.h */,
+				DA9675110E02D2C800989378 /* lp_wlp.h */,
+				DA9675120E02D2C800989378 /* lpkit.h */,
+				DA9675130E02D2C800989378 /* lusol.h */,
+				DA9675140E02D2C800989378 /* mmio.h */,
+				DA9675150E02D2C800989378 /* myblas.h */,
+				DA9675160E02D2C800989378 /* RlpSolve.h */,
+				DA9675170E02D2C800989378 /* RlpSolveLink.h */,
+				DA9675180E02D2C800989378 /* yacc_read.h */,
+			);
+			name = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

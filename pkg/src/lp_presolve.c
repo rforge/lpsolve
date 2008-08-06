@@ -4224,15 +4224,18 @@ STATIC int presolve_coldominance01(presolverec *psdata, NATURAL *nConRemoved, NA
     /* Find the dominant columns, fix and delete the others */
     if(coldel[0] > 1) {
       qsortex(colobj+1, coldel[0], 0, sizeof(*colobj), FALSE, compareLPSREAL, coldel+1, sizeof(*coldel));
-      jb = (NATURAL) (rhsval+lp->epsvalue);
-      for(jb++; jb <= coldel[0]; jb++) {
-        jx = coldel[jb];
-        if(!presolve_colfix(psdata, jx, lp->orig_lowbo[nrows+jx], TRUE, &iVarFixed)) {
-           status = presolve_setstatus(psdata, INFEASIBLE);
-           goto Finish;
+      /* if(rhsval+lp->epsvalue < lp->infinite) { */
+        jb = (NATURAL) (rhsval+lp->epsvalue);
+        /* printf("%f / %d\n", rhsval, jb); */
+        for(jb++; jb <= coldel[0]; jb++) {
+          jx = coldel[jb];
+          if(!presolve_colfix(psdata, jx, lp->orig_lowbo[nrows+jx], TRUE, &iVarFixed)) {
+            status = presolve_setstatus(psdata, INFEASIBLE);
+            goto Finish;
+          }
+          presolve_colremove(psdata, jx, TRUE);
         }
-        presolve_colremove(psdata, jx, TRUE);
-      }
+      /*} */
     }
 
     /* Clear the non-zero row values ahead of the next row candidate */

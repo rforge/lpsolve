@@ -111,8 +111,8 @@ void __WINAPI lp_solve_version(int *majorversion, int *minorversion, int *releas
 
 MYBOOL __WINAPI userabort(lprec *lp, int message)
 {
-  static MYBOOL abort;
-  static int spx_save;
+  MYBOOL abort;
+  int spx_save;
 
   spx_save = lp->spx_status;
   lp->spx_status = RUNNING;
@@ -131,10 +131,8 @@ MYBOOL __WINAPI userabort(lprec *lp, int message)
 
 STATIC int yieldformessages(lprec *lp)
 {
-  static double currenttime;
-
   if((lp->sectimeout > 0) &&
-     (((currenttime = timeNow()) -lp->timestart)-(LPSREAL)lp->sectimeout>0))
+     ((timeNow()-lp->timestart)-(LPSREAL)lp->sectimeout>0))
     lp->spx_status = TIMEOUT;
 
   if(lp->ctrlc != NULL) {
@@ -1367,6 +1365,7 @@ lprec * __WINAPI make_lp(int rows, int columns)
   lp->names_used    = FALSE;
   lp->use_row_names = TRUE;
   lp->use_col_names = TRUE;
+  lp->rowcol_name   = NULL;
 
   /* Do standard initializations ------------------------------------------------------------ */
 #if 1
@@ -1479,6 +1478,7 @@ lprec * __WINAPI make_lp(int rows, int columns)
   lp->msghandle = NULL;
 
   lp->timecreate = timeNow();
+
   return(lp);
 }
 
@@ -1516,6 +1516,7 @@ void __WINAPI delete_lp(lprec *lp)
   if(lp == NULL)
     return;
 
+  FREE(lp->rowcol_name);
   FREE(lp->lp_name);
   FREE(lp->ex_status);
   if(lp->names_used) {
@@ -4617,8 +4618,6 @@ MYBOOL modifyOF1(lprec *lp, int index, LPSREAL *ofValue, LPSREAL mult)
 /* Adjust objective function values for primal/dual phase 1, if appropriate */
 {
   MYBOOL accept = TRUE;
-/*  static MYBOOL accept;
-  accept = TRUE;  */
 
   /* Primal simplex: Set user variables to zero or BigM-scaled */
   if(((lp->simplex_mode & SIMPLEX_Phase1_PRIMAL) != 0) && (abs(lp->P1extraDim) > 0)) {
@@ -5970,7 +5969,6 @@ char * __WINAPI get_row_name(lprec *lp, int rownr)
 char * __WINAPI get_origrow_name(lprec *lp, int rownr)
 {
   MYBOOL newrow;
-  static char name[50];
   char   *ptr;
 
   newrow = (MYBOOL) (rownr < 0);
@@ -5993,11 +5991,14 @@ char * __WINAPI get_origrow_name(lprec *lp, int rownr)
     ptr = lp->row_name[rownr]->name;
   }
   else {
+    if(lp->rowcol_name == NULL)
+      if (!allocCHAR(lp, &lp->rowcol_name, 20, FALSE))
+        return(NULL);
+    ptr = lp->rowcol_name;
     if(newrow)
-      sprintf(name, ROWNAMEMASK2, rownr);
+      sprintf(ptr, ROWNAMEMASK2, rownr);
     else
-      sprintf(name, ROWNAMEMASK, rownr);
-    ptr = name;
+      sprintf(ptr, ROWNAMEMASK, rownr);
   }
   return(ptr);
 }
@@ -6038,7 +6039,6 @@ char * __WINAPI get_origcol_name(lprec *lp, int colnr)
 {
   MYBOOL newcol;
   char   *ptr;
-  static char name[50];
 
   newcol = (MYBOOL) (colnr < 0);
   colnr = abs(colnr);
@@ -6059,11 +6059,14 @@ char * __WINAPI get_origcol_name(lprec *lp, int colnr)
     ptr = lp->col_name[colnr]->name;
   }
   else {
+    if(lp->rowcol_name == NULL)
+      if (!allocCHAR(lp, &lp->rowcol_name, 20, FALSE))
+        return(NULL);
+    ptr = lp->rowcol_name;
     if(newcol)
-      sprintf((char *) name, COLNAMEMASK2, colnr);
+      sprintf(ptr, COLNAMEMASK2, colnr);
     else
-      sprintf((char *) name, COLNAMEMASK, colnr);
-    ptr = name;
+      sprintf(ptr, COLNAMEMASK, colnr);
   }
   return(ptr);
 }
@@ -7876,9 +7879,9 @@ STATIC MYBOOL check_degeneracy(lprec *lp, LPSREAL *pcol, int *degencount)
 STATIC MYBOOL performiteration(lprec *lp, int rownr, int varin, LLPSREAL theta, MYBOOL primal, MYBOOL allowminit,
                                LPSREAL *prow, int *nzprow, LPSREAL *pcol, int *nzpcol, int *boundswaps)
 {
-  static int    varout;
-  static LPSREAL   pivot, epsmargin, leavingValue, leavingUB, enteringUB;
-  static MYBOOL leavingToUB, enteringFromUB, enteringIsFixed, leavingIsFixed;
+  int    varout;
+  LPSREAL   pivot, epsmargin, leavingValue, leavingUB, enteringUB;
+  MYBOOL leavingToUB, enteringFromUB, enteringIsFixed, leavingIsFixed;
   MYBOOL *islower = &(lp->is_lower[varin]);
   MYBOOL minitNow = FALSE, minitStatus = ITERATE_MAJORMAJOR;
   LLPSREAL  deltatheta = theta;
@@ -8479,25 +8482,35 @@ STATIC void construct_solution(lprec *lp, LPSREAL *target)
       }
 
       /* Do MIP-related tests and computations */
-      if((lp->int_vars > 0) && mat_validate(lp->matA) && !lp->wasPresolved) {
+      if((lp->int_vars > 0) && mat_validate(lp->matA) /* && !lp->wasPresolved */) { /* && !lp->wasPresolved uncommented by findings of William H. Patton. The code was never executed when the test was there. The code has effect in an integer model with all integer objective coeff. to cut-off optimization and thus make it faster */
         LPSREAL fixedOF = unscaled_value(lp, lp->orig_rhs[0], 0);
 
         /* Check if we have an all-integer OF */
         basi = lp->columns;
         for(j = 1; j <= basi; j++) {
-          f = fabs(get_mat(lp, 0, j)) + lp->epsint/2;
-          f = fmod(f, 1);
-          if(!is_int(lp, j) || (f > lp->epsint))
-            break;
+          f = fabs(get_mat(lp, 0, j)) + lp->epsint / 2;
+          if(f > lp->epsint) { /* If coefficient is 0 then it doesn't influence OF, even it variable is not integer */
+            if(!is_int(lp, j) || (fmod(f, 1) > lp->epsint))
+              break;
+          }
         }
 
         /* If so, we can round up the fractional OF */
         if(j > basi) {
           f = my_chsign(is_maxim(lp), lp->real_solution) + fixedOF;
           f = floor(f+(1-epsvalue));
-          lp->bb_limitOF = my_chsign(is_maxim(lp), f - fixedOF);
+          f = my_chsign(is_maxim(lp), f - fixedOF);
+          if(is_infinite(lp, lp->bb_limitOF))
+            lp->bb_limitOF = f;
+          else if(is_maxim(lp)) {
+            SETMIN(lp->bb_limitOF, f);
+          }
+          else {
+            SETMAX(lp->bb_limitOF, f);
+          }
         }
       }
+
       /* Check that a user limit on the OF is feasible */
       if((lp->int_vars > 0) &&
          (my_chsign(is_maxim(lp), my_reldiff(lp->best_solution[0],lp->bb_limitOF)) < -epsvalue)) {
@@ -8526,7 +8539,7 @@ STATIC int check_solution(lprec *lp, int  lastcolumn, LPSREAL *solution,
   report(lp, NORMAL, " \n");
   if(MIP_count(lp) > 0)
     report(lp, NORMAL, "%s solution  " RESULTVALUEMASK " after %10.0f iter, %9.0f nodes (gap %.1f%%).\n",
-                       my_if(lp->bb_break && bb_better(lp, OF_RELAXED, OF_TEST_NE), "Subopt.", "Optimal"),
+                       my_if(lp->bb_break && !bb_better(lp, OF_DUALLIMIT, OF_TEST_BE) && bb_better(lp, OF_RELAXED, OF_TEST_NE), "Subopt.", "Optimal"),
                        solution[0], (double) lp->total_iter, (double) lp->bb_totalnodes,
                        100.0*fabs(my_reldiff(lp->solution[0], lp->bb_limitOF)));
   else
