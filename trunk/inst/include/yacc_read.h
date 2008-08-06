@@ -9,8 +9,8 @@ struct _tmp_store_struct
 {
   char    *name;
   int     row;
-  REAL    value;
-  REAL    rhs_value;
+  LPSREAL    value;
+  LPSREAL    rhs_value;
   short   relat;
 };
 
@@ -42,9 +42,9 @@ int store_bounds(parse_parm *pp, int warn);
 void storevarandweight(parse_parm *pp, char *name);
 int set_sos_type(parse_parm *pp, int SOStype);
 int set_sos_weight(parse_parm *pp, double weight, int sos_decl);
-int set_sec_threshold(parse_parm *pp, char *name, REAL threshold);
-int rhs_store(parse_parm *pp, REAL value, int HadConstraint, int HadVar, int Had_lineair_sum);
-int var_store(parse_parm *pp, char *var, REAL value, int HadConstraint, int HadVar, int Had_lineair_sum);
+int set_sec_threshold(parse_parm *pp, char *name, LPSREAL threshold);
+int rhs_store(parse_parm *pp, LPSREAL value, int HadConstraint, int HadVar, int Had_lineair_sum);
+int var_store(parse_parm *pp, char *var, LPSREAL value, int HadConstraint, int HadVar, int Had_lineair_sum);
 int negate_constraint(parse_parm *pp);
 void add_row(parse_parm *pp);
 void add_sos_row(parse_parm *pp, short SOStype);

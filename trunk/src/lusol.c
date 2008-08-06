@@ -59,7 +59,7 @@ void *clean_realloc(void *oldptr, int width, int newsize, int oldsize)
 {
   newsize *= width;
   oldsize *= width;
-  oldptr = LUSOL_REALLOC(oldptr, newsize);
+  oldptr = LUSOL_LPSREALLOC(oldptr, newsize);
   if(newsize > oldsize)
 /*    MEMCLEAR(oldptr+oldsize, newsize-oldsize); */
     memset((char *)oldptr+oldsize, '\0', newsize-oldsize);
@@ -80,7 +80,7 @@ MYBOOL LUSOL_realloc_a(LUSOLrec *LUSOL, int newsize)
   if(oldsize > 0)
     oldsize++;
 
-  LUSOL->a    = (REAL *) clean_realloc(LUSOL->a,    sizeof(*(LUSOL->a)),
+  LUSOL->a    = (LPSREAL *) clean_realloc(LUSOL->a,    sizeof(*(LUSOL->a)),
                                                     newsize, oldsize);
   LUSOL->indc = (int *)  clean_realloc(LUSOL->indc, sizeof(*(LUSOL->indc)),
                                                     newsize, oldsize);
@@ -163,7 +163,7 @@ MYBOOL LUSOL_realloc_r(LUSOLrec *LUSOL, int newsize)
     if(LUSOL->luparm[LUSOL_IP_PIVOTTYPE] == LUSOL_PIVMOD_TRP)
 #endif
     {
-      LUSOL->amaxr = (REAL *) clean_realloc(LUSOL->amaxr, sizeof(*(LUSOL->amaxr)),
+      LUSOL->amaxr = (LPSREAL *) clean_realloc(LUSOL->amaxr, sizeof(*(LUSOL->amaxr)),
                                                           newsize, oldsize);
       if((newsize > 0) && (LUSOL->amaxr == NULL))
         return( FALSE );
@@ -199,10 +199,10 @@ MYBOOL LUSOL_realloc_c(LUSOLrec *LUSOL, int newsize)
                                                       newsize, oldsize);
   LUSOL->locc  = (int *)  clean_realloc(LUSOL->locc,  sizeof(*(LUSOL->locc)),
                                                       newsize, oldsize);
-  LUSOL->w     = (REAL *) clean_realloc(LUSOL->w,     sizeof(*(LUSOL->w)),
+  LUSOL->w     = (LPSREAL *) clean_realloc(LUSOL->w,     sizeof(*(LUSOL->w)),
                                                       newsize, oldsize);
 #ifdef LUSOLSafeFastUpdate
-  LUSOL->vLU6L = (REAL *) clean_realloc(LUSOL->vLU6L, sizeof(*(LUSOL->vLU6L)),
+  LUSOL->vLU6L = (LPSREAL *) clean_realloc(LUSOL->vLU6L, sizeof(*(LUSOL->vLU6L)),
                                                       newsize, oldsize);
 #else
   LUSOL->vLU6L = LUSOL->w;
@@ -215,7 +215,7 @@ MYBOOL LUSOL_realloc_c(LUSOLrec *LUSOL, int newsize)
 
 #ifndef ClassicHamaxR
     if(LUSOL->luparm[LUSOL_IP_PIVOTTYPE] == LUSOL_PIVMOD_TCP) {
-      LUSOL->Ha = (REAL *) clean_realloc(LUSOL->Ha,   sizeof(*(LUSOL->Ha)),
+      LUSOL->Ha = (LPSREAL *) clean_realloc(LUSOL->Ha,   sizeof(*(LUSOL->Ha)),
                                                       newsize, oldsize);
       LUSOL->Hj = (int *)  clean_realloc(LUSOL->Hj,   sizeof(*(LUSOL->Hj)),
                                                       newsize, oldsize);
@@ -228,7 +228,7 @@ MYBOOL LUSOL_realloc_c(LUSOLrec *LUSOL, int newsize)
 #endif
 #ifndef ClassicdiagU
     if(LUSOL->luparm[LUSOL_IP_KEEPLU] == FALSE) {
-      LUSOL->diagU = (REAL *) clean_realloc(LUSOL->diagU, sizeof(*(LUSOL->diagU)),
+      LUSOL->diagU = (LPSREAL *) clean_realloc(LUSOL->diagU, sizeof(*(LUSOL->diagU)),
                                                           newsize, oldsize);
       if((newsize > 0) && (LUSOL->diagU == NULL))
         return( FALSE );
@@ -302,7 +302,7 @@ char *LUSOL_pivotLabel(LUSOLrec *LUSOL)
 
 void LUSOL_setpivotmodel(LUSOLrec *LUSOL, int pivotmodel, int initlevel)
 {
-  REAL newFM, newUM;
+  LPSREAL newFM, newUM;
 
   /* Set pivotmodel if specified */
   if(pivotmodel > LUSOL_PIVMOD_NOCHANGE) {
@@ -354,7 +354,7 @@ void LUSOL_setpivotmodel(LUSOLrec *LUSOL, int pivotmodel, int initlevel)
 MYBOOL LUSOL_tightenpivot(LUSOLrec *LUSOL)
 {
 #if 0
-  REAL newvalue;
+  LPSREAL newvalue;
 #endif
 
   /* Give up tightening if we are already less than limit and we cannot change strategy */
@@ -391,8 +391,8 @@ MYBOOL LUSOL_addSingularity(LUSOLrec *LUSOL, int singcol, int *inform)
   if((NSING > 0) && (NSING >= ASING)) {
 
     /* Increase list in "reasonable" steps */
-    ASING += (int) (10.0 * (log10((REAL) LUSOL->m)+1.0));
-    LUSOL->isingular = (int *) LUSOL_REALLOC(LUSOL->isingular, sizeof(*LUSOL->isingular)*(ASING+1));
+    ASING += (int) (10.0 * (log10((LPSREAL) LUSOL->m)+1.0));
+    LUSOL->isingular = (int *) LUSOL_LPSREALLOC(LUSOL->isingular, sizeof(*LUSOL->isingular)*(ASING+1));
     if(LUSOL->isingular == NULL) {
       LUSOL->luparm[LUSOL_IP_SINGULARLISTSIZE] = 0;
       *inform = LUSOL_INFORM_NOMEMLEFT;
@@ -525,7 +525,7 @@ void LUSOL_clear(LUSOLrec *LUSOL, MYBOOL nzonly)
   }
 }
 
-MYBOOL LUSOL_assign(LUSOLrec *LUSOL, int iA[], int jA[], REAL Aij[], int nzcount, MYBOOL istriplet)
+MYBOOL LUSOL_assign(LUSOLrec *LUSOL, int iA[], int jA[], LPSREAL Aij[], int nzcount, MYBOOL istriplet)
 {
   int k, m, n, ij, kol;
 
@@ -574,7 +574,7 @@ MYBOOL LUSOL_assign(LUSOLrec *LUSOL, int iA[], int jA[], REAL Aij[], int nzcount
   return( TRUE );
 }
 
-int LUSOL_loadColumn(LUSOLrec *LUSOL, int iA[], int jA, REAL Aij[], int nzcount, int offset1)
+int LUSOL_loadColumn(LUSOLrec *LUSOL, int iA[], int jA, LPSREAL Aij[], int nzcount, int offset1)
 {
   int i, ii, nz, k;
 
@@ -660,10 +660,10 @@ int LUSOL_factorize(LUSOLrec *LUSOL)
   return( inform );
 }
 
-int LUSOL_ftran(LUSOLrec *LUSOL, REAL b[], int NZidx[], MYBOOL prepareupdate)
+int LUSOL_ftran(LUSOLrec *LUSOL, LPSREAL b[], int NZidx[], MYBOOL prepareupdate)
 {
   int  inform;
-  REAL *vector;
+  LPSREAL *vector;
 
   if(prepareupdate)
     vector = LUSOL->vLU6L;
@@ -683,7 +683,7 @@ int LUSOL_ftran(LUSOLrec *LUSOL, REAL b[], int NZidx[], MYBOOL prepareupdate)
 }
 
 
-int LUSOL_btran(LUSOLrec *LUSOL, REAL b[], int NZidx[])
+int LUSOL_btran(LUSOLrec *LUSOL, LPSREAL b[], int NZidx[])
 {
   int inform;
 
@@ -700,10 +700,10 @@ int LUSOL_btran(LUSOLrec *LUSOL, REAL b[], int NZidx[])
 }
 
 
-int LUSOL_replaceColumn(LUSOLrec *LUSOL, int jcol, REAL v[])
+int LUSOL_replaceColumn(LUSOLrec *LUSOL, int jcol, LPSREAL v[])
 {
   int  inform;
-  REAL DIAG, VNORM;
+  LPSREAL DIAG, VNORM;
 
   LU8RPC(LUSOL, LUSOL_UPDATE_OLDNONEMPTY, LUSOL_UPDATE_NEWNONEMPTY,
                 jcol, v, NULL,
@@ -713,17 +713,17 @@ int LUSOL_replaceColumn(LUSOLrec *LUSOL, int jcol, REAL v[])
   return( inform );
 }
 
-REAL LUSOL_vecdensity(LUSOLrec *LUSOL, REAL V[])
+LPSREAL LUSOL_vecdensity(LUSOLrec *LUSOL, LPSREAL V[])
 {
   int I, N = 0;
 
   for(I = 1; I <= LUSOL->m; I++)
     if(fabs(V[I]) > 0)
       N++;
-  return( (REAL) N / (REAL) LUSOL->m );
+  return( (LPSREAL) N / (LPSREAL) LUSOL->m );
 }
 
-char relationChar(REAL left, REAL right)
+char relationChar(LPSREAL left, LPSREAL right)
 {
   if(left > right)
     return('>');
@@ -749,7 +749,7 @@ void LUSOL_dump(FILE *output, LUSOLrec *LUSOL)
   if(!userfile)
     output = fopen("LUSOL.dbg", "w");
 
-  blockWriteREAL(output, "a", LUSOL->a, 1, LUSOL->lena);
+  blockWriteLPSREAL(output, "a", LUSOL->a, 1, LUSOL->lena);
   blockWriteINT(output, "indc", LUSOL->indc, 1, LUSOL->lena);
   blockWriteINT(output, "indr", LUSOL->indr, 1, LUSOL->lena);
 
@@ -776,7 +776,7 @@ LUSOLmat *LUSOL_matcreate(int dim, int nz)
 
   newm = (LUSOLmat *) LUSOL_CALLOC(1, sizeof(*newm));
   if(newm != NULL) {
-    newm->a    = (REAL *) LUSOL_MALLOC((nz+1)*sizeof(REAL));
+    newm->a    = (LPSREAL *) LUSOL_MALLOC((nz+1)*sizeof(LPSREAL));
     newm->lenx = (int *)  LUSOL_MALLOC((dim+1)*sizeof(int));
     newm->indx = (int *)  LUSOL_MALLOC((dim+1)*sizeof(int));
     newm->indr = (int *)  LUSOL_MALLOC((nz+1)*sizeof(int));

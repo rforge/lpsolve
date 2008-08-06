@@ -18,11 +18,11 @@ extern "C" {
 #endif
 
 /* Put function headers here */
-STATIC int primloop(lprec *lp, MYBOOL primalfeasible, REAL primaloffset);
-STATIC int dualloop(lprec *lp, MYBOOL dualfeasible, int dualinfeasibles[], REAL dualoffset);
+STATIC int primloop(lprec *lp, MYBOOL primalfeasible, LPSREAL primaloffset);
+STATIC int dualloop(lprec *lp, MYBOOL dualfeasible, int dualinfeasibles[], LPSREAL dualoffset);
 STATIC int spx_run(lprec *lp, MYBOOL validInvB);
 STATIC int spx_solve(lprec *lp);
-STATIC int lag_solve(lprec *lp, REAL start_bound, int num_iter);
+STATIC int lag_solve(lprec *lp, LPSREAL start_bound, int num_iter);
 STATIC int heuristics(lprec *lp, int mode);
 STATIC int lin_solve(lprec *lp);
 

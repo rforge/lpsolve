@@ -71,7 +71,7 @@ void LU6CHK(LUSOLrec *LUSOL, int MODE, int LENA2, int *INFORM)
 {
   MYBOOL KEEPLU;
   int    I, J, JUMIN, K, L, L1, L2, LENL, LPRINT, NDEFIC, NRANK;
-  REAL   AIJ, DIAG, DUMAX, DUMIN, LMAX, UMAX, UTOL1, UTOL2;
+  LPSREAL   AIJ, DIAG, DUMAX, DUMIN, LMAX, UMAX, UTOL1, UTOL2;
 
   LPRINT = LUSOL->luparm[LUSOL_IP_PRINTLEVEL];
   KEEPLU = (MYBOOL) (LUSOL->luparm[LUSOL_IP_KEEPLU]!=0);
@@ -195,7 +195,7 @@ void LU6CHK(LUSOLrec *LUSOL, int MODE, int LENA2, int *INFORM)
 {
   MYBOOL KEEPLU, TRP;
   int    I, J, JUMIN, K, L, L1, L2, LENL, LDIAGU, LPRINT, NDEFIC, NRANK;
-  REAL   AIJ, DIAG, DUMAX, DUMIN, LMAX, UMAX, UTOL1, UTOL2;
+  LPSREAL   AIJ, DIAG, DUMAX, DUMIN, LMAX, UMAX, UTOL1, UTOL2;
 
   LPRINT = LUSOL->luparm[LUSOL_IP_PRINTLEVEL];
   KEEPLU = (MYBOOL) (LUSOL->luparm[LUSOL_IP_KEEPLU] != 0);
@@ -352,13 +352,13 @@ void LU6CHK(LUSOLrec *LUSOL, int MODE, int LENA2, int *INFORM)
    15 Dec 2002: First version derived from lu6sol.
    15 Dec 2002: Current version.
    ------------------------------------------------------------------ */
-void LU6L(LUSOLrec *LUSOL, int *INFORM, REAL V[], int NZidx[])
+void LU6L(LUSOLrec *LUSOL, int *INFORM, LPSREAL V[], int NZidx[])
 {
   int  JPIV, K, L, L1, LEN, LENL, LENL0, NUML, NUML0;
-  REAL SMALL;
-  register REAL VPIV;
+  LPSREAL SMALL;
+  register LPSREAL VPIV;
 #ifdef LUSOLFastSolve
-  REAL *aptr;
+  LPSREAL *aptr;
   int  *iptr, *jptr;
 #else
   int  I, J;
@@ -444,13 +444,13 @@ void LU6L(LUSOLrec *LUSOL, int *INFORM, REAL V[], int NZidx[])
    15 Dec 2002: First version of lu6LD.
    15 Dec 2002: Current version.
    ================================================================== */
-void LU6LD(LUSOLrec *LUSOL, int *INFORM, int MODE, REAL V[], int NZidx[])
+void LU6LD(LUSOLrec *LUSOL, int *INFORM, int MODE, LPSREAL V[], int NZidx[])
 {
   int  IPIV, K, L, L1, LEN, NUML0;
-  REAL DIAG, SMALL;
-  register REAL VPIV;
+  LPSREAL DIAG, SMALL;
+  register LPSREAL VPIV;
 #ifdef LUSOLFastSolve
-  REAL *aptr;
+  LPSREAL *aptr;
   int  *jptr;
 #else
   int  J;
@@ -505,17 +505,17 @@ void LU6LD(LUSOLrec *LUSOL, int *INFORM, int MODE, REAL V[], int NZidx[])
    15 Dec 2002: First version derived from lu6sol.
    15 Dec 2002: Current version.
    ================================================================== */
-void LU6LT(LUSOLrec *LUSOL, int *INFORM, REAL V[], int NZidx[])
+void LU6LT(LUSOLrec *LUSOL, int *INFORM, LPSREAL V[], int NZidx[])
 {
 #ifdef DoTraceL0
-  REAL    TEMP;
+  LPSREAL    TEMP;
 #endif
   int     K, L, L1, L2, LEN, LENL, LENL0, NUML0;
-  REAL    SMALL;
-  register REALXP SUM;
-  register REAL HOLD;
+  LPSREAL    SMALL;
+  register LPSREALXP SUM;
+  register LPSREAL HOLD;
 #if (defined LUSOLFastSolve) && !(defined DoTraceL0)
-  REAL    *aptr;
+  LPSREAL    *aptr;
   int     *iptr, *jptr;
 #else
   int     I, J;
@@ -588,7 +588,7 @@ void LU6LT(LUSOLrec *LUSOL, int *INFORM, REAL V[], int NZidx[])
 #endif
       }
 #endif
-      V[LUSOL->indr[L1]] += (REAL) SUM;
+      V[LUSOL->indr[L1]] += (LPSREAL) SUM;
     }
   }
 
@@ -599,7 +599,7 @@ void LU6LT(LUSOLrec *LUSOL, int *INFORM, REAL V[], int NZidx[])
 void print_L0(LUSOLrec *LUSOL)
 {
   int  I, J, K, L, L1, L2, LEN, LENL0, NUML0;
-  REAL *denseL0 = (REAL*) calloc(LUSOL->m+1, (LUSOL->n+1)*sizeof(*denseL0));
+  LPSREAL *denseL0 = (LPSREAL*) calloc(LUSOL->m+1, (LUSOL->n+1)*sizeof(*denseL0));
 
   NUML0 = LUSOL->luparm[LUSOL_IP_COLCOUNT_L0];
   LENL0 = LUSOL->luparm[LUSOL_IP_NONZEROS_L0];
@@ -639,7 +639,7 @@ void print_L0(LUSOLrec *LUSOL)
    15 Dec 2002: First version derived from lu6sol.
    15 Dec 2002: Current version.
    ================================================================== */
-void LU6U(LUSOLrec *LUSOL, int *INFORM, REAL V[], REAL W[], int NZidx[])
+void LU6U(LUSOLrec *LUSOL, int *INFORM, LPSREAL V[], LPSREAL W[], int NZidx[])
 {
   /* Do column-based U version, if available */
   if((LUSOL->U != NULL) ||
@@ -649,10 +649,10 @@ void LU6U(LUSOLrec *LUSOL, int *INFORM, REAL V[], REAL W[], int NZidx[])
   /* Alternatively, do the standard column-based L0 version */
   else {
     int  I, J, K, KLAST, L, L1, L2, L3, NRANK, NRANK1;
-    REAL SMALL;
-    register REALXP T;
+    LPSREAL SMALL;
+    register LPSREALXP T;
 #ifdef LUSOLFastSolve
-    REAL *aptr;
+    LPSREAL *aptr;
     int  *jptr;
 #endif
     NRANK = LUSOL->luparm[LUSOL_IP_RANK_U];
@@ -694,11 +694,11 @@ void LU6U(LUSOLrec *LUSOL, int *INFORM, REAL V[], REAL W[], int NZidx[])
       }
 #endif
       J = LUSOL->iq[K];
-      if(fabs((REAL) T)<=SMALL)
+      if(fabs((LPSREAL) T)<=SMALL)
         T = ZERO;
       else
         T /= LUSOL->a[L1];
-      W[J] = (REAL) T;
+      W[J] = (LPSREAL) T;
     }
 /*      Compute residual for overdetermined systems. */
     T = ZERO;
@@ -710,7 +710,7 @@ void LU6U(LUSOLrec *LUSOL, int *INFORM, REAL V[], REAL W[], int NZidx[])
     if(T>ZERO)
       *INFORM = LUSOL_INFORM_LUSINGULAR;
     LUSOL->luparm[LUSOL_IP_INFORM]     = *INFORM;
-    LUSOL->parmlu[LUSOL_RP_RESIDUAL_U] = (REAL) T;
+    LUSOL->parmlu[LUSOL_RP_RESIDUAL_U] = (LPSREAL) T;
   }
 }
 
@@ -720,14 +720,14 @@ void LU6U(LUSOLrec *LUSOL, int *INFORM, REAL V[], REAL W[], int NZidx[])
    15 Dec 2002: First version derived from lu6sol.
    15 Dec 2002: Current version.
    ================================================================== */
-void LU6UT(LUSOLrec *LUSOL, int *INFORM, REAL V[], REAL W[], int NZidx[])
+void LU6UT(LUSOLrec *LUSOL, int *INFORM, LPSREAL V[], LPSREAL W[], int NZidx[])
 {
   int  I, J, K, L, L1, L2, NRANK, NRANK1,
        *ip = LUSOL->ip + 1, *iq = LUSOL->iq + 1;
-  REAL SMALL;
-  register REAL T;
+  LPSREAL SMALL;
+  register LPSREAL T;
 #ifdef LUSOLFastSolve
-  REAL *aptr;
+  LPSREAL *aptr;
   int  *jptr;
 #endif
 
@@ -833,7 +833,7 @@ void LU6UT(LUSOLrec *LUSOL, int *INFORM, REAL V[], REAL W[], int NZidx[])
                 But hard to change other "go to"s to "if then else".
    15 Dec 2002: lu6L, lu6Lt, lu6U, lu6Ut added to modularize lu6sol.
    ================================================================== */
-void LU6SOL(LUSOLrec *LUSOL, int MODE, REAL V[], REAL W[], int NZidx[], int *INFORM)
+void LU6SOL(LUSOLrec *LUSOL, int MODE, LPSREAL V[], LPSREAL W[], int NZidx[], int *INFORM)
 {
   if(MODE==LUSOL_SOLVE_Lv_v) {          /* Solve  L v(new) = v. */
     LU6L(LUSOL, INFORM,V, NZidx);

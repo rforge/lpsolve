@@ -10,7 +10,7 @@
 /* Changes: 19 September 2004   Moved function pointer variable             */
 /*                              declarations from myblas.h to myblas.c      */
 /*                              to avoid linker problems with the Mac.      */
-/*          20 April 2005       Modified all double types to REAL to self-  */
+/*          20 April 2005       Modified all double types to LPSREAL to self-  */
 /*                              adjust to global settings.  Note that BLAS  */
 /*                              as of now does not have double double.      */
 /* ************************************************************************ */
@@ -56,14 +56,14 @@ extern "C" {
 #endif
 #endif
 
-typedef void   (BLAS_CALLMODEL BLAS_dscal_func) (int *n, REAL *da, REAL *dx, int *incx);
-typedef void   (BLAS_CALLMODEL BLAS_dcopy_func) (int *n, REAL *dx, int *incx,  REAL *dy, int *incy);
-typedef void   (BLAS_CALLMODEL BLAS_daxpy_func) (int *n, REAL *da, REAL *dx, int *incx,  REAL *dy, int *incy);
-typedef void   (BLAS_CALLMODEL BLAS_dswap_func) (int *n, REAL *dx, int *incx,  REAL *dy, int *incy);
-typedef double (BLAS_CALLMODEL BLAS_ddot_func)  (int *n, REAL *dx, int *incx,  REAL *dy, int *incy);
-typedef int    (BLAS_CALLMODEL BLAS_idamax_func)(int *n, REAL *x,  int *is);
-typedef void   (BLAS_CALLMODEL BLAS_dload_func) (int *n, REAL *da, REAL *dx, int *incx);
-typedef double (BLAS_CALLMODEL BLAS_dnormi_func)(int *n, REAL *x);
+typedef void   (BLAS_CALLMODEL BLAS_dscal_func) (int *n, LPSREAL *da, LPSREAL *dx, int *incx);
+typedef void   (BLAS_CALLMODEL BLAS_dcopy_func) (int *n, LPSREAL *dx, int *incx,  LPSREAL *dy, int *incy);
+typedef void   (BLAS_CALLMODEL BLAS_daxpy_func) (int *n, LPSREAL *da, LPSREAL *dx, int *incx,  LPSREAL *dy, int *incy);
+typedef void   (BLAS_CALLMODEL BLAS_dswap_func) (int *n, LPSREAL *dx, int *incx,  LPSREAL *dy, int *incy);
+typedef double (BLAS_CALLMODEL BLAS_ddot_func)  (int *n, LPSREAL *dx, int *incx,  LPSREAL *dy, int *incy);
+typedef int    (BLAS_CALLMODEL BLAS_idamax_func)(int *n, LPSREAL *x,  int *is);
+typedef void   (BLAS_CALLMODEL BLAS_dload_func) (int *n, LPSREAL *da, LPSREAL *dx, int *incx);
+typedef double (BLAS_CALLMODEL BLAS_dnormi_func)(int *n, LPSREAL *x);
 
 #ifndef __WINAPI
 # ifdef WIN32
@@ -81,27 +81,27 @@ MYBOOL unload_BLAS(void);
 /* ************************************************************************ */
 /* User-callable BLAS definitions (C base 1)                                */
 /* ************************************************************************ */
-void dscal ( int n, REAL da,  REAL *dx, int incx );
-void dcopy ( int n, REAL *dx, int incx, REAL *dy, int incy );
-void daxpy ( int n, REAL da,  REAL *dx, int incx,   REAL *dy, int incy );
-void dswap ( int n, REAL *dx, int incx, REAL *dy, int incy );
-REAL ddot  ( int n, REAL *dx, int incx, REAL *dy, int incy );
-int  idamax( int n, REAL *x,  int is );
-void dload ( int n, REAL da,  REAL *dx, int incx );
-REAL dnormi( int n, REAL *x );
+void dscal ( int n, LPSREAL da,  LPSREAL *dx, int incx );
+void dcopy ( int n, LPSREAL *dx, int incx, LPSREAL *dy, int incy );
+void daxpy ( int n, LPSREAL da,  LPSREAL *dx, int incx,   LPSREAL *dy, int incy );
+void dswap ( int n, LPSREAL *dx, int incx, LPSREAL *dy, int incy );
+LPSREAL ddot  ( int n, LPSREAL *dx, int incx, LPSREAL *dy, int incy );
+int  idamax( int n, LPSREAL *x,  int is );
+void dload ( int n, LPSREAL da,  LPSREAL *dx, int incx );
+LPSREAL dnormi( int n, LPSREAL *x );
 
 
 /* ************************************************************************ */
 /* Locally implemented BLAS functions (C base 0)                            */
 /* ************************************************************************ */
-void BLAS_CALLMODEL my_dscal ( int *n, REAL *da, REAL *dx,  int *incx );
-void BLAS_CALLMODEL my_dcopy ( int *n, REAL *dx, int *incx, REAL *dy, int *incy );
-void BLAS_CALLMODEL my_daxpy ( int *n, REAL *da, REAL *dx,  int *incx,  REAL *dy, int *incy );
-void BLAS_CALLMODEL my_dswap ( int *n, REAL *dx, int *incx, REAL *dy, int *incy );
-REAL BLAS_CALLMODEL my_ddot  ( int *n, REAL *dx, int *incx,  REAL *dy, int *incy );
-int  BLAS_CALLMODEL my_idamax( int *n, REAL *x,  int *is );
-void BLAS_CALLMODEL my_dload ( int *n, REAL *da, REAL *dx, int *incx );
-REAL BLAS_CALLMODEL my_dnormi( int *n, REAL *x );
+void BLAS_CALLMODEL my_dscal ( int *n, LPSREAL *da, LPSREAL *dx,  int *incx );
+void BLAS_CALLMODEL my_dcopy ( int *n, LPSREAL *dx, int *incx, LPSREAL *dy, int *incy );
+void BLAS_CALLMODEL my_daxpy ( int *n, LPSREAL *da, LPSREAL *dx,  int *incx,  LPSREAL *dy, int *incy );
+void BLAS_CALLMODEL my_dswap ( int *n, LPSREAL *dx, int *incx, LPSREAL *dy, int *incy );
+LPSREAL BLAS_CALLMODEL my_ddot  ( int *n, LPSREAL *dx, int *incx,  LPSREAL *dy, int *incy );
+int  BLAS_CALLMODEL my_idamax( int *n, LPSREAL *x,  int *is );
+void BLAS_CALLMODEL my_dload ( int *n, LPSREAL *da, LPSREAL *dx, int *incx );
+LPSREAL BLAS_CALLMODEL my_dnormi( int *n, LPSREAL *x );
 
 
 /* ************************************************************************ */
@@ -121,8 +121,8 @@ int posmat( int nrowb, int row, int col );
 /* Randomization functions                                                  */
 /* ************************************************************************ */
 void randomseed(int *seeds);
-void randomdens( int n, REAL *x, REAL r1, REAL r2, REAL densty, int *seeds);
-void ddrand( int n, REAL *x, int incx, int *seeds );
+void randomdens( int n, LPSREAL *x, LPSREAL r1, LPSREAL r2, LPSREAL densty, int *seeds);
+void ddrand( int n, LPSREAL *x, int incx, int *seeds );
 
 
 #ifdef __cplusplus

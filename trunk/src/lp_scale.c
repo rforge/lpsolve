@@ -31,7 +31,7 @@
 
 /* First define scaling and unscaling primitives */
 
-REAL scaled_value(lprec *lp, REAL value, int index)
+LPSREAL scaled_value(lprec *lp, LPSREAL value, int index)
 {
   if(fabs(value) < lp->infinite) {
     if(lp->scaling_used)
@@ -45,7 +45,7 @@ REAL scaled_value(lprec *lp, REAL value, int index)
   return(value);
 }
 
-REAL unscaled_value(lprec *lp, REAL value, int index)
+LPSREAL unscaled_value(lprec *lp, LPSREAL value, int index)
 {
   if(fabs(value) < lp->infinite) {
     if(lp->scaling_used)
@@ -59,14 +59,14 @@ REAL unscaled_value(lprec *lp, REAL value, int index)
   return(value);
 }
 
-STATIC REAL scaled_mat(lprec *lp, REAL value, int rownr, int colnr)
+STATIC LPSREAL scaled_mat(lprec *lp, LPSREAL value, int rownr, int colnr)
 {
   if(lp->scaling_used)
     value *= lp->scalars[rownr] * lp->scalars[lp->rows + colnr];
   return( value );
 }
 
-STATIC REAL unscaled_mat(lprec *lp, REAL value, int rownr, int colnr)
+STATIC LPSREAL unscaled_mat(lprec *lp, LPSREAL value, int rownr, int colnr)
 {
   if(lp->scaling_used)
     value /= lp->scalars[rownr] * lp->scalars[lp->rows + colnr];
@@ -76,13 +76,13 @@ STATIC REAL unscaled_mat(lprec *lp, REAL value, int rownr, int colnr)
 /* Compute the scale factor by the formulae:
       FALSE: SUM (log |Aij|) ^ 2
       TRUE:  SUM (log |Aij| - RowScale[i] - ColScale[j]) ^ 2 */
-REAL CurtisReidMeasure(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColScale)
+LPSREAL CurtisReidMeasure(lprec *lp, MYBOOL _Advanced, LPSREAL *FRowScale, LPSREAL *FColScale)
 {
   int      i, nz;
-  REAL     absvalue, logvalue;
-  register REAL result;
+  LPSREAL     absvalue, logvalue;
+  register LPSREAL result;
   MATrec   *mat = lp->matA;
-  REAL     *value;
+  LPSREAL     *value;
   int      *rownr, *colnr;
 
   /* Do OF part */
@@ -137,13 +137,13 @@ REAL CurtisReidMeasure(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColS
 
     r, c are resulting row and column scalings (RowScale, ColScale) */
 
-int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColScale)
+int CurtisReidScales(lprec *lp, MYBOOL _Advanced, LPSREAL *FRowScale, LPSREAL *FColScale)
 {
   int    i, row, col, ent, nz;
-  REAL   *RowScalem2, *ColScalem2,
+  LPSREAL   *RowScalem2, *ColScalem2,
          *RowSum, *ColSum,
          *residual_even, *residual_odd;
-  REAL   sk,   qk,     ek,
+  LPSREAL   sk,   qk,     ek,
          skm1, qkm1,   ekm1,
          qkm2, qkqkm1, ekm2, ekekm1,
          absvalue, logvalue,
@@ -151,7 +151,7 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
   int    *RowCount, *ColCount, colMax;
   int    Result;
   MATrec *mat = lp->matA;
-  REAL   *value;
+  LPSREAL   *value;
   int    *rownr, *colnr;
 
   if(CurtisReidMeasure(lp, _Advanced, FRowScale, FColScale)<0.1*get_nonzeros(lp))
@@ -161,16 +161,16 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
   nz = get_nonzeros(lp);
   colMax = lp->columns;
 
-  allocREAL(lp, &RowSum, lp->rows+1, TRUE);
+  allocLPSREAL(lp, &RowSum, lp->rows+1, TRUE);
   allocINT(lp,  &RowCount, lp->rows+1, TRUE);
-  allocREAL(lp, &residual_odd, lp->rows+1, TRUE);
+  allocLPSREAL(lp, &residual_odd, lp->rows+1, TRUE);
 
-  allocREAL(lp, &ColSum, colMax+1, TRUE);
+  allocLPSREAL(lp, &ColSum, colMax+1, TRUE);
   allocINT(lp,  &ColCount, colMax+1, TRUE);
-  allocREAL(lp, &residual_even, colMax+1, TRUE);
+  allocLPSREAL(lp, &residual_even, colMax+1, TRUE);
 
-  allocREAL(lp, &RowScalem2, lp->rows+1, FALSE);
-  allocREAL(lp, &ColScalem2, colMax+1, FALSE);
+  allocLPSREAL(lp, &RowScalem2, lp->rows+1, FALSE);
+  allocLPSREAL(lp, &ColScalem2, colMax+1, FALSE);
 
   /* Set origin for row scaling */
   for(i = 1; i <= colMax; i++) {
@@ -212,9 +212,9 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
                    residual = ColSum - ET RowCount-1 RowSum */
 
   StopTolerance= MAX(lp->scalelimit-floor(lp->scalelimit), DEF_SCALINGEPS);
-  StopTolerance *= (REAL) nz;
+  StopTolerance *= (LPSREAL) nz;
   for(row = 0; row <= lp->rows; row++) {
-    FRowScale[row] = RowSum[row] / (REAL) RowCount[row];
+    FRowScale[row] = RowSum[row] / (LPSREAL) RowCount[row];
     RowScalem2[row] = FRowScale[row];
   }
 
@@ -225,14 +225,14 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
     residual_even[col] = ColSum[col];
 
     if(lp->orig_obj[col] != 0)
-      residual_even[col] -= RowSum[0] / (REAL) RowCount[0];
+      residual_even[col] -= RowSum[0] / (LPSREAL) RowCount[0];
 
     i = mat->col_end[col-1];
     rownr = &(COL_MAT_ROWNR(i));
     ent = mat->col_end[col];
     for(; i < ent;
         i++, rownr += matRowColStep) {
-      residual_even[col] -= RowSum[*rownr] / (REAL) RowCount[*rownr];
+      residual_even[col] -= RowSum[*rownr] / (LPSREAL) RowCount[*rownr];
     }
   }
 
@@ -240,7 +240,7 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
   sk = 0;
   skm1 = 0;
   for(col = 1; col <= colMax; col++)
-    sk += (residual_even[col]*residual_even[col]) / (REAL) ColCount[col];
+    sk += (residual_even[col]*residual_even[col]) / (LPSREAL) ColCount[col];
 
   Result = 0;
   qk=1; qkm1=0; qkm2=0;
@@ -261,7 +261,7 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
           for(row = 0; row <= lp->rows; row++)
             FRowScale[row]*=(1 + ekekm1 / qkqkm1);
           for(row = 0; row<=lp->rows; row++)
-            FRowScale[row]+=(residual_odd[row] / (qkqkm1 * (REAL) RowCount[row]) -
+            FRowScale[row]+=(residual_odd[row] / (qkqkm1 * (LPSREAL) RowCount[row]) -
                              RowScalem2[row] * ekekm1 / qkqkm1);
         }
       }
@@ -273,7 +273,7 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
         for(col = 1; col <= colMax; col++)
           FColScale[col] *= (1 + ekekm1 / qkqkm1);
         for(col = 1; col <= colMax; col++)
-          FColScale[col] += (residual_even[col] / ((REAL) ColCount[col] * qkqkm1) -
+          FColScale[col] += (residual_even[col] / ((LPSREAL) ColCount[col] * qkqkm1) -
                              ColScalem2[col] * ekekm1 / qkqkm1);
       }
     }
@@ -286,13 +286,13 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
 
       for(i = 1; i <= colMax; i++)
         if(lp->orig_obj[i] != 0)
-          residual_odd[0] += (residual_even[i] / (REAL) ColCount[i]);
+          residual_odd[0] += (residual_even[i] / (LPSREAL) ColCount[i]);
 
       rownr = &(COL_MAT_ROWNR(0));
       colnr = &(COL_MAT_COLNR(0));
       for(i = 0; i < nz;
           i++, rownr += matRowColStep, colnr += matRowColStep) {
-        residual_odd[*rownr] += (residual_even[*colnr] / (REAL) ColCount[*colnr]);
+        residual_odd[*rownr] += (residual_even[*colnr] / (LPSREAL) ColCount[*colnr]);
       }
       for(row = 0; row <= lp->rows; row++)
         residual_odd[row] *= (-1 / qk);
@@ -301,7 +301,7 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
       skm1 = sk;
       sk = 0;
       for(row = 0; row <= lp->rows; row++)
-        sk += (residual_odd[row]*residual_odd[row]) / (REAL) RowCount[row];
+        sk += (residual_odd[row]*residual_odd[row]) / (LPSREAL) RowCount[row];
     }
     else { /* odd */
       /* residual */
@@ -310,13 +310,13 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
 
       for(i = 1; i <= colMax; i++)
         if(lp->orig_obj[i] != 0)
-          residual_even[i] += (residual_odd[0] / (REAL) RowCount[0]);
+          residual_even[i] += (residual_odd[0] / (LPSREAL) RowCount[0]);
 
       rownr = &(COL_MAT_ROWNR(0));
       colnr = &(COL_MAT_COLNR(0));
       for(i = 0; i < nz;
           i++, rownr += matRowColStep, colnr += matRowColStep) {
-        residual_even[*colnr] += (residual_odd[*rownr] / (REAL) RowCount[*rownr]);
+        residual_even[*colnr] += (residual_odd[*rownr] / (LPSREAL) RowCount[*rownr]);
       }
       for(col = 1; col <= colMax; col++)
         residual_even[col] *= (-1 / qk);
@@ -325,7 +325,7 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
       skm1 = sk;
       sk = 0;
       for(col = 1; col <= colMax; col++)
-        sk += (residual_even[col]*residual_even[col]) / (REAL) ColCount[col];
+        sk += (residual_even[col]*residual_even[col]) / (LPSREAL) ColCount[col];
     }
 
     /* Compute ek and qk */
@@ -347,14 +347,14 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
     for(row = 0; row<=lp->rows; row++)
       FRowScale[row]*=(1.0 + ekekm1 / qkm1);
     for(row = 0; row<=lp->rows; row++)
-      FRowScale[row]+=(residual_odd[row] / (qkm1 * (REAL) RowCount[row]) -
+      FRowScale[row]+=(residual_odd[row] / (qkm1 * (LPSREAL) RowCount[row]) -
                       RowScalem2[row] * ekekm1 / qkm1);
   }
   else { /* pass is odd, compute ColScale */
     for(col=1; col<=colMax; col++)
       FColScale[col]*=(1 + ekekm1 / qkm1);
     for(col=1; col<=colMax; col++)
-      FColScale[col]+=(residual_even[col] / ((REAL) ColCount[col] * qkm1) -
+      FColScale[col]+=(residual_even[col] / ((LPSREAL) ColCount[col] * qkm1) -
                        ColScalem2[col] * ekekm1 / qkm1);
   }
 
@@ -365,7 +365,7 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
     /* CHECK: M RowScale + E ColScale = RowSum */
     error = 0;
     for(row = 0; row <= lp->rows; row++) {
-      check = (REAL) RowCount[row] * FRowScale[row];
+      check = (LPSREAL) RowCount[row] * FRowScale[row];
       if(row == 0) {
         for(i = 1; i <= colMax; i++) {
           if(lp->orig_obj[i] != 0)
@@ -387,7 +387,7 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
     /* CHECK: E^T RowScale + N ColScale = ColSum */
     error = 0;
     for(col = 1; col <= colMax; col++) {
-      check = (REAL) ColCount[col] * FColScale[col];
+      check = (LPSREAL) ColCount[col] * FColScale[col];
 
       if(lp->orig_obj[col] != 0)
         check += FRowScale[0];
@@ -436,20 +436,20 @@ int CurtisReidScales(lprec *lp, MYBOOL _Advanced, REAL *FRowScale, REAL *FColSca
 
 }
 
-STATIC MYBOOL scaleCR(lprec *lp, REAL *scaledelta)
+STATIC MYBOOL scaleCR(lprec *lp, LPSREAL *scaledelta)
 {
-  REAL *scalechange = NULL;
+  LPSREAL *scalechange = NULL;
   int  Result;
 
   if(!lp->scaling_used) {
-    allocREAL(lp, &lp->scalars, lp->sum_alloc + 1, FALSE);
+    allocLPSREAL(lp, &lp->scalars, lp->sum_alloc + 1, FALSE);
     for(Result = 0; Result <= lp->sum; Result++)
       lp->scalars[Result] = 1;
     lp->scaling_used = TRUE;
   }
 
   if(scaledelta == NULL)
-    allocREAL(lp, &scalechange, lp->sum + 1, FALSE);
+    allocLPSREAL(lp, &scalechange, lp->sum + 1, FALSE);
   else
     scalechange = scaledelta;
 
@@ -470,7 +470,7 @@ STATIC MYBOOL scaleCR(lprec *lp, REAL *scaledelta)
   return((MYBOOL) (Result > 0));
 }
 
-STATIC MYBOOL transform_for_scale(lprec *lp, REAL *value)
+STATIC MYBOOL transform_for_scale(lprec *lp, LPSREAL *value)
 {
   MYBOOL Accept = TRUE;
   *value = fabs(*value);
@@ -488,7 +488,7 @@ STATIC MYBOOL transform_for_scale(lprec *lp, REAL *value)
   return( Accept );
 }
 
-STATIC void accumulate_for_scale(lprec *lp, REAL *min, REAL *max, REAL value)
+STATIC void accumulate_for_scale(lprec *lp, LPSREAL *min, LPSREAL *max, LPSREAL value)
 {
   if(transform_for_scale(lp, &value))
     if(is_scaletype(lp, SCALE_MEAN)) {
@@ -501,9 +501,9 @@ STATIC void accumulate_for_scale(lprec *lp, REAL *min, REAL *max, REAL value)
     }
 }
 
-STATIC REAL minmax_to_scale(lprec *lp, REAL min, REAL max, int itemcount)
+STATIC LPSREAL minmax_to_scale(lprec *lp, LPSREAL min, LPSREAL max, int itemcount)
 {
-  REAL scale;
+  LPSREAL scale;
 
   /* Initialize according to transformation / weighting model */
   if(is_scalemode(lp, SCALE_LOGARITHMIC))
@@ -548,7 +548,7 @@ STATIC REAL minmax_to_scale(lprec *lp, REAL min, REAL max, int itemcount)
   return(scale);
 }
 
-STATIC REAL roundPower2(REAL scale)
+STATIC LPSREAL roundPower2(LPSREAL scale)
 /* Purpose is to round a number to it nearest power of 2; in a system
    with binary number representation, this avoids rounding errors when
    scale is used to normalize another value */
@@ -578,7 +578,7 @@ STATIC REAL roundPower2(REAL scale)
 
 }
 
-STATIC MYBOOL scale_updatecolumns(lprec *lp, REAL *scalechange, MYBOOL updateonly)
+STATIC MYBOOL scale_updatecolumns(lprec *lp, LPSREAL *scalechange, MYBOOL updateonly)
 {
   int i, j;
 
@@ -600,7 +600,7 @@ STATIC MYBOOL scale_updatecolumns(lprec *lp, REAL *scalechange, MYBOOL updateonl
   return( TRUE );
 }
 
-STATIC MYBOOL scale_updaterows(lprec *lp, REAL *scalechange, MYBOOL updateonly)
+STATIC MYBOOL scale_updaterows(lprec *lp, LPSREAL *scalechange, MYBOOL updateonly)
 {
   int i;
 
@@ -623,11 +623,11 @@ STATIC MYBOOL scale_updaterows(lprec *lp, REAL *scalechange, MYBOOL updateonly)
   return( TRUE );
 }
 
-STATIC MYBOOL scale_columns(lprec *lp, REAL *scaledelta)
+STATIC MYBOOL scale_columns(lprec *lp, LPSREAL *scaledelta)
 {
   int     i,j, colMax, nz;
-  REAL    *scalechange;
-  REAL    *value;
+  LPSREAL    *scalechange;
+  LPSREAL    *value;
   int     *colnr;
   MATrec  *mat = lp->matA;
 
@@ -672,11 +672,11 @@ STATIC MYBOOL scale_columns(lprec *lp, REAL *scaledelta)
   return( TRUE );
 }
 
-STATIC MYBOOL scale_rows(lprec *lp, REAL *scaledelta)
+STATIC MYBOOL scale_rows(lprec *lp, LPSREAL *scaledelta)
 {
   int     i, j, nz, colMax;
-  REAL    *scalechange;
-  REAL    *value;
+  LPSREAL    *scalechange;
+  LPSREAL    *value;
   int     *rownr;
   MATrec  *mat = lp->matA;
 
@@ -726,21 +726,21 @@ STATIC MYBOOL scale_rows(lprec *lp, REAL *scaledelta)
   return( TRUE );
 }
 
-STATIC REAL scale(lprec *lp, REAL *scaledelta)
+STATIC LPSREAL scale(lprec *lp, LPSREAL *scaledelta)
 {
   int     i, j, nz, row_count, nzOF = 0;
-  REAL    *row_max, *row_min, *scalechange = NULL, absval;
-  REAL    col_max, col_min;
+  LPSREAL    *row_max, *row_min, *scalechange = NULL, absval;
+  LPSREAL    col_max, col_min;
   MYBOOL  rowscaled, colscaled;
   MATrec  *mat = lp->matA;
-  REAL    *value;
+  LPSREAL    *value;
   int     *rownr;
 
   if(is_scaletype(lp, SCALE_NONE))
     return(0.0);
 
   if(!lp->scaling_used) {
-    allocREAL(lp, &lp->scalars, lp->sum_alloc + 1, FALSE);
+    allocLPSREAL(lp, &lp->scalars, lp->sum_alloc + 1, FALSE);
     for(i = 0; i <= lp->sum; i++) {
       lp->scalars[i] = 1;
     }
@@ -754,7 +754,7 @@ STATIC REAL scale(lprec *lp, REAL *scaledelta)
     }
 #endif
   if(scaledelta == NULL)
-    allocREAL(lp, &scalechange, lp->sum + 1, FALSE);
+    allocLPSREAL(lp, &scalechange, lp->sum + 1, FALSE);
   else
     scalechange = scaledelta;
 
@@ -763,8 +763,8 @@ STATIC REAL scale(lprec *lp, REAL *scaledelta)
     scalechange[i] = 1;
 
   row_count = lp->rows;
-  allocREAL(lp, &row_max, row_count + 1, TRUE);
-  allocREAL(lp, &row_min, row_count + 1, FALSE);
+  allocLPSREAL(lp, &row_max, row_count + 1, TRUE);
+  allocLPSREAL(lp, &row_min, row_count + 1, FALSE);
 
   /* Initialise min and max values of rows */
   for(i = 0; i <= row_count; i++) {
@@ -877,7 +877,7 @@ STATIC REAL scale(lprec *lp, REAL *scaledelta)
   return(1 - sqrt(col_max*col_min));
 }
 
-STATIC MYBOOL finalize_scaling(lprec *lp, REAL *scaledelta)
+STATIC MYBOOL finalize_scaling(lprec *lp, LPSREAL *scaledelta)
 {
   int i;
 
@@ -893,7 +893,7 @@ STATIC MYBOOL finalize_scaling(lprec *lp, REAL *scaledelta)
 
   /* Check if we should prevent rounding errors */
   if(is_scalemode(lp, SCALE_POWER2)) {
-    REAL *scalars;
+    LPSREAL *scalars;
     if(scaledelta == NULL)
       scalars = lp->scalars;
     else
@@ -908,10 +908,10 @@ STATIC MYBOOL finalize_scaling(lprec *lp, REAL *scaledelta)
 
 }
 
-STATIC REAL auto_scale(lprec *lp)
+STATIC LPSREAL auto_scale(lprec *lp)
 {
   int    n = 1;
-  REAL   scalingmetric = 0, *scalenew = NULL;
+  LPSREAL   scalingmetric = 0, *scalenew = NULL;
 
   if(lp->scaling_used &&
      ((((lp->scalemode & SCALE_DYNUPDATE) == 0)) || (lp->bb_level > 0)))
@@ -922,13 +922,13 @@ STATIC REAL auto_scale(lprec *lp)
     /* Allocate array for incremental scaling if appropriate */
     if((lp->solvecount > 1) && (lp->bb_level < 1) &&
        ((lp->scalemode & SCALE_DYNUPDATE) != 0))
-      allocREAL(lp, &scalenew, lp->sum + 1, FALSE);
+      allocLPSREAL(lp, &scalenew, lp->sum + 1, FALSE);
 
     if(is_scaletype(lp, SCALE_CURTISREID)) {
       scalingmetric = scaleCR(lp, scalenew);
     }
     else {
-      REAL scalinglimit, scalingdelta;
+      LPSREAL scalinglimit, scalingdelta;
       int  count;
 
       /* Integer value of scalelimit holds the maximum number of iterations; default to 1 */
@@ -983,7 +983,7 @@ STATIC void unscale_columns(lprec *lp)
 {
   int     i, j, nz;
   MATrec  *mat = lp->matA;
-  REAL    *value;
+  LPSREAL    *value;
   int     *rownr, *colnr;
 
   if(!lp->columns_scaled)
@@ -1023,7 +1023,7 @@ void undoscale(lprec *lp)
 {
   int     i, j, nz;
   MATrec  *mat = lp->matA;
-  REAL    *value;
+  LPSREAL    *value;
   int     *rownr, *colnr;
 
   if(lp->scaling_used) {

@@ -45,7 +45,7 @@ MYBOOL LU1L0(LUSOLrec *LUSOL, LUSOLmat **mat, int *inform)
 
   /* Check if we should apply "smarts" before proceeding to the row matrix creation */
   if((LUSOL->luparm[LUSOL_IP_ACCELERATION] & LUSOL_AUTOORDER) &&
-     ((REAL) LUSOL->luparm[LUSOL_IP_ROWCOUNT_L0] /
+     ((LPSREAL) LUSOL->luparm[LUSOL_IP_ROWCOUNT_L0] /
 #if 0
              LUSOL->luparm[LUSOL_IP_COLCOUNT_L0]
 #else
@@ -103,16 +103,16 @@ Finish:
 }
 
 /* Solve L0' v = v based on row-based version of L0, constructed by LU1L0 */
-void LU6L0T_v(LUSOLrec *LUSOL, LUSOLmat *mat, REAL V[], int NZidx[], int *INFORM)
+void LU6L0T_v(LUSOLrec *LUSOL, LUSOLmat *mat, LPSREAL V[], int NZidx[], int *INFORM)
 {
 #ifdef DoTraceL0
-  REAL TEMP;
+  LPSREAL TEMP;
 #endif
   int  LEN, K, KK, L, L1, NUML0;
-  REAL SMALL;
-  register REAL VPIV;
+  LPSREAL SMALL;
+  register LPSREAL VPIV;
 #if (defined LUSOLFastSolve) && !(defined DoTraceL0)
-  REAL *aptr;
+  LPSREAL *aptr;
   int  *jptr;
 #else
   int  J;

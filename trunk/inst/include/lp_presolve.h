@@ -43,10 +43,10 @@ typedef struct _psrec
   int  *negcount;
   int  *pluneg;
   int  *infcount;
-  REAL  *plulower;
-  REAL  *neglower;
-  REAL  *pluupper;
-  REAL  *negupper;
+  LPSREAL  *plulower;
+  LPSREAL  *neglower;
+  LPSREAL  *pluupper;
+  LPSREAL  *negupper;
   int  allocsize;
 } psrec;
 
@@ -57,13 +57,13 @@ typedef struct _presolverec
   LLrec *EQmap;
   LLrec *LTmap;
   LLrec *INTmap;
-  REAL  *pv_upbo;
-  REAL  *pv_lobo;
-  REAL  *dv_upbo;
-  REAL  *dv_lobo;
+  LPSREAL  *pv_upbo;
+  LPSREAL  *pv_lobo;
+  LPSREAL  *dv_upbo;
+  LPSREAL  *dv_lobo;
   lprec *lp;
-  REAL  epsvalue;
-  REAL  epspivot;
+  LPSREAL  epsvalue;
+  LPSREAL  epspivot;
   int   innerloops;
   int   middleloops;
   int   outerloops;
@@ -81,7 +81,7 @@ STATIC MYBOOL presolve_createUndo(lprec *lp);
 STATIC MYBOOL presolve_rebuildUndo(lprec *lp, MYBOOL isprimal);
 STATIC MYBOOL inc_presolve_space(lprec *lp, int delta, MYBOOL isrows);
 STATIC MYBOOL presolve_setOrig(lprec *lp, int orig_rows, int orig_cols);
-STATIC MYBOOL presolve_colfix(presolverec *psdata, int colnr, REAL newvalue, MYBOOL remove, int *tally);
+STATIC MYBOOL presolve_colfix(presolverec *psdata, int colnr, LPSREAL newvalue, MYBOOL remove, int *tally);
 STATIC MYBOOL presolve_fillUndo(lprec *lp, int orig_rows, int orig_cols, MYBOOL setOrig);
 STATIC MYBOOL presolve_freeUndo(lprec *lp);
 
@@ -96,7 +96,7 @@ STATIC int presolve_shrink(presolverec *psdata, int *nConRemove, int *nVarRemove
 STATIC void presolve_rowremove(presolverec *psdata, int rownr, MYBOOL allowcoldelete);
 STATIC int presolve_colremove(presolverec *psdata, int colnr, MYBOOL allowrowdelete);
 
-STATIC MYBOOL presolve_colfixdual(presolverec *psdata, int colnr, REAL *fixValue, int *status);
+STATIC MYBOOL presolve_colfixdual(presolverec *psdata, int colnr, LPSREAL *fixValue, int *status);
 
 INLINE int presolve_rowlength(presolverec *psdata, int rownr)
 {

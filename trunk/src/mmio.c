@@ -144,7 +144,7 @@ int mm_read_banner(FILE *f, MM_typecode *matcode)
 
     /* third field */
 
-    if (strcmp(data_type, MM_REAL_STR) == 0)
+    if (strcmp(data_type, MM_LPSREAL_STR) == 0)
         mm_set_real(matcode);
     else
     if (strcmp(data_type, MM_COMPLEX_STR) == 0)
@@ -460,7 +460,7 @@ char  *mm_typecode_to_str(MM_typecode matcode)
 
     /* check for element data type */
     if (mm_is_real(matcode))
-        types[2] = MM_REAL_STR;
+        types[2] = MM_LPSREAL_STR;
     else
     if (mm_is_complex(matcode))
         types[2] = MM_COMPLEX_STR;

@@ -15,9 +15,9 @@ INLINE MYBOOL applyPricer(lprec *lp);
 STATIC void simplexPricer(lprec *lp, MYBOOL isdual);
 STATIC void freePricer(lprec *lp);
 STATIC MYBOOL resizePricer(lprec *lp);
-STATIC REAL getPricer(lprec *lp, int item, MYBOOL isdual);
+STATIC LPSREAL getPricer(lprec *lp, int item, MYBOOL isdual);
 STATIC MYBOOL restartPricer(lprec *lp, MYBOOL isdual);
-STATIC MYBOOL updatePricer(lprec *lp, int rownr, int colnr, REAL *pcol, REAL *prow, int *nzprow);
+STATIC MYBOOL updatePricer(lprec *lp, int rownr, int colnr, LPSREAL *pcol, LPSREAL *prow, int *nzprow);
 STATIC MYBOOL verifyPricer(lprec *lp);
 
 #ifdef __cplusplus

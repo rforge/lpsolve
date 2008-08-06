@@ -33,7 +33,7 @@
 
    ------------------------------------------------------------------------- */
 
-STATIC MATrec *mat_create(lprec *lp, int rows, int columns, REAL epsvalue)
+STATIC MATrec *mat_create(lprec *lp, int rows, int columns, LPSREAL epsvalue)
 {
   MATrec *newmat;
 
@@ -120,7 +120,7 @@ STATIC MYBOOL mat_memopt(MATrec *mat, int rowextra, int colextra, int nzextra)
 #else /*if MatrixColAccess==CAM_Vector*/
   status &= allocINT(mat->lp,  &(mat->col_mat_colnr), matalloc, AUTOMATIC) &&
             allocINT(mat->lp,  &(mat->col_mat_rownr), matalloc, AUTOMATIC) &&
-            allocREAL(mat->lp, &(mat->col_mat_value), matalloc, AUTOMATIC);
+            allocLPSREAL(mat->lp, &(mat->col_mat_value), matalloc, AUTOMATIC);
 #endif
   status &= allocINT(mat->lp, &mat->col_end, colalloc, AUTOMATIC);
   if(mat->col_tag != NULL)
@@ -134,16 +134,16 @@ STATIC MYBOOL mat_memopt(MATrec *mat, int rowextra, int colextra, int nzextra)
 #else /*if MatrixRowAccess==COL_Vector*/
   status &= allocINT(mat->lp,  &(mat->row_mat_colnr), matalloc, AUTOMATIC) &&
             allocINT(mat->lp,  &(mat->row_mat_rownr), matalloc, AUTOMATIC) &&
-            allocREAL(mat->lp, &(mat->row_mat_value), matalloc, AUTOMATIC);
+            allocLPSREAL(mat->lp, &(mat->row_mat_value), matalloc, AUTOMATIC);
 #endif
   status &= allocINT(mat->lp, &mat->row_end, rowalloc, AUTOMATIC);
   if(mat->row_tag != NULL)
     status &= allocINT(mat->lp, &mat->row_tag, rowalloc, AUTOMATIC);
 
   if(mat->colmax != NULL)
-    status &= allocREAL(mat->lp, &(mat->colmax), colalloc, AUTOMATIC);
+    status &= allocLPSREAL(mat->lp, &(mat->colmax), colalloc, AUTOMATIC);
   if(mat->rowmax != NULL)
-    status &= allocREAL(mat->lp, &(mat->rowmax), rowalloc, AUTOMATIC);
+    status &= allocLPSREAL(mat->lp, &(mat->rowmax), rowalloc, AUTOMATIC);
 
   return( status );
 }
@@ -176,7 +176,7 @@ STATIC MYBOOL inc_mat_space(MATrec *mat, int mindelta)
 #else /*if MatrixColAccess==CAM_Vector*/
     allocINT(mat->lp,  &(mat->col_mat_colnr), mat->mat_alloc, AUTOMATIC);
     allocINT(mat->lp,  &(mat->col_mat_rownr), mat->mat_alloc, AUTOMATIC);
-    allocREAL(mat->lp, &(mat->col_mat_value), mat->mat_alloc, AUTOMATIC);
+    allocLPSREAL(mat->lp, &(mat->col_mat_value), mat->mat_alloc, AUTOMATIC);
 #endif
 
 #if MatrixRowAccess==RAM_Index
@@ -186,7 +186,7 @@ STATIC MYBOOL inc_mat_space(MATrec *mat, int mindelta)
 #else /*if MatrixColAccess==CAM_Vector*/
     allocINT(mat->lp,  &(mat->row_mat_colnr), mat->mat_alloc, AUTOMATIC);
     allocINT(mat->lp,  &(mat->row_mat_rownr), mat->mat_alloc, AUTOMATIC);
-    allocREAL(mat->lp, &(mat->row_mat_value), mat->mat_alloc, AUTOMATIC);
+    allocLPSREAL(mat->lp, &(mat->row_mat_value), mat->mat_alloc, AUTOMATIC);
 #endif
   }
   return(TRUE);
@@ -411,7 +411,7 @@ STATIC int mat_mapreplace(MATrec *mat, LLrec *rowmap, LLrec *colmap, MATrec *mat
 {
   lprec *lp = mat->lp;
   int   i, ib, ie, ii, j, jj, jb, je, nz, *colend, *rownr, *rownr2, *indirect = NULL;
-  REAL  *value, *value2;
+  LPSREAL  *value, *value2;
 
   /* Check if there is something to insert */
   if((mat2 != NULL) && ((mat2->col_tag == NULL) || (mat2->col_tag[0] <= 0) || (mat_nonzeros(mat2) == 0)))
@@ -588,7 +588,7 @@ STATIC int mat_zerocompact(MATrec *mat)
 STATIC int mat_rowcompact(MATrec *mat, MYBOOL dozeros)
 {
   int  i, ie, ii, j, nn, *colend, *rownr;
-  REAL *value;
+  LPSREAL *value;
 
   nn = 0;
   ie = 0;
@@ -766,7 +766,7 @@ STATIC int mat_shiftcols(MATrec *mat, int *bbase, int delta, LLrec *varmap)
 STATIC MATrec *mat_extractmat(MATrec *mat, LLrec *rowmap, LLrec *colmap, MYBOOL negated)
 {
   int    *rownr, *colnr, xa, na;
-  REAL   *value;
+  LPSREAL   *value;
   MATrec *newmat = mat_create(mat->lp, mat->rows, mat->columns, mat->epsvalue);
 
   /* Initialize */
@@ -788,11 +788,11 @@ STATIC MATrec *mat_extractmat(MATrec *mat, LLrec *rowmap, LLrec *colmap, MYBOOL 
   return( newmat );
 }
 
-STATIC MYBOOL mat_setcol(MATrec *mat, int colno, int count, REAL *column, int *rowno, MYBOOL doscale, MYBOOL checkrowmode)
+STATIC MYBOOL mat_setcol(MATrec *mat, int colno, int count, LPSREAL *column, int *rowno, MYBOOL doscale, MYBOOL checkrowmode)
 {
   int    i, jj = 0, elmnr, orignr, newnr, firstrow;
   MYBOOL *addto = NULL, isA, isNZ;
-  REAL   value, saved = 0;
+  LPSREAL   value, saved = 0;
   lprec  *lp = mat->lp;
 
   /* Check if we are in row order mode and should add as row instead;
@@ -809,7 +809,7 @@ STATIC MYBOOL mat_setcol(MATrec *mat, int colno, int count, REAL *column, int *r
     return( FALSE );
   if(isNZ && (count > 0)) {
     if(count > 1)
-      sortREALByINT(column, rowno, count, 0, TRUE);
+      sortLPSREALByINT(column, rowno, count, 0, TRUE);
     if((rowno[0] < 0) || (rowno[count-1] > mat->rows))
       return( FALSE );
   }
@@ -946,9 +946,9 @@ STATIC MYBOOL mat_mergemat(MATrec *target, MATrec *source, MYBOOL usecolmap)
 {
   lprec *lp = target->lp;
   int   i, ix, iy, n, *colmap = NULL;
-  REAL  *colvalue = NULL;
+  LPSREAL  *colvalue = NULL;
 
-  if((target->rows < source->rows) || !allocREAL(lp, &colvalue, target->rows+1, FALSE))
+  if((target->rows < source->rows) || !allocLPSREAL(lp, &colvalue, target->rows+1, FALSE))
     return( FALSE );
 
   if(usecolmap) {
@@ -988,11 +988,11 @@ STATIC int mat_nz_unused(MATrec *mat)
   return( mat->mat_alloc - mat->col_end[mat->columns] );
 }
 
-STATIC MYBOOL mat_setrow(MATrec *mat, int rowno, int count, REAL *row, int *colno, MYBOOL doscale, MYBOOL checkrowmode)
+STATIC MYBOOL mat_setrow(MATrec *mat, int rowno, int count, LPSREAL *row, int *colno, MYBOOL doscale, MYBOOL checkrowmode)
 {
   int    k, kk, i, ii, j, jj = 0, jj_j, elmnr, orignr, newnr, firstcol, rownr, colnr;
   MYBOOL *addto = NULL, isA, isNZ;
-  REAL   value, saved = 0;
+  LPSREAL   value, saved = 0;
   lprec  *lp = mat->lp;
 
   /* Check if we are in row order mode and should add as column instead;
@@ -1011,7 +1011,7 @@ STATIC MYBOOL mat_setrow(MATrec *mat, int rowno, int count, REAL *row, int *coln
     return( FALSE );
   if(isNZ && (count > 0)) {
     if(count > 1)
-      sortREALByINT(row, colno, count, 0, TRUE);
+      sortLPSREALByINT(row, colno, count, 0, TRUE);
     if((colno[0] < 1) || (colno[count-1] > mat->columns))
       return( FALSE );
   }
@@ -1382,11 +1382,11 @@ Done:
 
 }
 
-STATIC int mat_appendrow(MATrec *mat, int count, REAL *row, int *colno, REAL mult, MYBOOL checkrowmode)
+STATIC int mat_appendrow(MATrec *mat, int count, LPSREAL *row, int *colno, LPSREAL mult, MYBOOL checkrowmode)
 {
   int    i, j, jj = 0, stcol, elmnr, orignr, newnr, firstcol;
   MYBOOL *addto = NULL, isA, isNZ;
-  REAL   value, saved = 0;
+  LPSREAL   value, saved = 0;
   lprec  *lp = mat->lp;
 
   /* Check if we are in row order mode and should add as column instead;
@@ -1399,7 +1399,7 @@ STATIC int mat_appendrow(MATrec *mat, int count, REAL *row, int *colno, REAL mul
   isNZ = (MYBOOL) (colno != NULL);
   if(isNZ && (count > 0)) {
     if(count > 1)
-      sortREALByINT(row, colno, count, 0, TRUE);
+      sortLPSREALByINT(row, colno, count, 0, TRUE);
     if((colno[0] < 1) || (colno[count-1] > mat->columns))
       return( 0 );
   }
@@ -1514,10 +1514,10 @@ Done:
 
 }
 
-STATIC int mat_appendcol(MATrec *mat, int count, REAL *column, int *rowno, REAL mult, MYBOOL checkrowmode)
+STATIC int mat_appendcol(MATrec *mat, int count, LPSREAL *column, int *rowno, LPSREAL mult, MYBOOL checkrowmode)
 {
   int     i, row, elmnr, lastnr;
-  REAL    value;
+  LPSREAL    value;
   MYBOOL  isA, isNZ;
   lprec   *lp = mat->lp;
 
@@ -1552,7 +1552,7 @@ STATIC int mat_appendcol(MATrec *mat, int count, REAL *column, int *rowno, REAL 
   isNZ = (MYBOOL) (column == NULL || rowno != NULL);
   if(isNZ && (count > 0)) {
     if(count > 1)
-      sortREALByINT(column, rowno, count, 0, TRUE);
+      sortLPSREALByINT(column, rowno, count, 0, TRUE);
     if((rowno[0] < 0))
       return( 0 );
   }
@@ -1711,7 +1711,7 @@ STATIC MYBOOL mat_validate(MATrec *mat)
   return( TRUE );
 }
 
-MYBOOL mat_get_data(lprec *lp, int matindex, MYBOOL isrow, int **rownr, int **colnr, REAL **value)
+MYBOOL mat_get_data(lprec *lp, int matindex, MYBOOL isrow, int **rownr, int **colnr, LPSREAL **value)
 {
   MATrec *mat = lp->matA;
 
@@ -1921,7 +1921,7 @@ Done:
   return( exitvalue );
 }
 
-STATIC REAL mat_getitem(MATrec *mat, int row, int column)
+STATIC LPSREAL mat_getitem(MATrec *mat, int row, int column)
 {
   int elmnr;
 
@@ -1939,7 +1939,7 @@ STATIC REAL mat_getitem(MATrec *mat, int row, int column)
   }
 }
 
-STATIC MYBOOL mat_additem(MATrec *mat, int row, int column, REAL delta)
+STATIC MYBOOL mat_additem(MATrec *mat, int row, int column, LPSREAL delta)
 {
   int elmnr;
 
@@ -1961,12 +1961,12 @@ STATIC MYBOOL mat_additem(MATrec *mat, int row, int column, REAL delta)
   }
 }
 
-STATIC MYBOOL mat_setitem(MATrec *mat, int row, int column, REAL value)
+STATIC MYBOOL mat_setitem(MATrec *mat, int row, int column, LPSREAL value)
 {
   return( mat_setvalue(mat, row, column, value, FALSE) );
 }
 
-STATIC void mat_multrow(MATrec *mat, int row_nr, REAL mult)
+STATIC void mat_multrow(MATrec *mat, int row_nr, LPSREAL mult)
 {
   int i, k1, k2;
 
@@ -1997,7 +1997,7 @@ STATIC void mat_multrow(MATrec *mat, int row_nr, REAL mult)
   }
 }
 
-STATIC void mat_multcol(MATrec *mat, int col_nr, REAL mult, MYBOOL DoObj)
+STATIC void mat_multcol(MATrec *mat, int col_nr, LPSREAL mult, MYBOOL DoObj)
 {
   int    i, ie;
   MYBOOL isA;
@@ -2024,11 +2024,11 @@ STATIC void mat_multcol(MATrec *mat, int col_nr, REAL mult, MYBOOL DoObj)
   }
 }
 
-STATIC void mat_multadd(MATrec *mat, REAL *lhsvector, int varnr, REAL mult)
+STATIC void mat_multadd(MATrec *mat, LPSREAL *lhsvector, int varnr, LPSREAL mult)
 {
   int               colnr;
   register int      ib, ie, *matRownr;
-  register REAL     *matValue;
+  register LPSREAL     *matValue;
 
   /* Handle case of a slack variable */
   if(varnr <= mat->lp->rows) {
@@ -2059,7 +2059,7 @@ STATIC void mat_multadd(MATrec *mat, REAL *lhsvector, int varnr, REAL mult)
 
 }
 
-STATIC MYBOOL mat_setvalue(MATrec *mat, int Row, int Column, REAL Value, MYBOOL doscale)
+STATIC MYBOOL mat_setvalue(MATrec *mat, int Row, int Column, LPSREAL Value, MYBOOL doscale)
 {
   int    elmnr, lastelm, i, RowA = Row, ColumnA = Column;
   MYBOOL isA;
@@ -2170,7 +2170,7 @@ STATIC MYBOOL mat_setvalue(MATrec *mat, int Row, int Column, REAL Value, MYBOOL 
   return(TRUE);
 }
 
-STATIC MYBOOL mat_appendvalue(MATrec *mat, int Row, REAL Value)
+STATIC MYBOOL mat_appendvalue(MATrec *mat, int Row, LPSREAL Value)
 {
   int *elmnr, Column = mat->columns;
 
@@ -2250,11 +2250,11 @@ STATIC int mat_findcolumn(MATrec *mat, int matindex)
   return(j);
 }
 
-STATIC int mat_expandcolumn(MATrec *mat, int colnr, REAL *column, int *nzlist, MYBOOL signedA)
+STATIC int mat_expandcolumn(MATrec *mat, int colnr, LPSREAL *column, int *nzlist, MYBOOL signedA)
 {
   MYBOOL  isA = (MYBOOL) (mat->lp->matA == mat);
   int     i, ie, j, nzcount = 0;
-  REAL    *matValue;
+  LPSREAL    *matValue;
   int     *matRownr;
 
   signedA &= isA;
@@ -2291,11 +2291,11 @@ STATIC MYBOOL mat_computemax(MATrec *mat)
   int  *rownr = &COL_MAT_ROWNR(0),
        *colnr = &COL_MAT_COLNR(0),
        i = 0, ie = mat->col_end[mat->columns], ez = 0;
-  REAL *value = &COL_MAT_VALUE(0), epsmachine = mat->lp->epsmachine, absvalue;
+  LPSREAL *value = &COL_MAT_VALUE(0), epsmachine = mat->lp->epsmachine, absvalue;
 
   /* Prepare arrays */
-  if(!allocREAL(mat->lp, &mat->colmax, mat->columns_alloc+1, AUTOMATIC) ||
-     !allocREAL(mat->lp, &mat->rowmax, mat->rows_alloc+1, AUTOMATIC))
+  if(!allocLPSREAL(mat->lp, &mat->colmax, mat->columns_alloc+1, AUTOMATIC) ||
+     !allocLPSREAL(mat->lp, &mat->rowmax, mat->rows_alloc+1, AUTOMATIC))
      return( FALSE );
   MEMCLEAR(mat->colmax, mat->columns+1);
   MEMCLEAR(mat->rowmax, mat->rows+1);
@@ -2357,9 +2357,9 @@ STATIC MYBOOL mat_transpose(MATrec *mat)
       swapPTR((void **) &mat->col_mat, (void **) &newmat);
       FREE(newmat);
 #else /*if MatrixColAccess==CAM_Vector*/
-      REAL *newValue = NULL;
+      LPSREAL *newValue = NULL;
       int  *newRownr = NULL;
-      allocREAL(mat->lp, &newValue, mat->mat_alloc, FALSE);
+      allocLPSREAL(mat->lp, &newValue, mat->mat_alloc, FALSE);
       allocINT(mat->lp, &newRownr, mat->mat_alloc, FALSE);
 
       j = mat->row_end[0];
@@ -2427,11 +2427,11 @@ STATIC int incrementUndoLadder(DeltaVrec *DV)
   DV->tracker->columns++;
   return(DV->activelevel);
 }
-STATIC MYBOOL modifyUndoLadder(DeltaVrec *DV, int itemno, REAL target[], REAL newvalue)
+STATIC MYBOOL modifyUndoLadder(DeltaVrec *DV, int itemno, LPSREAL target[], LPSREAL newvalue)
 {
   MYBOOL status;
   int    varindex = itemno;
-  REAL   oldvalue = target[itemno];
+  LPSREAL   oldvalue = target[itemno];
 
 #ifndef UseMilpSlacksRCF  /* Check if we should include ranged constraints */
   varindex -= DV->lp->rows;
@@ -2447,7 +2447,7 @@ STATIC int countsUndoLadder(DeltaVrec *DV)
   else
     return( 0 );
 }
-STATIC int restoreUndoLadder(DeltaVrec *DV, REAL target[])
+STATIC int restoreUndoLadder(DeltaVrec *DV, LPSREAL target[])
 {
   int iD = 0;
 
@@ -2456,7 +2456,7 @@ STATIC int restoreUndoLadder(DeltaVrec *DV, REAL target[])
     int    iB = mat->col_end[DV->activelevel-1],
            iE = mat->col_end[DV->activelevel],
            *matRownr = &COL_MAT_ROWNR(iB);
-    REAL   *matValue = &COL_MAT_VALUE(iB),
+    LPSREAL   *matValue = &COL_MAT_VALUE(iB),
            oldvalue;
 
     /* Restore the values */
@@ -2497,7 +2497,7 @@ STATIC MYBOOL freeUndoLadder(DeltaVrec **DV)
   return(TRUE);
 }
 
-STATIC MYBOOL appendUndoPresolve(lprec *lp, MYBOOL isprimal, REAL beta, int colnrDep)
+STATIC MYBOOL appendUndoPresolve(lprec *lp, MYBOOL isprimal, LPSREAL beta, int colnrDep)
 {
   MATrec *mat;
 
@@ -2532,7 +2532,7 @@ STATIC MYBOOL appendUndoPresolve(lprec *lp, MYBOOL isprimal, REAL beta, int coln
   else
     return( FALSE );
 }
-STATIC MYBOOL addUndoPresolve(lprec *lp, MYBOOL isprimal, int colnrElim, REAL alpha, REAL beta, int colnrDep)
+STATIC MYBOOL addUndoPresolve(lprec *lp, MYBOOL isprimal, int colnrElim, LPSREAL alpha, LPSREAL beta, int colnrDep)
 {
   int       ix;
   DeltaVrec **DV;
@@ -2709,7 +2709,7 @@ STATIC MYBOOL addUndoPresolve(lprec *lp, MYBOOL isprimal, int colnrElim, REAL al
 STATIC MYBOOL __WINAPI invert(lprec *lp, MYBOOL shiftbounds, MYBOOL final)
 {
   MYBOOL *usedpos, resetbasis;
-  REAL   test;
+  LPSREAL   test;
   int    k, i, j;
   int    singularities, usercolB;
 
@@ -2785,12 +2785,12 @@ STATIC MYBOOL __WINAPI invert(lprec *lp, MYBOOL shiftbounds, MYBOOL final)
 
   /* Recompute the RHS ( Ref. lp_solve inverse logic and Chvatal p. 121 ) */
 #ifdef DebugInv
-  blockWriteLREAL(stdout, "RHS-values pre invert", lp->rhs, 0, lp->rows);
+  blockWriteLLPSREAL(stdout, "RHS-values pre invert", lp->rhs, 0, lp->rows);
 #endif
   recompute_solution(lp, shiftbounds);
   restartPricer(lp, AUTOMATIC);
 #ifdef DebugInv
-  blockWriteLREAL(stdout, "RHS-values post invert", lp->rhs, 0, lp->rows);
+  blockWriteLLPSREAL(stdout, "RHS-values post invert", lp->rhs, 0, lp->rows);
 #endif
 
 Cleanup:
@@ -2808,13 +2808,13 @@ Cleanup:
 } /* invert */
 
 
-STATIC MYBOOL fimprove(lprec *lp, REAL *pcol, int *nzidx, REAL roundzero)
+STATIC MYBOOL fimprove(lprec *lp, LPSREAL *pcol, int *nzidx, LPSREAL roundzero)
 {
-  REAL   *errors, sdp;
+  LPSREAL   *errors, sdp;
   int    j;
   MYBOOL Ok = TRUE;
 
-  allocREAL(lp, &errors, lp->rows + 1, FALSE);
+  allocLPSREAL(lp, &errors, lp->rows + 1, FALSE);
   if(errors == NULL) {
     Ok = FALSE;
     return(Ok);
@@ -2840,13 +2840,13 @@ STATIC MYBOOL fimprove(lprec *lp, REAL *pcol, int *nzidx, REAL roundzero)
   return(Ok);
 }
 
-STATIC MYBOOL bimprove(lprec *lp, REAL *rhsvector, int *nzidx, REAL roundzero)
+STATIC MYBOOL bimprove(lprec *lp, LPSREAL *rhsvector, int *nzidx, LPSREAL roundzero)
 {
   int    j;
-  REAL   *errors, err, maxerr;
+  LPSREAL   *errors, err, maxerr;
   MYBOOL Ok = TRUE;
 
-  allocREAL(lp, &errors, lp->sum + 1, FALSE);
+  allocLPSREAL(lp, &errors, lp->sum + 1, FALSE);
   if(errors == NULL) {
     Ok = FALSE;
     return(Ok);
@@ -2889,7 +2889,7 @@ STATIC MYBOOL bimprove(lprec *lp, REAL *rhsvector, int *nzidx, REAL roundzero)
   return(Ok);
 }
 
-STATIC void ftran(lprec *lp, REAL *rhsvector, int *nzidx, REAL roundzero)
+STATIC void ftran(lprec *lp, LPSREAL *rhsvector, int *nzidx, LPSREAL roundzero)
 {
 #if 0
   if(is_action(lp->improve, IMPROVE_SOLUTION) && lp->bfp_pivotcount(lp))
@@ -2899,7 +2899,7 @@ STATIC void ftran(lprec *lp, REAL *rhsvector, int *nzidx, REAL roundzero)
     lp->bfp_ftran_normal(lp, rhsvector, nzidx);
 }
 
-STATIC void btran(lprec *lp, REAL *rhsvector, int *nzidx, REAL roundzero)
+STATIC void btran(lprec *lp, LPSREAL *rhsvector, int *nzidx, LPSREAL roundzero)
 {
 #if 0
   if(is_action(lp->improve, IMPROVE_SOLUTION) && lp->bfp_pivotcount(lp))
@@ -2909,7 +2909,7 @@ STATIC void btran(lprec *lp, REAL *rhsvector, int *nzidx, REAL roundzero)
     lp->bfp_btran_normal(lp, rhsvector, nzidx);
 }
 
-STATIC MYBOOL fsolve(lprec *lp, int varin, REAL *pcol, int *nzidx, REAL roundzero, REAL ofscalar, MYBOOL prepareupdate)
+STATIC MYBOOL fsolve(lprec *lp, int varin, LPSREAL *pcol, int *nzidx, LPSREAL roundzero, LPSREAL ofscalar, MYBOOL prepareupdate)
 /* Was setpivcol in versions earlier than 4.0.1.8 - KE */
 {
   MYBOOL ok = TRUE;
@@ -2929,7 +2929,7 @@ STATIC MYBOOL fsolve(lprec *lp, int varin, REAL *pcol, int *nzidx, REAL roundzer
 } /* fsolve */
 
 
-STATIC MYBOOL bsolve(lprec *lp, int row_nr, REAL *rhsvector, int *nzidx, REAL roundzero, REAL ofscalar)
+STATIC MYBOOL bsolve(lprec *lp, int row_nr, LPSREAL *rhsvector, int *nzidx, LPSREAL roundzero, LPSREAL ofscalar)
 {
   MYBOOL ok = TRUE;
 
@@ -2946,8 +2946,8 @@ STATIC MYBOOL bsolve(lprec *lp, int row_nr, REAL *rhsvector, int *nzidx, REAL ro
 
 
 /* Vector compression and expansion routines */
-STATIC MYBOOL vec_compress(REAL *densevector, int startpos, int endpos, REAL epsilon,
-                           REAL *nzvector, int *nzindex)
+STATIC MYBOOL vec_compress(LPSREAL *densevector, int startpos, int endpos, LPSREAL epsilon,
+                           LPSREAL *nzvector, int *nzindex)
 {
   int n;
 
@@ -2970,7 +2970,7 @@ STATIC MYBOOL vec_compress(REAL *densevector, int startpos, int endpos, REAL eps
   return( TRUE );
 }
 
-STATIC MYBOOL vec_expand(REAL *nzvector, int *nzindex, REAL *densevector, int startpos, int endpos)
+STATIC MYBOOL vec_expand(LPSREAL *nzvector, int *nzindex, LPSREAL *densevector, int startpos, int endpos)
 {
   int i, n;
 
@@ -3000,7 +3000,7 @@ STATIC MYBOOL get_colIndexA(lprec *lp, int varset, int *colindex, MYBOOL append)
 {
   int      i, varnr, P1extraDim, vb, ve, n, nrows = lp->rows, nsum = lp->sum;
   MYBOOL   omitfixed, omitnonfixed;
-  REAL     v;
+  LPSREAL     v;
 
   /* Find what variable range to scan - default is {SCAN_USERVARS} */
   /* First determine the starting position; add from the top, going down */
@@ -3076,16 +3076,16 @@ STATIC MYBOOL get_colIndexA(lprec *lp, int varset, int *colindex, MYBOOL append)
   return(TRUE);
 }
 
-STATIC int prod_Ax(lprec *lp, int *coltarget, REAL *input, int *nzinput,
-                              REAL roundzero, REAL ofscalar,
-                              REAL *output, int *nzoutput, int roundmode)
+STATIC int prod_Ax(lprec *lp, int *coltarget, LPSREAL *input, int *nzinput,
+                              LPSREAL roundzero, LPSREAL ofscalar,
+                              LPSREAL *output, int *nzoutput, int roundmode)
 /* prod_Ax is only used in fimprove; note that it is NOT VALIDATED/verified as of 20030801 - KE */
 {
   int      j, colnr, ib, ie, vb, ve;
   MYBOOL   localset, localnz = FALSE, isRC;
   MATrec   *mat = lp->matA;
-  REAL     sdp;
-  REAL     *value;
+  LPSREAL     sdp;
+  LPSREAL     *value;
   int      *rownr;
 
   /* Find what variable range to scan - default is {SCAN_USERVARS} */
@@ -3144,19 +3144,19 @@ STATIC int prod_Ax(lprec *lp, int *coltarget, REAL *input, int *nzinput,
 }
 
 STATIC int prod_xA(lprec *lp, int *coltarget,
-                              REAL *input, int *nzinput, REAL roundzero, REAL ofscalar,
-                              REAL *output, int *nzoutput, int roundmode)
+                              LPSREAL *input, int *nzinput, LPSREAL roundzero, LPSREAL ofscalar,
+                              LPSREAL *output, int *nzoutput, int roundmode)
 /* Note that the dot product xa is stored at the active column index of A, i.e. of a.
    This means that if the basis only contains non-slack variables, output may point to
    the same vector as input, without overwriting the [0..rows] elements. */
 {
   int      colnr, rownr, varnr, ib, ie, vb, ve, nrows = lp->rows;
   MYBOOL   localset, localnz = FALSE, includeOF, isRC;
-  REALXP   vmax;
-  register REALXP v;
+  LPSREALXP   vmax;
+  register LPSREALXP v;
   int      inz, *rowin, countNZ = 0;
   MATrec   *mat = lp->matA;
-  register REAL     *matValue;
+  register LPSREAL     *matValue;
   register int      *matRownr;
 
   /* Clean output area (only necessary if we are returning the full vector) */
@@ -3311,14 +3311,14 @@ STATIC int prod_xA(lprec *lp, int *coltarget,
 
     /* Special handling of small reduced cost values */
     if(!isRC || (my_chsign(lp->is_lower[varnr], v) < 0)) {
-      SETMAX(vmax, fabs((REAL) v));
+      SETMAX(vmax, fabs((LPSREAL) v));
     }
     if(v != 0) {
       countNZ++;
       if(nzoutput != NULL)
         nzoutput[countNZ] = varnr;
     }
-    output[varnr] = (REAL) v;
+    output[varnr] = (LPSREAL) v;
   }
 
   /* Compute reduced cost if this option is active */
@@ -3358,17 +3358,17 @@ STATIC int prod_xA(lprec *lp, int *coltarget,
 }
 
 STATIC MYBOOL prod_xA2(lprec *lp, int *coltarget,
-                                  REAL *prow, REAL proundzero, int *nzprow,
-                                  REAL *drow, REAL droundzero, int *nzdrow,
-                                  REAL ofscalar, int roundmode)
+                                  LPSREAL *prow, LPSREAL proundzero, int *nzprow,
+                                  LPSREAL *drow, LPSREAL droundzero, int *nzdrow,
+                                  LPSREAL ofscalar, int roundmode)
 {
   int      varnr, colnr, ib, ie, vb, ve, nrows = lp->rows;
   MYBOOL   includeOF, isRC;
-  REALXP   dmax, pmax;
-  register REALXP d, p;
+  LPSREALXP   dmax, pmax;
+  register LPSREALXP d, p;
   MATrec   *mat = lp->matA;
-  REAL     value;
-  register REAL     *matValue;
+  LPSREAL     value;
+  register LPSREAL     *matValue;
   register int      *matRownr;
   MYBOOL localset;
 
@@ -3468,8 +3468,8 @@ STATIC MYBOOL prod_xA2(lprec *lp, int *coltarget,
       }
     }
 
-    SETMAX(pmax, fabs((REAL) p));
-    prow[varnr] = (REAL) p;
+    SETMAX(pmax, fabs((LPSREAL) p));
+    prow[varnr] = (LPSREAL) p;
     if((nzprow != NULL) && (p != 0)) {
       (*nzprow)++;
       nzprow[*nzprow] = varnr;
@@ -3477,9 +3477,9 @@ STATIC MYBOOL prod_xA2(lprec *lp, int *coltarget,
 
     /* Special handling of reduced cost rounding */
     if(!isRC || (my_chsign(lp->is_lower[varnr], d) < 0)) {
-      SETMAX(dmax, fabs((REAL) d));
+      SETMAX(dmax, fabs((LPSREAL) d));
     }
-    drow[varnr] = (REAL) d;
+    drow[varnr] = (LPSREAL) d;
     if((nzdrow != NULL) && (d != 0)) {
       (*nzdrow)++;
       nzdrow[*nzdrow] = varnr;
@@ -3532,10 +3532,10 @@ STATIC MYBOOL prod_xA2(lprec *lp, int *coltarget,
 }
 
 STATIC void bsolve_xA2(lprec *lp, int* coltarget,
-                                  int row_nr1, REAL *vector1, REAL roundzero1, int *nzvector1,
-                                  int row_nr2, REAL *vector2, REAL roundzero2, int *nzvector2, int roundmode)
+                                  int row_nr1, LPSREAL *vector1, LPSREAL roundzero1, int *nzvector1,
+                                  int row_nr2, LPSREAL *vector2, LPSREAL roundzero2, int *nzvector2, int roundmode)
 {
-  REAL ofscalar = 1.0;
+  LPSREAL ofscalar = 1.0;
 
  /* Clear and initialize first vector */
   if(nzvector1 == NULL)

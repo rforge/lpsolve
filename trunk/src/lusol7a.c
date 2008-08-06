@@ -18,10 +18,10 @@
    ------------------------------------------------------------------
    09 May 1988: First f77 version.
    ================================================================== */
-void LU7ADD(LUSOLrec *LUSOL, int JADD, REAL V[], int LENL, int *LENU,
-  int *LROW, int NRANK, int *INFORM, int *KLAST, REAL *VNORM)
+void LU7ADD(LUSOLrec *LUSOL, int JADD, LPSREAL V[], int LENL, int *LENU,
+  int *LROW, int NRANK, int *INFORM, int *KLAST, LPSREAL *VNORM)
 {
-  REAL SMALL;
+  LPSREAL SMALL;
   int  K, I, LENI, MINFRE, NFREE, LR1, LR2, L;
 #ifndef LUSOLFastMove
   int J;
@@ -146,10 +146,10 @@ void LU7CYC(LUSOLrec *LUSOL, int KFIRST, int KLAST, int IX[])
    09 May 1988: First f77 version.
                 No longer calls lu7for at end.  lu8rpc, lu8mod do so.
    ================================================================== */
-void LU7ELM(LUSOLrec *LUSOL, int JELM, REAL V[], int *LENL,
-            int *LROW, int NRANK, int *INFORM, REAL *DIAG)
+void LU7ELM(LUSOLrec *LUSOL, int JELM, LPSREAL V[], int *LENL,
+            int *LROW, int NRANK, int *INFORM, LPSREAL *DIAG)
 {
-  REAL VI, VMAX, SMALL;
+  LPSREAL VI, VMAX, SMALL;
   int  NRANK1, MINFRE, NFREE, KMAX, L, K, I, LMAX, IMAX, L1, L2;
 
 #ifdef ForceInitialization
@@ -264,12 +264,12 @@ x990:
    09 May 1988: First f77 version.
    ================================================================== */
 void LU7FOR(LUSOLrec *LUSOL, int KFIRST, int KLAST, int *LENL, int *LENU,
-                     int *LROW, int *INFORM, REAL *DIAG)
+                     int *LROW, int *INFORM, LPSREAL *DIAG)
 {
   MYBOOL SWAPPD;
   int    KBEGIN, IW, LENW, LW1, LW2, JFIRST, MINFRE, NFREE, L, J, KSTART, KSTOP, K,
          LFIRST, IV, LENV, LV1, JLAST, LV2, LV3, LV, JV, LW, LDIAG, LIMIT;
-  REAL   AMULT, LTOL, USPACE, SMALL, VJ, WJ;
+  LPSREAL   AMULT, LTOL, USPACE, SMALL, VJ, WJ;
 
   LTOL   = LUSOL->parmlu[LUSOL_RP_UPDATEMAX_Lij];
   SMALL  = LUSOL->parmlu[LUSOL_RP_ZEROTOLERANCE];
@@ -567,9 +567,9 @@ x990:
    09 May 1988: First f77 version.
    ================================================================== */
 void LU7RNK(LUSOLrec *LUSOL, int JSING, int *LENU,
-            int *LROW, int *NRANK, int *INFORM, REAL *DIAG)
+            int *LROW, int *NRANK, int *INFORM, LPSREAL *DIAG)
 {
-  REAL UTOL1, UMAX;
+  LPSREAL UTOL1, UMAX;
   int  IW, LENW, L1, L2, LMAX, L, JMAX, KMAX;
 
 #ifdef ForceInitialization

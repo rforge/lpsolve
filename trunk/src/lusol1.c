@@ -32,15 +32,15 @@
    07 May 2002: Another break needed at end of first loop.
    07 May 2002: Current version of lu1DCP.
    ================================================================== */
-void LU1DCP(LUSOLrec *LUSOL, REAL DA[], int LDA, int M, int N, REAL SMALL,
+void LU1DCP(LUSOLrec *LUSOL, LPSREAL DA[], int LDA, int M, int N, LPSREAL SMALL,
             int *NSING, int IPVT[], int IX[])
 {
 
   int       I, J, K, KP1, L, LAST, LENCOL, IMAX, JMAX, JLAST, JNEW;
-  REAL      AIJMAX, AJMAX;
-  register REAL T;
+  LPSREAL      AIJMAX, AJMAX;
+  register LPSREAL T;
 #ifdef LUSOLFastDenseIndex
-  register REAL *DA1, *DA2;
+  register LPSREAL *DA1, *DA2;
   int IDA1, IDA2;
 #else
   register int IDA1, IDA2;
@@ -226,13 +226,13 @@ x10:
    21 Dec 1994: Bug found via example from Steve Dirkse.
                 Loop 100 added to set ipvt(*) for singular rows.
    ================================================================== */
-void LU1DPP(LUSOLrec *LUSOL, REAL DA[], int LDA, int M, int N, REAL SMALL,
+void LU1DPP(LUSOLrec *LUSOL, LPSREAL DA[], int LDA, int M, int N, LPSREAL SMALL,
             int *NSING, int IPVT[], int IX[])
 {
   int            I, J, K, KP1, L, LAST, LENCOL;
-  register REAL T;
+  register LPSREAL T;
 #ifdef LUSOLFastDenseIndex
-  register REAL *DA1, *DA2;
+  register LPSREAL *DA1, *DA2;
   int IDA1, IDA2;
 #else
   register int IDA1, IDA2;
@@ -515,7 +515,7 @@ void LU1PQ3(LUSOLrec *LUSOL, int MN, int LEN[], int IPERM[], int IW[], int *NRAN
    27 Mar 2001: Decided to use only ind(l) > 0 and = 0 in lu1fad.
                 Still have to keep entries with len(i) = 0.
    ================================================================== */
-void LU1REC(LUSOLrec *LUSOL, int N, MYBOOL REALS, int *LTOP,
+void LU1REC(LUSOLrec *LUSOL, int N, MYBOOL LPSREALS, int *LTOP,
                              int IND[], int LEN[], int LOC[])
 {
   int  NEMPTY, I, LENI, L, LEND, K, KLAST, ILAST, LPRINT;
@@ -542,7 +542,7 @@ void LU1REC(LUSOLrec *LUSOL, int N, MYBOOL REALS, int *LTOP,
     if(I>0) {
       K++;
       IND[K] = I;
-      if(REALS)
+      if(LPSREALS)
         LUSOL->a[K] = LUSOL->a[L];
     }
     else if(I<-N) {
@@ -551,7 +551,7 @@ void LU1REC(LUSOLrec *LUSOL, int N, MYBOOL REALS, int *LTOP,
       ILAST = I;
       K++;
       IND[K] = LEN[I];
-      if(REALS)
+      if(LPSREALS)
         LUSOL->a[K] = LUSOL->a[L];
       LOC[I] = KLAST+1;
       LEN[I] = K-KLAST;
@@ -572,7 +572,7 @@ void LU1REC(LUSOLrec *LUSOL, int N, MYBOOL REALS, int *LTOP,
   LPRINT = LUSOL->luparm[LUSOL_IP_PRINTLEVEL];
   if(LPRINT>=LUSOL_MSG_PIVOT)
     LUSOL_report(LUSOL, 0, "lu1rec.  File compressed from %d to %d\n",
-                        *LTOP,K,REALS,NEMPTY);
+                        *LTOP,K,LPSREALS,NEMPTY);
 /*      ncp */
   LUSOL->luparm[LUSOL_IP_COMPRESSIONS_LU]++;
 /*      Return ilast in ind(ltop + 1). */
@@ -660,16 +660,16 @@ void LU1SLK(LUSOLrec *LUSOL)
                 have ilast and jlast.)
    ================================================================== */
 void LU1GAU(LUSOLrec *LUSOL, int MELIM, int NSPARE,
-            REAL SMALL, int LPIVC1, int LPIVC2, int *LFIRST, int LPIVR2,
+            LPSREAL SMALL, int LPIVC1, int LPIVC2, int *LFIRST, int LPIVR2,
             int LFREE, int MINFRE, int ILAST, int *JLAST, int *LROW, int *LCOL,
             int *LU, int *NFILL,
-            int MARK[],  REAL AL[], int MARKL[], REAL AU[], int IFILL[], int JFILL[])
+            int MARK[],  LPSREAL AL[], int MARKL[], LPSREAL AU[], int IFILL[], int JFILL[])
 {
   MYBOOL ATEND;
   int    LR, J, LENJ, NFREE, LC1, LC2, NDONE, NDROP, L, I, LL, K,
          LR1, LAST, LREP, L1, L2, LC, LENI;
-  register REAL UJ;
-  REAL   AIJ;
+  register LPSREAL UJ;
+  LPSREAL   AIJ;
 
   for(LR = *LFIRST; LR <= LPIVR2; LR++) {
     J = LUSOL->indr[LR];
@@ -898,12 +898,12 @@ x900:
                 large and dense.
    10 Sep 2000  TCP, aijtol added for Threshold Complete Pivoting.
    ================================================================== */
-void LU1MAR(LUSOLrec *LUSOL, int MAXMN, MYBOOL TCP, REAL AIJTOL, REAL LTOL,
+void LU1MAR(LUSOLrec *LUSOL, int MAXMN, MYBOOL TCP, LPSREAL AIJTOL, LPSREAL LTOL,
             int MAXCOL, int MAXROW, int *IBEST, int *JBEST, int *MBEST)
 {
   int  KBEST, NCOL, NROW, NZ1, NZ, LQ1, LQ2, LQ, J, LC1, LC2, LC, I, LEN1, MERIT, LP1,
        LP2, LP, LR1, LR2, LR;
-  REAL ABEST, LBEST, AMAX, AIJ, CMAX;
+  LPSREAL ABEST, LBEST, AMAX, AIJ, CMAX;
 
   ABEST = ZERO;
   LBEST = ZERO;
@@ -1149,11 +1149,11 @@ x900:
                 holds the largest element in each column.
    09 May 2002: Current version of lu1mCP.
    ================================================================== */
-void LU1MCP(LUSOLrec *LUSOL, REAL AIJTOL, int *IBEST, int *JBEST, int *MBEST,
-            int HLEN, REAL HA[], int HJ[])
+void LU1MCP(LUSOLrec *LUSOL, LPSREAL AIJTOL, int *IBEST, int *JBEST, int *MBEST,
+            int HLEN, LPSREAL HA[], int HJ[])
 {
   int  J, KHEAP, LC, LC1, LC2, LENJ, MAXCOL, NCOL, NZ1, I, LEN1, MERIT;
-  REAL ABEST, AIJ, AMAX, CMAX, LBEST;
+  LPSREAL ABEST, AIJ, AMAX, CMAX, LBEST;
 
 /*      ------------------------------------------------------------------
         Search up to maxcol columns stored at the top of the heap.
@@ -1260,12 +1260,12 @@ x900:
    11 Jun 2002: First version of lu1mRP derived from lu1mar.
    11 Jun 2002: Current version of lu1mRP.
    ================================================================== */
-void LU1MRP(LUSOLrec *LUSOL, int MAXMN, REAL LTOL, int MAXCOL, int MAXROW,
-  int *IBEST, int *JBEST, int *MBEST, REAL AMAXR[])
+void LU1MRP(LUSOLrec *LUSOL, int MAXMN, LPSREAL LTOL, int MAXCOL, int MAXROW,
+  int *IBEST, int *JBEST, int *MBEST, LPSREAL AMAXR[])
 {
   int  I, J, KBEST, LC, LC1, LC2, LEN1, LP, LP1, LP2, LQ, LQ1,
        LQ2, LR, LR1, LR2, MERIT, NCOL, NROW, NZ, NZ1;
-  REAL ABEST, AIJ, AMAX, ATOLI, ATOLJ;
+  LPSREAL ABEST, AIJ, AMAX, ATOLI, ATOLJ;
 
 /*      ------------------------------------------------------------------
         Search cols of length nz = 1, then rows of length nz = 1,
@@ -1451,11 +1451,11 @@ x900:
                 There is no safeguard to ensure that A is symmetric.
    14 Dec 2002: Current version of lu1mSP.
    ================================================================== */
-void LU1MSP(LUSOLrec *LUSOL, int MAXMN, REAL LTOL, int MAXCOL,
+void LU1MSP(LUSOLrec *LUSOL, int MAXMN, LPSREAL LTOL, int MAXCOL,
             int *IBEST, int *JBEST, int *MBEST)
 {
   int  I, J, KBEST, LC, LC1, LC2, LQ, LQ1, LQ2, MERIT, NCOL, NZ, NZ1;
-  REAL ABEST, AIJ, AMAX, ATOLJ;
+  LPSREAL ABEST, AIJ, AMAX, ATOLJ;
 
 /*      ------------------------------------------------------------------
         Search cols of length nz = 1, then cols of length nz = 2, etc.
@@ -1567,7 +1567,7 @@ x900:
 void LU1MXC(LUSOLrec *LUSOL, int K1, int K2, int IX[])
 {
   int  I, J, K, L, LC, LENJ;
-  REAL AMAX;
+  LPSREAL AMAX;
 
   for(K = K1; K <= K2; K++) {
     J = IX[K];
@@ -1600,15 +1600,15 @@ void LU1MXC(LUSOLrec *LUSOL, int K1, int K2, int IX[])
    11 Jun 2002: First version of lu1mxr.
                 Allow for empty columns.
    ================================================================== */
-void LU1MXR(LUSOLrec *LUSOL, int K1, int K2, int IX[], REAL AMAXR[])
+void LU1MXR(LUSOLrec *LUSOL, int K1, int K2, int IX[], LPSREAL AMAXR[])
 {
 #define FastMXR
 #ifdef FastMXR
   static int  I, *J, *IC, K, LC, LC1, LC2, LR, LR1, LR2;
-  static REAL AMAX;
+  static LPSREAL AMAX;
 #else
   int  I, J, K, LC, LC1, LC2, LR, LR1, LR2;
-  REAL AMAX;
+  LPSREAL AMAX;
 #endif
 
   for(K = K1; K <= K2; K++) {
@@ -1660,11 +1660,11 @@ void LU1MXR(LUSOLrec *LUSOL, int K1, int K2, int IX[], REAL AMAXR[])
 void LU1FUL(LUSOLrec *LUSOL, int LEND, int LU1, MYBOOL TPP,
             int MLEFT, int NLEFT, int NRANK, int NROWU,
             int *LENL, int *LENU, int *NSING,
-            MYBOOL KEEPLU, REAL SMALL, REAL D[], int IPVT[])
+            MYBOOL KEEPLU, LPSREAL SMALL, LPSREAL D[], int IPVT[])
 {
   int  L, I, J, IPBASE, LDBASE, LQ, LC1, LC2, LC, LD, LKK, LKN, LU, K, L1,
        L2, IBEST, JBEST, LA, LL, NROWD, NCOLD;
-  REAL AI, AJ;
+  LPSREAL AI, AJ;
 
 /*      ------------------------------------------------------------------
         If lu1pq3 moved any empty rows, reset ipinv = inverse of ip.
@@ -1806,8 +1806,8 @@ void LU1FUL(LUSOLrec *LUSOL, int LEND, int LU1, MYBOOL TPP,
    xx Feb 1985: Original version.
    17 Oct 2000: a, indc, indr now have size lena to allow nelem = 0.
    ================================================================== */
-void LU1OR1(LUSOLrec *LUSOL, REAL SMALL,
-            REAL *AMAX, int *NUMNZ, int *LERR, int *INFORM)
+void LU1OR1(LUSOLrec *LUSOL, LPSREAL SMALL,
+            LPSREAL *AMAX, int *NUMNZ, int *LERR, int *INFORM)
 {
   int I, J, L, LDUMMY;
 
@@ -1871,7 +1871,7 @@ x910:
    ================================================================== */
 void LU1OR2(LUSOLrec *LUSOL)
 {
-  REAL ACE, ACEP;
+  LPSREAL ACE, ACEP;
   int  L, J, I, JCE, ICE, ICEP, JCEP, JA, JB;
 
 /*      Set  loc(j)  to point to the beginning of column  j. */
@@ -2226,12 +2226,12 @@ void LU1PEN(LUSOLrec *LUSOL, int NSPARE, int *ILAST,
    ================================================================== */
 void LU1FAD(LUSOLrec *LUSOL,
 #ifdef ClassicHamaxR
-            int LENA2, int LENH, REAL HA[], int HJ[], int HK[], REAL AMAXR[],
+            int LENA2, int LENH, LPSREAL HA[], int HJ[], int HK[], LPSREAL AMAXR[],
 #endif
             int *INFORM, int *LENL, int *LENU, int *MINLEN,
             int *MERSUM, int *NUTRI, int *NLTRI,
             int *NDENS1, int *NDENS2, int *NRANK,
-            REAL *LMAX, REAL *UMAX, REAL *DUMAX, REAL *DUMIN, REAL *AKMAX)
+            LPSREAL *LMAX, LPSREAL *UMAX, LPSREAL *DUMAX, LPSREAL *DUMIN, LPSREAL *AKMAX)
 {
   MYBOOL UTRI, LTRI, SPARS1, SPARS2, DENSE, DENSLU, KEEPLU, TCP, TPP, TRP,TSP;
   int    HLEN, HOPS, H, LPIV, LPRINT, MAXCOL, MAXROW, ILAST, JLAST, LFILE, LROW, LCOL,
@@ -2240,7 +2240,7 @@ void LU1FAD(LUSOLrec *LUSOL,
          MELIM, NELIM, JMAX, IMAX, LL1, LSAVE, LFREE, LIMIT, MINFRE, LPIVR, LPIVR1, LPIVR2,
          L, LPIVC, LPIVC1, LPIVC2, KBEST, LU, LR, LENJ, LC1, LAST, LL, LS,
          LENI, LR1, LFIRST, NFILL, NZCHNG, K, MRANK, NSING;
-  REAL   LIJ, LTOL, SMALL, USPACE, DENS1, DENS2, AIJMAX, AIJTOL, AMAX, ABEST, DIAG, V;
+  LPSREAL   LIJ, LTOL, SMALL, USPACE, DENS1, DENS2, AIJMAX, AIJTOL, AMAX, ABEST, DIAG, V;
 #ifdef ClassicHamaxR
   int    LDIAGU;
 #else
@@ -3364,7 +3364,7 @@ void LU1FAC(LUSOLrec *LUSOL, int *INFORM)
   int     LENH, LENA2, LOCH, LMAXR;
 #endif
 
-  REAL    LMAX, LTOL, SMALL, AMAX, UMAX, DUMAX, DUMIN, AKMAX, DM, DN, DELEM, DENSTY,
+  LPSREAL    LMAX, LTOL, SMALL, AMAX, UMAX, DUMAX, DUMIN, AKMAX, DM, DN, DELEM, DENSTY,
           AGRWTH, UGRWTH, GROWTH, CONDU, DINCR, AVGMER;
 
 /*      Free row-based version of L0 (regenerated by LUSOL_btran). */

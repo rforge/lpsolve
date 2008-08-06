@@ -136,7 +136,7 @@ STATIC void free_SOSgroup(SOSgroup **group)
 }
 
 /* SOS record functions */
-STATIC SOSrec *create_SOSrec(SOSgroup *group, char *name, int type, int priority, int size, int *variables, REAL *weights)
+STATIC SOSrec *create_SOSrec(SOSgroup *group, char *name, int type, int priority, int size, int *variables, LPSREAL *weights)
 {
   SOSrec *SOS;
 
@@ -167,7 +167,7 @@ STATIC SOSrec *create_SOSrec(SOSgroup *group, char *name, int type, int priority
 }
 
 
-STATIC int append_SOSrec(SOSrec *SOS, int size, int *variables, REAL *weights)
+STATIC int append_SOSrec(SOSrec *SOS, int size, int *variables, LPSREAL *weights)
 {
   int   i, oldsize, newsize, nn;
   lprec *lp = SOS->parent->lp;
@@ -189,9 +189,9 @@ STATIC int append_SOSrec(SOSrec *SOS, int size, int *variables, REAL *weights)
 
  /* Copy the new data into the arrays */
   if(SOS->weights == NULL)
-    allocREAL(lp, &SOS->weights, 1+newsize, TRUE);
+    allocLPSREAL(lp, &SOS->weights, 1+newsize, TRUE);
   else
-    allocREAL(lp, &SOS->weights, 1+newsize, AUTOMATIC);
+    allocLPSREAL(lp, &SOS->weights, 1+newsize, AUTOMATIC);
   for(i = oldsize+1; i <= newsize; i++) {
     SOS->members[i] = variables[i-oldsize-1];
     if((SOS->members[i] < 1) || (SOS->members[i] > lp->columns))
@@ -210,7 +210,7 @@ STATIC int append_SOSrec(SOSrec *SOS, int size, int *variables, REAL *weights)
   }
 
  /* Sort the new paired lists ascending by weight (simple bubble sort) */
-  i = sortByREAL(SOS->members, SOS->weights, newsize, 1, TRUE);
+  i = sortByLPSREAL(SOS->members, SOS->weights, newsize, 1, TRUE);
   if(i > 0)
     report(lp, DETAILED, "append_SOS_rec: Non-unique SOS variable weight for index %d\n", i);
 
@@ -234,7 +234,7 @@ STATIC int make_SOSchain(lprec *lp, MYBOOL forceresort)
 {
   int      i, j, k, n;
   MYBOOL   *hold = NULL;
-  REAL     *order, sum, weight;
+  LPSREAL     *order, sum, weight;
   SOSgroup *group = lp->SOS;
 
   /* PART A: Resort individual SOS member lists, if specified */
@@ -249,7 +249,7 @@ STATIC int make_SOSchain(lprec *lp, MYBOOL forceresort)
   if(lp->sos_vars > 0) /* Prevent memory loss in case of multiple solves */
     FREE(lp->sos_priority);
   allocINT(lp, &lp->sos_priority, n, FALSE);
-  allocREAL(lp, &order, n, FALSE);
+  allocLPSREAL(lp, &order, n, FALSE);
 
   /* Move variable data to the master SOS list and sort by ascending weight */
   n = 0;
@@ -263,7 +263,7 @@ STATIC int make_SOSchain(lprec *lp, MYBOOL forceresort)
       n++;
     }
   }
-  hpsortex(order, n, 0, sizeof(*order), FALSE, compareREAL, lp->sos_priority);
+  hpsortex(order, n, 0, sizeof(*order), FALSE, compareLPSREAL, lp->sos_priority);
   FREE(order);
 
   /* Remove duplicate SOS variables */
@@ -446,7 +446,7 @@ STATIC MYBOOL SOS_shift_col(SOSgroup *group, int sosindex, int column, int delta
   int    i, ii, n, nn, nr;
   int    changed;
   int    *list;
-  REAL   *weights;
+  LPSREAL   *weights;
 
 #ifdef Paranoia
   lprec  *lp = group->lp;
@@ -1205,7 +1205,7 @@ MYBOOL SOS_unmark(SOSgroup *group, int sosindex, int column)
 }
 
 
-int SOS_fix_unmarked(SOSgroup *group, int sosindex, int variable, REAL *bound, REAL value, MYBOOL isupper,
+int SOS_fix_unmarked(SOSgroup *group, int sosindex, int variable, LPSREAL *bound, LPSREAL value, MYBOOL isupper,
                      int *diffcount, DeltaVrec *changelog)
 {
   int    i, ii, count, n, nn, nLeft, nRight, *list;
@@ -1285,7 +1285,7 @@ int SOS_fix_unmarked(SOSgroup *group, int sosindex, int variable, REAL *bound, R
 }
 
 int *SOS_get_candidates(SOSgroup *group, int sosindex, int column, MYBOOL excludetarget,
-                        REAL *upbound, REAL *lobound)
+                        LPSREAL *upbound, LPSREAL *lobound)
 {
   int    i, ii, j, n, nn = 0, *list, *candidates = NULL;
   lprec  *lp = group->lp;
@@ -1355,11 +1355,11 @@ Finish:
 
 }
 
-int SOS_fix_list(SOSgroup *group, int sosindex, int variable, REAL *bound,
+int SOS_fix_list(SOSgroup *group, int sosindex, int variable, LPSREAL *bound,
                  int *varlist, MYBOOL isleft, DeltaVrec *changelog)
 {
   int    i, ii, jj, count = 0;
-  REAL   value = 0;
+  LPSREAL   value = 0;
   lprec  *lp = group->lp;
 
 #ifdef Paranoia
@@ -1412,7 +1412,7 @@ int SOS_fix_list(SOSgroup *group, int sosindex, int variable, REAL *bound,
   return( count );
 }
 
-int SOS_is_satisfied(SOSgroup *group, int sosindex, REAL *solution)
+int SOS_is_satisfied(SOSgroup *group, int sosindex, LPSREAL *solution)
 /* Determine if the SOS is satisfied for the current solution vector;
    The return code is in the range [-2..+2], depending on the type of
    satisfaction.  Positive return value means too many non-zero values,
@@ -1526,7 +1526,7 @@ int SOS_is_satisfied(SOSgroup *group, int sosindex, REAL *solution)
   return( status );
 }
 
-MYBOOL SOS_is_feasible(SOSgroup *group, int sosindex, REAL *solution)
+MYBOOL SOS_is_feasible(SOSgroup *group, int sosindex, LPSREAL *solution)
 /* Determine if the SOS is feasible up to the current SOS variable */
 {
   int    i, n, nn, *list;

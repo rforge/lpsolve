@@ -43,7 +43,7 @@ int CMP_CALLMODEL compareImprovementVar(const pricerec *current, const pricerec 
 {
   register int   result = COMP_PREFERNONE;
   register lprec *lp = current->lp;
-  register REAL  testvalue, margin = PREC_IMPROVEGAP;
+  register LPSREAL  testvalue, margin = PREC_IMPROVEGAP;
   int currentcolno, currentvarno = current->varno,
       candidatecolno, candidatevarno = candidate->varno;
   MYBOOL isdual = candidate->isdual;
@@ -154,7 +154,7 @@ int CMP_CALLMODEL compareSubstitutionVar(const pricerec *current, const pricerec
 {
   register int    result = COMP_PREFERNONE;
   register lprec  *lp = current->lp;
-  register REAL   testvalue = candidate->theta,
+  register LPSREAL   testvalue = candidate->theta,
                   margin = current->theta;
   MYBOOL isdual = candidate->isdual, candbetter;
   int    currentcolno, currentvarno = current->varno,
@@ -196,7 +196,7 @@ int CMP_CALLMODEL compareSubstitutionVar(const pricerec *current, const pricerec
 
   /* Resolve a tie */
   if(result == COMP_PREFERNONE) {
-    REAL currentpivot = fabs(current->pivot),
+    LPSREAL currentpivot = fabs(current->pivot),
          candidatepivot = fabs(candidate->pivot);
 
     /* Handle first index / Bland's rule specially */
@@ -292,7 +292,7 @@ Finish:
 }
 int CMP_CALLMODEL compareBoundFlipVar(const pricerec *current, const pricerec *candidate)
 {
-  register REAL  testvalue, margin;
+  register LPSREAL  testvalue, margin;
   register int   result = COMP_PREFERNONE;
   register lprec *lp = current->lp;
   MYBOOL    candbetter;
@@ -332,7 +332,7 @@ int CMP_CALLMODEL compareBoundFlipVar(const pricerec *current, const pricerec *c
 
     /* Tertiary selection based on priority for large pivot sizes */
     if(result == COMP_PREFERNONE) {
-      REAL currentpivot   = fabs(current->pivot),
+      LPSREAL currentpivot   = fabs(current->pivot),
            candidatepivot = fabs(candidate->pivot);
       if(candidatepivot > currentpivot+margin)
         result = COMP_PREFERCANDIDATE;
@@ -342,7 +342,7 @@ int CMP_CALLMODEL compareBoundFlipVar(const pricerec *current, const pricerec *c
 
     /* Secondary selection based on priority for narrow-bounded variables */
     if(result == COMP_PREFERNONE)
-      result = compareREAL(&(lp->upbo[currentvarno]),
+      result = compareLPSREAL(&(lp->upbo[currentvarno]),
                            &(lp->upbo[candidatevarno]));
 
   }
@@ -372,7 +372,7 @@ Finish:
    a subject for the comparison functions/operators. */
 STATIC MYBOOL validImprovementVar(pricerec *candidate)
 {
-  register REAL candidatepivot = fabs(candidate->pivot);
+  register LPSREAL candidatepivot = fabs(candidate->pivot);
 
 #ifdef Paranoia
   return( (MYBOOL) ((candidate->varno > 0) && (candidatepivot > candidate->lp->epsvalue)) );
@@ -384,7 +384,7 @@ STATIC MYBOOL validImprovementVar(pricerec *candidate)
 STATIC MYBOOL validSubstitutionVar(pricerec *candidate)
 {
   register lprec *lp   = candidate->lp;
-  register REAL  theta = (candidate->isdual ? fabs(candidate->theta) : candidate->theta);
+  register LPSREAL  theta = (candidate->isdual ? fabs(candidate->theta) : candidate->theta);
 
 #ifdef Paranoia
   if(candidate->varno <= 0)
@@ -658,10 +658,10 @@ STATIC void makePriceLoop(lprec *lp, int *start, int *end, int *delta)
 }
 
 /* Routine to verify accuracy of the current basis factorization */
-STATIC MYBOOL serious_facterror(lprec *lp, REAL *bvector, int maxcols, REAL tolerance)
+STATIC MYBOOL serious_facterror(lprec *lp, LPSREAL *bvector, int maxcols, LPSREAL tolerance)
 {
   int    i, j, ib, ie, nz, nc;
-  REAL   sum, tsum = 0, err = 0;
+  LPSREAL   sum, tsum = 0, err = 0;
   MATrec *mat = lp->matA;
 
   if(bvector == 0)
@@ -696,12 +696,12 @@ STATIC MYBOOL serious_facterror(lprec *lp, REAL *bvector, int maxcols, REAL tole
 }
 
 /* Computation of reduced costs */
-STATIC void update_reducedcosts(lprec *lp, MYBOOL isdual, int leave_nr, int enter_nr, REAL *prow, REAL *drow)
+STATIC void update_reducedcosts(lprec *lp, MYBOOL isdual, int leave_nr, int enter_nr, LPSREAL *prow, LPSREAL *drow)
 {
   /* "Fast" update of the dual reduced cost vector; note that it must be called
      after the pivot operation and only applies to a major "true" iteration */
   int  i;
-  REAL hold;
+  LPSREAL hold;
 
   if(isdual) {
     hold = -drow[enter_nr]/prow[enter_nr];
@@ -721,11 +721,11 @@ STATIC void update_reducedcosts(lprec *lp, MYBOOL isdual, int leave_nr, int ente
 
 
 STATIC void compute_reducedcosts(lprec *lp, MYBOOL isdual, int row_nr, int *coltarget, MYBOOL dosolve,
-                                            REAL *prow, int *nzprow,
-                                            REAL *drow, int *nzdrow,
+                                            LPSREAL *prow, int *nzprow,
+                                            LPSREAL *drow, int *nzdrow,
                                             int roundmode)
 {
-  REAL epsvalue = lp->epsvalue;  /* Any larger value can produce a suboptimal result */
+  LPSREAL epsvalue = lp->epsvalue;  /* Any larger value can produce a suboptimal result */
   roundmode |=  MAT_ROUNDRC;
 
   if(isdual) {
@@ -735,7 +735,7 @@ STATIC void compute_reducedcosts(lprec *lp, MYBOOL isdual, int row_nr, int *colt
                    roundmode);
   }
   else {
-    REAL *bVector;
+    LPSREAL *bVector;
 
 #if 1 /* Legacy mode, that is possibly a little faster */
     if((lp->multivars == NULL) && (lp->P1extraDim == 0))
@@ -763,7 +763,7 @@ STATIC void compute_reducedcosts(lprec *lp, MYBOOL isdual, int row_nr, int *colt
 
    Both of these cases are associated with numerical stalling, which we could
    argue should be detected and handled by the stalling monitor routine. */
-STATIC MYBOOL verify_stability(lprec *lp, MYBOOL isprimal, REAL xfeas, REAL sfeas, int nfeas)
+STATIC MYBOOL verify_stability(lprec *lp, MYBOOL isprimal, LPSREAL xfeas, LPSREAL sfeas, int nfeas)
 {
   MYBOOL testOK = TRUE;
   return( testOK );
@@ -780,10 +780,10 @@ STATIC MYBOOL verify_stability(lprec *lp, MYBOOL isprimal, REAL xfeas, REAL sfea
   xfeas = fabs(xfeas);             /* Maximum (positive) infeasibility */
 /*  if(xfeas < lp->epspivot) { */
   if(xfeas < lp->epssolution) {
-    REAL f;
+    LPSREAL f;
     sfeas = fabs(sfeas);           /* Make sum of infeasibilities positive */
     xfeas = (sfeas-xfeas)/nfeas;   /* Average "residual" feasibility */
-    f = 1 + log10((REAL) nfeas);   /* Some numerical complexity scalar */
+    f = 1 + log10((LPSREAL) nfeas);   /* Some numerical complexity scalar */
     /* Numerical errors can interact to cause non-convergence, and the
       idea is to relax the tolerance to account for this and only
       marginally weakening the (user-specified) tolerance. */
@@ -796,12 +796,12 @@ STATIC MYBOOL verify_stability(lprec *lp, MYBOOL isprimal, REAL xfeas, REAL sfea
 
 /* Find an entering column for the case that the specified basic variable
    is fixed or zero - typically used for artificial variable elimination */
-STATIC int find_rowReplacement(lprec *lp, int rownr, REAL *prow, int *nzprow)
+STATIC int find_rowReplacement(lprec *lp, int rownr, LPSREAL *prow, int *nzprow)
 /* The logic in this section generally follows Chvatal: Linear Programming, p. 130
    Basically, the function is a specialized coldual(). */
 {
   int  i, bestindex;
-  REAL bestvalue;
+  LPSREAL bestvalue;
 
  /* Solve for "local reduced cost" */
   set_action(&lp->piv_strategy, PRICE_FORCEFULL);
@@ -830,10 +830,10 @@ STATIC int find_rowReplacement(lprec *lp, int rownr, REAL *prow, int *nzprow)
 }
 
 /* Find the primal simplex entering non-basic column variable */
-STATIC int colprim(lprec *lp, REAL *drow, int *nzdrow, MYBOOL skipupdate, int partialloop, int *candidatecount, MYBOOL updateinfeas, REAL *xviol)
+STATIC int colprim(lprec *lp, LPSREAL *drow, int *nzdrow, MYBOOL skipupdate, int partialloop, int *candidatecount, MYBOOL updateinfeas, LPSREAL *xviol)
 {
   int      i, ix, iy, iz, ninfeas, nloop = 0;
-  REAL     f, sinfeas, xinfeas, epsvalue = lp->epsdual;
+  LPSREAL     f, sinfeas, xinfeas, epsvalue = lp->epsdual;
   pricerec current, candidate;
   MYBOOL   collectMP = FALSE;
   int      *coltarget = NULL;
@@ -957,11 +957,11 @@ doLoop:
 } /* colprim */
 
 /* Find the primal simplex leaving basic column variable */
-STATIC int rowprim(lprec *lp, int colnr, LREAL *theta, REAL *pcol, int *nzpcol, MYBOOL forceoutEQ, REAL *xviol)
+STATIC int rowprim(lprec *lp, int colnr, LLPSREAL *theta, LPSREAL *pcol, int *nzpcol, MYBOOL forceoutEQ, LPSREAL *xviol)
 {
   int      i, ii, iy, iz, Hpass, k, *nzlist;
-  LREAL    f, savef;
-  REAL     Heps, Htheta, Hlimit, epsvalue, epspivot, p;
+  LLPSREAL    f, savef;
+  LPSREAL     Heps, Htheta, Hlimit, epsvalue, epspivot, p;
   pricerec current, candidate;
   MYBOOL   isupper = !lp->is_lower[colnr], HarrisTwoPass = FALSE;
 
@@ -1165,11 +1165,11 @@ Retry:
 
 
 /* Find the dual simplex leaving basic variable */
-STATIC int rowdual(lprec *lp, REAL *rhvec, MYBOOL forceoutEQ, MYBOOL updateinfeas, REAL *xviol)
+STATIC int rowdual(lprec *lp, LPSREAL *rhvec, MYBOOL forceoutEQ, MYBOOL updateinfeas, LPSREAL *xviol)
 {
   int       k, i, iy, iz, ii, ninfeas;
-  register REAL     rh;
-  REAL      up, lo = 0,
+  register LPSREAL     rh;
+  LPSREAL      up, lo = 0,
             epsvalue, sinfeas, xinfeas;
   pricerec  current, candidate;
   MYBOOL    collectMP = FALSE;
@@ -1285,11 +1285,11 @@ STATIC int rowdual(lprec *lp, REAL *rhvec, MYBOOL forceoutEQ, MYBOOL updateinfea
 } /* rowdual */
 
 
-STATIC void longdual_testset(lprec *lp, int which, int rownr, REAL *prow, int *nzprow,
-                                                    REAL *drow, int *nzdrow)
+STATIC void longdual_testset(lprec *lp, int which, int rownr, LPSREAL *prow, int *nzprow,
+                                                    LPSREAL *drow, int *nzdrow)
 {
   int i,j;
-  REAL F = lp->infinite;
+  LPSREAL F = lp->infinite;
   if(which == 0) {             /* Maros Example-1 - raw data */
     j =  1; i = lp->rows+j; lp->upbo[i] = 0;  lp->is_lower[i] =  TRUE; nzprow[j] = i; prow[i] =  2; drow[i] = -1;
     j =  2; i = lp->rows+j; lp->upbo[i] = 1;  lp->is_lower[i] =  TRUE; nzprow[j] = i; prow[i] = -2; drow[i] =  2;
@@ -1340,18 +1340,18 @@ STATIC void longdual_testset(lprec *lp, int which, int rownr, REAL *prow, int *n
 
 
 /* Find the dual simplex entering non-basic variable */
-STATIC int coldual(lprec *lp, int row_nr, REAL *prow, int *nzprow,
-                                          REAL *drow, int *nzdrow,
+STATIC int coldual(lprec *lp, int row_nr, LPSREAL *prow, int *nzprow,
+                                          LPSREAL *drow, int *nzdrow,
                                           MYBOOL dualphase1, MYBOOL skipupdate,
-                                          int *candidatecount, REAL *xviol)
+                                          int *candidatecount, LPSREAL *xviol)
 {
   int      i, iy, iz, ix, k, nbound;
-  LREAL    w, g, quot;
-  REAL     viol, p, epspivot = lp->epspivot;
+  LLPSREAL    w, g, quot;
+  LPSREAL     viol, p, epspivot = lp->epspivot;
 #ifdef MachinePrecRoundRHS
-  REAL     epsvalue = lp->epsmachine;
+  LPSREAL     epsvalue = lp->epsmachine;
 #else
-  REAL     epsvalue = lp->epsvalue;
+  LPSREAL     epsvalue = lp->epsvalue;
 #endif
   pricerec current, candidate;
   MYBOOL   isbatch = FALSE, /* Requires that lp->longsteps->size > lp->sum */
@@ -1536,7 +1536,7 @@ STATIC int coldual(lprec *lp, int row_nr, REAL *prow, int *nzprow,
 } /* coldual */
 
 
-INLINE REAL normalizeEdge(lprec *lp, int item, REAL edge, MYBOOL isdual)
+INLINE LPSREAL normalizeEdge(lprec *lp, int item, LPSREAL edge, MYBOOL isdual)
 {
 #if 1
   /* Don't use the pricer "close to home", since this can possibly
@@ -1554,7 +1554,7 @@ INLINE REAL normalizeEdge(lprec *lp, int item, REAL edge, MYBOOL isdual)
 STATIC int partial_findBlocks(lprec *lp, MYBOOL autodefine, MYBOOL isrow)
 {
   int    i, jj, n, nb, ne, items;
-  REAL   hold, biggest, *sum = NULL;
+  LPSREAL   hold, biggest, *sum = NULL;
   MATrec *mat = lp->matA;
   partialrec *blockdata;
 
@@ -1563,7 +1563,7 @@ STATIC int partial_findBlocks(lprec *lp, MYBOOL autodefine, MYBOOL isrow)
 
   blockdata = IF(isrow, lp->rowblocks, lp->colblocks);
   items     = IF(isrow, lp->rows, lp->columns);
-  allocREAL(lp, &sum, items+1, FALSE);
+  allocLPSREAL(lp, &sum, items+1, FALSE);
 
   /* Loop over items and compute the average column index for each */
   sum[0] = 0;
@@ -1773,7 +1773,7 @@ STATIC MYBOOL multi_resize(multirec *multi, int blocksize, int blockdiv, MYBOOL 
         multi->freeList[i] = n;
     }
     if(doVlist)
-      ok &= allocREAL(multi->lp, &(multi->valueList), multi->size+1, AUTOMATIC);
+      ok &= allocLPSREAL(multi->lp, &(multi->valueList), multi->size+1, AUTOMATIC);
     if(doIset) {
       ok &= allocINT(multi->lp, &(multi->indexSet), multi->size+1, AUTOMATIC);
       if(ok && (oldsize == 0))
@@ -1832,7 +1832,7 @@ STATIC int multi_restart(multirec *multi)
   return( n );
 }
 
-STATIC void multi_valueInit(multirec *multi, REAL step_base, REAL obj_base)
+STATIC void multi_valueInit(multirec *multi, LPSREAL step_base, LPSREAL obj_base)
 {
   multi->step_base = multi->step_last = step_base;
   multi->obj_base  = multi->obj_last  = obj_base;
@@ -1843,7 +1843,7 @@ STATIC void multi_valueInit(multirec *multi, REAL step_base, REAL obj_base)
 #endif
 }
 
-STATIC REAL *multi_valueList(multirec *multi)
+STATIC LPSREAL *multi_valueList(multirec *multi)
 {
   return(multi->valueList);
 }
@@ -1867,7 +1867,7 @@ STATIC int multi_getvar(multirec *multi, int item)
 STATIC MYBOOL multi_recompute(multirec *multi, int index, MYBOOL isphase2, MYBOOL fullupdate)
 {
   int      i, n;
-  REAL     lB, uB, Alpha, this_theta, prev_theta;
+  LPSREAL     lB, uB, Alpha, this_theta, prev_theta;
   lprec    *lp = multi->lp;
   pricerec *thisprice;
 
@@ -1982,8 +1982,8 @@ STATIC int multi_enteringvar(multirec *multi, pricerec *current, int priority)
 {
   lprec    *lp = multi->lp;
   int      i, bestindex, colnr;
-  REAL     bound, score, bestscore = -lp->infinite;
-  REAL     b1, b2, b3;
+  LPSREAL     bound, score, bestscore = -lp->infinite;
+  LPSREAL     b1, b2, b3;
   pricerec *candidate, *bestcand;
 
   /* Check that we have a candidate */
@@ -2026,7 +2026,7 @@ Redo:
     score = fabs(candidate->pivot) / multi->maxpivot;
     score = pow(1.0 + score                           , b1) *
             pow(1.0 + log(bound / multi->maxbound + 1), b2) *
-            pow(1.0 + (REAL) i / multi->used          , b3);
+            pow(1.0 + (LPSREAL) i / multi->used          , b3);
     if(score > bestscore) {
       bestscore = score;
       bestindex = i;
@@ -2071,7 +2071,7 @@ Finish:
   return( multi->active );
 }
 
-STATIC REAL multi_enteringtheta(multirec *multi)
+STATIC LPSREAL multi_enteringtheta(multirec *multi)
 {
   return( multi->step_base );
 }

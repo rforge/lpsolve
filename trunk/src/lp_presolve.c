@@ -102,9 +102,9 @@ STATIC MYBOOL inc_presolve_space(lprec *lp, int delta, MYBOOL isrows)
 
   /* Reallocate lp memory */
   if(isrows)
-    allocREAL(lp, &psundo->fixed_rhs,   lp->rows_alloc+1, AUTOMATIC);
+    allocLPSREAL(lp, &psundo->fixed_rhs,   lp->rows_alloc+1, AUTOMATIC);
   else
-    allocREAL(lp, &psundo->fixed_obj,   lp->columns_alloc+1, AUTOMATIC);
+    allocLPSREAL(lp, &psundo->fixed_obj,   lp->columns_alloc+1, AUTOMATIC);
   allocINT(lp,  &psundo->var_to_orig, rowcolsum, AUTOMATIC);
   allocINT(lp,  &psundo->orig_to_var, rowcolsum, AUTOMATIC);
 
@@ -160,7 +160,7 @@ STATIC MYBOOL presolve_fillUndo(lprec *lp, int orig_rows, int orig_cols, MYBOOL 
 STATIC MYBOOL presolve_rebuildUndo(lprec *lp, MYBOOL isprimal)
 {
   int             ik, ie, ix, j, k, *colnrDep;
-  REAL             hold, *value, *solution, *slacks;
+  LPSREAL             hold, *value, *solution, *slacks;
   presolveundorec *psdata = lp->presolve_undo;
   MATrec          *mat = NULL;
 
@@ -244,7 +244,7 @@ STATIC void presolve_storeDualUndo(presolverec *psdata, int rownr, int colnr)
   lprec    *lp = psdata->lp;
   MYBOOL   firstdone = FALSE;
   int      ix, iix, item;
-  REAL     Aij = get_mat(lp, rownr, colnr);
+  LPSREAL     Aij = get_mat(lp, rownr, colnr);
   MATrec   *mat = lp->matA;
 
   if(presolve_collength(psdata, colnr) == 0)
@@ -341,11 +341,11 @@ STATIC MYBOOL presolve_SOScheck(presolverec *psdata)
 /* Presolve routines for tightening the model                                    */
 /* ----------------------------------------------------------------------------- */
 
-INLINE REAL presolve_roundrhs(lprec *lp, REAL value, MYBOOL isGE)
+INLINE LPSREAL presolve_roundrhs(lprec *lp, LPSREAL value, MYBOOL isGE)
 {
 #ifdef DoPresolveRounding
-  REAL eps = PRESOLVE_EPSVALUE*1000,
-  /* REAL eps = PRESOLVE_EPSVALUE*pow(10.0,MAX(0,log10(1+fabs(value)))), */
+  LPSREAL eps = PRESOLVE_EPSVALUE*1000,
+  /* LPSREAL eps = PRESOLVE_EPSVALUE*pow(10.0,MAX(0,log10(1+fabs(value)))), */
   testout = my_precision(value, eps);
 #if 1
   if(my_chsign(isGE, value-testout) < 0)
@@ -365,7 +365,7 @@ INLINE REAL presolve_roundrhs(lprec *lp, REAL value, MYBOOL isGE)
   return( value );
 }
 
-INLINE REAL presolve_roundval(lprec *lp, REAL value)
+INLINE LPSREAL presolve_roundval(lprec *lp, LPSREAL value)
 {
 #ifdef DoPresolveRounding
   /* value = my_precision(value, PRESOLVE_EPSVALUE*MAX(1,log10(1+fabs(value)))); */
@@ -385,9 +385,9 @@ INLINE MYBOOL presolve_mustupdate(lprec *lp, int colnr)
 #endif
 }
 
-INLINE REAL presolve_sumplumin(lprec *lp, int item, psrec *ps, MYBOOL doUpper)
+INLINE LPSREAL presolve_sumplumin(lprec *lp, int item, psrec *ps, MYBOOL doUpper)
 {
-  REAL *plu = (doUpper ? ps->pluupper : ps->plulower),
+  LPSREAL *plu = (doUpper ? ps->pluupper : ps->plulower),
        *neg = (doUpper ? ps->negupper : ps->neglower);
 
   if(fabs(plu[item]) >= lp->infinite)
@@ -398,13 +398,13 @@ INLINE REAL presolve_sumplumin(lprec *lp, int item, psrec *ps, MYBOOL doUpper)
     return( plu[item]+neg[item] );
 }
 
-INLINE void presolve_range(lprec *lp, int rownr, psrec *ps, REAL *loValue, REAL *hiValue)
+INLINE void presolve_range(lprec *lp, int rownr, psrec *ps, LPSREAL *loValue, LPSREAL *hiValue)
 {
   *loValue = presolve_sumplumin(lp, rownr,   ps, FALSE);
   *hiValue = presolve_sumplumin(lp, rownr,   ps, TRUE);
 }
 
-STATIC void presolve_rangeorig(lprec *lp, int rownr, psrec *ps, REAL *loValue, REAL *hiValue, REAL delta)
+STATIC void presolve_rangeorig(lprec *lp, int rownr, psrec *ps, LPSREAL *loValue, LPSREAL *hiValue, LPSREAL delta)
 {
   delta = my_chsign(is_chsign(lp, rownr), lp->presolve_undo->fixed_rhs[rownr] + delta);
   *loValue = presolve_sumplumin(lp, rownr,   ps, FALSE) + delta;
@@ -416,7 +416,7 @@ STATIC MYBOOL presolve_rowfeasible(presolverec *psdata, int rownr, MYBOOL userow
   lprec    *lp = psdata->lp;
   MYBOOL   status = TRUE;
   int      contype, origrownr = rownr;
-  REAL     LHS, RHS, value;
+  LPSREAL     LHS, RHS, value;
 
   /* Optionally loop across all active rows in the provided map (debugging) */
   if(userowmap)
@@ -508,7 +508,7 @@ Done:
 STATIC MYBOOL presolve_validate(presolverec *psdata, MYBOOL forceupdate)
 {
   int    i, ie, j, je, k, rownr, *items;
-  REAL   upbound, lobound, value;
+  LPSREAL   upbound, lobound, value;
   lprec  *lp = psdata->lp;
   MATrec *mat = lp->matA;
   MYBOOL status = mat->row_end_valid && !forceupdate;
@@ -607,7 +607,7 @@ STATIC MYBOOL presolve_validate(presolverec *psdata, MYBOOL forceupdate)
 
 STATIC MYBOOL presolve_rowtallies(presolverec *psdata, int rownr, int *plu, int *neg, int *pluneg)
 {
-  REAL   value;
+  LPSREAL   value;
   lprec  *lp = psdata->lp;
   MATrec *mat = lp->matA;
   int    ix, jx, ib = 0;
@@ -765,7 +765,7 @@ INLINE int presolve_lastrow(presolverec *psdata, int colnr)
   return( presolve_nextrecord(psdata->cols, colnr, NULL) );
 }
 
-INLINE void presolve_adjustrhs(presolverec *psdata, int rownr, REAL fixdelta, REAL epsvalue)
+INLINE void presolve_adjustrhs(presolverec *psdata, int rownr, LPSREAL fixdelta, LPSREAL epsvalue)
 {
   lprec *lp = psdata->lp;
 
@@ -784,7 +784,7 @@ STATIC int presolve_shrink(presolverec *psdata, int *nConRemove, int *nVarRemove
   SOSgroup *SOS = psdata->lp->SOS;
   int     status = RUNNING, countR = 0, countC = 0,
           i, ix, n, *list;
-  REAL    fixValue;
+  LPSREAL    fixValue;
 
   /* Remove empty rows */
   list = psdata->rows->empty;
@@ -1048,12 +1048,12 @@ Done:
   return( status );
 }
 
-STATIC MYBOOL presolve_fixSOS1(presolverec *psdata, int colnr, REAL fixvalue, int *nr, int *nv)
+STATIC MYBOOL presolve_fixSOS1(presolverec *psdata, int colnr, LPSREAL fixvalue, int *nr, int *nv)
 {
   lprec    *lp = psdata->lp;
   int      i, k, j;
   SOSrec   *SOS;
-  REAL     newvalue;
+  LPSREAL     newvalue;
   MYBOOL   *fixed = NULL, status = FALSE;
 
   /* Allocate working member list */
@@ -1158,10 +1158,10 @@ STATIC void presolve_setEQ(presolverec *psdata, int rownr)
    psdata->dv_upbo[rownr] = lp->infinite;
 }
 
-STATIC MYBOOL presolve_singletonbounds(presolverec *psdata, int rownr, int colnr, REAL *lobound, REAL *upbound, REAL *aval)
+STATIC MYBOOL presolve_singletonbounds(presolverec *psdata, int rownr, int colnr, LPSREAL *lobound, LPSREAL *upbound, LPSREAL *aval)
 {
   lprec  *lp = psdata->lp;
-  REAL   coeff_a, epsvalue = psdata->epsvalue;
+  LPSREAL   coeff_a, epsvalue = psdata->epsvalue;
   MYBOOL isneg;
 
   /* Compute row singleton variable range */
@@ -1182,7 +1182,7 @@ STATIC MYBOOL presolve_singletonbounds(presolverec *psdata, int rownr, int colnr
     else if(isneg)
       *upbound = -(*upbound);
     if(isneg)
-      swapREAL(lobound, upbound);
+      swapLPSREAL(lobound, upbound);
   }
 
   /* Check against bound - handle SC variables specially */
@@ -1229,10 +1229,10 @@ STATIC MYBOOL presolve_singletonbounds(presolverec *psdata, int rownr, int colnr
   return( isneg );
 }
 
-STATIC MYBOOL presolve_altsingletonvalid(presolverec *psdata, int rownr, int colnr, REAL reflotest, REAL refuptest)
+STATIC MYBOOL presolve_altsingletonvalid(presolverec *psdata, int rownr, int colnr, LPSREAL reflotest, LPSREAL refuptest)
 {
   lprec *lp = psdata->lp;
-  REAL  coeff_bl, coeff_bu, epsvalue = psdata->epsvalue;
+  LPSREAL  coeff_bl, coeff_bu, epsvalue = psdata->epsvalue;
 
   coeff_bl = get_rh_lower(lp, rownr);
   coeff_bu = get_rh_upper(lp, rownr);
@@ -1258,11 +1258,11 @@ STATIC MYBOOL presolve_altsingletonvalid(presolverec *psdata, int rownr, int col
 }
 
 STATIC MYBOOL presolve_multibounds(presolverec *psdata, int rownr, int colnr,
-                                   REAL *lobound, REAL *upbound, REAL *aval, MYBOOL *rowbinds)
+                                   LPSREAL *lobound, LPSREAL *upbound, LPSREAL *aval, MYBOOL *rowbinds)
 {
   lprec    *lp = psdata->lp;
   MYBOOL   rowbindsvar = FALSE, status = FALSE;
-  REAL     coeff_a, LHS, RHS, netX, Xupper, Xlower, epsvalue = psdata->epsvalue;
+  LPSREAL     coeff_a, LHS, RHS, netX, Xupper, Xlower, epsvalue = psdata->epsvalue;
 
   /* Get variable bounds for netting */
   LHS = *lobound;
@@ -1351,13 +1351,13 @@ STATIC MYBOOL presolve_testrow(presolverec *psdata, int lastrow)
     return( TRUE );
 }
 
-STATIC MYBOOL presolve_coltighten(presolverec *psdata, int colnr, REAL LOnew, REAL UPnew, int *count)
+STATIC MYBOOL presolve_coltighten(presolverec *psdata, int colnr, LPSREAL LOnew, LPSREAL UPnew, int *count)
 {
   lprec    *lp = psdata->lp;
   int      elmnr, elmend, k, oldcount = 0, newcount = 0, deltainf;
-  REAL     LOold, UPold, Value, margin = psdata->epsvalue;
+  LPSREAL     LOold, UPold, Value, margin = psdata->epsvalue;
   MATrec   *mat = lp->matA;
-  REAL     *value;
+  LPSREAL     *value;
   int      *rownr;
 
   /* Attempt correction of marginally equal, but inconsistent input values */
@@ -1506,12 +1506,12 @@ STATIC int presolve_rowtighten(presolverec *psdata, int rownr, int *tally, MYBOO
   lprec  *lp = psdata->lp;
   MYBOOL rowbinds;
   int    item = 0, jx, jjx, ix, idxn = 0, *idxbound = NULL, status = RUNNING;
-  REAL   *newbound = NULL, RHlo = get_rh_lower(lp, rownr), RHup = get_rh_upper(lp, rownr),
+  LPSREAL   *newbound = NULL, RHlo = get_rh_lower(lp, rownr), RHup = get_rh_upper(lp, rownr),
          VARlo, VARup, Aval;
   MATrec *mat = lp->matA;
 
   jx = presolve_rowlength(psdata, rownr);
-  allocREAL(lp, &newbound, 2*jx, TRUE);
+  allocLPSREAL(lp, &newbound, 2*jx, TRUE);
   allocINT (lp, &idxbound, 2*jx, TRUE);
 
   /* Identify bound tightening for each active variable in the constraint */
@@ -1569,27 +1569,27 @@ STATIC int presolve_rowtighten(presolverec *psdata, int rownr, int *tally, MYBOO
   return(status);
 }
 
-STATIC void set_dv_bounds(presolverec *psdata, int rownr, REAL lowbo, REAL upbo)
+STATIC void set_dv_bounds(presolverec *psdata, int rownr, LPSREAL lowbo, LPSREAL upbo)
 {
   psdata->dv_lobo[rownr] = lowbo;
   psdata->dv_upbo[rownr] = upbo;
 }
-STATIC REAL get_dv_lower(presolverec *psdata, int rownr)
+STATIC LPSREAL get_dv_lower(presolverec *psdata, int rownr)
 {
   return( psdata->dv_lobo[rownr] );
 }
 
-STATIC REAL get_dv_upper(presolverec *psdata, int rownr)
+STATIC LPSREAL get_dv_upper(presolverec *psdata, int rownr)
 {
   return( psdata->dv_upbo[rownr] );
 }
 
-STATIC MYBOOL presolve_rowfix(presolverec *psdata, int rownr, REAL newvalue, MYBOOL remove, int *tally)
+STATIC MYBOOL presolve_rowfix(presolverec *psdata, int rownr, LPSREAL newvalue, MYBOOL remove, int *tally)
 {
   lprec    *lp = psdata->lp;
   int      i, ix, ie;
   MYBOOL   isneg, lofinite, upfinite, doupdate = FALSE, chsign = is_chsign(lp, rownr);
-  REAL     lobound, upbound, lovalue, upvalue,
+  LPSREAL     lobound, upbound, lovalue, upvalue,
            Value, fixvalue, fixprod, mult;
   MATrec   *mat = lp->matA;
   psrec    *ps = psdata->cols;
@@ -1737,7 +1737,7 @@ STATIC MYBOOL presolve_rowfix(presolverec *psdata, int rownr, REAL newvalue, MYB
 STATIC int presolve_colsingleton(presolverec *psdata, int i, int j, int *count)
 {
   lprec    *lp = psdata->lp;
-  REAL     RHlow, RHup, LObound, UPbound, Value;
+  LPSREAL     RHlow, RHup, LObound, UPbound, Value;
 
 #ifdef Paranoia
   if(!isActiveLink(psdata->cols->varmap, j))
@@ -1771,16 +1771,16 @@ STATIC int presolve_colsingleton(presolverec *psdata, int i, int j, int *count)
     return( presolve_setstatus(psdata, INFEASIBLE) );
 }
 
-STATIC MYBOOL presolve_colfix(presolverec *psdata, int colnr, REAL newvalue, MYBOOL remove, int *tally)
+STATIC MYBOOL presolve_colfix(presolverec *psdata, int colnr, LPSREAL newvalue, MYBOOL remove, int *tally)
 {
   lprec    *lp = psdata->lp;
   int      i, ix, ie;
   MYBOOL   isneg, lofinite, upfinite, doupdate = FALSE, doOF = TRUE;
-  REAL     lobound, upbound, lovalue, upvalue,
+  LPSREAL     lobound, upbound, lovalue, upvalue,
            Value, fixvalue, mult;
   MATrec   *mat = lp->matA;
   psrec    *ps = psdata->rows;
-  REAL     *value;
+  LPSREAL     *value;
   int      *rownr;
 
   /* Set "fixed" value in case we are deleting a variable */
@@ -1987,12 +1987,12 @@ STATIC int presolve_rowfixzero(presolverec *psdata, int rownr, int *nv)
 }
 
 /* Function to find if a variable can be fixed based on considering the dual */
-STATIC MYBOOL presolve_colfixdual(presolverec *psdata, int colnr, REAL *fixValue, int *status)
+STATIC MYBOOL presolve_colfixdual(presolverec *psdata, int colnr, LPSREAL *fixValue, int *status)
 {
   lprec   *lp = psdata->lp;
   MYBOOL  hasOF, isMI, isDualFREE = TRUE;
   int     i, ix, ie, *rownr, signOF;
-  REAL    *value, loX, upX, eps = psdata->epsvalue;
+  LPSREAL    *value, loX, upX, eps = psdata->epsvalue;
   MATrec  *mat = lp->matA;
 
   /* First check basic variable range */
@@ -2022,7 +2022,7 @@ STATIC MYBOOL presolve_colfixdual(presolverec *psdata, int colnr, REAL *fixValue
     if(!isActiveLink(psdata->rows->varmap, i))
       continue;
     if(presolve_rowlength(psdata, i) == 1) {
-      REAL val = my_chsign(is_chsign(lp, i), *value),
+      LPSREAL val = my_chsign(is_chsign(lp, i), *value),
            loR = get_rh_lower(lp, i),
            upR = get_rh_upper(lp, i);
       if(!presolve_singletonbounds(psdata, i, colnr, &loR, &upR, &val)) {
@@ -2082,11 +2082,11 @@ STATIC MYBOOL presolve_colfixdual(presolverec *psdata, int colnr, REAL *fixValue
 }
 
 #if 0
-STATIC MYBOOL presolve_probefix01(presolverec *psdata, int colnr, REAL *fixvalue)
+STATIC MYBOOL presolve_probefix01(presolverec *psdata, int colnr, LPSREAL *fixvalue)
 {
   lprec    *lp = psdata->lp;
   int      i, ix, item;
-  REAL     loLim, absvalue, epsvalue = psdata->epsvalue;
+  LPSREAL     loLim, absvalue, epsvalue = psdata->epsvalue;
   MATrec   *mat = lp->matA;
   MYBOOL   chsign, canfix = FALSE;
 
@@ -2128,11 +2128,11 @@ STATIC MYBOOL presolve_probefix01(presolverec *psdata, int colnr, REAL *fixvalue
   return( canfix );
 }
 #else
-STATIC MYBOOL presolve_probefix01(presolverec *psdata, int colnr, REAL *fixvalue)
+STATIC MYBOOL presolve_probefix01(presolverec *psdata, int colnr, LPSREAL *fixvalue)
 {
   lprec    *lp = psdata->lp;
   int      i, ix, item;
-  REAL     loLim, upLim, range, absvalue, epsvalue = psdata->epsvalue, tolgap;
+  LPSREAL     loLim, upLim, range, absvalue, epsvalue = psdata->epsvalue, tolgap;
   MATrec   *mat = lp->matA;
   MYBOOL   chsign, status = FALSE;
 
@@ -2158,7 +2158,7 @@ STATIC MYBOOL presolve_probefix01(presolverec *psdata, int colnr, REAL *fixvalue
     if(chsign) {
       loLim = my_chsign(chsign, loLim);
       upLim = my_chsign(chsign, upLim);
-      swapREAL(&loLim, &upLim);
+      swapLPSREAL(&loLim, &upLim);
     }
 
     /* Check the upper constraint bound for possible violation if the value were to be fixed at 1 */
@@ -2200,7 +2200,7 @@ STATIC int presolve_probetighten01(presolverec *psdata, int colnr)
   lprec    *lp = psdata->lp;
   MYBOOL   chsign;
   int      i, ix, item, n = 0;
-  REAL     upLim, value, absvalue, epsvalue = psdata->epsvalue;
+  LPSREAL     upLim, value, absvalue, epsvalue = psdata->epsvalue;
   MATrec   *mat = lp->matA;
 
 #if 0 /* Handled in calling routine */
@@ -2221,7 +2221,7 @@ STATIC int presolve_probetighten01(presolverec *psdata, int colnr)
     /* Does this constraint qualify for coefficient tightening? */
     absvalue = fabs(value);
     if(upLim - absvalue < lp->orig_rhs[i]-epsvalue*MAX(1, absvalue)) {
-      REAL delta = lp->orig_rhs[i] - upLim;
+      LPSREAL delta = lp->orig_rhs[i] - upLim;
       lp->orig_rhs[i] = upLim;
       upLim = value - my_chsign(value < 0, delta);
       COL_MAT_VALUE(ix) = upLim;
@@ -2247,7 +2247,7 @@ STATIC int presolve_mergerows(presolverec *psdata, int *nRows, int *nSum)
   MYBOOL candelete;
   int    status = RUNNING, item1, item2,
          firstix, RT1, RT2, i, ix, iix, j, jjx, n = 0;
-  REAL   Value1, Value2, bound;
+  LPSREAL   Value1, Value2, bound;
   MATrec *mat = lp->matA;
 
   for(i = lastActiveLink(psdata->rows->varmap); (i > 0) && (status == RUNNING); ) {
@@ -2351,7 +2351,7 @@ STATIC int presolve_mergerows(presolverec *psdata, int *nRows, int *nSum)
           my_roundzero(Value2, lp->epsdual);      /* Extra rounding tolerance *** */
 
           if((bound < 0))
-            swapREAL(&Value1, &Value2);
+            swapLPSREAL(&Value1, &Value2);
 
           bound = get_rh_lower(lp, ix);
           if(Value1 > bound + psdata->epsvalue)
@@ -2400,7 +2400,7 @@ STATIC MYBOOL presolve_reduceGCD(presolverec *psdata, int *nn, int *nb, int *nsu
   MYBOOL   status = TRUE;
   int      i, jx, je, in = 0, ib = 0;
   LLONG    GCDvalue;
-  REAL     *Avalue, Rvalue, epsvalue = psdata->epsvalue;
+  LPSREAL     *Avalue, Rvalue, epsvalue = psdata->epsvalue;
   MATrec   *mat = lp->matA;
 
   for(i = firstActiveLink(psdata->INTmap); i != 0; i = nextActiveLink(psdata->INTmap, i)) {
@@ -2454,7 +2454,7 @@ STATIC int presolve_knapsack(presolverec *psdata, int *nn)
   lprec *lp = psdata->lp;
   int    m, n, i, ix, j, jx, colnr, *rownr = NULL,
          status = RUNNING;
-  REAL   *colOF = lp->orig_obj, value, *ratio = NULL;
+  LPSREAL   *colOF = lp->orig_obj, value, *ratio = NULL;
   LLrec  *map = psdata->EQmap;
   MATrec *mat = lp->matA;
 
@@ -2465,7 +2465,7 @@ STATIC int presolve_knapsack(presolverec *psdata, int *nn)
 
   /* Get the OF row */
   allocINT(lp, &rownr,  map->count+1, FALSE);
-  allocREAL(lp, &ratio, map->count+1, FALSE);
+  allocLPSREAL(lp, &ratio, map->count+1, FALSE);
 
   /* Loop over each row trying to find equal entries in the OF */
   rownr[0] = 0;
@@ -2578,7 +2578,7 @@ STATIC MYBOOL presolve_invalideq2(lprec *lp, presolverec *psdata)
 }
 
 /* Callback to obtain the non-zero rows of equality constraints */
-int BFP_CALLMODEL presolve_getcolumnEQ(lprec *lp, int colnr, REAL nzvalues[], int nzrows[], int mapin[])
+int BFP_CALLMODEL presolve_getcolumnEQ(lprec *lp, int colnr, LPSREAL nzvalues[], int nzrows[], int mapin[])
 {
   int    i, ib, ie, nn = 0;
   MATrec *mat = lp->matA;
@@ -2652,7 +2652,7 @@ STATIC int presolve_elimeq2(presolverec *psdata, int *nn, int *nr, int *nc, int 
             iCoeffChanged = 0, iRowsRemoved = 0, iVarsFixed = 0, nrows = lp->rows,
             status = RUNNING, *colindex = NULL;
   MYBOOL    freshupdate;
-  REAL      Coeff1, Coeff2, Value1, Value2, lobound, upbound, bound, test, product,
+  LPSREAL      Coeff1, Coeff2, Value1, Value2, lobound, upbound, bound, test, product,
             *colvalue = NULL, *delvalue = NULL, *colitem;
   MATrec    *mat = lp->matA, *rev = NULL;
   DeltaVrec *DV = NULL;
@@ -2666,8 +2666,8 @@ STATIC int presolve_elimeq2(presolverec *psdata, int *nn, int *nr, int *nc, int 
 
   /* Tally counts */
   createLink(lp->rows, &EQ2, NULL);
-  if((EQ2 == NULL) || !allocREAL(lp, &colvalue, nrows+1, FALSE) ||
-                      !allocREAL(lp, &delvalue, nrows+1, FALSE))
+  if((EQ2 == NULL) || !allocLPSREAL(lp, &colvalue, nrows+1, FALSE) ||
+                      !allocLPSREAL(lp, &delvalue, nrows+1, FALSE))
     goto Finish;
   for(i = firstActiveLink(psdata->EQmap); i > 0; i = nextActiveLink(psdata->EQmap, i)) {
     if(presolve_rowlength(psdata, i) == 2)
@@ -2767,7 +2767,7 @@ STATIC int presolve_elimeq2(presolverec *psdata, int *nn, int *nr, int *nc, int 
     /* Perform variable index swap if indicated */
     if(k != 0) {
       swapINT(&jx, &jjx);
-      swapREAL(&Coeff1, &Coeff2);
+      swapLPSREAL(&Coeff1, &Coeff2);
     }
 
     Value1 = lp->orig_rhs[i]/Coeff2; /* Delta constant term */
@@ -3011,7 +3011,7 @@ Finish:
 STATIC MYBOOL presolve_impliedfree(lprec *lp, presolverec *psdata, int colnr)
 {
   int    i, ix, ie;
-  REAL   Tlower, Tupper;
+  LPSREAL   Tlower, Tupper;
   MYBOOL status, rowbinds, isfree = FALSE;
   MATrec *mat = lp->matA;
 
@@ -3038,7 +3038,7 @@ STATIC MYBOOL presolve_impliedcolfix(presolverec *psdata, int rownr, int colnr, 
   MYBOOL   signflip, undoadded = FALSE;
   MATrec   *mat = lp->matA;
   int      jx, i, ib, ie = mat->row_end[rownr];
-  REAL     varLo = 0, varHi = 0, varRange, conRange = 0, matValue = 0, dual, RHS = lp->orig_rhs[rownr],
+  LPSREAL     varLo = 0, varHi = 0, varRange, conRange = 0, matValue = 0, dual, RHS = lp->orig_rhs[rownr],
            pivot, matAij = mat_getitem(mat, rownr, colnr), *vecOF = lp->orig_obj;
 
   /* We cannot have semi-continuous or non-qualifying integers */
@@ -3115,7 +3115,7 @@ STATIC MYBOOL presolve_impliedcolfix(presolverec *psdata, int rownr, int colnr, 
       varHi = get_upbo(lp, colnr);
       varHi *= (my_infinite(lp, varHi) ? my_sign(pivot) : pivot);
       if(pivot < 0)
-        swapREAL(&varHi, &varLo);
+        swapLPSREAL(&varHi, &varLo);
       signflip = my_infinite(lp, varLo);
     }
     if(signflip) {
@@ -3128,7 +3128,7 @@ STATIC MYBOOL presolve_impliedcolfix(presolverec *psdata, int rownr, int colnr, 
       if(!isfree) {
         varLo = -varLo;
         varHi = -varHi;
-        swapREAL(&varHi, &varLo);
+        swapLPSREAL(&varHi, &varLo);
       }
     }
     matValue = RHS/pivot;
@@ -3255,10 +3255,10 @@ STATIC psrec *presolve_initpsrec(lprec *lp, int size)
   allocINT(lp, &ps->empty, size, FALSE);
   ps->empty[0] = 0;
 
-  allocREAL(lp, &ps->pluupper,  size, FALSE);
-  allocREAL(lp, &ps->negupper,  size, FALSE);
-  allocREAL(lp, &ps->plulower,  size, FALSE);
-  allocREAL(lp, &ps->neglower,  size, FALSE);
+  allocLPSREAL(lp, &ps->pluupper,  size, FALSE);
+  allocLPSREAL(lp, &ps->negupper,  size, FALSE);
+  allocLPSREAL(lp, &ps->plulower,  size, FALSE);
+  allocLPSREAL(lp, &ps->neglower,  size, FALSE);
   allocINT(lp,  &ps->infcount,  size, FALSE);
 
   ps->next = (int **) calloc(size, sizeof(*(ps->next)));
@@ -3302,7 +3302,7 @@ STATIC presolverec *presolve_init(lprec *lp)
   int         k, i, ix, ixx, colnr,
               ncols = lp->columns,
               nrows = lp->rows;
-  REAL        hold;
+  LPSREAL        hold;
   MATrec      *mat = lp->matA;
   presolverec *psdata = NULL;
 
@@ -3325,14 +3325,14 @@ STATIC presolverec *presolve_init(lprec *lp)
 
   /* Save incoming primal bounds */
   k = lp->sum + 1;
-  allocREAL(lp, &psdata->pv_lobo, k, FALSE);
+  allocLPSREAL(lp, &psdata->pv_lobo, k, FALSE);
   MEMCOPY(psdata->pv_lobo, lp->orig_lowbo, k);
-  allocREAL(lp, &psdata->pv_upbo, k, FALSE);
+  allocLPSREAL(lp, &psdata->pv_upbo, k, FALSE);
   MEMCOPY(psdata->pv_upbo, lp->orig_upbo, k);
 
   /* Create and initialize dual value (Langrangean and slack) limits */
-  allocREAL(lp, &psdata->dv_lobo, k, FALSE);
-  allocREAL(lp, &psdata->dv_upbo, k, FALSE);
+  allocLPSREAL(lp, &psdata->dv_lobo, k, FALSE);
+  allocLPSREAL(lp, &psdata->dv_upbo, k, FALSE);
   for(i = 0; i <= nrows; i++) {
     psdata->dv_lobo[i] = (is_constr_type(lp, i, EQ) ? -lp->infinite : 0);
     psdata->dv_upbo[i] = lp->infinite;
@@ -3428,7 +3428,7 @@ STATIC int presolve_makefree(presolverec *psdata)
 {
   lprec    *lp = psdata->lp;
   int      i, ix, j, nn = 0;
-  REAL     Xlower, Xupper, losum, upsum, lorhs, uprhs, freeinf = lp->infinite / 10;
+  LPSREAL     Xlower, Xupper, losum, upsum, lorhs, uprhs, freeinf = lp->infinite / 10;
   MATrec   *mat = lp->matA;
   LLrec    *colLL = NULL;
 
@@ -3630,10 +3630,10 @@ STATIC MYBOOL presolve_debugdump(lprec *lp, presolverec *psdata, char *filename,
   blockWriteINT(output, "pluneg",    psdata->rows->pluneg,    0, lp->rows);
 
   fprintf(output, "\nSUMS\n----\n\n");
-  blockWriteREAL(output, "pluupper", psdata->rows->pluupper, 0, lp->rows);
-  blockWriteREAL(output, "negupper", psdata->rows->negupper, 0, lp->rows);
-  blockWriteREAL(output, "plulower", psdata->rows->pluupper, 0, lp->rows);
-  blockWriteREAL(output, "neglower", psdata->rows->negupper, 0, lp->rows);
+  blockWriteLPSREAL(output, "pluupper", psdata->rows->pluupper, 0, lp->rows);
+  blockWriteLPSREAL(output, "negupper", psdata->rows->negupper, 0, lp->rows);
+  blockWriteLPSREAL(output, "plulower", psdata->rows->pluupper, 0, lp->rows);
+  blockWriteLPSREAL(output, "neglower", psdata->rows->negupper, 0, lp->rows);
 
   if(filename != NULL)
     fclose(output);
@@ -3677,7 +3677,7 @@ int CMP_CALLMODEL compAggregate(const UNIONTYPE QSORTrec *current, const UNIONTY
   int  index1 = (int) (current->pvoidint2.intval),
        index2 = (int) (candidate->pvoidint2.intval);
   lprec *lp   = (lprec *) current->pvoidint2.ptr;
-  REAL value1 = lp->orig_obj[index1],
+  LPSREAL value1 = lp->orig_obj[index1],
        value2 = lp->orig_obj[index2];
 
   /* Smallest objective coefficient (largest contribution to OF) */
@@ -3707,7 +3707,7 @@ STATIC int presolve_rowdominance(presolverec *psdata, int *nCoeffChanged, int *n
   MATrec   *mat = lp->matA;
   int      i, ii, ib, ie, n, jb, je, jx, *coldel = NULL, status = RUNNING, item,
            iCoeffChanged = 0, iRowRemoved = 0, iVarFixed = 0;
-  REAL     ratio, *rowvalues = NULL;
+  LPSREAL     ratio, *rowvalues = NULL;
   UNIONTYPE QSORTrec *QS = (UNIONTYPE QSORTrec *) calloc(lp->rows+1, sizeof(*QS));
 
   /* Check if we were able to obtain working memory */
@@ -3747,7 +3747,7 @@ STATIC int presolve_rowdominance(presolverec *psdata, int *nCoeffChanged, int *n
 
   /* Let us start from the top of the list, going forward and looking
     for the longest possible dominating row */
-  if(!allocREAL(lp, &rowvalues, lp->columns + 1, TRUE) ||
+  if(!allocLPSREAL(lp, &rowvalues, lp->columns + 1, TRUE) ||
      !allocINT(lp, &coldel, lp->columns + 1, FALSE))
     goto Finish;
 
@@ -3896,7 +3896,7 @@ STATIC int presolve_coldominance01(presolverec *psdata, int *nConRemoved, int *n
   MYBOOL   first;
   int      i, ii, ib, ie, n, jb, je, jx, jj, item, item2,
            *coldel = NULL, status = RUNNING, iVarFixed = 0;
-  REAL     scale, rhsval, *colvalues = NULL;
+  LPSREAL     scale, rhsval, *colvalues = NULL;
   UNIONTYPE QSORTrec *QS = (UNIONTYPE QSORTrec *) calloc(lp->columns+1, sizeof(*QS));
 
   /* Check if we were able to obtain working memory */
@@ -3941,7 +3941,7 @@ STATIC int presolve_coldominance01(presolverec *psdata, int *nConRemoved, int *n
 
   /* Let us start from the top of the list, going forward and looking
     for the longest possible dominated column */
-  if(!allocREAL(lp, &colvalues, lp->rows + 1, TRUE) ||
+  if(!allocLPSREAL(lp, &colvalues, lp->rows + 1, TRUE) ||
      !allocINT(lp, &coldel, lp->columns + 1, FALSE))
     goto Finish;
 
@@ -4079,7 +4079,7 @@ STATIC int presolve_coldominance01(presolverec *psdata, NATURAL *nConRemoved, NA
            *coldel = NULL;
   int      jb, jj, ii,
            status = RUNNING;
-  REAL     rhsval,
+  LPSREAL     rhsval,
            *colvalues = NULL, *colobj = NULL;
   LLrec    *sets = NULL;
   UNIONTYPE QSORTrec *QS = (UNIONTYPE QSORTrec *) calloc(n+1, sizeof(*QS));
@@ -4146,8 +4146,8 @@ STATIC int presolve_coldominance01(presolverec *psdata, NATURAL *nConRemoved, NA
 
   /* Let us start from the top of the list, going forward and looking
     for the longest possible dominated column */
-  if(!allocREAL(lp, &colvalues, nrows + 1, TRUE) ||
-     !allocREAL(lp, &colobj, n + 1, FALSE) ||
+  if(!allocLPSREAL(lp, &colvalues, nrows + 1, TRUE) ||
+     !allocLPSREAL(lp, &colobj, n + 1, FALSE) ||
      !allocINT(lp, &coldel, n + 1, FALSE))
     goto Finish;
 
@@ -4223,7 +4223,7 @@ STATIC int presolve_coldominance01(presolverec *psdata, NATURAL *nConRemoved, NA
 
     /* Find the dominant columns, fix and delete the others */
     if(coldel[0] > 1) {
-      qsortex(colobj+1, coldel[0], 0, sizeof(*colobj), FALSE, compareREAL, coldel+1, sizeof(*coldel));
+      qsortex(colobj+1, coldel[0], 0, sizeof(*colobj), FALSE, compareLPSREAL, coldel+1, sizeof(*coldel));
       /* if(rhsval+lp->epsvalue < lp->infinite) { */
         jb = (NATURAL) (rhsval+lp->epsvalue);
         /* printf("%f / %d\n", rhsval, jb); */
@@ -4269,7 +4269,7 @@ STATIC int presolve_aggregate(presolverec *psdata, int *nConRemoved, int *nVarsF
   MYBOOL   first;
   int      i, ii, ib, ie, ix, n, jb, je, jx, jj, item, item2,
            *coldel = NULL, status = RUNNING, iVarFixed = 0;
-  REAL     scale, *colvalues = NULL;
+  LPSREAL     scale, *colvalues = NULL;
   UNIONTYPE QSORTrec *QScand = (UNIONTYPE QSORTrec *) calloc(lp->columns+1, sizeof(*QScand));
 
   /* Check if we were able to obtain working memory */
@@ -4296,7 +4296,7 @@ STATIC int presolve_aggregate(presolverec *psdata, int *nConRemoved, int *nVarsF
 
   /* Let us start from the top of the list, going forward and looking
     for the longest possible identical column */
-  if(!allocREAL(lp, &colvalues, lp->rows + 1, TRUE) ||
+  if(!allocLPSREAL(lp, &colvalues, lp->rows + 1, TRUE) ||
      !allocINT(lp, &coldel, lp->columns + 1, FALSE))
     goto Finish;
 
@@ -4365,7 +4365,7 @@ STATIC int presolve_aggregate(presolverec *psdata, int *nConRemoved, int *nVarsF
 
     /* Sort the aggregation list if we have aggregation candidates */
     if(coldel[0] > 1) {
-      REAL     of, ofelim, fixvalue;
+      LPSREAL     of, ofelim, fixvalue;
       MYBOOL   isint;
       UNIONTYPE QSORTrec *QSagg = (UNIONTYPE QSORTrec *) calloc(coldel[0], sizeof(*QSagg));
 
@@ -4484,7 +4484,7 @@ STATIC int presolve_makesparser(presolverec *psdata, int *nCoeffChanged, int *nC
   MYBOOL   chsign;
   int      i, ii, ib, ix, k, n, jb, je, jl, jjb, jje, jjl, jx, jjx, item, itemEQ,
            *nzidx = NULL, status = RUNNING, iObjChanged = 0, iCoeffChanged = 0, iConRemove = 0;
-  REAL     test, ratio, value, valueEQ, *valptr;
+  LPSREAL     test, ratio, value, valueEQ, *valptr;
   LLrec    *EQlist = NULL;
   UNIONTYPE QSORTrec *QS = (UNIONTYPE QSORTrec *) calloc(lp->rows, sizeof(*QS));
 
@@ -4759,7 +4759,7 @@ STATIC int presolve_SOS1(presolverec *psdata, int *nCoeffChanged, int *nConRemov
   MYBOOL   candelete, SOS_GUBactive = FALSE;
   int      iCoeffChanged = 0, iConRemove = 0, iSOS = 0,
            i,ix,iix, j,jx,jjx, status = RUNNING;
-  REAL     Value1;
+  LPSREAL     Value1;
   MATrec   *mat = lp->matA;
 
   for(i = lastActiveLink(psdata->rows->varmap); i > 0; ) {
@@ -4822,7 +4822,7 @@ STATIC int presolve_SOS1(presolverec *psdata, int *nCoeffChanged, int *nConRemov
 
 STATIC int presolve_boundconflict(presolverec *psdata, int baserowno, int colno)
 {
-  REAL   Value1, Value2;
+  LPSREAL   Value1, Value2;
   lprec  *lp = psdata->lp;
   MATrec *mat = lp->matA;
   int    ix, item = 0,
@@ -4865,7 +4865,7 @@ STATIC int presolve_columns(presolverec *psdata, int *nCoeffChanged, int *nConRe
            colfixdual = is_presolve(lp, PRESOLVE_COLFIXDUAL);
   int      iCoeffChanged = 0, iConRemove = 0, iVarFixed = 0, iBoundTighten = 0,
            status = RUNNING, ix, j, countNZ, item;
-  REAL     Value1;
+  LPSREAL     Value1;
 
   for(j = firstActiveLink(psdata->cols->varmap); (j != 0) && (status == RUNNING); ) {
 
@@ -5036,7 +5036,7 @@ STATIC int presolve_freeandslacks(presolverec *psdata, int *nCoeffChanged, int *
            impliedslack = is_presolve(lp, PRESOLVE_IMPLIEDSLK);
   int      iCoeffChanged = 0, iConRemove = 0, iVarFixed = 0,
            status = RUNNING, i, ix, j, countNZ;
-  REAL     coeff_bl, coeff_bu;
+  LPSREAL     coeff_bl, coeff_bu;
   MATrec   *mat = lp->matA;
 
   if(impliedfree || impliedslack)
@@ -5091,7 +5091,7 @@ STATIC int presolve_freeandslacks(presolverec *psdata, int *nCoeffChanged, int *
 #endif
              (countNZ > 1) &&
              !is_constr_type(lp, i, EQ))  {
-      REAL *target,
+      LPSREAL *target,
             ValueA   = COL_MAT_VALUE(presolve_lastrow(psdata, j));
 #if 0
       coeff_bu = get_rh_upper(lp, i);
@@ -5166,7 +5166,7 @@ STATIC int presolve_preparerows(presolverec *psdata, int *nBoundTighten, int *nS
   MYBOOL   impliedfree = is_presolve(lp, PRESOLVE_IMPLIEDFREE),
            tightenbounds  = is_presolve(lp, PRESOLVE_BOUNDS);
   int      iRangeTighten = 0, iBoundTighten = 0, status = RUNNING, i, j;
-  REAL     losum, upsum, lorhs, uprhs, epsvalue = psdata->epsvalue;
+  LPSREAL     losum, upsum, lorhs, uprhs, epsvalue = psdata->epsvalue;
   MATrec   *mat = lp->matA;
 
   for(i = lastActiveLink(psdata->rows->varmap); i > 0; i = prevActiveLink(psdata->rows->varmap, i)) {
@@ -5239,7 +5239,7 @@ STATIC int presolve_rows(presolverec *psdata, int *nCoeffChanged, int *nConRemov
   MYBOOL   candelete;
   int      iCoeffChanged = 0, iConRemove = 0, iVarFixed = 0, iBoundTighten = 0,
            status = RUNNING, i,ix, j,jx, item;
-  REAL     Value1, Value2, losum, upsum, lorhs, uprhs, epsvalue = psdata->epsvalue;
+  LPSREAL     Value1, Value2, losum, upsum, lorhs, uprhs, epsvalue = psdata->epsvalue;
   MATrec   *mat = lp->matA;
 
   for(i = lastActiveLink(psdata->rows->varmap); (i > 0) && (status == RUNNING); ) {
@@ -5289,7 +5289,7 @@ STATIC int presolve_rows(presolverec *psdata, int *nCoeffChanged, int *nConRemov
         Value2 = ROW_MAT_VALUE(jx);
         Value1 = lp->orig_rhs[i] / Value2;
         if(Value2 < 0)
-          swapREAL(&losum, &upsum);
+          swapLPSREAL(&losum, &upsum);
         if((Value1 < losum / my_if(my_infinite(lp, losum), my_sign(Value2), Value2) - epsvalue) ||
            (Value1 > upsum / my_if(my_infinite(lp, upsum), my_sign(Value2), Value2) + epsvalue))
           status = presolve_setstatus(psdata, INFEASIBLE);
@@ -5406,7 +5406,7 @@ STATIC int presolve(lprec *lp)
          i, j = 0, jx = 0, jjx = 0, k, oSum,
          iCoeffChanged = 0, iConRemove = 0, iVarFixed = 0, iBoundTighten = 0, iSOS = 0, iSum = 0,
          nCoeffChanged = 0, nConRemove = 0, nVarFixed = 0, nBoundTighten = 0, nSOS = 0, nSum = 0;
-  REAL   Value1, Value2, initrhs0 = lp->orig_rhs[0];
+  LPSREAL   Value1, Value2, initrhs0 = lp->orig_rhs[0];
   presolverec *psdata = NULL;
   MATrec *mat = lp->matA;
 
@@ -5494,7 +5494,7 @@ write_lp(lp, "test_in.lp");    /* Write to lp-formatted file for debugging */
   else {
 
     if(lp->full_solution == NULL)
-      allocREAL(lp, &lp->full_solution, lp->sum_alloc+1, TRUE);
+      allocLPSREAL(lp, &lp->full_solution, lp->sum_alloc+1, TRUE);
 
     /* Identify infeasible SOS'es prior to any pruning */
     j = 0;

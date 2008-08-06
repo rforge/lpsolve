@@ -48,7 +48,7 @@
 struct structSOSvars {
   char                 *name;
   int                  col;
-  REAL                 weight;
+  LPSREAL                 weight;
   struct structSOSvars *next;
 };
 
@@ -63,7 +63,7 @@ struct structSOS {
 
 struct SOSrow {
   int  col;
-  REAL value;
+  LPSREAL value;
   struct SOSrow *next;
 };
 
@@ -76,8 +76,8 @@ struct SOSrowdata {
 struct rside /* contains relational operator and rhs value */
 {
   int           row;
-  REAL          value;
-  REAL          range_value;
+  LPSREAL          value;
+  LPSREAL          range_value;
   struct rside  *next;
   short         relat;
   short         range_relat;
@@ -88,7 +88,7 @@ struct rside /* contains relational operator and rhs value */
 struct column
 {
   int            row;
-  REAL           value;
+  LPSREAL           value;
   struct  column *next;
   struct  column *prev;
 };
@@ -97,8 +97,8 @@ struct structcoldata {
   int               must_be_int;
   int               must_be_sec;
   int               must_be_free;
-  REAL              upbo;
-  REAL              lowbo;
+  LPSREAL              upbo;
+  LPSREAL              lowbo;
   struct  column   *firstcol;
   struct  column   *col;
 };
@@ -184,7 +184,7 @@ static void add_int_var(parse_parm *pp, char *name, short int_decl)
   else {
     pp->coldata[hp->index].must_be_int = TRUE;
     if(int_decl == 2) {
-      if(pp->coldata[hp->index].lowbo != -DEF_INFINITE * (REAL) 10.0) {
+      if(pp->coldata[hp->index].lowbo != -DEF_INFINITE * (LPSREAL) 10.0) {
         char buf[256];
 
         sprintf(buf, "Variable %s: lower bound on variable redefined", name);
@@ -226,7 +226,7 @@ static void add_sec_var(parse_parm *pp, char *name)
     pp->coldata[hp->index].must_be_sec = TRUE;
 }
 
-int set_sec_threshold(parse_parm *pp, char *name, REAL threshold)
+int set_sec_threshold(parse_parm *pp, char *name, LPSREAL threshold)
 {
   hashelem *hp;
 
@@ -363,11 +363,11 @@ static int inccoldata(parse_parm *pp)
   if(Columns == 0)
     CALLOC(pp->coldata, coldatastep, struct structcoldata);
   else if((Columns%coldatastep) == 0)
-    REALLOC(pp->coldata, Columns + coldatastep, struct structcoldata);
+    LPSREALLOC(pp->coldata, Columns + coldatastep, struct structcoldata);
 
   if(pp->coldata != NULL) {
-    pp->coldata[Columns].upbo = (REAL) DEF_INFINITE;
-    pp->coldata[Columns].lowbo = (REAL) -DEF_INFINITE * (REAL) 10.0; /* temporary. If still this value then 0 will be taken */
+    pp->coldata[Columns].upbo = (LPSREAL) DEF_INFINITE;
+    pp->coldata[Columns].lowbo = (LPSREAL) -DEF_INFINITE * (LPSREAL) 10.0; /* temporary. If still this value then 0 will be taken */
     pp->coldata[Columns].col = NULL;
     pp->coldata[Columns].firstcol = NULL;
     pp->coldata[Columns].must_be_int = FALSE;
@@ -437,7 +437,7 @@ void null_tmp_store(parse_parm *pp, int init_Lin_term_count)
  */
 static int store(parse_parm *pp, char *variable,
 		  int row,
-		  REAL value)
+		  LPSREAL value)
 {
   hashelem *h_tab_p;
   struct column *col_p;
@@ -616,7 +616,7 @@ int negate_constraint(parse_parm *pp)
  * store RHS value in the rightside structure
  * if type = true then
  */
-int rhs_store(parse_parm *pp, REAL value, int HadConstraint, int HadVar, int Had_lineair_sum)
+int rhs_store(parse_parm *pp, LPSREAL value, int HadConstraint, int HadVar, int Had_lineair_sum)
 {
   if(/* pp->Lin_term_count > 1 */ (HadConstraint && HadVar) || (pp->Rows == 0)){ /* not a bound */
     if (pp->Rows == 0)
@@ -663,7 +663,7 @@ int rhs_store(parse_parm *pp, REAL value, int HadConstraint, int HadVar, int Had
  * count the amount of lineair terms in a constraint
  * only store in data-structure if the constraint is not a bound
  */
-int var_store(parse_parm *pp, char *var, REAL value, int HadConstraint, int HadVar, int Had_lineair_sum)
+int var_store(parse_parm *pp, char *var, LPSREAL value, int HadConstraint, int HadVar, int Had_lineair_sum)
 {
   int row;
 
@@ -705,7 +705,7 @@ int store_bounds(parse_parm *pp, int warn)
 {
   if(pp->tmp_store.value != 0) {
     hashelem *h_tab_p;
-    REAL boundvalue;
+    LPSREAL boundvalue;
 
     if((h_tab_p = findhash(pp->tmp_store.name, pp->Hash_tab)) == NULL) {
       /* a new columnname is found, create an entry in the hashlist */
@@ -825,7 +825,7 @@ static int readinput(parse_parm *pp, lprec *lp)
   hashelem *hp;
   struct rside *rp;
   signed char *negateAndSOS = NULL;
-  REAL *row = NULL, a;
+  LPSREAL *row = NULL, a;
   int *rowno = NULL;
   MYBOOL SOSinMatrix = FALSE;
   struct SOSrowdata *SOSrowdata = NULL;
@@ -932,7 +932,7 @@ static int readinput(parse_parm *pp, lprec *lp)
   }
 
   if((lp != NULL) &&
-     ((MALLOC(row, 1 + pp->Rows, REAL) == NULL) || (MALLOC(rowno, 1 + pp->Rows, int) == NULL))) {
+     ((MALLOC(row, 1 + pp->Rows, LPSREAL) == NULL) || (MALLOC(rowno, 1 + pp->Rows, int) == NULL))) {
     FREE(SOSrowdata);
     FREE(negateAndSOS);
     FREE(row);
@@ -1075,7 +1075,7 @@ static int readinput(parse_parm *pp, lprec *lp)
   {
     struct structSOSvars *SOSvars, *SOSvars1;
     int *sosvars, n, col;
-    REAL *weights;
+    LPSREAL *weights;
     hashelem *hp;
 
     pp->LastSOS = pp->FirstSOS;
@@ -1210,7 +1210,7 @@ static int readinput(parse_parm *pp, lprec *lp)
 
 lprec *yacc_read(lprec *lp, int verbose, char *lp_name, int (*parse) (parse_parm *pp), parse_parm *pp, void (*delete_allocated_memory) (parse_parm *pp))
 {
-  REAL *orig_upbo;
+  LPSREAL *orig_upbo;
   int stat = -1;
   lprec *lp0 = lp;
 
@@ -1259,7 +1259,7 @@ lprec *yacc_read(lprec *lp, int verbose, char *lp_name, int (*parse) (parse_parm
 	if(pp->Rows) {
 	  int row;
 
-	  MALLOCCPY(orig_upbo, lp->orig_upbo, 1 + pp->Rows, REAL);
+	  MALLOCCPY(orig_upbo, lp->orig_upbo, 1 + pp->Rows, LPSREAL);
 	  for(row = 1; row <= pp->Rows; row++)
 	    set_constr_type(lp, row, pp->relat[row]);
 

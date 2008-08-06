@@ -43,7 +43,7 @@ STATIC void write_lpcomment(void *userhandle, write_modeldata_func write_modelda
 STATIC int write_lprow(lprec *lp, int rowno, void *userhandle, write_modeldata_func write_modeldata, int maxlen)
 {
   int     i, ie, j, nchars;
-  REAL    a;
+  LPSREAL    a;
   MATrec  *mat = lp->matA;
   MYBOOL  first = TRUE, elements;
 
@@ -105,7 +105,7 @@ MYBOOL __WINAPI write_lpex(lprec *lp, void *userhandle, write_modeldata_func wri
          ncols = lp->columns,
          nchars, maxlen = LP_MAXLINELEN;
   MYBOOL ok;
-  REAL   a;
+  LPSREAL   a;
   char   *ptr;
 
   if(lp->matA->is_roworder) {

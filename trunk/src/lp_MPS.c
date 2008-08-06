@@ -449,7 +449,7 @@ STATIC int scan_lineFREE(lprec *lp, int section, char* line, char *field1, char 
 }
 
 STATIC int addmpscolumn(lprec *lp, MYBOOL Int_section, MYBOOL *Column_ready,
-                        int *count, REAL *Last_column, int *Last_columnno, char *Last_col_name)
+                        int *count, LPSREAL *Last_column, int *Last_columnno, char *Last_col_name)
 {
   int ok = TRUE;
 
@@ -467,7 +467,7 @@ STATIC int addmpscolumn(lprec *lp, MYBOOL Int_section, MYBOOL *Column_ready,
 }
 
 #if 0
-STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], REAL rowValue[])
+STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], LPSREAL rowValue[])
 {
   int i = *count;
 
@@ -476,7 +476,7 @@ STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], REAL rowValue[])
 
   while((i > 0) && (rowIndex[i] < rowIndex[i-1])) {
     swapINT (rowIndex+i, rowIndex+i-1);
-    swapREAL(rowValue+i, rowValue+i-1);
+    swapLPSREAL(rowValue+i, rowValue+i-1);
     i--;
   }
   (*count)++;
@@ -484,7 +484,7 @@ STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], REAL rowValue[])
 }
 #endif
 
-STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], REAL rowValue[])
+STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], LPSREAL rowValue[])
 {
   int i = *count;
 
@@ -495,7 +495,7 @@ STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], REAL rowValue[])
   /* Move the element so that the index list is sorted ascending */
   while((i > 0) && (rowIndex[i] < rowIndex[i-1])) {
     swapINT (rowIndex+i, rowIndex+i-1);
-    swapREAL(rowValue+i, rowValue+i-1);
+    swapLPSREAL(rowValue+i, rowValue+i-1);
     i--;
   }
 
@@ -548,7 +548,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
   MYBOOL Int_section, Column_ready, Column_ready1,
          Unconstrained_rows_found = FALSE, OF_found = FALSE, CompleteStatus = FALSE;
   double field4, field6;
-  REAL   *Last_column = NULL;
+  LPSREAL   *Last_column = NULL;
   int    count = 0, *Last_columnno = NULL;
   int    OBJSENSE = ROWTYPE_EMPTY;
   lprec  *lp;
@@ -624,7 +624,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
           report(lp, FULL, "Switching to ROWS section\n");
         }
         else if(strcmp(tmp, "COLUMNS") == 0) {
-          allocREAL(lp, &Last_column, lp->rows + 1, TRUE);
+          allocLPSREAL(lp, &Last_column, lp->rows + 1, TRUE);
           allocINT(lp, &Last_columnno, lp->rows + 1, TRUE);
           count = 0;
           if ((Last_column == NULL) || (Last_columnno == NULL))
@@ -793,7 +793,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
               if(row > lp->rows)
                 report(lp, CRITICAL, "Invalid row %s encountered in the MPS file\n", field3);
               Last_columnno[count] = row;
-              Last_column[count] = (REAL)field4;
+              Last_column[count] = (LPSREAL)field4;
               if(appendmpsitem(&count, Last_columnno, Last_column)) {
                 NZ++;
                 Column_ready = TRUE;
@@ -805,7 +805,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
               if(row > lp->rows)
                 report(lp, CRITICAL, "Invalid row %s encountered in the MPS file\n", field5);
               Last_columnno[count] = row;
-              Last_column[count] = (REAL)field6;
+              Last_column[count] = (LPSREAL)field6;
               if(appendmpsitem(&count, Last_columnno, Last_column)) {
                 NZ++;
                 Column_ready = TRUE;
@@ -837,12 +837,12 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
           }
 
           if((row = find_row(lp, field3, Unconstrained_rows_found)) >= 0) {
-            set_rh(lp, row, (REAL)field4);
+            set_rh(lp, row, (LPSREAL)field4);
           }
 
           if(items == 6) {
             if((row = find_row(lp, field5, Unconstrained_rows_found)) >= 0) {
-              set_rh(lp, row, (REAL)field6);
+              set_rh(lp, row, (LPSREAL)field6);
             }
           }
 
@@ -1140,7 +1140,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
   return( CompleteStatus );
 }
 
-static void number(char *str,REAL value)
+static void number(char *str,LPSREAL value)
  {
   char __str[80], *_str;
   int  i;
@@ -1269,7 +1269,7 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
 {
   int    i, j, jj, je, k, marker, putheader, ChangeSignObj = FALSE, *idx, *idx1;
   MYBOOL ok = TRUE, names_used;
-  REAL   a, *val, *val1;
+  LPSREAL   a, *val, *val1;
   char * (*MPSname)(char *name0, char *name);
   char numberbuffer[15];
   char name0[9];
@@ -1347,7 +1347,7 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
     write_data(userhandle, write_modeldata, "%s\n", MPSname(name0, get_row_name(lp, i)));
   }
 
-  allocREAL(lp, &val, 1 + lp->rows, TRUE);
+  allocLPSREAL(lp, &val, 1 + lp->rows, TRUE);
   allocINT(lp, &idx, 1 + lp->rows, TRUE);
   write_data(userhandle, write_modeldata, "COLUMNS\n");
   for(i = 1; i <= lp->columns; i++) {

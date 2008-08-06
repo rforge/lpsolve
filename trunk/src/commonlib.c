@@ -359,9 +359,9 @@ int CMP_CALLMODEL compareINT(const void *current, const void *candidate)
 {
   return( CMP_COMPARE( *(int *) current, *(int *) candidate ) );
 }
-int CMP_CALLMODEL compareREAL(const void *current, const void *candidate)
+int CMP_CALLMODEL compareLPSREAL(const void *current, const void *candidate)
 {
-  return( CMP_COMPARE( *(REAL *) current, *(REAL *) candidate ) );
+  return( CMP_COMPARE( *(LPSREAL *) current, *(LPSREAL *) candidate ) );
 }
 
 /* Heap sort function (procedurally based on the Numerical Recipes version,
@@ -735,10 +735,10 @@ Finish:
 
 
 /* Simple specialized bubble/insertion sort functions */
-int sortByREAL(int *item, REAL *weight, int size, int offset, MYBOOL unique)
+int sortByLPSREAL(int *item, LPSREAL *weight, int size, int offset, MYBOOL unique)
 {
   int i, ii, saveI;
-  REAL saveW;
+  LPSREAL saveW;
 
   for(i = 1; i < size; i++) {
     ii = i+offset-1;
@@ -785,10 +785,10 @@ int sortByINT(int *item, int *weight, int size, int offset, MYBOOL unique)
   }
   return(0);
 }
-REAL sortREALByINT(REAL *item, int *weight, int size, int offset, MYBOOL unique)
+LPSREAL sortLPSREALByINT(LPSREAL *item, int *weight, int size, int offset, MYBOOL unique)
 {
   int  i, ii, saveW;
-  REAL saveI;
+  LPSREAL saveI;
 
   for(i = 1; i < size; i++) {
     ii = i+offset-1;
@@ -822,7 +822,7 @@ double timeNow(void)
 #elif defined PosixTime
   struct timespec t;
 # if 0
-  clock_gettime(CLOCK_REALTIME, &t);
+  clock_gettime(CLOCK_LPSREALTIME, &t);
   return( (double) t.tv_sec + (double) t.tv_nsec/1.0e9 );
 # else
   static double   timeBase;
@@ -895,8 +895,8 @@ void blockWriteBOOL(FILE *output, char *label, MYBOOL *myvector, int first, int 
     fprintf(output, "\n");
 }
 
-/* List a vector of REAL values for the given index range */
-void blockWriteREAL(FILE *output, char *label, REAL *myvector, int first, int last)
+/* List a vector of LPSREAL values for the given index range */
+void blockWriteLPSREAL(FILE *output, char *label, LPSREAL *myvector, int first, int last)
 {
   int i, k = 0;
 
@@ -916,7 +916,7 @@ void blockWriteREAL(FILE *output, char *label, REAL *myvector, int first, int la
 
 
 /* CONSOLE vector and matrix printing routines */
-void printvec( int n, REAL *x, int modulo )
+void printvec( int n, LPSREAL *x, int modulo )
 {
   int i;
 
@@ -931,7 +931,7 @@ void printvec( int n, REAL *x, int modulo )
 }
 
 
-void printmatUT( int size, int n, REAL *U, int modulo)
+void printmatUT( int size, int n, LPSREAL *U, int modulo)
 {
    int i, ll;
    ll = 0;
@@ -942,7 +942,7 @@ void printmatUT( int size, int n, REAL *U, int modulo)
 }
 
 
-void printmatSQ( int size, int n, REAL *X, int modulo)
+void printmatSQ( int size, int n, LPSREAL *X, int modulo)
 {
    int i, ll;
    ll = 0;

@@ -18,12 +18,12 @@
 #ifdef MATLAB
   #define LUSOL_MALLOC(bytesize)        mxMalloc(bytesize)
   #define LUSOL_CALLOC(count, recsize)  mxCalloc(count, recsize)
-  #define LUSOL_REALLOC(ptr, bytesize)  mxRealloc((void *) ptr, bytesize)
+  #define LUSOL_LPSREALLOC(ptr, bytesize)  mxRealloc((void *) ptr, bytesize)
   #define LUSOL_FREE(ptr)               {mxFree(ptr); ptr=NULL;}
 #else
   #define LUSOL_MALLOC(bytesize)        malloc(bytesize)
   #define LUSOL_CALLOC(count, recsize)  calloc(count, recsize)
-  #define LUSOL_REALLOC(ptr, bytesize)  realloc((void *) ptr, bytesize)
+  #define LUSOL_LPSREALLOC(ptr, bytesize)  realloc((void *) ptr, bytesize)
   #define LUSOL_FREE(ptr)               {free(ptr); ptr=NULL;}
 #endif
 
@@ -76,11 +76,11 @@
 #ifndef NULL
   #define NULL                       0
 #endif
-#ifndef REAL
-  #define REAL double
+#ifndef LPSREAL
+  #define LPSREAL double
 #endif
-#ifndef REALXP
-  #define REALXP long double
+#ifndef LPSREALXP
+  #define LPSREALXP long double
 #endif
 #ifndef MYBOOL
   #define MYBOOL unsigned char
@@ -257,7 +257,7 @@ typedef void LUSOLlogfunc(void *lp, void *userhandle, char *buf);
 
 /* Sparse matrix data */
 typedef struct _LUSOLmat {
-  REAL *a;
+  LPSREAL *a;
   int  *lenx, *indr, *indc, *indx;
 } LUSOLmat;
 
@@ -274,12 +274,12 @@ typedef struct _LUSOLrec {
 
   /* Parameter storage arrays */
   int    luparm[LUSOL_IP_LASTITEM + 1];
-  REAL   parmlu[LUSOL_RP_LASTITEM + 1];
+  LPSREAL   parmlu[LUSOL_RP_LASTITEM + 1];
 
   /* Arrays of length lena+1 */
   int    lena, nelem;
   int    *indc, *indr;
-  REAL   *a;
+  LPSREAL   *a;
 
   /* Arrays of length maxm+1 (row storage) */
   int    maxm, m;
@@ -288,17 +288,17 @@ typedef struct _LUSOLrec {
   /* Arrays of length maxn+1 (column storage) */
   int    maxn, n;
   int    *lenc, *iq, *iploc, *iqinv, *locc;
-  REAL   *w, *vLU6L;
+  LPSREAL   *w, *vLU6L;
 
   /* List of singular columns, with dynamic size allocation */
   int    *isingular;
 
   /* Extra arrays of length n for TCP and keepLU == FALSE */
-  REAL   *Ha, *diagU;
+  LPSREAL   *Ha, *diagU;
   int    *Hj, *Hk;
 
   /* Extra arrays of length m for TRP*/
-  REAL   *amaxr;
+  LPSREAL   *amaxr;
 
   /* Extra array for L0 and U stored by row/column for faster btran/ftran */
   LUSOLmat *L0;
@@ -314,7 +314,7 @@ typedef struct _LUSOLrec {
 
 LUSOLrec *LUSOL_create(FILE *outstream, int msgfil, int pivotmodel, int updatelimit);
 MYBOOL LUSOL_sizeto(LUSOLrec *LUSOL, int init_r, int init_c, int init_a);
-MYBOOL LUSOL_assign(LUSOLrec *LUSOL, int iA[], int jA[], REAL Aij[],
+MYBOOL LUSOL_assign(LUSOLrec *LUSOL, int iA[], int jA[], LPSREAL Aij[],
                                      int nzcount, MYBOOL istriplet);
 void LUSOL_clear(LUSOLrec *LUSOL, MYBOOL nzonly);
 void LUSOL_free(LUSOLrec *LUSOL);
@@ -322,10 +322,10 @@ void LUSOL_free(LUSOLrec *LUSOL);
 LUSOLmat *LUSOL_matcreate(int dim, int nz);
 void LUSOL_matfree(LUSOLmat **mat);
 
-int LUSOL_loadColumn(LUSOLrec *LUSOL, int iA[], int jA, REAL Aij[], int nzcount, int offset1);
+int LUSOL_loadColumn(LUSOLrec *LUSOL, int iA[], int jA, LPSREAL Aij[], int nzcount, int offset1);
 void LUSOL_setpivotmodel(LUSOLrec *LUSOL, int pivotmodel, int initlevel);
 int LUSOL_factorize(LUSOLrec *LUSOL);
-int LUSOL_replaceColumn(LUSOLrec *LUSOL, int jcol, REAL v[]);
+int LUSOL_replaceColumn(LUSOLrec *LUSOL, int jcol, LPSREAL v[]);
 
 MYBOOL LUSOL_tightenpivot(LUSOLrec *LUSOL);
 MYBOOL LUSOL_addSingularity(LUSOLrec *LUSOL, int singcol, int *inform);
@@ -334,19 +334,19 @@ int LUSOL_findSingularityPosition(LUSOLrec *LUSOL, int singcol);
 
 char *LUSOL_pivotLabel(LUSOLrec *LUSOL);
 char *LUSOL_informstr(LUSOLrec *LUSOL, int inform);
-REAL LUSOL_vecdensity(LUSOLrec *LUSOL, REAL V[]);
+LPSREAL LUSOL_vecdensity(LUSOLrec *LUSOL, LPSREAL V[]);
 void LUSOL_report(LUSOLrec *LUSOL, int msglevel, char *format, ...);
 void LUSOL_timer(LUSOLrec *LUSOL, int timerid, char *text);
 
-int LUSOL_ftran(LUSOLrec *LUSOL, REAL b[], int NZidx[], MYBOOL prepareupdate);
-int LUSOL_btran(LUSOLrec *LUSOL, REAL b[], int NZidx[]);
+int LUSOL_ftran(LUSOLrec *LUSOL, LPSREAL b[], int NZidx[], MYBOOL prepareupdate);
+int LUSOL_btran(LUSOLrec *LUSOL, LPSREAL b[], int NZidx[]);
 
 void LU1FAC(LUSOLrec *LUSOL, int *INFORM);
 MYBOOL LU1L0(LUSOLrec *LUSOL, LUSOLmat **mat, int *inform);
-void LU6SOL(LUSOLrec *LUSOL, int MODE, REAL V[], REAL W[], int NZidx[], int *INFORM);
+void LU6SOL(LUSOLrec *LUSOL, int MODE, LPSREAL V[], LPSREAL W[], int NZidx[], int *INFORM);
 void LU8RPC(LUSOLrec *LUSOL, int MODE1, int MODE2,
-            int JREP, REAL V[], REAL W[],
-            int *INFORM, REAL *DIAG, REAL *VNORM);
+            int JREP, LPSREAL V[], LPSREAL W[],
+            int *INFORM, LPSREAL *DIAG, LPSREAL *VNORM);
 
 void LUSOL_dump(FILE *output, LUSOLrec *LUSOL);
 

@@ -152,7 +152,7 @@ typedef struct parse_vars_s
   int SOSNr;
   int SOSweight;         /* SOS weight */
   char *Last_var, *Last_var0;
-  REAL f, f0, f1;
+  LPSREAL f, f0, f1;
 } parse_vars;
 
 #ifdef FORTIFY
@@ -577,7 +577,7 @@ static const char *const lp_yytname[] =
   "@2", "real_constraint", "@3", "@4", "@5", "optionalrange", "@6", "@7",
   "x_lineair_sum2", "x_lineair_sum3", "@8", "x_lineair_sum", "@9",
   "x_lineair_sum1", "x_lineair_term", "x_lineair_term1", "@10", "RE_OP",
-  "cons_term", "REALCONS", "x_SIGN", "optional_AR_M_OP", "RHS_STORE",
+  "cons_term", "LPSREALCONS", "x_SIGN", "optional_AR_M_OP", "RHS_STORE",
   "int_bin_sec_sos_free_declarations", "real_int_bin_sec_sos_free_decls",
   "SEC_INT_BIN_SEC_SOS_FREE", "int_bin_sec_sos_free_declaration", "@11",
   "xx_int_bin_sec_sos_free_declaration", "@12",

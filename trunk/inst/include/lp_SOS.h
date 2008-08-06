@@ -38,7 +38,7 @@ typedef struct _SOSrec
   int       size;
   int       priority;
   int       *members;
-  REAL      *weights;
+  LPSREAL      *weights;
   int       *membersSorted;
   int       *membersMapped;
 } SOSrec;
@@ -67,9 +67,9 @@ STATIC int append_SOSgroup(SOSgroup *group, SOSrec *SOS);
 STATIC int clean_SOSgroup(SOSgroup *group, MYBOOL forceupdatemap);
 STATIC void free_SOSgroup(SOSgroup **group);
 
-STATIC SOSrec *create_SOSrec(SOSgroup *group, char *name, int type, int priority, int size, int *variables, REAL *weights);
+STATIC SOSrec *create_SOSrec(SOSgroup *group, char *name, int type, int priority, int size, int *variables, LPSREAL *weights);
 STATIC MYBOOL delete_SOSrec(SOSgroup *group, int sosindex);
-STATIC int append_SOSrec(SOSrec *SOS, int size, int *variables, REAL *weights);
+STATIC int append_SOSrec(SOSrec *SOS, int size, int *variables, LPSREAL *weights);
 STATIC void free_SOSrec(SOSrec *SOS);
 
 /* SOS utilities */
@@ -83,7 +83,7 @@ int SOS_infeasible(SOSgroup *group, int sosindex);
 int SOS_member_index(SOSgroup *group, int sosindex, int member);
 int SOS_member_count(SOSgroup *group, int sosindex);
 int SOS_memberships(SOSgroup *group, int column);
-int *SOS_get_candidates(SOSgroup *group, int sosindex, int column, MYBOOL excludetarget, REAL *upbound, REAL *lobound);
+int *SOS_get_candidates(SOSgroup *group, int sosindex, int column, MYBOOL excludetarget, LPSREAL *upbound, LPSREAL *lobound);
 int SOS_is_member(SOSgroup *group, int sosindex, int column);
 MYBOOL SOS_is_member_of_type(SOSgroup *group, int column, int sostype);
 MYBOOL SOS_set_GUB(SOSgroup *group, int sosindex, MYBOOL state);
@@ -94,12 +94,12 @@ MYBOOL SOS_is_full(SOSgroup *group, int sosindex, int column, MYBOOL activeonly)
 MYBOOL SOS_can_activate(SOSgroup *group, int sosindex, int column);
 MYBOOL SOS_set_marked(SOSgroup *group, int sosindex, int column, MYBOOL asactive);
 MYBOOL SOS_unmark(SOSgroup *group, int sosindex, int column);
-int SOS_fix_unmarked(SOSgroup *group, int sosindex, int variable, REAL *bound, REAL value,
+int SOS_fix_unmarked(SOSgroup *group, int sosindex, int variable, LPSREAL *bound, LPSREAL value,
                      MYBOOL isupper, int *diffcount, DeltaVrec *changelog);
-int SOS_fix_list(SOSgroup *group, int sosindex, int variable, REAL *bound, 
+int SOS_fix_list(SOSgroup *group, int sosindex, int variable, LPSREAL *bound, 
                   int *varlist, MYBOOL isleft, DeltaVrec *changelog);
-int SOS_is_satisfied(SOSgroup *group, int sosindex, REAL *solution);
-MYBOOL SOS_is_feasible(SOSgroup *group, int sosindex, REAL *solution);
+int SOS_is_satisfied(SOSgroup *group, int sosindex, LPSREAL *solution);
+MYBOOL SOS_is_feasible(SOSgroup *group, int sosindex, LPSREAL *solution);
 
 #ifdef __cplusplus
  }

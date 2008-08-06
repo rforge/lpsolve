@@ -51,7 +51,7 @@ INLINE MYBOOL applyPricer(lprec *lp)
 STATIC void simplexPricer(lprec *lp, MYBOOL isdual)
 {
   if(lp->edgeVector != NULL)
-    lp->edgeVector[0] = (REAL) isdual;
+    lp->edgeVector[0] = (LPSREAL) isdual;
 }
 
 
@@ -67,7 +67,7 @@ STATIC MYBOOL resizePricer(lprec *lp)
     return( TRUE );
 
   /* Reallocate vector for new size */
-  if(!allocREAL(lp, &(lp->edgeVector), lp->sum_alloc+1, AUTOMATIC))
+  if(!allocLPSREAL(lp, &(lp->edgeVector), lp->sum_alloc+1, AUTOMATIC))
     return( FALSE );
 
   /* Signal that we have not yet initialized the price vector */
@@ -90,9 +90,9 @@ STATIC MYBOOL initPricer(lprec *lp)
 }
 
 
-STATIC REAL getPricer(lprec *lp, int item, MYBOOL isdual)
+STATIC LPSREAL getPricer(lprec *lp, int item, MYBOOL isdual)
 {
-  REAL value = 1.0;
+  LPSREAL value = 1.0;
 
   if(!applyPricer(lp))
     return( value );
@@ -136,7 +136,7 @@ STATIC REAL getPricer(lprec *lp, int item, MYBOOL isdual)
 
 STATIC MYBOOL restartPricer(lprec *lp, MYBOOL isdual)
 {
-  REAL   *sEdge = NULL, seNorm, hold;
+  LPSREAL   *sEdge = NULL, seNorm, hold;
   int    i, j, m;
   MYBOOL isDEVEX, ok = applyPricer(lp);
 
@@ -171,7 +171,7 @@ STATIC MYBOOL restartPricer(lprec *lp, MYBOOL isdual)
   }
 
   /* Otherwise do the full Steepest Edge norm initialization */
-  ok = allocREAL(lp, &sEdge, m+1, FALSE);
+  ok = allocLPSREAL(lp, &sEdge, m+1, FALSE);
   if(!ok)
     return( ok );
 
@@ -224,10 +224,10 @@ STATIC MYBOOL restartPricer(lprec *lp, MYBOOL isdual)
 }
 
 
-STATIC MYBOOL formWeights(lprec *lp, int colnr, REAL *pcol, REAL **w)
+STATIC MYBOOL formWeights(lprec *lp, int colnr, LPSREAL *pcol, LPSREAL **w)
 /* This computes Bw = a, where B is the basis and a is a column of A */
 {
-  MYBOOL ok = allocREAL(lp, w, lp->rows+1, FALSE);
+  MYBOOL ok = allocLPSREAL(lp, w, lp->rows+1, FALSE);
 
   if(ok) {
     if(pcol == NULL)
@@ -239,7 +239,7 @@ STATIC MYBOOL formWeights(lprec *lp, int colnr, REAL *pcol, REAL **w)
   }
 /*
   if(pcol != NULL) {
-    REAL cEdge, hold;
+    LPSREAL cEdge, hold;
     int  i;
 
     cEdge = 0;
@@ -255,15 +255,15 @@ STATIC MYBOOL formWeights(lprec *lp, int colnr, REAL *pcol, REAL **w)
 */
   return(ok);
 }
-STATIC void freeWeights(REAL *w)
+STATIC void freeWeights(LPSREAL *w)
 {
   FREE(w);
 }
 
 
-STATIC MYBOOL updatePricer(lprec *lp, int rownr, int colnr, REAL *pcol, REAL *prow, int *nzprow)
+STATIC MYBOOL updatePricer(lprec *lp, int rownr, int colnr, LPSREAL *pcol, LPSREAL *prow, int *nzprow)
 {
-  REAL   *vEdge = NULL, cEdge, hold, *newEdge, *w = NULL;
+  LPSREAL   *vEdge = NULL, cEdge, hold, *newEdge, *w = NULL;
   int    i, m, n, exitcol, errlevel = DETAILED;
   MYBOOL forceRefresh = FALSE, isDual, isDEVEX, ok = FALSE;
 
@@ -293,12 +293,12 @@ STATIC MYBOOL updatePricer(lprec *lp, int rownr, int colnr, REAL *pcol, REAL *pr
 
   /* Price norms for the dual simplex - the basic columns */
   if(isDual) {
-    REAL rw;
+    LPSREAL rw;
     int  targetcol;
 
     /* Don't need to compute cross-products with DEVEX */
     if(!isDEVEX) {
-      ok = allocREAL(lp, &vEdge, m+1, FALSE);
+      ok = allocLPSREAL(lp, &vEdge, m+1, FALSE);
       if(!ok)
         return( ok );
 
@@ -371,11 +371,11 @@ STATIC MYBOOL updatePricer(lprec *lp, int rownr, int colnr, REAL *pcol, REAL *pr
   /* Price norms for the primal simplex - the non-basic columns */
   else {
 
-    REAL *vTemp = NULL, *vAlpha = NULL, cAlpha;
+    LPSREAL *vTemp = NULL, *vAlpha = NULL, cAlpha;
     int  *coltarget;
 
-    ok = allocREAL(lp, &vTemp, m+1, TRUE) &&
-         allocREAL(lp, &vAlpha, n+1, TRUE);
+    ok = allocLPSREAL(lp, &vTemp, m+1, TRUE) &&
+         allocLPSREAL(lp, &vAlpha, n+1, TRUE);
     if(!ok)
       return( ok );
 
@@ -393,7 +393,7 @@ STATIC MYBOOL updatePricer(lprec *lp, int rownr, int colnr, REAL *pcol, REAL *pr
 
     /* Don't need to compute cross-products with DEVEX */
     if(!isDEVEX) {
-      ok = allocREAL(lp, &vEdge, n+1, TRUE);
+      ok = allocLPSREAL(lp, &vEdge, n+1, TRUE);
       if(!ok)
         return( ok );
 
@@ -488,7 +488,7 @@ Finish2:
 
 STATIC MYBOOL verifyPricer(lprec *lp)
 {
-  REAL value;
+  LPSREAL value;
   int  i, n;
   MYBOOL ok = applyPricer(lp);
 
