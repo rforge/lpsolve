@@ -1,3 +1,8 @@
+%\VignetteIndexEntry{lpSolveAPI}
+%\VignetteDepends{lpSolveAPI}
+%\VignetteKeywords{lpSolveAPI}
+%\VignettePackage{lpSolveAPI}
+
 \documentclass[12pt,a4paper]{article}
 \usepackage{natbib}
 \usepackage{parskip}
