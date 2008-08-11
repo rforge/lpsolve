@@ -8,7 +8,6 @@
 
 /* Begin PBXFileReference section */
 		0EA670410E0D33430075A859 /* plot.lpExtPtr.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = plot.lpExtPtr.Rd; path = man/plot.lpExtPtr.Rd; sourceTree = SOURCE_ROOT; };
-		0EA670430E0D35850075A859 /* lpSolveAPI.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = lpSolveAPI.pdf; path = inst/doc/lpSolveAPI.pdf; sourceTree = SOURCE_ROOT; };
 		0EA670440E0D35850075A859 /* lpSolveAPI.Rnw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolveAPI.Rnw; path = inst/doc/lpSolveAPI.Rnw; sourceTree = SOURCE_ROOT; };
 		0EA670620E0D524C0075A859 /* add.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.column.q; path = R/add.column.q; sourceTree = SOURCE_ROOT; };
 		0EA670630E0D524C0075A859 /* add.constraint.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.constraint.q; path = R/add.constraint.q; sourceTree = SOURCE_ROOT; };
@@ -201,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				0EA670440E0D35850075A859 /* lpSolveAPI.Rnw */,
-				0EA670430E0D35850075A859 /* lpSolveAPI.pdf */,
 			);
 			name = doc;
 			sourceTree = "<group>";
