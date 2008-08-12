@@ -39,16 +39,16 @@ Kjell Konis \\
 \setcounter{page}{1}
 \section{Introduction}
 
+The lpSolveAPI package provides an R API for the lp\_solve library, a \textit{mixed integer linear programming} (MILP) solver with support for pure linear, (mixed) integer/binary, semi-continuous and special ordered sets (SOS) models. The lp\_solve library uses the revised simplex method to solve pure linear programs and uses the branch-and-bound algorithm to handle integer variables, semi-continuous variables and special ordered sets.
 
-Note that there is also an lpSolve package available on CRAN. The CRAN version of the package is based on lp\_solve version 5.5.0.8 and does not include the API.
-Note
+Note there is separate package called lpSolve available on CRAN that provides a few high-level functions for solving specific types of linear programs. The lpSolve package is based on an older version of lp\_solve (5.5.0.8) and does not include the API.
 
 The~\texttt{>} shown before each R command is the R prompt. Only the text after~\texttt{>} must be entered.
 
 
 \subsection{Installation}
 
-Use the following command to install the package 
+Use the following command to install the package from CRAN
 
 <<eval=FALSE>>=
 install.packages("lpSolveAPI")
@@ -60,7 +60,11 @@ then load it into your R session.
 library(lpSolveAPI)
 @
 
+Additionally, development versions of the package can be obtained from the R-Forge lpSolveAPI project website.
 
+\begin{verbatim}
+  http://lpsolve.r-forge.r-project.org
+\end{verbatim}
 
 \subsection{Getting Help}
 
@@ -70,13 +74,16 @@ Documentation is provided for each function in the lpSolve package using R's bui
 help(add.constraint)
 @
 
-will display the documentation for the add.constraint function.
+will display the documentation for the add.constraint function. Use the following command to list all of the functions provided by the lpSolveAPI package.
+
+<<eval=FALSE>>=
+ls("package:lpSolveAPI")
+@
 
 
 \subsection{Conventions used in the lpSolveAPI Package}
 
-The syntax used to program lp\_solve via the lpSolveAPI package is different from that normally used in R.  The general approach used in the lpSolveAPI package is to create an \textit{lpSolve linear program model object} (LPMO), use the set accessor methods to define the linear program in that object, solve the linear program and finally use the get accessor methods to retrieve elements of the solution.  The first argument to almost all of the functions in the lpSolveAPI package is therefore the lpSolve linear program model object that the function is meant to operate on.
-
+The syntax used to program lp\_solve via the lpSolveAPI package is different from that normally used in R.  The general approach used in the lpSolveAPI package is to create an \textit{lpSolve linear program model object} (LPMO), use the set accessor methods to define a linear program (which will be contained in the LPMO), solve the linear program and finally use the get accessor methods to retrieve elements of the solution.  The first argument to almost all of the functions in the lpSolveAPI package is therefore the lpSolve linear program model object that the function is meant to operate on.
 
 A new lpSolve linear program model object with $m$ constraints and $n$ decision variables can be created using the \texttt{make.lp} function.  For example, the following command creates an lpSolve linear program model object with $3$ constraints and $2$ decision variables.
 
@@ -105,7 +112,7 @@ $$\begin{array}{rrcrcl}
 \end{array}$$
 \onehalfspacing
 
-with $x_{1} \geq 0$ and $x_{2} \geq 0$.  The best way to build a model in lp\_solve is columnwise; that is to set the columns then the objective function, constraint types and right-hand-side.  For example,
+with $x_{1} \geq 0$ and $x_{2} \geq 0$.  The best way to build a model in lp\_solve is columnwise; that is to set the columns then the objective function then the constraint types and finally the right-hand-side.
 
 \singlespacing
 <<>>=
@@ -118,14 +125,12 @@ my.lp
 @
 \onehalfspacing
 
-
-The set accessor methods (the functions with names beginning with set) operate directly on a lpSolve linear program model object.  Do not assign the output of a set accessor method and expect an lpSolve linear program model object.  The (invisible) return value of these functions is generally a logical status code indicating whether the function executed sucessfully.
-
+The set accessor methods (the functions with names beginning with the word \textit{set}) operate directly on an lpSolve linear program model object.  Do not assign the output of a set accessor method and expect an lpSolve linear program model object.  The (invisible) return value of these functions is generally a logical status code indicating whether the function executed sucessfully.
 
 
 \subsection{Caveats}
 
-The lpSolveAPI package provides an API for building and solving linear programs that mimics the lp\_solve C API. This approach allows much greater flexibility but also has a few caveats. The most important is that the lpSolve linear program model objects created by make.lp and read.lp are not actually R objects but external pointers to lp\_solve 'lprec' structures. R does not know how to deal with these structures. In particular, R cannot duplicate them. Thus you must never assign an existing lpSolve linear program model object in R code.
+The lpSolveAPI package provides an API for building and solving linear programs that mimics the lp\_solve C API. This approach allows much greater flexibility but also has a few caveats. The most important is that the lpSolve linear program model objects created by \texttt{make.lp} and \texttt{read.lp} are not actually R objects but external pointers to lp\_solve 'lprec' structures. R does not know how to deal with these structures. In particular, R cannot duplicate them. Thus you should avoid assigning LPMOs in R code.
 
 Consider the following example. First we create an empty model \texttt{x}.
 
@@ -152,18 +157,70 @@ And finally, take a look at y.
 y
 @
 
-The changes we made in \texttt{x} appear in \texttt{y} as well. Although \texttt{x} and \texttt{y} are two distinct objects in R, they both refer to the same lp\_solve 'lprec' structure.
+The changes made to \texttt{x} appear in \texttt{y} as well. Although \texttt{x} and \texttt{y} are two distinct objects in R, they both refer to the same external lp\_solve 'lprec' structure.
 
-\subsection{Learning by Example}
+\subsection{A Detailed Example}
+
+Lets solve the mixed integer linear program
+
+\singlespacing
+$$\begin{array}{rrcrcrcrcl}
+\mbox{minimize:}   &     1x_{1} & + &     3 x_{2} & + &  6.24x_{3} & + & 0.1x_{4} &      & \\
+\mbox{subject to:} &            &   & 78.26 x_{2} &   &            & + & 2.9x_{4} & \geq & 92.3 \\
+                   &  0.24x_{1} &   &             & + & 11.31x_{3} &   &          & \leq & 14.8 \\
+                   & 12.68x_{1} &   &             & + &  0.08x_{3} & + & 0.9x_{4} & \geq & 4 \\
+\end{array}$$
+\onehalfspacing
+
+\vspace{1em}
+
+where $x_{1}$ is a real decision variable with a minimum value of $28.6$, $x_{2}$ is a nonnegative integer-valued decision variable, $x_{3}$ is a binary decision variable and $x_{4}$ is a real decision variable restricted to the range $[18, 48.98]$.
+
+First, we create an LPMO with $3$ constraints and $4$ decision variables.
 
 <<>>=
-lprec <- make.lp(0, 4)
-set.objfn(lprec, c(1, 3, 6.24, 0.1))
-add.constraint(lprec, c(0, 78.26, 0, 2.9), ">=", 92.3)
-add.constraint(lprec, c(0.24, 0, 11.31, 0), "<=", 14.8)
-add.constraint(lprec, c(12.68, 0, 0.08, 0.9), ">=", 4)
+lprec <- make.lp(3, 4)
+@
+
+Next we set the values in the first column.
+
+<<>>=
+set.column(lprec, 1, c(0.0, 0.24, 12.68))
+@
+
+The lp\_solve library is capable of using a sparse vectors to represent the constraints matrix.  In the remaining three columns, only the nonzero entries are set.
+
+<<>>=
+set.column(lprec, 2, 78.26, indices = 1)
+set.column(lprec, 3, c(11.31, 0.08), indices = 2:3)
+set.column(lprec, 4, c(2.9, 0.9), indices = c(1, 3))
+@
+
+Next, we set the objective function, constraint types and right-hand-side.
+
+<<>>=
+set.objfn(lprec, c(1.0, 3.0, 6.24, 0.1))
+set.constr.type(lprec, c(">=", "<=", ">="))
+set.rhs(lprec, c(92.3, 14.8, 4))
+@
+
+By default, all decision variables are created as real with range $[0, \infty)$.  Thus we must change the type of the decision variables $x_{2}$ and $x_{3}$.
+
+<<>>=
+set.type(lprec, 2, "integer")
+set.type(lprec, 3, "binary")
+@
+
+Setting the type to binary automatically changes the range to $[0, 1]$.  We still need to set the range constraints on $x_{1}$ and $x_{4}$.
+
+<<>>=
 set.bounds(lprec, lower = c(28.6, 18), columns = c(1, 4))
 set.bounds(lprec, upper = 48.98, columns = 4)
+@
+
+Finally, we name the decision variables and the constraints.
+
+<<>>=
 RowNames <- c("THISROW", "THATROW", "LASTROW")
 ColNames <- c("COLONE", "COLTWO", "COLTHREE", "COLFOUR")
 dimnames(lprec) <- list(RowNames, ColNames)
@@ -175,11 +232,13 @@ Lets take a look at what we have done so far.
 lprec  # or equivalently print(lprec)
 @
 
-Now lets solve the model.
+Now we can solve the model and retrieve some results.
 
 <<>>=
 solve(lprec)
 @
+
+A return value of $0$ indicates that the model was successfully solved.
 
 <<>>=
 get.objective(lprec)
@@ -193,35 +252,20 @@ get.variables(lprec)
 get.constraints(lprec)
 @
 
-Note that there are some commands that return an answer. For the accessor functions (generally named get.*) the output should be clear. For other functions (e.g., solve), the interpretation of the returned value is described in the documentation. Since solve is generic in R, use the command
+Note that there are some commands that return an answer. For the get accessor functions (the functions with names beginning with the word \textit{get}) the output should be clear. For other functions (e.g., solve), the interpretation of the returned value is described in the documentation. Since solve is generic in R, use the command
 
 <<eval=FALSE>>=
 help(solve.lpExtPtr)
 @
 
-to view the appropriate documentation. The assignment functions (generally named \texttt{set.*}) also have a return value - often a logical value indicating whether the command was successful - that is returned invisibly. Invisible values can be assigned but are not echoed to the console. For example,
+to view the appropriate documentation. The set accessor functions (the functions with names beginning with the word \textit{set}) also have a return value - often a logical value indicating whether the command was successful - that is returned invisibly. Invisible values can be assigned but are not echoed to the console. For example,
 
 <<>>=
-status <- add.constraint(lprec, c(12.68, 0, 0.08, 0.9), ">=", 4)
+status <- add.constraint(lprec, 1:4, ">=", 5)
 status
 @
 
 indicates that the operation was successful. Invisible values can also be used in flow control.
-
-
-\section{Further Examples}
-
-\subsection{Solving Dense Mixed Integer/Linear Programs}
-
-
-\subsection{Sparse Linear Programs: The Transportation Problem}
-
-
-\subsection{Integer Variables: Non-Integer $c_{ij}$}
-
-
-\subsection{Binary Variables: The 8 Queens Problem}
-
 
 \end{document}
 
