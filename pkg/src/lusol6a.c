@@ -512,7 +512,7 @@ void LU6LT(LUSOLrec *LUSOL, int *INFORM, LPSREAL V[], int NZidx[])
 #endif
   int     K, L, L1, L2, LEN, LENL, LENL0, NUML0;
   LPSREAL    SMALL;
-  register LPSREALXP SUM;
+  register REALXP SUM;
   register LPSREAL HOLD;
 #if (defined LUSOLFastSolve) && !(defined DoTraceL0)
   LPSREAL    *aptr;
@@ -650,7 +650,7 @@ void LU6U(LUSOLrec *LUSOL, int *INFORM, LPSREAL V[], LPSREAL W[], int NZidx[])
   else {
     int  I, J, K, KLAST, L, L1, L2, L3, NRANK, NRANK1;
     LPSREAL SMALL;
-    register LPSREALXP T;
+    register REALXP T;
 #ifdef LUSOLFastSolve
     LPSREAL *aptr;
     int  *jptr;

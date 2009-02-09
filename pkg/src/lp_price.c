@@ -342,7 +342,7 @@ int CMP_CALLMODEL compareBoundFlipVar(const pricerec *current, const pricerec *c
 
     /* Secondary selection based on priority for narrow-bounded variables */
     if(result == COMP_PREFERNONE)
-      result = compareLPSREAL(&(lp->upbo[currentvarno]),
+      result = compareREAL(&(lp->upbo[currentvarno]),
                            &(lp->upbo[candidatevarno]));
 
   }
@@ -957,10 +957,10 @@ doLoop:
 } /* colprim */
 
 /* Find the primal simplex leaving basic column variable */
-STATIC int rowprim(lprec *lp, int colnr, LLPSREAL *theta, LPSREAL *pcol, int *nzpcol, MYBOOL forceoutEQ, LPSREAL *xviol)
+STATIC int rowprim(lprec *lp, int colnr, LREAL *theta, LPSREAL *pcol, int *nzpcol, MYBOOL forceoutEQ, LPSREAL *xviol)
 {
   int      i, ii, iy, iz, Hpass, k, *nzlist;
-  LLPSREAL    f, savef;
+  LREAL    f, savef;
   LPSREAL     Heps, Htheta, Hlimit, epsvalue, epspivot, p;
   pricerec current, candidate;
   MYBOOL   isupper = !lp->is_lower[colnr], HarrisTwoPass = FALSE;
@@ -1346,7 +1346,7 @@ STATIC int coldual(lprec *lp, int row_nr, LPSREAL *prow, int *nzprow,
                                           int *candidatecount, LPSREAL *xviol)
 {
   int      i, iy, iz, ix, k, nbound;
-  LLPSREAL    w, g, quot;
+  LREAL    w, g, quot;
   LPSREAL     viol, p, epspivot = lp->epspivot;
 #ifdef MachinePrecRoundRHS
   LPSREAL     epsvalue = lp->epsmachine;
@@ -1563,7 +1563,7 @@ STATIC int partial_findBlocks(lprec *lp, MYBOOL autodefine, MYBOOL isrow)
 
   blockdata = IF(isrow, lp->rowblocks, lp->colblocks);
   items     = IF(isrow, lp->rows, lp->columns);
-  allocLPSREAL(lp, &sum, items+1, FALSE);
+  allocREAL(lp, &sum, items+1, FALSE);
 
   /* Loop over items and compute the average column index for each */
   sum[0] = 0;
@@ -1773,7 +1773,7 @@ STATIC MYBOOL multi_resize(multirec *multi, int blocksize, int blockdiv, MYBOOL 
         multi->freeList[i] = n;
     }
     if(doVlist)
-      ok &= allocLPSREAL(multi->lp, &(multi->valueList), multi->size+1, AUTOMATIC);
+      ok &= allocREAL(multi->lp, &(multi->valueList), multi->size+1, AUTOMATIC);
     if(doIset) {
       ok &= allocINT(multi->lp, &(multi->indexSet), multi->size+1, AUTOMATIC);
       if(ok && (oldsize == 0))
@@ -1940,7 +1940,7 @@ STATIC MYBOOL multi_recompute(multirec *multi, int index, MYBOOL isphase2, MYBOO
   n = index;
   while(n < multi->used) {
     i = ++multi->freeList[0];
-    multi->freeList[i] = ((pricerec *) multi->sortedList[n].pvoidreal.ptr) - multi->items;
+    multi->freeList[i] = (int) (((pricerec *) multi->sortedList[n].pvoidreal.ptr) - multi->items);
     n++;
   }
   multi->used  = index;

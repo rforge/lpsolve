@@ -15,7 +15,7 @@
    ptr\
   )
 
-#define LPSREALLOC(ptr, nr, type)\
+#define REALLOC(ptr, nr, type)\
   ((((nr) == 0) || ((ptr = (type *) realloc(ptr, (size_t)((nr) * sizeof(*ptr)))) == NULL)) ? \
    report(NULL, CRITICAL, "realloc of %d bytes failed on line %d of file %s\n",\
            (nr) * sizeof(*ptr), __LINE__, __FILE__), (ptr = NULL /* (void *) 0 */) : \

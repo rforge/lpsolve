@@ -405,7 +405,7 @@ STATIC MYBOOL add_artificial(lprec *lp, int forrownr, LPSREAL *nzarray, int *idx
 
      /* Create temporary sparse array storage */
       if(nzarray == NULL)
-        allocLPSREAL(lp, &avalue, 2, FALSE);
+        allocREAL(lp, &avalue, 2, FALSE);
       else
         avalue = nzarray;
       if(idxarray == NULL)
@@ -566,7 +566,7 @@ STATIC int primloop(lprec *lp, MYBOOL primalfeasible, LPSREAL primaloffset)
          primalphase1, pricerCanChange, minit, stallaccept, pendingunbounded;
   int    i, j, k, colnr = 0, rownr = 0, lastnr = 0,
          candidatecount = 0, minitcount = 0, ok = TRUE;
-  LLPSREAL  theta = 0.0;
+  LREAL  theta = 0.0;
   LPSREAL   epsvalue, xviolated, cviolated,
          *prow = NULL, *pcol = NULL,
          *drow = lp->drow;
@@ -605,7 +605,7 @@ STATIC int primloop(lprec *lp, MYBOOL primalfeasible, LPSREAL primaloffset)
 #if 1 /* v5.1 code: Not really necessary since we do not price the artificial
         variables (stored at the end of the column list, they are initially
         basic and are never allowed to enter the basis, once they exit) */
-      ok = allocLPSREAL(lp, &(lp->drow), lp->sum+1, AUTOMATIC) &&
+      ok = allocREAL(lp, &(lp->drow), lp->sum+1, AUTOMATIC) &&
            allocINT(lp, &(lp->nzdrow), lp->sum+1, AUTOMATIC);
       if(!ok)
         goto Finish;
@@ -628,9 +628,9 @@ STATIC int primloop(lprec *lp, MYBOOL primalfeasible, LPSREAL primaloffset)
   }
 
   /* Create work arrays and optionally the multiple pricing structure */
-  ok = allocLPSREAL(lp, &(lp->bsolveVal), lp->rows + 1, FALSE) &&
-       allocLPSREAL(lp, &prow, lp->sum + 1, TRUE) &&
-       allocLPSREAL(lp, &pcol, lp->rows + 1, TRUE);
+  ok = allocREAL(lp, &(lp->bsolveVal), lp->rows + 1, FALSE) &&
+       allocREAL(lp, &prow, lp->sum + 1, TRUE) &&
+       allocREAL(lp, &pcol, lp->rows + 1, TRUE);
   if(is_piv_mode(lp, PRICE_MULTIPLE) && (lp->multiblockdiv > 1)) {
     lp->multivars = multi_create(lp, FALSE);
     ok &= (lp->multivars != NULL) &&
@@ -993,7 +993,7 @@ STATIC int dualloop(lprec *lp, MYBOOL dualfeasible, int dualinfeasibles[], LPSRE
 #endif
          ok = TRUE;
   int    *boundswaps = NULL;
-  LLPSREAL  theta = 0.0;
+  LREAL  theta = 0.0;
   LPSREAL   epsvalue, xviolated, cviolated,
          *prow = NULL, *pcol = NULL,
          *drow = lp->drow;
@@ -1005,9 +1005,9 @@ STATIC int dualloop(lprec *lp, MYBOOL dualfeasible, int dualinfeasibles[], LPSRE
                          my_boolstr(dualfeasible));
 
   /* Allocate work arrays */
-  ok = allocLPSREAL(lp, &prow,   lp->sum + 1,  TRUE) &&
+  ok = allocREAL(lp, &prow,   lp->sum + 1,  TRUE) &&
        allocINT (lp, &nzprow, lp->sum + 1,  FALSE) &&
-       allocLPSREAL(lp, &pcol,   lp->rows + 1, TRUE);
+       allocREAL(lp, &pcol,   lp->rows + 1, TRUE);
   if(!ok)
     goto Finish;
 
@@ -1779,10 +1779,10 @@ STATIC int lag_solve(lprec *lp, LPSREAL start_bound, int num_iter)
   }
 
   /* Allocate iteration arrays */
-  if(!allocLPSREAL(lp, &OrigObj, lp->columns + 1, FALSE) ||
-     !allocLPSREAL(lp, &ModObj,  lp->columns + 1, TRUE) ||
-     !allocLPSREAL(lp, &SubGrad, get_Lrows(lp) + 1, TRUE) ||
-     !allocLPSREAL(lp, &BestFeasSol, lp->sum + 1, TRUE)) {
+  if(!allocREAL(lp, &OrigObj, lp->columns + 1, FALSE) ||
+     !allocREAL(lp, &ModObj,  lp->columns + 1, TRUE) ||
+     !allocREAL(lp, &SubGrad, get_Lrows(lp) + 1, TRUE) ||
+     !allocREAL(lp, &BestFeasSol, lp->sum + 1, TRUE)) {
     lp->lag_status = NOMEMORY;
      return( lp->lag_status );
   }

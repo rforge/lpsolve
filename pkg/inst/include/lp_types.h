@@ -25,19 +25,19 @@
   #define LPSREAL    double
 #endif
 
-#ifndef LPSREALXP
+#ifndef REALXP
   #if 1
-    #define LPSREALXP long double  /* Set local accumulation variable as long double */
+    #define REALXP long double  /* Set local accumulation variable as long double */
   #else
-    #define LPSREALXP LPSREAL          /* Set local accumulation as default precision */
+    #define REALXP LPSREAL          /* Set local accumulation as default precision */
   #endif
 #endif
 
-#ifndef LLPSREAL
+#ifndef LREAL
   #if 0
-    #define LLPSREAL long double   /* Set global solution update variable as long double */
+    #define LREAL long double   /* Set global solution update variable as long double */
   #else
-    #define LLPSREAL LPSREAL           /* Set global solution update variable as default precision */
+    #define LREAL LPSREAL           /* Set global solution update variable as default precision */
   #endif
 #endif
 

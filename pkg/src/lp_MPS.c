@@ -476,7 +476,7 @@ STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], LPSREAL rowValue[])
 
   while((i > 0) && (rowIndex[i] < rowIndex[i-1])) {
     swapINT (rowIndex+i, rowIndex+i-1);
-    swapLPSREAL(rowValue+i, rowValue+i-1);
+    swapREAL(rowValue+i, rowValue+i-1);
     i--;
   }
   (*count)++;
@@ -495,7 +495,7 @@ STATIC MYBOOL appendmpsitem(int *count, int rowIndex[], LPSREAL rowValue[])
   /* Move the element so that the index list is sorted ascending */
   while((i > 0) && (rowIndex[i] < rowIndex[i-1])) {
     swapINT (rowIndex+i, rowIndex+i-1);
-    swapLPSREAL(rowValue+i, rowValue+i-1);
+    swapREAL(rowValue+i, rowValue+i-1);
     i--;
   }
 
@@ -624,7 +624,7 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
           report(lp, FULL, "Switching to ROWS section\n");
         }
         else if(strcmp(tmp, "COLUMNS") == 0) {
-          allocLPSREAL(lp, &Last_column, lp->rows + 1, TRUE);
+          allocREAL(lp, &Last_column, lp->rows + 1, TRUE);
           allocINT(lp, &Last_columnno, lp->rows + 1, TRUE);
           count = 0;
           if ((Last_column == NULL) || (Last_columnno == NULL))
@@ -867,14 +867,16 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
           if(var < 0) /* undefined var and could add ... */;
           else if(strcmp(field1, "UP") == 0) {
           /* upper bound */
-            if(!set_bounds(lp, var, get_lowbo(lp, var), field4))
+            /* if(!set_bounds(lp, var, get_lowbo(lp, var), field4)) */
+            if(!set_upbo(lp, var, field4))
               break;
           }
           else if(strcmp(field1, "SC") == 0) {
             /* upper bound */
             if(field4 == 0)
               field4 = lp->infinite;
-            if(!set_bounds(lp, var, get_lowbo(lp, var), field4))
+            /* if(!set_bounds(lp, var, get_lowbo(lp, var), field4)) */
+            if(!set_upbo(lp, var, field4))
               break;
             set_semicont(lp, var, TRUE);
           }
@@ -882,22 +884,26 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
             /* upper bound */
             if(field4 == 0)
               field4 = lp->infinite;
-            if(!set_bounds(lp, var, get_lowbo(lp, var), field4))
+            /* if(!set_bounds(lp, var, get_lowbo(lp, var), field4)) */
+            if(!set_upbo(lp, var, field4))
               break;
             set_int(lp, var, TRUE);
             set_semicont(lp, var, TRUE);
           }
           else if(strcmp(field1, "LO") == 0) {
             /* lower bound */
-            if(!set_bounds(lp, var, field4, get_upbo(lp, var)))
+            /* if(!set_bounds(lp, var, field4, get_upbo(lp, var))) */
+            if(!set_lowbo(lp, var, field4))
               break;
           }
-      else if(strcmp(field1, "PL") == 0) { /* plus-ranged variable */
-            if(!set_bounds(lp, var, get_lowbo(lp, var), lp->infinite))
+          else if(strcmp(field1, "PL") == 0) { /* plus-ranged variable */
+            /* if(!set_bounds(lp, var, get_lowbo(lp, var), lp->infinite)) */
+            if(!set_upbo(lp, var, lp->infinite))
               break;
-      }
+          }
           else if(strcmp(field1, "MI") == 0) { /* minus-ranged variable */
-            if(!set_bounds(lp, var, -lp->infinite, get_upbo(lp, var)))
+            /* if(!set_bounds(lp, var, -lp->infinite, get_upbo(lp, var))) */
+            if(!set_lowbo(lp, var, -lp->infinite))
               break;
           }
           else if(strcmp(field1, "FR") == 0) { /* free variable */
@@ -913,12 +919,14 @@ MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func 
           }
           /* AMPL bounds type UI and LI added by E.Imamura (CRIEPI)  */
           else if(strcmp(field1, "UI") == 0) { /* upper bound for integer variable */
-            if(!set_bounds(lp, var, get_lowbo(lp, var), field4))
+            /* if(!set_bounds(lp, var, get_lowbo(lp, var), field4)) */
+            if(!set_upbo(lp, var, field4))
               break;
             set_int(lp, var, TRUE);
           }
           else if(strcmp(field1, "LI") == 0) { /* lower bound for integer variable - corrected by KE */
-            if(!set_bounds(lp, var, field4, get_upbo(lp, var)))
+            /* if(!set_bounds(lp, var, field4, get_upbo(lp, var))) */
+            if(!set_lowbo(lp, var, field4))
               break;
             set_int(lp, var, TRUE);
           }
@@ -1265,7 +1273,7 @@ static void write_data(void *userhandle, write_modeldata_func write_modeldata, c
   write_modeldata(userhandle, buff);
 }
 
-MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata_func write_modeldata)
+MYBOOL __WINAPI MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata_func write_modeldata)
 {
   int    i, j, jj, je, k, marker, putheader, ChangeSignObj = FALSE, *idx, *idx1;
   MYBOOL ok = TRUE, names_used;
@@ -1347,7 +1355,7 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
     write_data(userhandle, write_modeldata, "%s\n", MPSname(name0, get_row_name(lp, i)));
   }
 
-  allocLPSREAL(lp, &val, 1 + lp->rows, TRUE);
+  allocREAL(lp, &val, 1 + lp->rows, TRUE);
   allocINT(lp, &idx, 1 + lp->rows, TRUE);
   write_data(userhandle, write_modeldata, "COLUMNS\n");
   for(i = 1; i <= lp->columns; i++) {
@@ -1474,9 +1482,25 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
                         MPSname(name0, get_col_name(lp, j)));
       }
       else {
+        if((lp->orig_lowbo[i] != 0) || (is_int(lp, j))) { /* Some solvers like CPLEX need to have a bound on a variable if it is integer, but not binary else it is interpreted as binary which is not ment */
+          a = lp->orig_lowbo[i];
+          a = unscaled_value(lp, a, i);
+          if(putheader) {
+            write_data(userhandle, write_modeldata, "BOUNDS\n");
+            putheader = FALSE;
+          }
+          if(lp->orig_lowbo[i] != -lp->infinite)
+            write_data(userhandle, write_modeldata, " LO BND       %s  %s\n",
+                            MPSname(name0, get_col_name(lp, j)),
+                            formatnumber12(numberbuffer, (double)a));
+          else
+            write_data(userhandle, write_modeldata, " MI BND       %s\n",
+                            MPSname(name0, get_col_name(lp, j)));
+        }
+
         if((lp->orig_upbo[i] < lp->infinite) || (is_semicont(lp, j))) {
           a = lp->orig_upbo[i];
-      if(a < lp->infinite)
+          if(a < lp->infinite)
             a = unscaled_value(lp, a, i);
           if(putheader) {
             write_data(userhandle, write_modeldata, "BOUNDS\n");
@@ -1496,21 +1520,6 @@ MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata
             write_data(userhandle, write_modeldata, " UP BND       %s  %s\n",
                             MPSname(name0, get_col_name(lp, j)),
                             formatnumber12(numberbuffer, (double)a));
-        }
-        if(lp->orig_lowbo[i] != 0) {
-          a = lp->orig_lowbo[i];
-          a = unscaled_value(lp, a, i);
-          if(putheader) {
-            write_data(userhandle, write_modeldata, "BOUNDS\n");
-            putheader = FALSE;
-          }
-          if(lp->orig_lowbo[i] != -lp->infinite)
-            write_data(userhandle, write_modeldata, " LO BND       %s  %s\n",
-                            MPSname(name0, get_col_name(lp, j)),
-                            formatnumber12(numberbuffer, (double)a));
-          else
-            write_data(userhandle, write_modeldata, " MI BND       %s\n",
-                            MPSname(name0, get_col_name(lp, j)));
         }
       }
     }
