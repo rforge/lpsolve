@@ -48,14 +48,14 @@ STATIC BBrec *create_BB(lprec *lp, BBrec *parentBB, MYBOOL dofullcopy)
   if(newBB != NULL) {
 
     if(parentBB == NULL) {
-      allocLPSREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
-      allocLPSREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
+      allocREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
+      allocREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
       MEMCOPY(newBB->upbo,  lp->orig_upbo,  lp->sum + 1);
       MEMCOPY(newBB->lowbo, lp->orig_lowbo, lp->sum + 1);
     }
     else if(dofullcopy) {
-      allocLPSREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
-      allocLPSREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
+      allocREAL(lp, &newBB->upbo,  lp->sum + 1, FALSE);
+      allocREAL(lp, &newBB->lowbo, lp->sum + 1, FALSE);
       MEMCOPY(newBB->upbo,  parentBB->upbo,  lp->sum + 1);
       MEMCOPY(newBB->lowbo, parentBB->lowbo, lp->sum + 1);
     }
@@ -322,7 +322,7 @@ STATIC MYBOOL initbranches_BB(BBrec *BB)
   push_basis(lp, NULL, NULL, NULL);
 
  /* Set default number of branches at the current B&B branch */
-  if(BB->vartype == BB_LPSREAL)
+  if(BB->vartype == BB_REAL)
     BB->nodesleft = 1;
 
   else {
@@ -368,7 +368,7 @@ STATIC MYBOOL initbranches_BB(BBrec *BB)
     /* Otherwise check if we should do automatic branching */
     else if(get_var_branch(lp, k) == BRANCH_AUTOMATIC) {
       new_bound = modf(BB->lastsolution/get_pseudorange(lp->bb_PseudoCost, k, BB->vartype), &temp);
-      if(_isnan(new_bound))
+      if(isnan(new_bound))
         new_bound = 0;
       else if(new_bound < 0)
         new_bound += 1.0;
@@ -615,7 +615,7 @@ Finish:
         BB->isfloor = !BB->isfloor;
       /* Header initialization */
       BB->isfloor = !BB->isfloor;
-      while(!OKstatus && !lp->bb_break && (BB->nodesleft > 0))
+      while(!OKstatus && /* !userabort(lp, -1) */ lp->spx_status != TIMEOUT && !lp->bb_break && (BB->nodesleft > 0))
         OKstatus = nextbranch_BB( BB );
     }
 
@@ -1042,7 +1042,7 @@ STATIC MYBOOL findnode_BB(BBrec *BB, int *varno, int *vartype, int *varcus)
 
   /* Initialize result and return variables */
   *varno    = 0;
-  *vartype  = BB_LPSREAL;
+  *vartype  = BB_REAL;
   *varcus   = 0;
   countnint = 0;
   BB->nodestatus = lp->spx_status;
@@ -1386,7 +1386,7 @@ STATIC int run_BB(lprec *lp)
 #endif
   lp->bb_upperchange = createUndoLadder(lp, varno, 2*MIP_count(lp));
   lp->bb_lowerchange = createUndoLadder(lp, varno, 2*MIP_count(lp));
-  lp->rootbounds = currentBB = push_BB(lp, NULL, 0, BB_LPSREAL, 0);
+  lp->rootbounds = currentBB = push_BB(lp, NULL, 0, BB_REAL, 0);
 
   /* Perform the branch & bound loop */
   while(lp->bb_level > 0) {
@@ -1418,7 +1418,7 @@ STATIC int run_BB(lprec *lp)
 
   /* Check if we should adjust status */
   if(lp->solutioncount > prevsolutions) {
-    if((status == PROCBREAK) || (status == USERABORT) || (status == TIMEOUT))
+    if((status == PROCBREAK) || (status == USERABORT) || (status == TIMEOUT) || userabort(lp, -1))
       status = SUBOPTIMAL;
     else
       status = OPTIMAL;

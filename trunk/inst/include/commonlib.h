@@ -68,11 +68,11 @@ static char NumChars[14]  = {"0123456789-+."};
   #define BLAS_prec "d" /* The BLAS precision prefix must correspond to the LPSREAL type */
 #endif
 
-#ifndef LPSREALXP
+#ifndef REALXP
   #if 1
-    #define LPSREALXP long double  /* Set local accumulation variable as long double */
+    #define REALXP long double  /* Set local accumulation variable as long double */
   #else
-    #define LPSREALXP LPSREAL          /* Set local accumulation as default precision */
+    #define REALXP LPSREAL          /* Set local accumulation as default precision */
   #endif
 #endif
 
@@ -135,8 +135,8 @@ static char NumChars[14]  = {"0123456789-+."};
   }
 #endif
 
-#ifndef LPSREALLOC
-#define LPSREALLOC(ptr, nr)\
+#ifndef REALLOC
+#define REALLOC(ptr, nr)\
   if(!((void *) ptr = realloc(ptr, (size_t)((size_t) (nr) * sizeof(*ptr)))) && nr) {\
     printf("realloc of %d bytes failed on line %d of file %s\n",\
            (size_t) nr * sizeof(*ptr), __LINE__, __FILE__);\
@@ -294,7 +294,7 @@ int qsortex(void *attributes, int count, int offset, int recsize, MYBOOL descend
 
 int CMP_CALLMODEL compareCHAR(const void *current, const void *candidate);
 int CMP_CALLMODEL compareINT(const void *current, const void *candidate);
-int CMP_CALLMODEL compareLPSREAL(const void *current, const void *candidate);
+int CMP_CALLMODEL compareREAL(const void *current, const void *candidate);
 void hpsort(void *attributes, int count, int offset, int recsize, MYBOOL descending, findCompare_func findCompare);
 void hpsortex(void *attributes, int count, int offset, int recsize, MYBOOL descending, findCompare_func findCompare, int *tags);
 
@@ -306,15 +306,15 @@ void QS_insert(UNIONTYPE QSORTrec a[], int ipos, void *mydata, int epos);
 void QS_delete(UNIONTYPE QSORTrec a[], int ipos, int epos);
 MYBOOL QS_execute(UNIONTYPE QSORTrec a[], int count, findCompare_func findCompare, int *nswaps);
 
-int sortByLPSREAL(int *item, LPSREAL *weight, int size, int offset, MYBOOL unique);
+int sortByREAL(int *item, LPSREAL *weight, int size, int offset, MYBOOL unique);
 int sortByINT(int *item, int *weight, int size, int offset, MYBOOL unique);
-LPSREAL sortLPSREALByINT(LPSREAL *item, int *weight, int size, int offset, MYBOOL unique);
+LPSREAL sortREALByINT(LPSREAL *item, int *weight, int size, int offset, MYBOOL unique);
 
 double timeNow(void);
 
 void blockWriteBOOL(FILE *output, char *label, MYBOOL *myvector, int first, int last, MYBOOL asRaw);
 void blockWriteINT(FILE *output, char *label, int *myvector, int first, int last);
-void blockWriteLPSREAL(FILE *output, char *label, LPSREAL *myvector, int first, int last);
+void blockWriteREAL(FILE *output, char *label, LPSREAL *myvector, int first, int last);
 
 void printvec( int n, LPSREAL *x, int modulo );
 void printmatSQ( int size, int n, LPSREAL *X, int modulo );

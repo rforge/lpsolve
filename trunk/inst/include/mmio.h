@@ -107,7 +107,7 @@ int mm_is_valid(MM_typecode matcode);   /* too complex for a macro */
 #define MM_COORDINATE_STR "coordinate"
 #define MM_SPARSE_STR "coordinate"
 #define MM_COMPLEX_STR  "complex"
-#define MM_LPSREAL_STR   "real"
+#define MM_REAL_STR   "real"
 #define MM_INT_STR    "integer"
 #define MM_GENERAL_STR  "general"
 #define MM_SYMM_STR   "symmetric"

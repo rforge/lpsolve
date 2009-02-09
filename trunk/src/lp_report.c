@@ -54,8 +54,8 @@ char * __VACALL explain(lprec *lp, char *format, ...)
 }
 void __VACALL report(lprec *lp, int level, char *format, ...)
 {
-  static char buff[DEF_STRBUFSIZE+1];
-  static va_list ap;
+  char buff[DEF_STRBUFSIZE+1];
+  va_list ap;
 
   if(lp == NULL) {
     va_start(ap, format);
@@ -159,12 +159,12 @@ STATIC void debug_print_bounds(lprec *lp, LPSREAL *upbo, LPSREAL *lowbo)
     }
 } /* debug_print_bounds */
 
-/* List a vector of LLPSREAL values for the given index range */
-void blockWriteLLPSREAL(FILE *output, char *label, LLPSREAL *vector, int first, int last)
+/* List a vector of LREAL values for the given index range */
+void blockWriteLREAL(FILE *output, char *label, LREAL *vector, int first, int last)
 {
   int i, k = 0;
 
-  fprintf(output, label);
+  fprintf(output, "%s", label);
   fprintf(output, "\n");
   for(i = first; i <= last; i++) {
     fprintf(output, " %18g", vector[i]);
@@ -193,7 +193,7 @@ void blockWriteAMAT(FILE *output, const char *label, lprec* lp, int first, int l
   if(last < 0)
     last = lp->rows;
 
-  fprintf(output, label);
+  fprintf(output, "%s", label);
   fprintf(output, "\n");
 
   if(first == 0) {
@@ -258,7 +258,7 @@ void blockWriteBMAT(FILE *output, const char *label, lprec* lp, int first, int l
   if(last < 0)
     last = lp->rows;
 
-  fprintf(output, label);
+  fprintf(output, "%s", label);
   fprintf(output, "\n");
 
   for(i = first; i <= last; i++) {
@@ -326,22 +326,22 @@ MYBOOL REPORT_debugdump(lprec *lp, char *filename, MYBOOL livedata)
   fprintf(output, "\nCORE DATA\n---------\n\n");
   blockWriteINT(output,  "Column starts", lp->matA->col_end, 0, lp->columns);
   blockWriteINT(output,  "row_type", lp->row_type, 0, lp->rows);
-  blockWriteLPSREAL(output, "orig_rhs", lp->orig_rhs, 0, lp->rows);
-  blockWriteLPSREAL(output, "orig_lowbo", lp->orig_lowbo, 0, lp->sum);
-  blockWriteLPSREAL(output, "orig_upbo", lp->orig_upbo, 0, lp->sum);
+  blockWriteREAL(output, "orig_rhs", lp->orig_rhs, 0, lp->rows);
+  blockWriteREAL(output, "orig_lowbo", lp->orig_lowbo, 0, lp->sum);
+  blockWriteREAL(output, "orig_upbo", lp->orig_upbo, 0, lp->sum);
   blockWriteINT(output,  "row_type", lp->row_type, 0, lp->rows);
   blockWriteBOOL(output, "var_type", lp->var_type, 0, lp->columns, TRUE);
   blockWriteAMAT(output, "A", lp, 0, lp->rows);
 
   if(livedata) {
     fprintf(output, "\nPROCESS DATA\n------------\n\n");
-    blockWriteLPSREAL(output,  "Active rhs", lp->rhs, 0, lp->rows);
+    blockWriteREAL(output,  "Active rhs", lp->rhs, 0, lp->rows);
     blockWriteINT(output,  "Basic variables", lp->var_basic, 0, lp->rows);
     blockWriteBOOL(output, "is_basic", lp->is_basic, 0, lp->sum, TRUE);
-    blockWriteLPSREAL(output, "lowbo", lp->lowbo, 0, lp->sum);
-    blockWriteLPSREAL(output, "upbo", lp->upbo, 0, lp->sum);
+    blockWriteREAL(output, "lowbo", lp->lowbo, 0, lp->sum);
+    blockWriteREAL(output, "upbo", lp->upbo, 0, lp->sum);
     if(lp->scalars != NULL)
-      blockWriteLPSREAL(output, "scalars", lp->scalars, 0, lp->sum);
+      blockWriteREAL(output, "scalars", lp->scalars, 0, lp->sum);
   }
 
   if(filename != NULL)
@@ -356,8 +356,10 @@ void REPORT_objective(lprec *lp)
 {
   if(lp->outstream == NULL)
     return;
-  fprintf(lp->outstream, "\nValue of objective function: %g\n",
-    (double)lp->best_solution[0]);
+  if(fabs(lp->best_solution[0]) < 1e-5)
+    fprintf(lp->outstream, "\nValue of objective function: %g\n", (double)lp->best_solution[0]);
+  else
+    fprintf(lp->outstream, "\nValue of objective function: %.8f\n", (double)lp->best_solution[0]);
   fflush(lp->outstream);
 }
 
@@ -612,7 +614,7 @@ MYBOOL REPORT_tableau(lprec *lp)
     lp->spx_status = NOTRUN;
     return(FALSE);
   }
-  if(!allocLPSREAL(lp, &prow,lp->sum + 1, TRUE)) {
+  if(!allocREAL(lp, &prow,lp->sum + 1, TRUE)) {
     lp->spx_status = NOMEMORY;
     return(FALSE);
   }
@@ -757,7 +759,7 @@ MYBOOL REPORT_mat_mmsave(lprec *lp, char *filename, int *colndx, MYBOOL includeO
   mm_write_mtx_crd_size(output, n+kk, m, nz+(colndx == lp->var_basic ? 1 : 0));
 
   /* Allocate working arrays for sparse column storage */
-  allocLPSREAL(lp, &acol, n+2, FALSE);
+  allocREAL(lp, &acol, n+2, FALSE);
   allocINT(lp, &nzlist, n+2, FALSE);
 
   /* Write the matrix non-zero values column-by-column.

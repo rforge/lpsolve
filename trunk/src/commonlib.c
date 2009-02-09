@@ -359,7 +359,7 @@ int CMP_CALLMODEL compareINT(const void *current, const void *candidate)
 {
   return( CMP_COMPARE( *(int *) current, *(int *) candidate ) );
 }
-int CMP_CALLMODEL compareLPSREAL(const void *current, const void *candidate)
+int CMP_CALLMODEL compareREAL(const void *current, const void *candidate)
 {
   return( CMP_COMPARE( *(LPSREAL *) current, *(LPSREAL *) candidate ) );
 }
@@ -735,7 +735,7 @@ Finish:
 
 
 /* Simple specialized bubble/insertion sort functions */
-int sortByLPSREAL(int *item, LPSREAL *weight, int size, int offset, MYBOOL unique)
+int sortByREAL(int *item, LPSREAL *weight, int size, int offset, MYBOOL unique)
 {
   int i, ii, saveI;
   LPSREAL saveW;
@@ -785,7 +785,7 @@ int sortByINT(int *item, int *weight, int size, int offset, MYBOOL unique)
   }
   return(0);
 }
-LPSREAL sortLPSREALByINT(LPSREAL *item, int *weight, int size, int offset, MYBOOL unique)
+LPSREAL sortREALByINT(LPSREAL *item, int *weight, int size, int offset, MYBOOL unique)
 {
   int  i, ii, saveW;
   LPSREAL saveI;
@@ -822,7 +822,7 @@ double timeNow(void)
 #elif defined PosixTime
   struct timespec t;
 # if 0
-  clock_gettime(CLOCK_LPSREALTIME, &t);
+  clock_gettime(CLOCK_REALTIME, &t);
   return( (double) t.tv_sec + (double) t.tv_nsec/1.0e9 );
 # else
   static double   timeBase;
@@ -859,7 +859,7 @@ void blockWriteINT(FILE *output, char *label, int *myvector, int first, int last
 {
   int i, k = 0;
 
-  fprintf(output, label);
+  fprintf(output, "%s", label);
   fprintf(output, "\n");
   for(i = first; i <= last; i++) {
     fprintf(output, " %5d", myvector[i]);
@@ -878,7 +878,7 @@ void blockWriteBOOL(FILE *output, char *label, MYBOOL *myvector, int first, int 
 {
   int i, k = 0;
 
-  fprintf(output, label);
+  fprintf(output, "%s", label);
   fprintf(output, "\n");
   for(i = first; i <= last; i++) {
     if(asRaw)
@@ -896,11 +896,11 @@ void blockWriteBOOL(FILE *output, char *label, MYBOOL *myvector, int first, int 
 }
 
 /* List a vector of LPSREAL values for the given index range */
-void blockWriteLPSREAL(FILE *output, char *label, LPSREAL *myvector, int first, int last)
+void blockWriteREAL(FILE *output, char *label, LPSREAL *myvector, int first, int last)
 {
   int i, k = 0;
 
-  fprintf(output, label);
+  fprintf(output, "%s", label);
   fprintf(output, "\n");
   for(i = first; i <= last; i++) {
     fprintf(output, " %18g", myvector[i]);

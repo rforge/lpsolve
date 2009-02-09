@@ -56,8 +56,11 @@
 /* Define user program feature option switches                               */
 /* ------------------------------------------------------------------------- */
 
-#if !defined _WINDOWS && !defined _WIN32 && !defined WIN32
-# define _isnan(x) FALSE
+# if defined _WIN32 && !defined __GNUC__
+#  define isnan _isnan
+# endif
+#if defined NOISNAN
+# define isnan(x) FALSE
 #endif
 
 #define SETMASK(variable, mask)     variable |= mask
@@ -189,7 +192,7 @@
 #define MAJORVERSION             5
 #define MINORVERSION             5
 #define RELEASE                  0
-#define BUILD                   13
+#define BUILD                   14
 #define BFPVERSION              12       /* Checked against bfp_compatible() */
 #define XLIVERSION              12       /* Checked against xli_compatible() */
 /* Note that both BFPVERSION and XLIVERSION typically have to be incremented
@@ -246,7 +249,7 @@
 #define SIMPLEX_DEFAULT         (SIMPLEX_DUAL_PRIMAL)
 
 /* Variable codes (internal) */
-#define ISLPSREAL                   0
+#define ISREAL                   0
 #define ISINTEGER                1
 #define ISSEMI                   2
 #define ISSOS                    4
@@ -373,7 +376,7 @@
 /* MIP constraint classes */
 #define ROWCLASS_Unknown         0   /* Undefined/unknown */
 #define ROWCLASS_Objective       1   /* The objective function */
-#define ROWCLASS_GeneralLPSREAL     2   /* General real-values constraint */
+#define ROWCLASS_GeneralREAL     2   /* General real-values constraint */
 #define ROWCLASS_GeneralMIP      3   /* General mixed integer/binary and real valued constraint */
 #define ROWCLASS_GeneralINT      4   /* General integer-only constraint */
 #define ROWCLASS_GeneralBIN      5   /* General binary-only constraint */
@@ -484,7 +487,7 @@
                                   PRICE_FORCEFULL + PRICE_TRUENORMINIT)
 
 /* B&B active variable codes (internal) */
-#define BB_LPSREAL                  0
+#define BB_REAL                  0
 #define BB_INT                   1
 #define BB_SC                    2
 #define BB_SOS                   3
@@ -1086,8 +1089,8 @@ typedef MYBOOL (BFP_CALLMODEL BFPbool_lpbool)(lprec *lp, MYBOOL changesign);
 typedef MYBOOL (BFP_CALLMODEL BFPbool_lpint)(lprec *lp, int size);
 typedef MYBOOL (BFP_CALLMODEL BFPbool_lpintintchar)(lprec *lp, int size, int deltasize, char *options);
 typedef MYBOOL (BFP_CALLMODEL BFPbool_lpintintint)(lprec *lp, int size, int deltasize, int sizeofvar);
-typedef LLPSREAL  (BFP_CALLMODEL BFPlreal_lpintintreal)(lprec *lp, int row_nr, int col_nr, LPSREAL *pcol);
-typedef LPSREAL   (BFP_CALLMODEL BFPreal_lplrealreal)(lprec *lp, LLPSREAL theta, LPSREAL *pcol);
+typedef LREAL  (BFP_CALLMODEL BFPlreal_lpintintreal)(lprec *lp, int row_nr, int col_nr, LPSREAL *pcol);
+typedef LPSREAL   (BFP_CALLMODEL BFPreal_lplrealreal)(lprec *lp, LREAL theta, LPSREAL *pcol);
 
 typedef int    (BFP_CALLMODEL getcolumnex_func)(lprec *lp, int colnr, LPSREAL *nzvalues, int *nzrows, int *mapin);
 typedef int    (BFP_CALLMODEL BFPint_lpintrealcbintint)(lprec *lp, int items, getcolumnex_func cb, int *maprow, int*mapcol);
@@ -1490,7 +1493,7 @@ struct _lprec
   /* RHS storage */
   LPSREAL      *orig_rhs;          /* rows_alloc+1 : The RHS after scaling and sign
                                    changing, but before 'Bound transformation' */
-  LLPSREAL     *rhs;               /* rows_alloc+1 : The RHS of the current simplex tableau */
+  LREAL     *rhs;               /* rows_alloc+1 : The RHS of the current simplex tableau */
 
   /* Row (constraint) parameters */
   int       *row_type;          /* rows_alloc+1 : Row/constraint type coding */
@@ -2057,8 +2060,8 @@ void __EXPORT_TYPE __WINAPI get_partialprice(lprec *lp, int *blockcount, int *bl
 MYBOOL __EXPORT_TYPE __WINAPI set_multiprice(lprec *lp, int multiblockdiv);
 int __EXPORT_TYPE __WINAPI get_multiprice(lprec *lp, MYBOOL getabssize);
 
-MYBOOL __WINAPI is_use_names(lprec *lp, MYBOOL isrow);
-void __WINAPI set_use_names(lprec *lp, MYBOOL isrow, MYBOOL use_names);
+MYBOOL __EXPORT_TYPE __WINAPI is_use_names(lprec *lp, MYBOOL isrow);
+void __EXPORT_TYPE __WINAPI set_use_names(lprec *lp, MYBOOL isrow, MYBOOL use_names);
 
 int __EXPORT_TYPE __WINAPI get_nameindex(lprec *lp, char *varname, MYBOOL isrow);
 
@@ -2121,6 +2124,19 @@ int __EXPORT_TYPE __WINAPI get_Lrows(lprec *lp);
 int __EXPORT_TYPE __WINAPI get_Norig_columns(lprec *lp);
 int __EXPORT_TYPE __WINAPI get_Ncolumns(lprec *lp);
 
+typedef int (__WINAPI read_modeldata_func)(void *userhandle, char *buf, int max_size);
+typedef int (__WINAPI write_modeldata_func)(void *userhandle, char *buf);
+MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func read_modeldata, int typeMPS, int verbose);
+
+/* #if defined develop */
+lprec __EXPORT_TYPE * __WINAPI read_lpex(void *userhandle, read_modeldata_func read_modeldata, int verbose, char *lp_name);
+MYBOOL __EXPORT_TYPE __WINAPI write_lpex(lprec *lp, void *userhandle, write_modeldata_func write_modeldata);
+
+lprec __EXPORT_TYPE * __WINAPI read_mpsex(void *userhandle, read_modeldata_func read_modeldata, int verbose);
+lprec __EXPORT_TYPE * __WINAPI read_freempsex(void *userhandle, read_modeldata_func read_modeldata, int verbose);
+
+MYBOOL __EXPORT_TYPE __WINAPI MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata_func write_modeldata);
+/* #endif */
 
 #ifdef __cplusplus
 }
@@ -2224,7 +2240,7 @@ STATIC MYBOOL isDualFeasible(lprec *lp, LPSREAL tol, int *boundflips, int infeas
 /* Main simplex driver routines */
 STATIC int preprocess(lprec *lp);
 STATIC void postprocess(lprec *lp);
-STATIC MYBOOL performiteration(lprec *lp, int rownr, int varin, LLPSREAL theta, MYBOOL primal, MYBOOL allowminit, LPSREAL *prow, int *nzprow, LPSREAL *pcol, int *nzpcol, int *boundswaps);
+STATIC MYBOOL performiteration(lprec *lp, int rownr, int varin, LREAL theta, MYBOOL primal, MYBOOL allowminit, LPSREAL *prow, int *nzprow, LPSREAL *pcol, int *nzpcol, int *boundswaps);
 STATIC void transfer_solution_var(lprec *lp, int uservar);
 STATIC void transfer_solution(lprec *lp, MYBOOL dofinal);
 
@@ -2262,23 +2278,10 @@ STATIC MYBOOL is_OF_nz(lprec *lp, int colnr);
 STATIC int get_basisOF(lprec *lp, int coltarget[], LPSREAL crow[], int colno[]);
 int    __WINAPI get_basiscolumn(lprec *lp, int j, int rn[], double bj[]);
 int    __WINAPI obtain_column(lprec *lp, int varin, LPSREAL *pcol, int *nzlist, int *maxabs);
-STATIC int compute_theta(lprec *lp, int rownr, LLPSREAL *theta, int isupbound, LPSREAL HarrisScalar, MYBOOL primal);
+STATIC int compute_theta(lprec *lp, int rownr, LREAL *theta, int isupbound, LPSREAL HarrisScalar, MYBOOL primal);
 
 /* Pivot utility routines */
 STATIC int findBasisPos(lprec *lp, int notint, int *var_basic);
 STATIC MYBOOL check_degeneracy(lprec *lp, LPSREAL *pcol, int *degencount);
-
-typedef int (__WINAPI read_modeldata_func)(void *userhandle, char *buf, int max_size);
-typedef int (__WINAPI write_modeldata_func)(void *userhandle, char *buf);
-MYBOOL __WINAPI MPS_readex(lprec **newlp, void *userhandle, read_modeldata_func read_modeldata, int typeMPS, int verbose);
-#if defined develop
-lprec __EXPORT_TYPE * __WINAPI read_lpex(void *userhandle, read_modeldata_func read_modeldata, int verbose, char *lp_name);
-MYBOOL __EXPORT_TYPE __WINAPI write_lpex(lprec *lp, void *userhandle, write_modeldata_func write_modeldata);
-
-lprec __EXPORT_TYPE * __WINAPI read_mpsex(void *userhandle, read_modeldata_func read_modeldata, int verbose);
-lprec __EXPORT_TYPE * __WINAPI read_freempsex(void *userhandle, read_modeldata_func read_modeldata, int verbose);
-
-MYBOOL MPS_writefileex(lprec *lp, int typeMPS, void *userhandle, write_modeldata_func write_modeldata);
-#endif
 
 #endif /* HEADER_lp_lib */

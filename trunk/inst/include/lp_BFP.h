@@ -63,7 +63,7 @@ MYBOOL __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_mustrefactorize)(lprec *lp);
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_refactcount)(lprec *lp, int kind);
 MYBOOL __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_isSetI)(lprec *lp);
 int    *bfp_createMDO(lprec *lp, MYBOOL *usedpos, int count, MYBOOL doMDO);
-void   BFP_CALLMODEL bfp_updaterefactstats(lprec *lp);
+void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_updaterefactstats)(lprec *lp);
 int    BFP_CALLMODEL bfp_rowextra(lprec *lp);
 
 /* Routines with OPTIONAL SHARED code; template routines suitable for canned          */
@@ -76,7 +76,7 @@ MYBOOL __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_pivotalloc)(lprec *lp, int newsize);
 int    __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_colcount)(lprec *lp);
 MYBOOL __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_canresetbasis)(lprec *lp);
 void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_finishfactorization)(lprec *lp);
-LLPSREAL  __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_prepareupdate)(lprec *lp, int row_nr, int col_nr, LPSREAL *pcol);
-LPSREAL   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_pivotRHS)(lprec *lp, LLPSREAL theta, LPSREAL *pcol);
+LREAL  __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_prepareupdate)(lprec *lp, int row_nr, int col_nr, LPSREAL *pcol);
+LPSREAL   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_pivotRHS)(lprec *lp, LREAL theta, LPSREAL *pcol);
 void   __BFP_EXPORT_TYPE (BFP_CALLMODEL bfp_btran_double)(lprec *lp, LPSREAL *prow, int *pnzidx, LPSREAL *drow, int *dnzidx);
 

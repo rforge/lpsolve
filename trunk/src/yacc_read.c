@@ -200,7 +200,7 @@ static void add_int_var(parse_parm *pp, char *name, short int_decl)
       pp->coldata[hp->index].upbo = 1;
     }
     else if(int_decl == 3) {
-      if(pp->coldata[hp->index].upbo == DEF_INFINITE)
+      if(pp->coldata[hp->index].upbo == DEF_INFINITE * (LPSREAL) 10.0)
         pp->coldata[hp->index].upbo = 1.0;
     }
   }
@@ -363,10 +363,10 @@ static int inccoldata(parse_parm *pp)
   if(Columns == 0)
     CALLOC(pp->coldata, coldatastep, struct structcoldata);
   else if((Columns%coldatastep) == 0)
-    LPSREALLOC(pp->coldata, Columns + coldatastep, struct structcoldata);
+    REALLOC(pp->coldata, Columns + coldatastep, struct structcoldata);
 
   if(pp->coldata != NULL) {
-    pp->coldata[Columns].upbo = (LPSREAL) DEF_INFINITE;
+    pp->coldata[Columns].upbo = (LPSREAL) DEF_INFINITE * (LPSREAL) 10.0;
     pp->coldata[Columns].lowbo = (LPSREAL) -DEF_INFINITE * (LPSREAL) 10.0; /* temporary. If still this value then 0 will be taken */
     pp->coldata[Columns].col = NULL;
     pp->coldata[Columns].firstcol = NULL;
@@ -990,7 +990,10 @@ static int readinput(parse_parm *pp, lprec *lp)
   	  /* lp->orig_lowbo[pp->Rows+index] = pp->coldata[hp->index].lowbo; */
           set_lowbo(lp, index, pp->coldata[hp->index].lowbo);
         /* lp->orig_upbo[pp->Rows+index] = pp->coldata[hp->index].upbo; */
-        set_upbo(lp, index, pp->coldata[hp->index].upbo);
+		if(pp->coldata[hp->index].upbo >= DEF_INFINITE)
+		  set_upbo(lp, index, DEF_INFINITE);
+		else
+          set_upbo(lp, index, pp->coldata[hp->index].upbo);
 
         /* check if it must be an integer variable */
         if(pp->coldata[hp->index].must_be_int) {

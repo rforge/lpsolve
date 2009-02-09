@@ -59,7 +59,7 @@ void *clean_realloc(void *oldptr, int width, int newsize, int oldsize)
 {
   newsize *= width;
   oldsize *= width;
-  oldptr = LUSOL_LPSREALLOC(oldptr, newsize);
+  oldptr = LUSOL_REALLOC(oldptr, newsize);
   if(newsize > oldsize)
 /*    MEMCLEAR(oldptr+oldsize, newsize-oldsize); */
     memset((char *)oldptr+oldsize, '\0', newsize-oldsize);
@@ -392,7 +392,7 @@ MYBOOL LUSOL_addSingularity(LUSOLrec *LUSOL, int singcol, int *inform)
 
     /* Increase list in "reasonable" steps */
     ASING += (int) (10.0 * (log10((LPSREAL) LUSOL->m)+1.0));
-    LUSOL->isingular = (int *) LUSOL_LPSREALLOC(LUSOL->isingular, sizeof(*LUSOL->isingular)*(ASING+1));
+    LUSOL->isingular = (int *) LUSOL_REALLOC(LUSOL->isingular, sizeof(*LUSOL->isingular)*(ASING+1));
     if(LUSOL->isingular == NULL) {
       LUSOL->luparm[LUSOL_IP_SINGULARLISTSIZE] = 0;
       *inform = LUSOL_INFORM_NOMEMLEFT;
@@ -749,7 +749,7 @@ void LUSOL_dump(FILE *output, LUSOLrec *LUSOL)
   if(!userfile)
     output = fopen("LUSOL.dbg", "w");
 
-  blockWriteLPSREAL(output, "a", LUSOL->a, 1, LUSOL->lena);
+  blockWriteREAL(output, "a", LUSOL->a, 1, LUSOL->lena);
   blockWriteINT(output, "indc", LUSOL->indc, 1, LUSOL->lena);
   blockWriteINT(output, "indr", LUSOL->indr, 1, LUSOL->lena);
 
