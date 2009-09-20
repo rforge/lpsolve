@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		0E36ACD610655B7C0070A8A0 /* lp_bit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = lp_bit.h; path = inst/include/lp_bit.h; sourceTree = SOURCE_ROOT; };
 		0EA670410E0D33430075A859 /* plot.lpExtPtr.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = plot.lpExtPtr.Rd; path = man/plot.lpExtPtr.Rd; sourceTree = SOURCE_ROOT; };
 		0EA670440E0D35850075A859 /* lpSolveAPI.Rnw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolveAPI.Rnw; path = inst/doc/lpSolveAPI.Rnw; sourceTree = SOURCE_ROOT; };
 		0EA670620E0D524C0075A859 /* add.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.column.q; path = R/add.column.q; sourceTree = SOURCE_ROOT; };
@@ -422,6 +423,7 @@
 				DA9674FB0E02D2C800989378 /* commonlib.h */,
 				DA9674FD0E02D2C800989378 /* ini.h */,
 				DA9674FE0E02D2C800989378 /* lp_BFP.h */,
+				0E36ACD610655B7C0070A8A0 /* lp_bit.h */,
 				DA9674FF0E02D2C800989378 /* lp_crash.h */,
 				DA9675000E02D2C800989378 /* lp_Hash.h */,
 				DA9675010E02D2C800989378 /* lp_lib.h */,

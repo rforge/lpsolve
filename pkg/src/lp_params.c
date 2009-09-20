@@ -25,10 +25,10 @@ typedef void (__WINAPI fn_REAL_set_function)(lprec *lp, LPSREAL value);
 #define setvalues(values, basemask) values, sizeof(values) / sizeof(*values), basemask
 #define setNULLvalues NULL, 0, 0
 #define setvalue(value) value, #value
-#define setintfunction(get_function, set_function) get_function, set_function, intfunction
-#define setlongfunction(get_function, set_function) (fn_int_get_function *) get_function, (fn_int_set_function *) set_function, longfunction
-#define setMYBOOLfunction(get_function, set_function) (fn_int_get_function *) get_function, (fn_int_set_function *) set_function, MYBOOLfunction
-#define setREALfunction(get_function, set_function) (fn_int_get_function *) get_function, (fn_int_set_function *) set_function, REALfunction
+#define setintfunction(get_function, set_function) { get_function }, { set_function }, intfunction
+#define setlongfunction(get_function, set_function) { (fn_int_get_function *) get_function }, {(fn_int_set_function *) set_function }, longfunction
+#define setMYBOOLfunction(get_function, set_function) { (fn_int_get_function *) get_function }, { (fn_int_set_function *) set_function }, MYBOOLfunction
+#define setREALfunction(get_function, set_function) {(fn_int_get_function *) get_function }, { (fn_int_set_function *) set_function }, REALfunction
 
 #define WRITE_COMMENTED 0
 #define WRITE_ACTIVE    1
@@ -357,9 +357,9 @@ static void write_params1(lprec *lp, FILE *fp, char *header, int newline)
       basemask = functions[i].basemask;
       for(j = 0; j < elements; j++) {
         value = functions[i].values[j].value;
-	ret2 = ret;
-	if(((unsigned int) value) < basemask)
-	  ret2 &= basemask;
+        ret2 = ret;
+        if(((unsigned int) value) < basemask)
+          ret2 &= basemask;
         if(value == 0) {
           if(ret2 == 0) {
             if(*buf)

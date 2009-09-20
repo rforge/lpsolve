@@ -961,7 +961,7 @@ STATIC int rowprim(lprec *lp, int colnr, LREAL *theta, LPSREAL *pcol, int *nzpco
 {
   int      i, ii, iy, iz, Hpass, k, *nzlist;
   LREAL    f, savef;
-  LPSREAL     Heps, Htheta, Hlimit, epsvalue, epspivot, p;
+  LPSREAL     Heps, Htheta, Hlimit, epsvalue, epspivot, p = 0.0;
   pricerec current, candidate;
   MYBOOL   isupper = !lp->is_lower[colnr], HarrisTwoPass = FALSE;
 
@@ -1981,7 +1981,7 @@ STATIC MYBOOL multi_removevar(multirec *multi, int varnr)
 STATIC int multi_enteringvar(multirec *multi, pricerec *current, int priority)
 {
   lprec    *lp = multi->lp;
-  int      i, bestindex, colnr;
+  int      i = 0, bestindex, colnr;
   LPSREAL     bound, score, bestscore = -lp->infinite;
   LPSREAL     b1, b2, b3;
   pricerec *candidate, *bestcand;
