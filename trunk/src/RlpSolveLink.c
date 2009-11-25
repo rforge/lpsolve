@@ -21,10 +21,8 @@ SEXP RlpSolve_make_lp(SEXP Srows, SEXP Scolumns)
 
   if(lp) {
     set_verbose(lp, NEUTRAL);
-    set_infinite(lp, R_PosInf);
     put_abortfunc(lp, RlpSolveAbortFunction, NULL);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
-    /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
 
   return ret;
@@ -37,10 +35,8 @@ SEXP RlpSolve_copy_lp(SEXP Slp)
   lprec* lp = lprecPointerFromSEXP(Slp);
   lprec* copy = copy_lp(lp);
 
-  if(copy) {
+  if(copy)
     ret = R_MakeExternalPtr(copy, RlpSolve_lprec_tag, R_NilValue);
-    /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
-  }
 
   return ret;
 }
@@ -55,10 +51,8 @@ SEXP RlpSolve_read_LP(SEXP Sfilename)
 
   if(lp) {
     set_verbose(lp, NEUTRAL);
-    set_infinite(lp, R_PosInf);
     put_abortfunc(lp, RlpSolveAbortFunction, NULL);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
-    /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
 
   return ret;
@@ -75,10 +69,8 @@ SEXP RlpSolve_read_MPS(SEXP Sfilename)
 
   if(lp) {
     set_verbose(lp, NEUTRAL);
-    set_infinite(lp, R_PosInf);
     put_abortfunc(lp, RlpSolveAbortFunction, NULL);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
-    /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
   }
 
   return ret;
@@ -92,7 +84,7 @@ SEXP RlpSolve_read_freeMPS(SEXP Sfilename)
 
   if(lp) {
     set_verbose(lp, NEUTRAL);
-    set_infinite(lp, R_PosInf);
+    /*set_infinite(lp, R_PosInf);*/
     put_abortfunc(lp, RlpSolveAbortFunction, NULL);
     ret = R_MakeExternalPtr(lp, RlpSolve_lprec_tag, R_NilValue);
     /*R_RegisterCFinalizer(ret, (R_CFinalizer_t) RlpSolve_delete_lp);*/
@@ -297,12 +289,15 @@ SEXP RlpSolve_add_SOS(SEXP Slp, SEXP Sname, SEXP Ssostype, SEXP Spriority,
 SEXP RlpSolve_is_SOS_var(SEXP Slp, SEXP Scolumns)
 {
   SEXP ret = R_NilValue;
+  int *columns = NULL, *status = NULL;
   lprec* lp = lprecPointerFromSEXP(Slp);
   int ncol = LENGTH(Scolumns), j = 0;
 
   PROTECT(ret = allocVector(LGLSXP, ncol));
+  columns = INTEGER(Scolumns);
+  status = LOGICAL(ret);
   for(j = 0; j < ncol; j++)
-    LOGICAL(ret)[j] = (int) is_SOS_var(lp, INTEGER(Scolumns)[j]);
+    status[j] = (int) is_SOS_var(lp, columns[j]);
   UNPROTECT(1);
 
   return ret;
@@ -312,14 +307,17 @@ SEXP RlpSolve_is_SOS_var(SEXP Slp, SEXP Scolumns)
 SEXP RlpSolve_del_column(SEXP Slp, SEXP Scolumns)
 {
   SEXP ret = R_NilValue;
+  int *columns = NULL, *status = NULL;
   lprec* lp = lprecPointerFromSEXP(Slp);
   int ncol = LENGTH(Scolumns), j = 0;
 
-  R_isort(INTEGER(Scolumns), ncol);
+  columns = INTEGER(Scolumns);
+  R_isort(columns, ncol);
 
   PROTECT(ret = allocVector(LGLSXP, ncol));
+  status = LOGICAL(ret);
   for(j = ncol-1; j >= 0; j--)
-    LOGICAL(ret)[j] = (int) del_column(lp, INTEGER(Scolumns)[j]);
+    status[j] = (int) del_column(lp, columns[j]);
   UNPROTECT(1);
 
   return ret;
@@ -329,14 +327,17 @@ SEXP RlpSolve_del_column(SEXP Slp, SEXP Scolumns)
 SEXP RlpSolve_del_constraint(SEXP Slp, SEXP Sdel_rows)
 {
   SEXP ret = R_NilValue;
+  int *del_rows = NULL, *status = NULL;
   lprec* lp = lprecPointerFromSEXP(Slp);
   int nrow = LENGTH(Sdel_rows), i = 0;
 
-  R_isort(INTEGER(Sdel_rows), nrow);
+  del_rows = INTEGER(Sdel_rows);
+  R_isort(del_rows, nrow);
 
   PROTECT(ret = allocVector(LGLSXP, nrow));
+  status = LOGICAL(ret);
   for(i = nrow-1; i >= 0; i--)
-    LOGICAL(ret)[i] = (int) del_constraint(lp, INTEGER(Sdel_rows)[i]);
+    status[i] = (int) del_constraint(lp, del_rows[i]);
   UNPROTECT(1);
 
   return ret;
@@ -377,14 +378,16 @@ SEXP RlpSolve_get_rowex(SEXP Slp, SEXP Srow_nr)
 SEXP RlpSolve_get_nameindex(SEXP Slp, SEXP Snames, SEXP Sisrow)
 {
   SEXP ret = R_NilValue;
+  int *status = NULL;
   lprec* lp = lprecPointerFromSEXP(Slp);
   int nval = LENGTH(Snames), i = 0, index = -1;
+  unsigned char isrow = (unsigned char) LOGICAL(Sisrow)[0];
 
   PROTECT(ret = allocVector(INTSXP, nval));
+  status = INTEGER(ret);
   for(i = 0; i < nval; i++) {
-    index = get_nameindex(lp, (char *) CHAR(STRING_ELT(Snames, i)),
-                          (unsigned char) LOGICAL(Sisrow)[0]);
-    INTEGER(ret)[i] = index >= 0 ? index : NA_INTEGER;
+    index = get_nameindex(lp, (char *) CHAR(STRING_ELT(Snames, i)), isrow);
+    status[i] = index >= 0 ? index : NA_INTEGER;
   }
   UNPROTECT(1);
 
@@ -764,12 +767,16 @@ SEXP RlpSolve_set_lowbo(SEXP Slp, SEXP Scolumns, SEXP Svalues)
 SEXP RlpSolve_get_lowbo(SEXP Slp, SEXP Scolumns)
 {
   SEXP ret = R_NilValue;
+  double *bounds = NULL, bound = 0.0;
   lprec* lp = lprecPointerFromSEXP(Slp);
-  int ncol = LENGTH(Scolumns), j = 0;
+  int j = 0, ncol = LENGTH(Scolumns), *columns = INTEGER(Scolumns);
 
   PROTECT(ret = allocVector(REALSXP, ncol));
-  for(j = 0; j < ncol; j++)
-    REAL(ret)[j] = get_lowbo(lp, INTEGER(Scolumns)[j]);
+  bounds = REAL(ret);
+  for(j = 0; j < ncol; j++) {
+    bound = get_lowbo(lp, columns[j]);
+    bounds[j] = is_infinite(lp, bound) ? R_NegInf : bound;
+  }
   UNPROTECT(1);
 
   return ret;
@@ -925,12 +932,16 @@ SEXP RlpSolve_set_rh_range(SEXP Slp, SEXP Srows, SEXP Sdeltavalue)
 SEXP RlpSolve_get_rh_range(SEXP Slp, SEXP Srows)
 {
   SEXP ret = R_NilValue;
+  double range = 0.0, *ranges = NULL;
   lprec* lp = lprecPointerFromSEXP(Slp);
-  int nrow = LENGTH(Srows), i = 0;
+  int i = 0, nrow = LENGTH(Srows), *rows = INTEGER(Srows);
 
   PROTECT(ret = allocVector(REALSXP, nrow));
-  for(i = 0; i < nrow; i++)
-    REAL(ret)[i] = get_rh_range(lp, INTEGER(Srows)[i]);
+  ranges = REAL(ret);
+  for(i = 0; i < nrow; i++) {
+    range = get_rh_range(lp, rows[i]);
+    ranges[i] = is_infinite(lp, range) ? R_PosInf : range;
+  }
   UNPROTECT(1);
 
   return ret;
@@ -1053,12 +1064,16 @@ SEXP RlpSolve_set_upbo(SEXP Slp, SEXP Scolumns, SEXP Svalues)
 SEXP RlpSolve_get_upbo(SEXP Slp, SEXP Scolumns)
 {
   SEXP ret = R_NilValue;
-  lprec* lp = lprecPointerFromSEXP(Slp);
-  int ncol = LENGTH(Scolumns), j = 0;
+  double *bounds = NULL, bound = 0.0;
+  lprec *lp = lprecPointerFromSEXP(Slp);
+  int j = 0, ncol = LENGTH(Scolumns), *columns = INTEGER(Scolumns);
 
   PROTECT(ret = allocVector(REALSXP, ncol));
-  for(j = 0; j < ncol; j++)
-    REAL(ret)[j] = get_upbo(lp, INTEGER(Scolumns)[j]);
+  bounds = REAL(ret);
+  for(j = 0; j < ncol; j++) {
+    bound = get_upbo(lp, columns[j]);
+    bounds[j] = is_infinite(lp, bound) ? R_PosInf : bound;
+  }
   UNPROTECT(1);
 
   return ret;
