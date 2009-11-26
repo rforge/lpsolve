@@ -13,12 +13,17 @@
 /*          20 April 2005       Modified all double types to LPSREAL to self-  */
 /*                              adjust to global settings.  Note that BLAS  */
 /*                              as of now does not have double double.      */
-/*          15 December 2005    Added idamin()                              */
 /* ************************************************************************ */
 
 #define BLAS_BASE         1
 #define UseMacroVector
-#define LoadableBlasLib
+#if defined LoadableBlasLib
+#  if LoadableBlasLib == 0
+#    undef LoadableBlasLib
+#  endif
+#else
+#  define LoadableBlasLib
+#endif
 
 
 /* ************************************************************************ */
@@ -26,7 +31,7 @@
 /* ************************************************************************ */
 #include "commonlib.h"
 #ifdef LoadableBlasLib
-  #if (defined WIN32) || (defined WIN64)
+  #ifdef WIN32
     #include <windows.h>
   #else
     #include <dlfcn.h>
@@ -44,11 +49,11 @@ extern "C" {
 /* ************************************************************************ */
 
 #ifndef BLAS_CALLMODEL
-  #if (defined WIN32) || (defined WIN64)
-    #define BLAS_CALLMODEL _cdecl
-  #else
-    #define BLAS_CALLMODEL
-  #endif
+#ifdef WIN32
+# define BLAS_CALLMODEL _cdecl
+#else
+# define BLAS_CALLMODEL
+#endif
 #endif
 
 typedef void   (BLAS_CALLMODEL BLAS_dscal_func) (int *n, LPSREAL *da, LPSREAL *dx, int *incx);
@@ -57,16 +62,15 @@ typedef void   (BLAS_CALLMODEL BLAS_daxpy_func) (int *n, LPSREAL *da, LPSREAL *d
 typedef void   (BLAS_CALLMODEL BLAS_dswap_func) (int *n, LPSREAL *dx, int *incx,  LPSREAL *dy, int *incy);
 typedef double (BLAS_CALLMODEL BLAS_ddot_func)  (int *n, LPSREAL *dx, int *incx,  LPSREAL *dy, int *incy);
 typedef int    (BLAS_CALLMODEL BLAS_idamax_func)(int *n, LPSREAL *x,  int *is);
-typedef int    (BLAS_CALLMODEL BLAS_idamin_func)(int *n, LPSREAL *x,  int *is);
 typedef void   (BLAS_CALLMODEL BLAS_dload_func) (int *n, LPSREAL *da, LPSREAL *dx, int *incx);
 typedef double (BLAS_CALLMODEL BLAS_dnormi_func)(int *n, LPSREAL *x);
 
 #ifndef __WINAPI
-  #if (defined WIN32) || (defined WIN64)
-    #define __WINAPI WINAPI
-  #else
-    #define __WINAPI
-  #endif
+# ifdef WIN32
+#  define __WINAPI WINAPI
+# else
+#  define __WINAPI
+# endif
 #endif
 
 void init_BLAS(void);
@@ -83,7 +87,6 @@ void daxpy ( int n, LPSREAL da,  LPSREAL *dx, int incx,   LPSREAL *dy, int incy 
 void dswap ( int n, LPSREAL *dx, int incx, LPSREAL *dy, int incy );
 LPSREAL ddot  ( int n, LPSREAL *dx, int incx, LPSREAL *dy, int incy );
 int  idamax( int n, LPSREAL *x,  int is );
-int  idamin( int n, LPSREAL *x,  int is );
 void dload ( int n, LPSREAL da,  LPSREAL *dx, int incx );
 LPSREAL dnormi( int n, LPSREAL *x );
 
@@ -97,7 +100,6 @@ void BLAS_CALLMODEL my_daxpy ( int *n, LPSREAL *da, LPSREAL *dx,  int *incx,  LP
 void BLAS_CALLMODEL my_dswap ( int *n, LPSREAL *dx, int *incx, LPSREAL *dy, int *incy );
 LPSREAL BLAS_CALLMODEL my_ddot  ( int *n, LPSREAL *dx, int *incx,  LPSREAL *dy, int *incy );
 int  BLAS_CALLMODEL my_idamax( int *n, LPSREAL *x,  int *is );
-int  BLAS_CALLMODEL my_idamin( int *n, LPSREAL *x,  int *is );
 void BLAS_CALLMODEL my_dload ( int *n, LPSREAL *da, LPSREAL *dx, int *incx );
 LPSREAL BLAS_CALLMODEL my_dnormi( int *n, LPSREAL *x );
 
