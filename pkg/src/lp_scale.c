@@ -806,7 +806,7 @@ STATIC LPSREAL scale(lprec *lp, LPSREAL *scaledelta)
       nz = nzOF;
     else
       nz = mat_rowlength(lp->matA, i);
-    absval = minmax_to_scale(lp, row_min[i], row_max[i], nzOF);
+    absval = minmax_to_scale(lp, row_min[i], row_max[i], nz); /* nz instead of nzOF KJEI 20/05/2010 */
     if(absval == 0)
       absval = 1;
     scalechange[i] = absval;

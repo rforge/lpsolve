@@ -191,8 +191,8 @@
 /* ------------------------------------------------------------------------- */
 #define MAJORVERSION             5
 #define MINORVERSION             5
-#define RELEASE                  0
-#define BUILD                   15
+#define RELEASE                  2
+#define BUILD                    0
 #define BFPVERSION              12       /* Checked against bfp_compatible() */
 #define XLIVERSION              12       /* Checked against xli_compatible() */
 /* Note that both BFPVERSION and XLIVERSION typically have to be incremented

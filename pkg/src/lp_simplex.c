@@ -567,7 +567,7 @@ STATIC int primloop(lprec *lp, MYBOOL primalfeasible, LPSREAL primaloffset)
   int    i, j, k, colnr = 0, rownr = 0, lastnr = 0,
          candidatecount = 0, minitcount = 0, ok = TRUE;
   LREAL  theta = 0.0;
-  LPSREAL   epsvalue, xviolated, cviolated = 0.0,
+  LPSREAL   epsvalue, xviolated = 0.0, cviolated = 0.0,
          *prow = NULL, *pcol = NULL,
          *drow = lp->drow;
   int    *workINT = NULL,

@@ -86,6 +86,8 @@
 # include "lp_fortify.h"
 #endif
 
+#define sensrejvar TRUE
+
 /* Return lp_solve version information */
 void __WINAPI lp_solve_version(int *majorversion, int *minorversion, int *release, int *build)
 {
@@ -1677,7 +1679,7 @@ lprec* __WINAPI copy_lp(lprec *lp)
   lprec *newlp = NULL;
   char buf[256], ok = FALSE;
   int sostype, priority, count, *sosvars, rows, columns;
-  LPSREAL *weights;
+  LPSREAL *weights = NULL;
 
 #if 0
   if(lp->wasPresolved)
@@ -2433,7 +2435,8 @@ STATIC MYBOOL shift_coldata(lprec *lp, int base, int delta, LLrec *usedmap)
 {
   int i, ii;
 
-  free_duals(lp);
+  if(lp->bb_totalnodes == 0)
+    free_duals(lp);
 
   /* Shift A matrix data */
   if(lp->matA->is_roworder)
@@ -3757,7 +3760,7 @@ int __WINAPI add_SOS(lprec *lp, char *name, int sostype, int priority, int count
   /* Make sure SOSes of order 3 and higher are properly defined */
   if(sostype > 2) {
     int j;
-    for(k = 1; k <= count; k++) {
+    for(k = 0; k < count; k++) {
       j = sosvars[k];
       if(!is_int(lp, j) || !is_semicont(lp, j)) {
         report(lp, IMPORTANT, "add_SOS: SOS3+ members all have to be integer or semi-continuous.\n");
@@ -6488,6 +6491,7 @@ STATIC int row_intstats(lprec *lp, int rownr, int pivcolnr, int *maxndec,
   return(nn);
 }
 
+#if 0
 LPSREAL MIP_stepOF(lprec *lp)
 /* This function tries to find a non-zero minimum improvement
    if the OF contains all integer variables (logic only applies if we are
@@ -6573,6 +6577,96 @@ LPSREAL MIP_stepOF(lprec *lp)
   }
   return( value );
 }
+#else
+
+LPSREAL MIP_stepOF(lprec *lp)
+/* This function tries to find a non-zero minimum improvement
+   if the OF contains all integer variables (logic only applies if we are
+   looking for a single solution, not possibly several equal-valued ones). */
+{
+  MYBOOL  OFgcd;
+  int     colnr, rownr, n, ib, ie,
+          pluscount, intcount;
+  int     intval, maxndec;
+  LPSREAL    value = 0, valOF, divOF, valGCD;
+  MATrec  *mat = lp->matA;
+
+  if((lp->int_vars > 0) && (lp->solutionlimit == 1) && mat_validate(mat)) {
+
+    /* Get statistics for integer OF variables and compute base stepsize */
+    n = row_intstats(lp, 0, 0, &maxndec, &pluscount, &intcount, &intval, &valGCD, &divOF);
+    if((n == 0) || (maxndec < 0))
+      return( value );
+    OFgcd = (MYBOOL) (intval > 0);
+    if(OFgcd)
+      value = valGCD;
+
+    /* Check non-ints in the OF to see if we can get more info */
+    if(n - intcount > 0) {
+      int nrv = n - intcount; /* Number of real variables in the objective */
+      int niv = 0;            /* Number of real variables identified as integer */
+      int nrows = lp->rows;
+
+      /* See if we have equality constraints */
+      for(ib = 1; ib <= nrows; ib++) {
+        if(is_constr_type(lp, ib, EQ))
+          break;
+      }
+
+      /* If so, there may be a chance to find an improved stepsize */
+      if(ib < nrows)
+      for(colnr = 1; colnr <= lp->columns; colnr++) {
+
+        /* Go directly to the next variable if this is an integer or
+          there is no row candidate to explore for hidden bounds for
+          real-valued variables (limit scan to one row/no recursion) */
+        if((lp->orig_obj[colnr] == 0) || is_int(lp, colnr))
+          continue;
+
+        /* Scan equality constraints */
+        ib = mat->col_end[colnr-1];
+        ie = mat->col_end[colnr];
+        while(ib < ie) {
+          if(is_constr_type(lp, (rownr = COL_MAT_ROWNR(ib)), EQ)) {
+
+            /* Get "child" row statistics, but break out if we don't
+              find enough information, i.e. no integers with coefficients of proper type */
+            n = row_intstats(lp, rownr, colnr, &maxndec, &pluscount, &intcount, &intval, &valGCD, &divOF);
+            if((intval < n - 1) || (maxndec < 0)) {
+              value = 0;
+              break;
+            }
+            niv++;
+
+            /* We can update */
+            valOF = unscaled_mat(lp, lp->orig_obj[colnr], 0, colnr);
+            valOF = fabs( valOF * (valGCD / divOF) );
+            if(OFgcd) {
+              SETMIN(value, valOF);
+            }
+            else {
+              OFgcd = TRUE;
+              value = valOF;
+            }
+          }
+          ib++;
+        }
+
+        /* No point in continuing scan if we failed in current column */
+        if(value == 0)
+          break;
+      }
+
+      /* Check if we found information for any real-valued variable;
+         if not, then we must set the improvement delta to 0 */
+      if(nrv > niv)
+        value = 0;
+    }
+  }
+  return( value );
+}
+
+#endif
 
 STATIC MYBOOL isPrimalSimplex(lprec *lp)
 {
@@ -6766,15 +6860,18 @@ STATIC MYBOOL isDualFeasible(lprec *lp, LPSREAL tol, int *boundflipcount, int in
 
   varnr = lp->rows + 1;
   for(i = 1; i <= lp->columns; i++, varnr++) {
-    islower = lp->is_lower[varnr];
-    if((my_chsign(islower, lp->orig_obj[i]) > 0) && (mat_collength(lp->matA, i) == 0) && !SOS_is_member(lp->SOS, 0, i)) {
-      lp->is_lower[varnr] = !islower;
-      if((islower && my_infinite(lp, lp->upbo[varnr])) ||
-         (!islower && my_infinite(lp, my_lowbo(lp, varnr)))) {
-        lp->spx_status = UNBOUNDED;
-        break;
+    if (mat_collength(lp->matA, i) == 0) {
+      islower = lp->is_lower[varnr];
+      if((my_chsign(islower, lp->orig_obj[i]) > 0) && !SOS_is_member(lp->SOS, 0, i)) {
+        lp->is_lower[varnr] = !islower;
+        if((islower && my_infinite(lp,  lp->upbo[varnr] /* lp->orig_upbo[varnr] */)) ||
+           (!islower && my_infinite(lp,  my_lowbo(lp, varnr) /* lp->orig_lowbo[varnr] */))) {
+          lp->spx_status = UNBOUNDED;
+          break;
+        }
+        /* lp->is_lower[varnr] = !islower; */
+        n++;
       }
-      n++;
     }
   }
 
@@ -8636,7 +8733,7 @@ STATIC int check_solution(lprec *lp, int  lastcolumn, LPSREAL *solution,
     report(lp, NORMAL, "%s solution  " RESULTVALUEMASK " after %10.0f iter, %9.0f nodes (gap %.1f%%).\n",
                        my_if(lp->bb_break && !bb_better(lp, OF_DUALLIMIT, OF_TEST_BE) && bb_better(lp, OF_RELAXED, OF_TEST_NE), "Subopt.", "Optimal"),
                        solution[0], (double) lp->total_iter, (double) lp->bb_totalnodes,
-                       100.0*fabs(my_reldiff(lp->solution[0], lp->bb_limitOF)));
+                       100.0*fabs(my_reldiff(solution[0], lp->bb_limitOF)));
   else
     report(lp, NORMAL, "Optimal solution  " RESULTVALUEMASK " after %10.0f iter.\n",
                        solution[0], (double) lp->total_iter);
@@ -9061,10 +9158,12 @@ STATIC MYBOOL construct_sensitivity_duals(lprec *lp)
 
       if (varnr > lp->rows) {
         if (objfromvalue != infinite) {
-          if (!lp->is_lower[varnr])
-            objfromvalue = lp->upbo[varnr] - objfromvalue;
-          if ((lp->upbo[varnr] < infinite) && (objfromvalue > lp->upbo[varnr]))
-            objfromvalue = lp->upbo[varnr];
+          if ((!sensrejvar) || (lp->upbo[varnr] != 0.0)) {
+            if (!lp->is_lower[varnr])
+              objfromvalue = lp->upbo[varnr] - objfromvalue;
+            if ((lp->upbo[varnr] < infinite) && (objfromvalue > lp->upbo[varnr]))
+              objfromvalue = lp->upbo[varnr];
+          }
           objfromvalue += lp->lowbo[varnr];
           objfromvalue = unscaled_value(lp, objfromvalue, varnr);
         }
@@ -9128,9 +9227,9 @@ Abandon:
         a = unscaled_mat(lp, drow[varnr], 0, i);
         if(is_maxim(lp))
           a = -a;
-        if (lp->upbo[varnr] == 0.0)
+        if ((!sensrejvar) && (lp->upbo[varnr] == 0.0))
           /* ignore, because this case doesn't results in further iterations */ ;
-        else if((lp->is_lower[varnr] != 0) == (is_maxim(lp) == FALSE))
+        else if(((lp->is_lower[varnr] != 0) == (is_maxim(lp) == FALSE)) && (a > -epsvalue))
           from = OrigObj[i] - a; /* less than this value gives further iterations */
         else
           till = OrigObj[i] - a; /* bigger than this value gives further iterations */
@@ -9175,13 +9274,13 @@ Abandon:
           if (is_maxim(lp)) {
             if (a - lp->lowbo[varnr] < epsvalue)
               from = -infinite; /* if variable is at lower bound then decrementing objective coefficient will not result in extra iterations because it would only extra decrease the value, but since it is at its lower bound ... */
-            else if (lp->lowbo[varnr] + lp->upbo[varnr] - a < epsvalue)
+            else if (((!sensrejvar) || (lp->upbo[varnr] != 0.0)) && (lp->lowbo[varnr] + lp->upbo[varnr] - a < epsvalue))
               till = infinite;  /* if variable is at upper bound then incrementing objective coefficient will not result in extra iterations because it would only extra increase the value, but since it is at its upper bound ... */
           }
           else {
             if (a - lp->lowbo[varnr] < epsvalue)
               till = infinite;  /* if variable is at lower bound then incrementing objective coefficient will not result in extra iterations because it would only extra decrease the value, but since it is at its lower bound ... */
-            else if (lp->lowbo[varnr] + lp->upbo[varnr] - a < epsvalue)
+            else if (((!sensrejvar) || (lp->upbo[varnr] != 0.0)) && (lp->lowbo[varnr] + lp->upbo[varnr] - a < epsvalue))
               from = -infinite; /* if variable is at upper bound then decrementing objective coefficient will not result in extra iterations because it would only extra increase the value, but since it is at its upper bound ... */
           }
         }
@@ -9853,12 +9952,12 @@ void postprocess(lprec *lp)
 
  /* Must compute duals here in case we have free variables; note that in
     this case sensitivity analysis is not possible unless done here */
-  if((MIP_count(lp) == 0) &&
-     (is_presolve(lp, PRESOLVE_DUALS) || (lp->var_is_free != NULL)))
-    construct_duals(lp);
-  if(is_presolve(lp, PRESOLVE_SENSDUALS)) {
-    if(!construct_sensitivity_duals(lp) || !construct_sensitivity_obj(lp))
-      report(lp, IMPORTANT, "postprocess: Unable to allocate working memory for duals.\n");
+  if((lp->bb_totalnodes == 0) && (lp->var_is_free == NULL)) {
+    if(is_presolve(lp, PRESOLVE_DUALS))
+      construct_duals(lp);
+    if(is_presolve(lp, PRESOLVE_SENSDUALS))
+      if(!construct_sensitivity_duals(lp) || !construct_sensitivity_obj(lp))
+        report(lp, IMPORTANT, "postprocess: Unable to allocate working memory for duals.\n");
   }
 
  /* Loop over all columns */
