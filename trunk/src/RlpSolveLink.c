@@ -1432,7 +1432,7 @@ SEXP RlpSolve_get_epsel(SEXP Slp)
   REAL(ret)[0] = get_epsel(lp);
   UNPROTECT(1);
 
-   return ret;
+  return ret;
 }
 
 
