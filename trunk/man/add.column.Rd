@@ -8,13 +8,13 @@ Add a column to an lpSolve linear program model object.
 }
 
 \usage{
-add.column(lprec, x, indices = 1:m)
+add.column(lprec, x, indices)
 }
 
 \arguments{
   \item{lprec}{an lpSolve linear program model object.}
-  \item{x}{a numeric vector containing the elements (only the nonzero elements if \code{indices} is also given) to be used in the added column. The length of \code{x} must be equal to the number of constraints in \code{lprec} unless \code{indices} is provided.}
-  \item{indices}{a numeric vector the same length as \code{x} of unique values from the set \{0, \dots, m\} where m is the number of constraints in \code{lprec}; \code{x[i]} is entered into constraint \code{indices[i]} in the added column.  The coefficients for the constraints not in \code{indices} are set to zero.  In particular, index \code{0} is the objective function coefficient in the added column and is set to zero by default.}
+  \item{x}{a numeric vector containing the elements (only the nonzero elements if the \code{indices} argument is also provided) of the column to be added. The length of \code{x} must be equal to the number of constraints in \code{lprec} unless \code{indices} is provided.}
+  \item{indices}{optional for sparse \code{x}. A numeric vector the same length as \code{x} of unique values from the set \{0, \dots, m\} where m is the number of constraints in \code{lprec}; \code{x[i]} is entered into constraint \code{indices[i]} in the added column.  The coefficients for the constraints not in \code{indices} are set to zero.  In particular, index \code{0} is the objective function coefficient in the added column and is set to zero by default. This argument should be omitted when \code{length(x) == m}.}
 }
 
 \details{
@@ -33,13 +33,8 @@ a logical value is invisibly returned: \code{TRUE} indicates that the operation 
 
 \examples{
 lps.model <- make.lp(4, 0)
-
-x <- c(6,2,4,9)
-add.column(lps.model, x)
-
-y <- c(3,1,5)
-ind <- c(1,2,4)
-add.column(lps.model, y, ind)
+add.column(lps.model, c(6,2,4,9))
+add.column(lps.model, c(3,1,5), indices = c(1,2,4))
 }
 
 \keyword{programming}

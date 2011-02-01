@@ -92,7 +92,7 @@
 		DA7F16EE0E01144E00F34E9B /* make.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = make.lp.Rd; path = man/make.lp.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F16EF0E01144E00F34E9B /* set.column.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.column.Rd; path = man/set.column.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F16F00E01144E00F34E9B /* lp.control.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.control.Rd; path = man/lp.control.Rd; sourceTree = SOURCE_ROOT; };
-		DA7F16F10E01144E00F34E9B /* undocumented.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = undocumented.Rd; path = man/undocumented.Rd; sourceTree = SOURCE_ROOT; };
+		DA7F16F10E01144E00F34E9B /* undocumented.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = undocumented.Rd; sourceTree = "<group>"; };
 		DA7F16F20E01144E00F34E9B /* add.SOS.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.SOS.Rd; path = man/add.SOS.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F16F30E01144E00F34E9B /* set.basis.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.basis.Rd; path = man/set.basis.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F16F40E01144E00F34E9B /* delete.column.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.column.Rd; path = man/delete.column.Rd; sourceTree = SOURCE_ROOT; };
@@ -222,62 +222,62 @@
 		DA7F16DF0E01144D00F34E9B /* man */ = {
 			isa = PBXGroup;
 			children = (
-				0EA670410E0D33430075A859 /* plot.lpExtPtr.Rd */,
+				DA7F16EB0E01144E00F34E9B /* add.column.Rd */,
+				DA7F16FB0E01144E00F34E9B /* add.constraint.Rd */,
+				DA7F16F20E01144E00F34E9B /* add.SOS.Rd */,
+				DA7F16F40E01144E00F34E9B /* delete.column.Rd */,
+				DA7F17020E01144E00F34E9B /* delete.constraint.Rd */,
+				DA7F16FE0E01144E00F34E9B /* delete.lp.Rd */,
+				DA7F17090E01144E00F34E9B /* dim.lpExtPtr.Rd */,
+				DA7F16E70E01144D00F34E9B /* dimnames.lpExtPtr.Rd */,
+				DA7F16E90E01144E00F34E9B /* get.basis.Rd */,
+				DA7F17150E01144E00F34E9B /* get.bounds.Rd */,
+				DA7F170C0E01144E00F34E9B /* get.branch.mode.Rd */,
 				DA7F16E00E01144D00F34E9B /* get.column.Rd */,
+				DA7F16F80E01144E00F34E9B /* get.constr.type.Rd */,
+				DA7F170F0E01144E00F34E9B /* get.constr.value.Rd */,
+				DA7F16ED0E01144E00F34E9B /* get.constraints.Rd */,
+				DA7F16E80E01144D00F34E9B /* get.dual.solution.Rd */,
+				DA7F17130E01144E00F34E9B /* get.kind.Rd */,
+				DA7F16F50E01144E00F34E9B /* get.mat.Rd */,
+				DA7F17070E01144E00F34E9B /* get.objective.Rd */,
+				DA7F16E30E01144D00F34E9B /* get.primal.solution.Rd */,
+				DA7F16FA0E01144E00F34E9B /* get.rhs.Rd */,
+				DA7F16FF0E01144E00F34E9B /* get.sensitivity.obj.Rd */,
+				DA7F16E60E01144D00F34E9B /* get.sensitivity.objex.Rd */,
+				DA7F17120E01144E00F34E9B /* get.sensitivity.rhs.Rd */,
+				DA7F16F60E01144E00F34E9B /* get.solutioncount.Rd */,
+				DA7F17110E01144E00F34E9B /* get.total.iter.Rd */,
+				DA7F17140E01144E00F34E9B /* get.total.nodes.Rd */,
+				DA7F170D0E01144E00F34E9B /* get.type.Rd */,
+				DA7F17050E01144E00F34E9B /* get.variables.Rd */,
+				DA7F17040E01144E00F34E9B /* guess.basis.Rd */,
+				DA7F16F00E01144E00F34E9B /* lp.control.Rd */,
+				DA7F17010E01144E00F34E9B /* lp.control.options.Rd */,
+				DA7F16EE0E01144E00F34E9B /* make.lp.Rd */,
+				DA7F170A0E01144E00F34E9B /* name.lp.Rd */,
+				0EA670410E0D33430075A859 /* plot.lpExtPtr.Rd */,
+				DA7F16E40E01144D00F34E9B /* print.lpExtPtr.Rd */,
+				DA7F17030E01144E00F34E9B /* read.lp.Rd */,
+				DA7F16FC0E01144E00F34E9B /* resize.lp.Rd */,
+				DA7F16EA0E01144E00F34E9B /* row.add.mode.Rd */,
+				DA7F170B0E01144E00F34E9B /* select.solution.Rd */,
+				DA7F16F30E01144E00F34E9B /* set.basis.Rd */,
+				DA7F16EC0E01144E00F34E9B /* set.bounds.Rd */,
+				DA7F17160E01144E00F34E9B /* set.branch.mode.Rd */,
+				DA7F170E0E01144E00F34E9B /* set.branch.weights.Rd */,
+				DA7F16EF0E01144E00F34E9B /* set.column.Rd */,
+				DA7F17000E01144E00F34E9B /* set.constr.type.Rd */,
+				DA7F16E50E01144D00F34E9B /* set.constr.value.Rd */,
+				DA7F16FD0E01144E00F34E9B /* set.mat.Rd */,
+				DA7F17080E01144E00F34E9B /* set.objfn.Rd */,
+				DA7F17060E01144E00F34E9B /* set.rhs.Rd */,
+				DA7F17100E01144E00F34E9B /* set.row.Rd */,
 				DA7F16E10E01144D00F34E9B /* set.semicont.Rd */,
 				DA7F16E20E01144D00F34E9B /* set.type.Rd */,
-				DA7F16E30E01144D00F34E9B /* get.primal.solution.Rd */,
-				DA7F16E40E01144D00F34E9B /* print.lpExtPtr.Rd */,
-				DA7F16E50E01144D00F34E9B /* set.constr.value.Rd */,
-				DA7F16E60E01144D00F34E9B /* get.sensitivity.objex.Rd */,
-				DA7F16E70E01144D00F34E9B /* dimnames.lpExtPtr.Rd */,
-				DA7F16E80E01144D00F34E9B /* get.dual.solution.Rd */,
-				DA7F16E90E01144E00F34E9B /* get.basis.Rd */,
-				DA7F16EA0E01144E00F34E9B /* row.add.mode.Rd */,
-				DA7F16EB0E01144E00F34E9B /* add.column.Rd */,
-				DA7F16EC0E01144E00F34E9B /* set.bounds.Rd */,
-				DA7F16ED0E01144E00F34E9B /* get.constraints.Rd */,
-				DA7F16EE0E01144E00F34E9B /* make.lp.Rd */,
-				DA7F16EF0E01144E00F34E9B /* set.column.Rd */,
-				DA7F16F00E01144E00F34E9B /* lp.control.Rd */,
-				DA7F16F10E01144E00F34E9B /* undocumented.Rd */,
-				DA7F16F20E01144E00F34E9B /* add.SOS.Rd */,
-				DA7F16F30E01144E00F34E9B /* set.basis.Rd */,
-				DA7F16F40E01144E00F34E9B /* delete.column.Rd */,
-				DA7F16F50E01144E00F34E9B /* get.mat.Rd */,
-				DA7F16F60E01144E00F34E9B /* get.solutioncount.Rd */,
-				DA7F16F70E01144E00F34E9B /* write.lp.Rd */,
-				DA7F16F80E01144E00F34E9B /* get.constr.type.Rd */,
 				DA7F16F90E01144E00F34E9B /* solve.lpExtPtr.Rd */,
-				DA7F16FA0E01144E00F34E9B /* get.rhs.Rd */,
-				DA7F16FB0E01144E00F34E9B /* add.constraint.Rd */,
-				DA7F16FC0E01144E00F34E9B /* resize.lp.Rd */,
-				DA7F16FD0E01144E00F34E9B /* set.mat.Rd */,
-				DA7F16FE0E01144E00F34E9B /* delete.lp.Rd */,
-				DA7F16FF0E01144E00F34E9B /* get.sensitivity.obj.Rd */,
-				DA7F17000E01144E00F34E9B /* set.constr.type.Rd */,
-				DA7F17010E01144E00F34E9B /* lp.control.options.Rd */,
-				DA7F17020E01144E00F34E9B /* delete.constraint.Rd */,
-				DA7F17030E01144E00F34E9B /* read.lp.Rd */,
-				DA7F17040E01144E00F34E9B /* guess.basis.Rd */,
-				DA7F17050E01144E00F34E9B /* get.variables.Rd */,
-				DA7F17060E01144E00F34E9B /* set.rhs.Rd */,
-				DA7F17070E01144E00F34E9B /* get.objective.Rd */,
-				DA7F17080E01144E00F34E9B /* set.objfn.Rd */,
-				DA7F17090E01144E00F34E9B /* dim.lpExtPtr.Rd */,
-				DA7F170A0E01144E00F34E9B /* name.lp.Rd */,
-				DA7F170B0E01144E00F34E9B /* select.solution.Rd */,
-				DA7F170C0E01144E00F34E9B /* get.branch.mode.Rd */,
-				DA7F170D0E01144E00F34E9B /* get.type.Rd */,
-				DA7F170E0E01144E00F34E9B /* set.branch.weights.Rd */,
-				DA7F170F0E01144E00F34E9B /* get.constr.value.Rd */,
-				DA7F17100E01144E00F34E9B /* set.row.Rd */,
-				DA7F17110E01144E00F34E9B /* get.total.iter.Rd */,
-				DA7F17120E01144E00F34E9B /* get.sensitivity.rhs.Rd */,
-				DA7F17130E01144E00F34E9B /* get.kind.Rd */,
-				DA7F17140E01144E00F34E9B /* get.total.nodes.Rd */,
-				DA7F17150E01144E00F34E9B /* get.bounds.Rd */,
-				DA7F17160E01144E00F34E9B /* set.branch.mode.Rd */,
+				DA7F16F10E01144E00F34E9B /* undocumented.Rd */,
+				DA7F16F70E01144E00F34E9B /* write.lp.Rd */,
 			);
 			path = man;
 			sourceTree = SOURCE_ROOT;
@@ -461,7 +461,14 @@
 			isa = PBXProject;
 			buildConfigurationList = DA7F16D30E01140F00F34E9B /* Build configuration list for PBXProject "lpSolveAPI" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = DA7F16CE0E01140F00F34E9B;
 			projectDirPath = "";
 			projectRoot = "";
