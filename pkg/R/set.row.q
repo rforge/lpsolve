@@ -1,6 +1,14 @@
-set.row <- function(lprec, row, xt, indices = 1:n)
+set.row <- function(lprec, row, xt, indices)
 {
-  n <- dim(lprec)[2]
+  if(missing(indices)) {
+    if(length(xt) != dim(lprec)[2])
+      stop("the length of ", sQuote("xt"), " is not equal to the number of ", 
+           "decision variables in the model")
+
+    epsel <- .Call("RlpSolve_get_epsel", lprec, PACKAGE = "lpSolveAPI")
+    indices <- which(abs(xt) > epsel)
+    xt <- xt[indices]
+  }
 
   if(length(xt) != length(indices))
     stop(sQuote("xt"), " and ", sQuote("indices"), " are not the same length")

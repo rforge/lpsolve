@@ -28,11 +28,13 @@ dimnames.lpExtPtr <- function(x)
   if(length(value[[2]]) != dx[2])
     stop(length(value[[2]]), " names provided for " , dx[2], " columns")
 
-  .Call("RlpSolve_set_row_names", x, as.integer(1:dx[1]),
-         as.character(value[[1]]), PACKAGE = "lpSolveAPI")
+  if(dx[1] > 0)
+    .Call("RlpSolve_set_row_names", x, as.integer(1:dx[1]),
+           as.character(value[[1]]), PACKAGE = "lpSolveAPI")
 
-  .Call("RlpSolve_set_col_names", x, as.integer(1:dx[2]),
-         as.character(value[[2]]), PACKAGE = "lpSolveAPI")
+  if(dx[2] > 0)
+    .Call("RlpSolve_set_col_names", x, as.integer(1:dx[2]),
+           as.character(value[[2]]), PACKAGE = "lpSolveAPI")
 
   x
 }

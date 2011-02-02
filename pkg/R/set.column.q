@@ -1,6 +1,14 @@
-set.column <- function(lprec, column, x, indices = 1:m)
+set.column <- function(lprec, column, x, indices)
 {
-  m <- dim(lprec)[1]
+  if(missing(indices)) {
+    if(length(x) != dim(lprec)[1])
+      stop("the length of ", sQuote("x"), " is not equal to the number of ", 
+           "constraints in the model")
+
+    epsel <- .Call("RlpSolve_get_epsel", lprec, PACKAGE = "lpSolveAPI")
+    indices <- which(abs(x) > epsel)
+    x <- x[indices]
+  }
 
   if(length(x) != length(indices))
     stop(sQuote("x"), " and ", sQuote("indices"), " are not the same length")
