@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		0E221D3613030B3500322C09 /* lpSolveAPI.R */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = lpSolveAPI.R; path = tests/lpSolveAPI.R; sourceTree = SOURCE_ROOT; };
 		0E36ACD610655B7C0070A8A0 /* lp_bit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = lp_bit.h; path = inst/include/lp_bit.h; sourceTree = SOURCE_ROOT; };
 		0EA670410E0D33430075A859 /* plot.lpExtPtr.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = plot.lpExtPtr.Rd; path = man/plot.lpExtPtr.Rd; sourceTree = SOURCE_ROOT; };
 		0EA670440E0D35850075A859 /* lpSolveAPI.Rnw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolveAPI.Rnw; path = inst/doc/lpSolveAPI.Rnw; sourceTree = SOURCE_ROOT; };
@@ -65,7 +66,6 @@
 		0EA670960E0D524D0075A859 /* set.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.type.q; path = R/set.type.q; sourceTree = SOURCE_ROOT; };
 		0EA670970E0D524D0075A859 /* solve.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = solve.q; path = R/solve.q; sourceTree = SOURCE_ROOT; };
 		0EA670980E0D524D0075A859 /* write.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = write.lp.q; path = R/write.lp.q; sourceTree = SOURCE_ROOT; };
-		0EB09AF61301769300052750 /* lpSolveAPI.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = lpSolveAPI.r; path = tests/lpSolveAPI.r; sourceTree = SOURCE_ROOT; };
 		0EB09AF7130176A500052750 /* absolute1.lp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; name = absolute1.lp; path = inst/tests/absolute1.lp; sourceTree = SOURCE_ROOT; };
 		0EB09AF8130176A500052750 /* binary1.lp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; name = binary1.lp; path = inst/tests/binary1.lp; sourceTree = SOURCE_ROOT; };
 		0EB09AF9130176A500052750 /* free1.lp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; name = free1.lp; path = inst/tests/free1.lp; sourceTree = SOURCE_ROOT; };
@@ -405,9 +405,9 @@
 		DA7F17980E01145000F34E9B /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				0EB09AF51301767500052750 /* lp_solve */,
-				0EB09AF61301769300052750 /* lpSolveAPI.r */,
+				0E221D3613030B3500322C09 /* lpSolveAPI.R */,
 				DA7F179A0E01145000F34E9B /* test.q */,
+				0EB09AF51301767500052750 /* lp_solve */,
 			);
 			path = tests;
 			sourceTree = SOURCE_ROOT;
