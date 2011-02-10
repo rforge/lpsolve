@@ -95,6 +95,7 @@
 		DA3A89BC0E0136BD003FE8A4 /* lusol6u.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lusol6u.c; path = src/lusol6u.c; sourceTree = SOURCE_ROOT; };
 		DA3A89BD0E0136BD003FE8A4 /* lusol7a.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lusol7a.c; path = src/lusol7a.c; sourceTree = SOURCE_ROOT; };
 		DA3A89BE0E0136BD003FE8A4 /* lusol8a.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lusol8a.c; path = src/lusol8a.c; sourceTree = SOURCE_ROOT; };
+		DA50DE681303FD5100334FB1 /* lpSolveAPI.Rout.save */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolveAPI.Rout.save; path = tests/lpSolveAPI.Rout.save; sourceTree = SOURCE_ROOT; };
 		DA7F16DC0E01144D00F34E9B /* DESCRIPTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DESCRIPTION; sourceTree = SOURCE_ROOT; };
 		DA7F16E00E01144D00F34E9B /* get.column.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.column.Rd; path = man/get.column.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F16E10E01144D00F34E9B /* set.semicont.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.semicont.Rd; path = man/set.semicont.Rd; sourceTree = SOURCE_ROOT; };
@@ -181,7 +182,6 @@
 		DA7F17900E01145000F34E9B /* RlpSolveLink.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RlpSolveLink.c; path = src/RlpSolveLink.c; sourceTree = SOURCE_ROOT; };
 		DA7F17930E01145000F34E9B /* Makevars */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Makevars; path = src/Makevars; sourceTree = SOURCE_ROOT; };
 		DA7F17950E01145000F34E9B /* lp_LUSOL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_LUSOL.c; sourceTree = "<group>"; };
-		DA7F179A0E01145000F34E9B /* test.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test.q; path = tests/test.q; sourceTree = SOURCE_ROOT; };
 		DA7F17A10E0115C900F34E9B /* Rpackage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Rpackage.html; path = website/Rpackage.html; sourceTree = SOURCE_ROOT; };
 		DA9674FA0E02D2C800989378 /* colamd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = colamd.h; path = inst/include/colamd.h; sourceTree = SOURCE_ROOT; };
 		DA9674FB0E02D2C800989378 /* commonlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = commonlib.h; path = inst/include/commonlib.h; sourceTree = SOURCE_ROOT; };
@@ -406,7 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				0E221D3613030B3500322C09 /* lpSolveAPI.R */,
-				DA7F179A0E01145000F34E9B /* test.q */,
+				DA50DE681303FD5100334FB1 /* lpSolveAPI.Rout.save */,
 				0EB09AF51301767500052750 /* lp_solve */,
 			);
 			path = tests;
