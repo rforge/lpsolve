@@ -573,7 +573,7 @@ SEXP RlpSolve_get_col_names(SEXP Slp, SEXP Scolumns)
   PROTECT(ret = allocVector(STRSXP, ncol));
   for(j = 0; j < ncol; j++)
     SET_STRING_ELT(ret, j,
-      mkChar((const char *) get_row_name(lp, INTEGER(Scolumns)[j])));
+      mkChar((const char *) get_col_name(lp, INTEGER(Scolumns)[j])));
   UNPROTECT(1);
 
   return ret;
