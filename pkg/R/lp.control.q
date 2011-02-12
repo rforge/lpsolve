@@ -469,7 +469,7 @@ lp.control <- function(lprec, ..., reset = FALSE)
   presolve <- .Call("RlpSolve_is_presolve", lprec,
                      as.integer(c(0, 2^(0:2), 2^(5:20))),
                      PACKAGE = "lpSolveAPI")
-  presolve <- c("none", "cols", "rows", "lindep", "sos", "reducemip",
+  presolve <- c("none", "rows", "cols", "lindep", "sos", "reducemip",
                 "knapsack", "elimeq2", "impliedfree", "reducedgcd", "probefix",
                 "probereduce", "rowdominate", "coldominate", "mergerows",
                 "impliedslk", "colfixdual", "bounds", "duals",

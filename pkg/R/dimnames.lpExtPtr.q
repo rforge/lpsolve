@@ -3,13 +3,13 @@ dimnames.lpExtPtr <- function(x)
   lp.size <- dim(x)
 
   if(lp.size[1] >= 1)
-    rowNames <- .Call("RlpSolve_get_origrow_names", x, as.integer(1:lp.size[1]),
+    rowNames <- .Call("RlpSolve_get_row_names", x, as.integer(1:lp.size[1]),
                        PACKAGE = "lpSolveAPI")
   else
     rowNames <- character(0)
 
   if(lp.size[2] >= 1)
-    colNames <- .Call("RlpSolve_get_origcol_names", x, as.integer(1:lp.size[2]),
+    colNames <- .Call("RlpSolve_get_col_names", x, as.integer(1:lp.size[2]),
                        PACKAGE = "lpSolveAPI")
   else
     colNames <- character(0)
