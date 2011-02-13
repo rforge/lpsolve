@@ -6,6 +6,8 @@ set.branch.weights <- function(lprec, weights)
 
   .Call("RlpSolve_set_var_weights", lprec, as.double(weights),
          PACKAGE = "lpSolveAPI")
+
+  invisible()
 }
 
 

@@ -395,9 +395,7 @@ SEXP RlpSolve_resize_lp(SEXP Slp, SEXP Srows, SEXP Scolumns)
 SEXP RlpSolve_set_add_rowmode(SEXP Slp, SEXP Sturnon)
 {
   lprec* lp = lprecPointerFromSEXP(Slp);
-
   RlpsHS(lp, set_add_rowmode(lp, (unsigned char) LOGICAL(Sturnon)[0]));
-
   return R_NilValue;
 }
 
@@ -720,9 +718,7 @@ SEXP RlpSolve_get_lowbo(SEXP Slp, SEXP Scolumns)
 SEXP RlpSolve_set_lp_name(SEXP Slp, SEXP Slpname)
 {
   lprec* lp = lprecPointerFromSEXP(Slp);
-
   RlpsHS(lp, set_lp_name(lp, (char*) CHAR(STRING_ELT(Slpname, 0))));
-
   return R_NilValue;
 }
 

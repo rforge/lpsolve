@@ -13,8 +13,10 @@ set.column <- function(lprec, column, x, indices)
   if(length(x) != length(indices))
     stop(sQuote("x"), " and ", sQuote("indices"), " are not the same length")
 
-  invisible(.Call("RlpSolve_set_columnex", lprec, as.integer(column),
-                   as.double(x), as.integer(indices), PACKAGE = "lpSolveAPI"))
+  .Call("RlpSolve_set_columnex", lprec, as.integer(column), as.double(x),
+         as.integer(indices), PACKAGE = "lpSolveAPI")
+
+  invisible()
 }
 
 

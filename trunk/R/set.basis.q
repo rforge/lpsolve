@@ -1,8 +1,9 @@
 set.basis <- function(lprec, basis, nonbasic = FALSE, default = FALSE)
 {
-  if(default)
-    return(invisible(.Call("RlpSolve_default_basis", lprec,
-                            PACKAGE = "lpSolveAPI")))
+  if(default) {
+    .Call("RlpSolve_default_basis", lprec, PACKAGE = "lpSolveAPI")
+    return(invisible())
+  }
 
   if(nonbasic)
     if(length(basis) != sum(dim(lprec)))
@@ -14,8 +15,10 @@ set.basis <- function(lprec, basis, nonbasic = FALSE, default = FALSE)
       stop("the length of ", sQuote("basis"), " must be the same as the number",
            " of columns in the model")
 
-  invisible(.Call("RlpSolve_set_basis", lprec, as.integer(c(0, basis)),
-                   as.logical(nonbasic), PACKAGE = "lpSolveAPI"))
+  .Call("RlpSolve_set_basis", lprec, as.integer(c(0, basis)),
+         as.logical(nonbasic), PACKAGE = "lpSolveAPI")
+
+  invisible()
 }
 
 

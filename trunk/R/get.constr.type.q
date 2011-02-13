@@ -7,7 +7,10 @@ get.constr.type <- function(lprec, constraints = 1:m, as.char = TRUE)
 
   types <- .Call("RlpSolve_get_constr_type", lprec, as.integer(constraints),
                   PACKAGE = "lpSolveAPI")
-  if(as.char) types <- c("free", "<=", ">=", "=")[types+1]
+
+  if(as.char)
+    types <- c("free", "<=", ">=", "=")[types+1]
+
   types
 }
 

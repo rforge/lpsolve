@@ -223,6 +223,18 @@ A description of the various control options that can be set in an lpSolve linea
 
     \item{timeout}{a positive integer value specifying the number of seconds after which a timeout will occur. If zero, then no timeout will occur.}
 
+    \item{verbose}{a character string controlling the severity of messages reported by lp_solve. The possible choices are given in the table below. All errors/warnings in lp_solve have a particular severiy: for example, specifying a wrong row or column index is considered a severe error. All messages equal to and below the set level are reported (in the console).
+
+      \tabular{rl}{
+        \code{"neutral"}: \tab No reporting. \cr
+        \code{"critical"}: \tab Only critical messages are reported. Hard errors like instability, out of memory, etc. \cr
+        \code{"severe"}: \tab Only severe messages are reported. Errors. \cr
+        \code{"important"}: \tab Only important messages are reported. Warnings and Errors. \cr
+        \code{"normal"}: \tab Normal messages are reported. \cr
+        \code{"detailed"}: \tab Detailed messages are reported. Like model size, continuing B&B improvements, etc. \cr
+        \code{"full"}: \tab All messages are reported. Useful for debugging purposes and small models. \cr
+      }
+    }
   }
 }
 

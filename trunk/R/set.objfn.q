@@ -13,8 +13,10 @@ set.objfn <- function(lprec, obj, indices)
   if(length(obj) != length(indices))
     stop(sQuote("obj"), " and ", sQuote("indices"), " are not the same length")
 
-  invisible(.Call("RlpSolve_set_obj_fnex", lprec, as.double(obj),
-                   as.integer(indices), PACKAGE = "lpSolveAPI"))
+  .Call("RlpSolve_set_obj_fnex", lprec, as.double(obj), as.integer(indices),
+         PACKAGE = "lpSolveAPI")
+
+  invisible()
 }
 
 

@@ -534,6 +534,7 @@ R1           0     1     0   =  2
 R2           1     1     0  <=  6
 R3           1     0    -2  >=  2
 R4           0     1     3  <=  5
+Kind       Std   Std   Std       
 Type      Real  Real  Real       
 Upper      Inf   Inf   Inf       
 Lower        0     0     0       
@@ -546,6 +547,7 @@ Maximize     1     1     1
 R2           1     1     0  <=  6
 R3           1     0    -2  >=  2
 R4           0     1     3  <=  5
+Kind       Std   Std   Std       
 Type      Real  Real  Real       
 Upper      Inf     2   Inf       
 Lower        0     2     0       
@@ -577,6 +579,7 @@ R1           0     1     0   =  2
 R2           1     1     0  <=  6
 R3           1     0    -2  >=  2
 R4           0     1     3  <=  5
+Kind       Std   Std   Std       
 Type      Real  Real  Real       
 Upper      Inf   Inf   Inf       
 Lower        0     0     0       
@@ -587,6 +590,7 @@ Model name:
             C1    C3       
 Maximize     1     1       
 R3           1    -2  >=  2
+Kind       Std   Std       
 Type      Real  Real       
 Upper        4     1       
 Lower        0     0       
