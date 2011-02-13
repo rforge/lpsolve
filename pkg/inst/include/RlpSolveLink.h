@@ -231,8 +231,8 @@ SEXP RlpSolve_get_variables(SEXP Slp);
 /*get_print_sol*/
 /*set_trace*/
 /*is_trace*/
-/*set_verbose*/
-/*get_verbose*/
+SEXP RlpSolve_set_verbose(SEXP Slp, SEXP Sverbose);
+SEXP RlpSolve_get_verbose(SEXP Slp);
 
 
 /*******************************
@@ -274,7 +274,7 @@ SEXP RlpSolve_write_freemps(SEXP Slp, SEXP Sfilename);
 /*column_in_lp*/
 SEXP RlpSolve_dualize_lp(SEXP Slp);
 SEXP RlpSolve_get_lp_index(SEXP Slp, SEXP Sorig_indices);
-SEXP RlpSolve_get_Lrows(SEXP Slp);
+/*SEXP RlpSolve_get_Lrows(SEXP Slp);*/
 SEXP RlpSolve_get_Ncolumns(SEXP Slp);
 SEXP RlpSolve_get_nonzeros(SEXP Slp);
 SEXP RlpSolve_get_Norig_columns(SEXP Slp);

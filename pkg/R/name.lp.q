@@ -5,6 +5,8 @@ name.lp <- function(lprec, name)
 
   .Call("RlpSolve_set_lp_name", lprec, as.character(name),
          PACKAGE = "lpSolveAPI")
+
+  invisible()
 }
 
 

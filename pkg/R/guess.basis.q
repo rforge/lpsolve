@@ -1,10 +1,10 @@
 guess.basis <- function(lprec, guess)
 {
   if(length(guess) != dim(lprec)[2])
-    stop("the length of ", sQuote("guess"), " must be the same as the number",
-         " of columns and constraints in the model")
+    stop("the length of ", sQuote("guess"), " must be equal to the number",
+         " of columns in the model")
 
-  basis <- .Call("RlpSolve_guess_basis", lprec, as.double(guess),
+  basis <- .Call("RlpSolve_guess_basis", lprec, as.double(c(0.0, guess)),
                   PACKAGE = "lpSolveAPI")
 
   if(basis[1] == 1)
