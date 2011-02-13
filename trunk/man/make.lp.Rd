@@ -8,12 +8,13 @@ Create a new lpSolve linear program model object.
 }
 
 \usage{
-make.lp(nrow = 0, ncol = 0)
+make.lp(nrow = 0, ncol = 0, verbose = "neutral")
 }
 
 \arguments{
   \item{nrow}{a nonnegative integer value specifying the number of constaints in the linear program.}
   \item{ncol}{a nonnegative integer value specifying the number of decision variables in the linear program.}
+  \item{verbose}{a character string controlling the level of error reporting. The default value \code{"neutral"} is no error reporting. Use \code{"normal"} or \code{"full"} for more comprehensive error reporting. See the \code{verbose} entry in \code{\link{lp.control.options}} for a complete description of this argument and its possible values.}
 }
 
 \value{

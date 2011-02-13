@@ -15,6 +15,21 @@ lprec* lprecPointerFromSEXP(SEXP Slprec)
 }
 
 
+void RlpsHS(lprec *lp, unsigned char status)
+{
+  if(status)
+    return;
+
+  error(get_statustext(lp, get_status(lp)));
+}
+
+
+void __WINAPI RlpSolveLogFunction(lprec *lp, void *userhandle, char *buf)
+{
+  Rprintf(buf);  
+}
+
+
 int __WINAPI RlpSolveAbortFunction(lprec *lp, void *userhandle)
 {
   int abort = 0;
@@ -184,12 +199,14 @@ void R_init_lpSolveAPI(DllInfo *info)
     {"RlpSolve_get_total_iter", (DL_FUNC) RlpSolve_get_total_iter, 1},
     {"RlpSolve_get_total_nodes", (DL_FUNC) RlpSolve_get_total_nodes, 1},
     {"RlpSolve_get_variables", (DL_FUNC) RlpSolve_get_variables, 1},
+    {"RlpSolve_set_verbose", (DL_FUNC) RlpSolve_set_verbose, 2},
+    {"RlpSolve_get_verbose", (DL_FUNC) RlpSolve_get_verbose, 1},
     {"RlpSolve_write_lp", (DL_FUNC) RlpSolve_write_lp, 2},
     {"RlpSolve_write_mps", (DL_FUNC) RlpSolve_write_mps, 2},
     {"RlpSolve_write_freemps", (DL_FUNC) RlpSolve_write_freemps, 2},
     {"RlpSolve_dualize_lp", (DL_FUNC) RlpSolve_dualize_lp, 1},
     {"RlpSolve_get_lp_index", (DL_FUNC) RlpSolve_get_lp_index, 2},
-    {"RlpSolve_get_Lrows", (DL_FUNC) RlpSolve_get_Lrows, 1},
+    /*{"RlpSolve_get_Lrows", (DL_FUNC) RlpSolve_get_Lrows, 1},*/
     {"RlpSolve_get_Ncolumns", (DL_FUNC) RlpSolve_get_Ncolumns, 1},
     {"RlpSolve_get_nonzeros", (DL_FUNC) RlpSolve_get_nonzeros, 1},
     {"RlpSolve_get_Norig_columns", (DL_FUNC) RlpSolve_get_Norig_columns, 1},
@@ -456,7 +473,7 @@ void R_init_lpSolveAPI(DllInfo *info)
   R_RegisterCCallable(package, "get_solutioncount", (DL_FUNC) get_solutioncount);
   R_RegisterCCallable(package, "get_Norig_rows", (DL_FUNC) get_Norig_rows);
   R_RegisterCCallable(package, "get_Nrows", (DL_FUNC) get_Nrows);
-  R_RegisterCCallable(package, "get_Lrows", (DL_FUNC) get_Lrows);
+  /*R_RegisterCCallable(package, "get_Lrows", (DL_FUNC) get_Lrows);*/
   R_RegisterCCallable(package, "get_Norig_columns", (DL_FUNC) get_Norig_columns);
   R_RegisterCCallable(package, "get_Ncolumns", (DL_FUNC) get_Ncolumns);
 }

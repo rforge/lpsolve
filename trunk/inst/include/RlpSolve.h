@@ -7,5 +7,7 @@
 void R_init_lpSolveAPI(DllInfo *info);
 lprec* lprecPointerFromSEXP(SEXP Slprec);
 int __WINAPI RlpSolveAbortFunction(lprec *lp, void *userhandle);
+void __WINAPI RlpSolveLogFunction(lprec *lp, void *userhandle, char *buf);
+void RlpsHS(lprec *lp, unsigned char status);
 
 

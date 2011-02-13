@@ -1,4 +1,5 @@
-read.lp <- function(filename, type = c("lp", "mps", "freemps"))
+read.lp <- function(filename, type = c("lp", "mps", "freemps"),
+                    verbose = "neutral")
 {
   if(!file.exists(filename))
     stop(dQuote(filename), ": no such file")
@@ -17,6 +18,11 @@ read.lp <- function(filename, type = c("lp", "mps", "freemps"))
   else
     type <- match.arg(type)
 
+  ch <- c("neutral", "critical", "severe", "important", "normal", "detailed",
+          "full")
+  verbose <- match.arg(verbose, choices = ch)
+  verbose <- match(verbose, table = ch) - 1
+
   lprec <- switch(type,
     "lp" = .Call("RlpSolve_read_LP", as.character(filename),
                   PACKAGE = "lpSolveAPI"),
@@ -30,6 +36,8 @@ read.lp <- function(filename, type = c("lp", "mps", "freemps"))
     stop("could not interpret ", basename(filename), " as an ", type, " file")
 
   else {
+    .Call("RlpSolve_set_verbose", lprec, as.integer(verbose),
+           PACKAGE = "lpSolveAPI")
     reg.finalizer(lprec, lpSolveAPI::delete.lp, TRUE)
     oldClass(lprec) <- "lpExtPtr"
   }
