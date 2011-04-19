@@ -50,47 +50,72 @@ R is a language and environment for statistical computing and graphics. It is a 
 </p>
 
 <p>
-There are currently two R packages based on lp_solve. The <i>lpSolve</i> R package provides high-level functions for solving general linear/integer problems, assignment problems and transportation problems. The <i>lpSolveAPI</i> R package provides an R API mirroring the lp_solve C API and hence provides a great deal more functionality but has a steeper learning curve. Both packages are available from <a href="http://cran.r-project.org/">CRAN</a>.
+There are currently two R packages based on lp_solve. The <i>lpSolve</i> package provides high-level functions for solving general linear/integer problems, assignment problems and transportation problems. The <i>lpSolveAPI</i> package provides a complete implementation of the lp_solve API.  The <i>lpSolveAPI</i> package has a lot more functionality than <i>lpSolve</i>, however, it also has a slightly more difficult learning curve. Both packages are available from <a href="http://cran.r-project.org/">CRAN</a>.
+</p>
+
+<p>
+<span style="color:red">Caveat (19.04.2011): the <i>lpSolve</i> package is based on lp_solve version 5.5.0.7 which was released on 27.12.2007.  The current version of lp_solve (used in the <i>lpSolveAPI</i> package) is 5.5.2.0 and was released on 22.08.2010.</span> 
+</p>
+
+<p>
+You can find the <strong>project summary page</strong> <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>.
 </p>
 
 <h5>Installation</h5>
 
 <p>
-To install the lpSolve package use the command command:
+To install the <i>lpSolve</i> package use the command:
 
 <pre>
   &gt; install.packages("lpSolve")
 </pre>
 
-and to install the lpSolveAPI package use the command:
+and to install the <i>lpSolveAPI</i> package use the command:
+
 <pre>
   &gt; install.packages("lpSolveAPI")
 </pre>
+
+After the packages have been downloaded and installed, you can load them into your R session using the <tt>library</tt> function, e.g.,
+
+<pre>
+  &gt; library(lpSolveAPI)
+</pre>
+
+This needs to be done once in each R session (i.e., every time you launch R).
+
 </p>
 
 <h5>Note</h5>
 
 <p>
-The <tt>&gt;</tt> shown before each R command is the R prompt.  Only the text after <tt>&gt;</tt> must be entered.
+The <tt>&gt;</tt> shown before each R command is the R prompt.  Only the text after <tt>&gt;</tt> should be entered.
 </p>
 
 
 <h3>Getting Help</h3>
 
 <p>
-Documentation is provided for each function in the lpSolve and lpSolveAPI packages using R's built-in help system.  For example, the command
+Documentation for the <i>lpSolve</i> and <i>lpSolveAPI</i> packages is provided using R's built-in help system.  For example, the command
 
 <pre>
-  &gt; ?lp
+  &gt; ?make.lp
 </pre>
 
-will display the documentation for the <tt>lp</tt> function in the lpSolve package. The lpSolve package also contains the functions <tt>lp.assign</tt> and <tt>lp.transport</tt> which solve assignment and transportation problems. Read these three help files first. If you have a problem that can not be solved using one of these three functions you will have to use the lpSolveAPI package.
+will display the documentation for the <tt>make.lp</tt> function.  You can list all of the functions in the <i>lpSolveAPI</i> package with the following command.
+
+<pre>
+  &gt; ls("package:lpSolveAPI")
+</pre>
+
+The documentation for each of these functions can be accessed using the <tt>?</tt> operator. Note that you must append <tt>.lpExtPtr</tt> to the names of the generic functions (<tt>dim</tt>, <tt>dimnames</tt>, <tt>plot</tt>, <tt>print</tt> and <tt>solve</tt>), otherwise you will get the documentation for the standard generic function.
+
 </p>
 
-<h3>Building and Solving Linear Programs Using the lpSolveAPI R Package</h3>
+<h3>Building and Solving Linear Programs Using the lpSolveAPI Package</h3>
 
 <p>
-The lpSolveAPI package provides an API for building and solving linear programs that mimics the lp_solve C API.  This approach allows much greater flexibility but also has a few caveats.  The most important is that the <i>lpSolve linear program model objects</i> created by <tt>make.lp</tt> and <tt>read.lp</tt> are not actually R objects but external pointers to lp_solve 'lprec' structures.  R does not know how to deal with these structures.  In particular, R cannot duplicate them.  Thus one must never assign an existing lpSolve linear program model object in R code.
+The lpSolveAPI package provides an API for building and solving linear programs that mimics the lp_solve C API.  This approach allows  greater flexibility but also has a few caveats.  The most important is that the <i>lpSolve linear program model objects</i> created by <tt>make.lp</tt> and <tt>read.lp</tt> are not actually R objects.  Rather, they are pointers to lp_solve 'lprec' structures which are created and store externally.  R does not know how to deal with these structures.  In particular, R cannot duplicate them.  You should never assign an lpSolve linear program model object in R code.
 </p>
 
 <p>
@@ -134,7 +159,7 @@ The changes we made in x appear in y as well.  Although x and y are two distinct
 The safest way to use the lpSolve API is inside an R function - do not return the lpSolve linear program model object.
 </p>
 
-<h5>Learning by Example</h5>
+<h3>A brief Example</h3>
 
 <pre>
   &gt; lprec <- make.lp(0, 4)
@@ -159,8 +184,8 @@ Lets take a look at what we have done so far.
   THATROW       0.24         0     11.31         0  <=  14.8
   LASTROW      12.68         0      0.08       0.9  >=     4
   Type          Real      Real      Real      Real          
-  upbo           Inf       Inf       Inf     48.98          
-  lowbo         28.6         0         0        18
+  Upper          Inf       Inf       Inf     48.98          
+  Lower         28.6         0         0        18          
 </pre>
 
 Now lets solve the model.
@@ -178,27 +203,6 @@ Now lets solve the model.
   &gt; get.constraints(lprec)
   [1]  92.3000   6.8640 391.2928
 </pre>
-
-<p>
-Note that there are some commands that return an answer.  For the accessor functions (generally named get.*) the output should be clear.  For other functions (e.g., <tt>solve</tt>), the interpretation of the returned value is described in the documentation.  Since <tt>solve</tt> is generic in R, use the command
-
-<pre>
-  &gt; ?solve.lpExtPtr
-</pre>
-
-to view the appropriate documentation.  The assignment functions (generally named set.*) also have a return value - often a logical value indicating whether the command was successful - that is returned invisibly.  Invisible values can be assigned but are not echoed to the console.  For example,
-
-<pre>
-  &gt; status <- add.constraint(lprec, c(12.68, 0, 0.08, 0.9), ">=", 4)
-  &gt; status
-  [1] TRUE
-</pre>
-
-indicates that the operation was successful.  Invisible values can also be used in flow control.
-</p>
-
-
-<p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
 
 </body>
 </html>
