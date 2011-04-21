@@ -213,6 +213,10 @@
 		DA9675160E02D2C800989378 /* RlpSolve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolve.h; path = inst/include/RlpSolve.h; sourceTree = SOURCE_ROOT; };
 		DA9675170E02D2C800989378 /* RlpSolveLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolveLink.h; path = inst/include/RlpSolveLink.h; sourceTree = SOURCE_ROOT; };
 		DA9675180E02D2C800989378 /* yacc_read.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yacc_read.h; path = inst/include/yacc_read.h; sourceTree = SOURCE_ROOT; };
+		DA9F87BE136035D4003828B9 /* lp.assign.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.assign.q; path = inst/lpSolve/lp.assign.q; sourceTree = SOURCE_ROOT; };
+		DA9F87BF136035D4003828B9 /* lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.q; path = inst/lpSolve/lp.q; sourceTree = SOURCE_ROOT; };
+		DA9F87C0136035D4003828B9 /* lp.transport.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.transport.q; path = inst/lpSolve/lp.transport.q; sourceTree = SOURCE_ROOT; };
+		DA9F87F2136051D5003828B9 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README; path = inst/lpSolve/README; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -259,6 +263,7 @@
 				DA7F16DF0E01144D00F34E9B /* man */,
 				0EA670420E0D35670075A859 /* doc */,
 				DA9674F80E02D29D00989378 /* include */,
+				DA9F87BD136035BD003828B9 /* lpSolve */,
 				DA7F174E0E01145000F34E9B /* src */,
 				DA7F17980E01145000F34E9B /* tests */,
 				DA7F17A00E0115B300F34E9B /* website */,
@@ -498,6 +503,17 @@
 				DA9675180E02D2C800989378 /* yacc_read.h */,
 			);
 			name = include;
+			sourceTree = "<group>";
+		};
+		DA9F87BD136035BD003828B9 /* lpSolve */ = {
+			isa = PBXGroup;
+			children = (
+				DA9F87F2136051D5003828B9 /* README */,
+				DA9F87BF136035D4003828B9 /* lp.q */,
+				DA9F87C0136035D4003828B9 /* lp.transport.q */,
+				DA9F87BE136035D4003828B9 /* lp.assign.q */,
+			);
+			name = lpSolve;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
