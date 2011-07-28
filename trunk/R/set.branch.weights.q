@@ -4,8 +4,7 @@ set.branch.weights <- function(lprec, weights)
     stop("the length of ", sQuote("weights"), " must be the same as the number",
          " of columns in the model")
 
-  .Call("RlpSolve_set_var_weights", lprec, as.double(weights),
-         PACKAGE = "lpSolveAPI")
+  .Call(RlpSolve_set_var_weights, lprec, as.double(weights))
 
   invisible()
 }

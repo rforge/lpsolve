@@ -5,7 +5,7 @@ set.objfn <- function(lprec, obj, indices)
       stop("the length of ", sQuote("obj"), " is not equal to the number of ", 
            "decision variables in the model")
 
-    epsel <- .Call("RlpSolve_get_epsel", lprec, PACKAGE = "lpSolveAPI")
+    epsel <- .Call(RlpSolve_get_epsel, lprec)
     indices <- which(abs(obj) > epsel)
     obj <- obj[indices]
   }
@@ -13,8 +13,7 @@ set.objfn <- function(lprec, obj, indices)
   if(length(obj) != length(indices))
     stop(sQuote("obj"), " and ", sQuote("indices"), " are not the same length")
 
-  .Call("RlpSolve_set_obj_fnex", lprec, as.double(obj), as.integer(indices),
-         PACKAGE = "lpSolveAPI")
+  .Call(RlpSolve_set_obj_fnex, lprec, as.double(obj), as.integer(indices))
 
   invisible()
 }

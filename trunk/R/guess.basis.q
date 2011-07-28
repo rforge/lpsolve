@@ -4,8 +4,7 @@ guess.basis <- function(lprec, guess)
     stop("the length of ", sQuote("guess"), " must be equal to the number",
          " of columns in the model")
 
-  basis <- .Call("RlpSolve_guess_basis", lprec, as.double(c(0.0, guess)),
-                  PACKAGE = "lpSolveAPI")
+  basis <- .Call(RlpSolve_guess_basis, lprec, as.double(c(0.0, guess)))
 
   if(basis[1] == 1)
     basis <- basis[-1]

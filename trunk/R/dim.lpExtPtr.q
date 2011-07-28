@@ -1,6 +1,5 @@
 dim.lpExtPtr <- function(x)
-  c(.Call("RlpSolve_get_Nrows", x, PACKAGE = "lpSolveAPI"),
-    .Call("RlpSolve_get_Ncolumns", x, PACKAGE = "lpSolveAPI"))
+  c(.Call(RlpSolve_get_Nrows, x), .Call(RlpSolve_get_Ncolumns, x))
 
 
 "dim<-.lpExtPtr" <- function(x, value)

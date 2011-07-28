@@ -5,13 +5,11 @@ make.lp <- function(nrow = 0, ncol = 0, verbose = "neutral")
   verbose <- match.arg(verbose, choices = ch)
   verbose <- match(verbose, table = ch) - 1
 
-  lprec <- .Call("RlpSolve_make_lp", as.integer(nrow), as.integer(ncol),
-                  PACKAGE = "lpSolveAPI")
+  lprec <- .Call(RlpSolve_make_lp, as.integer(nrow), as.integer(ncol))
 
   if(!is.null(lprec)) {
-    .Call("RlpSolve_set_verbose", lprec, as.integer(verbose),
-           PACKAGE = "lpSolveAPI")
-    reg.finalizer(lprec, lpSolveAPI::delete.lp, TRUE)
+    .Call(RlpSolve_set_verbose, lprec, as.integer(verbose))
+    reg.finalizer(lprec, delete.lp, TRUE)
     oldClass(lprec) <- "lpExtPtr"
   }
 

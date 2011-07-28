@@ -163,6 +163,8 @@ SEXP RlpSolve_set_presolve(SEXP Slp, SEXP Sdo_presolve, SEXP Smaxloops);
 SEXP RlpSolve_get_presolve(SEXP Slp);
 SEXP RlpSolve_get_presolveloops(SEXP Slp);
 SEXP RlpSolve_is_presolve(SEXP Slp, SEXP Stestmasks);
+SEXP RlpSolve_set_scalelimit(SEXP Slp, SEXP Sscalelimit);
+SEXP RlpSolve_get_scalelimit(SEXP Slp);
 SEXP RlpSolve_set_scaling(SEXP Slp, SEXP Sscalemode);
 SEXP RlpSolve_get_scaling(SEXP Slp);
 SEXP RlpSolve_is_integerscaling(SEXP Slp);

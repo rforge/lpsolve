@@ -7,8 +7,7 @@ set.constr.value <- function(lprec, rhs = NULL, lhs = NULL, constraints = 1:m)
       stop(sQuote("rhs"), " and ", sQuote("constraints"),
            " are not the same length")
 
-    .Call("RlpSolve_set_rh", lprec, as.integer(constraints), as.double(rhs),
-           PACKAGE = "lpSolveAPI")
+    .Call(RlpSolve_set_rh, lprec, as.integer(constraints), as.double(rhs))
   }
 
   if(!is.null(lhs)) {
@@ -19,8 +18,8 @@ set.constr.value <- function(lprec, rhs = NULL, lhs = NULL, constraints = 1:m)
            " are not the same length")
 
     range <- abs(rhs - lhs)
-    .Call("RlpSolve_set_rh_range", lprec, as.integer(constraints),
-           as.double(range), PACKAGE = "lpSolveAPI")
+    .Call(RlpSolve_set_rh_range, lprec, as.integer(constraints),
+          as.double(range))
   }
 
   invisible()

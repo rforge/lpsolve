@@ -1,6 +1,7 @@
 delete.lp <- function(lprec)
 {
-  .Call("RlpSolve_delete_lp", lprec, PACKAGE = "lpSolveAPI")
+  .Call(RlpSolve_delete_lp, lprec)
+
   invisible(lprec)
 }
 

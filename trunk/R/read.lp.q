@@ -24,21 +24,17 @@ read.lp <- function(filename, type = c("lp", "mps", "freemps"),
   verbose <- match(verbose, table = ch) - 1
 
   lprec <- switch(type,
-    "lp" = .Call("RlpSolve_read_LP", as.character(filename),
-                  PACKAGE = "lpSolveAPI"),
-    "mps" = .Call("RlpSolve_read_MPS", as.character(filename),
-                   PACKAGE = "lpSolveAPI"),
-    "freemps" = .Call("RlpSolve_read_freeMPS", as.character(filename),
-                       PACKAGE = "lpSolveAPI")
+    "lp" = .Call(RlpSolve_read_LP, as.character(filename)),
+    "mps" = .Call(RlpSolve_read_MPS, as.character(filename)),
+    "freemps" = .Call(RlpSolve_read_freeMPS, as.character(filename))
   )
 
   if(is.null(lprec))
     stop("could not interpret ", basename(filename), " as an ", type, " file")
 
   else {
-    .Call("RlpSolve_set_verbose", lprec, as.integer(verbose),
-           PACKAGE = "lpSolveAPI")
-    reg.finalizer(lprec, lpSolveAPI::delete.lp, TRUE)
+    .Call(RlpSolve_set_verbose, lprec, as.integer(verbose))
+    reg.finalizer(lprec, delete.lp, TRUE)
     oldClass(lprec) <- "lpExtPtr"
   }
 

@@ -41,7 +41,6 @@
 		0EA6707D0E0D524C0075A859 /* get.type.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.type.q; path = R/get.type.q; sourceTree = SOURCE_ROOT; };
 		0EA6707E0E0D524C0075A859 /* get.variables.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.variables.q; path = R/get.variables.q; sourceTree = SOURCE_ROOT; };
 		0EA6707F0E0D524C0075A859 /* guess.basis.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = guess.basis.q; path = R/guess.basis.q; sourceTree = SOURCE_ROOT; };
-		0EA670800E0D524D0075A859 /* library.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = library.q; path = R/library.q; sourceTree = SOURCE_ROOT; };
 		0EA670810E0D524D0075A859 /* lp.control.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.control.q; path = R/lp.control.q; sourceTree = SOURCE_ROOT; };
 		0EA670820E0D524D0075A859 /* make.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = make.lp.q; path = R/make.lp.q; sourceTree = SOURCE_ROOT; };
 		0EA670830E0D524D0075A859 /* name.lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = name.lp.q; path = R/name.lp.q; sourceTree = SOURCE_ROOT; };
@@ -114,7 +113,6 @@
 		DA7F16EE0E01144E00F34E9B /* make.lp.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = make.lp.Rd; path = man/make.lp.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F16EF0E01144E00F34E9B /* set.column.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.column.Rd; path = man/set.column.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F16F00E01144E00F34E9B /* lp.control.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.control.Rd; path = man/lp.control.Rd; sourceTree = SOURCE_ROOT; };
-		DA7F16F10E01144E00F34E9B /* undocumented.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = undocumented.Rd; sourceTree = "<group>"; };
 		DA7F16F20E01144E00F34E9B /* add.SOS.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.SOS.Rd; path = man/add.SOS.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F16F30E01144E00F34E9B /* set.basis.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.basis.Rd; path = man/set.basis.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F16F40E01144E00F34E9B /* delete.column.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = delete.column.Rd; path = man/delete.column.Rd; sourceTree = SOURCE_ROOT; };
@@ -183,6 +181,7 @@
 		DA7F17930E01145000F34E9B /* Makevars */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Makevars; path = src/Makevars; sourceTree = SOURCE_ROOT; };
 		DA7F17950E01145000F34E9B /* lp_LUSOL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_LUSOL.c; sourceTree = "<group>"; };
 		DA7F17A10E0115C900F34E9B /* Rpackage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Rpackage.html; path = website/Rpackage.html; sourceTree = SOURCE_ROOT; };
+		DA910CA913E18A000072F1E9 /* NAMESPACE */ = {isa = PBXFileReference; lastKnownFileType = text; path = NAMESPACE; sourceTree = "<group>"; };
 		DA9674FA0E02D2C800989378 /* colamd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = colamd.h; path = inst/include/colamd.h; sourceTree = SOURCE_ROOT; };
 		DA9674FB0E02D2C800989378 /* commonlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = commonlib.h; path = inst/include/commonlib.h; sourceTree = SOURCE_ROOT; };
 		DA9674FD0E02D2C800989378 /* ini.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ini.h; path = inst/include/ini.h; sourceTree = SOURCE_ROOT; };
@@ -258,6 +257,7 @@
 		DA7F16CE0E01140F00F34E9B = {
 			isa = PBXGroup;
 			children = (
+				DA910CA913E18A000072F1E9 /* NAMESPACE */,
 				DA7F16DC0E01144D00F34E9B /* DESCRIPTION */,
 				DA7F17170E01144E00F34E9B /* R */,
 				DA7F16DF0E01144D00F34E9B /* man */,
@@ -327,7 +327,6 @@
 				DA7F16E10E01144D00F34E9B /* set.semicont.Rd */,
 				DA7F16E20E01144D00F34E9B /* set.type.Rd */,
 				DA7F16F90E01144E00F34E9B /* solve.lpExtPtr.Rd */,
-				DA7F16F10E01144E00F34E9B /* undocumented.Rd */,
 				DA7F16F70E01144E00F34E9B /* write.lp.Rd */,
 			);
 			path = man;
@@ -366,7 +365,6 @@
 				0EA6707D0E0D524C0075A859 /* get.type.q */,
 				0EA6707E0E0D524C0075A859 /* get.variables.q */,
 				0EA6707F0E0D524C0075A859 /* guess.basis.q */,
-				0EA670800E0D524D0075A859 /* library.q */,
 				0EA670810E0D524D0075A859 /* lp.control.q */,
 				0EA670820E0D524D0075A859 /* make.lp.q */,
 				0EA670830E0D524D0075A859 /* name.lp.q */,

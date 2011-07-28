@@ -1,4 +1,4 @@
 get.objective <- function(lprec)
-  .Call("RlpSolve_get_objective", lprec, PACKAGE = "lpSolveAPI")
+  .Call(RlpSolve_get_objective, lprec)
 
 
