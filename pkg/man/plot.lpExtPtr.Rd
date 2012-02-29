@@ -17,7 +17,7 @@ Plots the feasible set of a simple linear program with two decision variables. T
   \item{\dots}{additional arguments are ignored.}
 }
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \keyword{hplot}
 

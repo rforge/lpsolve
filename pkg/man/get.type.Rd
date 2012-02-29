@@ -27,7 +27,7 @@ either a character vector with elements from the set \code{\{"real", "integer"\}
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \seealso{\code{\link{set.type}}}
 

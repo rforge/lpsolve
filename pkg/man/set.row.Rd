@@ -19,12 +19,12 @@ set.row(lprec, row, xt, indices)
 }
 
 \value{
-a logical value indicating whether the row was successfully set.
+a \code{NULL} value is invisibly returned.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \examples{
 lps.model <- make.lp(2, 4)

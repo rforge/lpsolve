@@ -28,7 +28,7 @@ There are several caveats associated with row entry mode. First, only use this f
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \seealso{\code{\link{add.constraint}}}
 

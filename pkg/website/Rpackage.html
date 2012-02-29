@@ -11,7 +11,7 @@
 <h1 align="left"><u>Using lp_solve in R</u></h1>
 
 <p>
-R is a language and environment for statistical computing and graphics. It is a GNU project which is similar to the S language and environment which was developed at Bell Laboratories (formerly AT&T, now Lucent Technologies) by John Chambers and colleagues. R can be considered as a different implementation of S. There are some important differences, but much code written for S runs unaltered under R.  For more information or to download R please visit the R <a href="http://www.r-project.org">website</a>.
+R is a language and environment for statistical computing and graphics. It is a GNU project which is similar to the S language and environment which was developed at Bell Laboratories (formerly AT&T, now Lucent Technologies) by John Chambers and colleagues. R can be considered as a different implementation of S. There are some important differences, but most code written for S runs unaltered under R.  For more information, or to download R, visit <a href="http://www.r-project.org">www.r-project.org</a>.
 </p>
 
 <p>
@@ -36,7 +36,7 @@ and to install the lpSolveAPI package use the command:
 <h5>Note</h5>
 
 <p>
-The <tt>&gt;</tt> shown before each R command is the R prompt.  Only the text after <tt>&gt;</tt> must be entered.
+The <tt>&gt;</tt> shown before each R command is the R prompt.  Only the text after <tt>&gt;</tt> should be entered.
 </p>
 
 
@@ -111,7 +111,8 @@ The safest way to use the lpSolve API is inside an R function - do not return th
   &gt; set.bounds(lprec, upper = 48.98, columns = 4)
   &gt; RowNames <- c("THISROW", "THATROW", "LASTROW")
   &gt; ColNames <- c("COLONE", "COLTWO", "COLTHREE", "COLFOUR")
-  &gt; dimnames(lprec) <- list(RowNames, ColNames)</pre>
+  &gt; dimnames(lprec) <- list(RowNames, ColNames)
+</pre>
 
 Lets take a look at what we have done so far.
 
@@ -123,9 +124,10 @@ Lets take a look at what we have done so far.
   THISROW          0     78.26         0       2.9  >=  92.3
   THATROW       0.24         0     11.31         0  <=  14.8
   LASTROW      12.68         0      0.08       0.9  >=     4
+  Kind           Std       Std       Std       Std          
   Type          Real      Real      Real      Real          
-  upbo           Inf       Inf       Inf     48.98          
-  lowbo         28.6         0         0        18
+  Upper          Inf       Inf       Inf     48.98          
+  Lower         28.6         0         0        18          
 </pre>
 
 Now lets solve the model.
@@ -145,22 +147,19 @@ Now lets solve the model.
 </pre>
 
 <p>
-Note that there are some commands that return an answer.  For the accessor functions (generally named get.*) the output should be clear.  For other functions (e.g., <tt>solve</tt>), the interpretation of the returned value is described in the documentation.  Since <tt>solve</tt> is generic in R, use the command
+Return values: for the accessor functions (generally named get.*) the output should be clear.  For some functions (e.g., <tt>solve</tt>), the interpretation of the returned value is described in the documentation.  Since <tt>solve</tt> is generic in R, use the command
 
 <pre>
   &gt; ?solve.lpExtPtr
 </pre>
 
-to view the appropriate documentation.  The assignment functions (generally named set.*) also have a return value - often a logical value indicating whether the command was successful - that is returned invisibly.  Invisible values can be assigned but are not echoed to the console.  For example,
-
-<pre>
-  &gt; status <- add.constraint(lprec, c(12.68, 0, 0.08, 0.9), ">=", 4)
-  &gt; status
-  [1] TRUE
-</pre>
-
-indicates that the operation was successful.  Invisible values can also be used in flow control.
+to view the appropriate documentation.  Finally, the assignment functions (generally named set.*) do not have return values; if they return without error, you may assume that they completed successfully.
 </p>
+
+
+<br>
+<br>
+<br>
 
 </BODY>
 </html>

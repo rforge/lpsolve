@@ -19,12 +19,12 @@ set.mat(lprec, i, j, value)
 }
 
 \value{
-a logical value indicating whether setting the matrix element was successful is invisibly returned.
+a \code{NULL} value is invisibly returned.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \seealso{\code{\link{resize.lp}}}
 

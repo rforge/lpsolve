@@ -27,12 +27,12 @@ The use of this function should be avoided when possible. Building a model colum
 }
 
 \value{
-a logical value is invisibly returned: \code{TRUE} indicates that the operation was successful and \code{FALSE} indicates that an error occurred.
+a \code{NULL} value is invisibly returned.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \examples{
 lps.model <- make.lp(0, 4)

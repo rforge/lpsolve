@@ -22,7 +22,7 @@ a list with elements \code{column} and \code{nzrow} such that \code{column[i]} c
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \examples{
 lps.model <- make.lp(4, 0)

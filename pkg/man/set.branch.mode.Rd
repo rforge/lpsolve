@@ -18,12 +18,12 @@ set.branch.mode(lprec, columns, modes)
 }
 
 \value{
-a vector of logical values indicating whether the branch modes were successfully set is invisibly returned.
+a \code{NULL} value is invisibly returned.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \keyword{programming}
 

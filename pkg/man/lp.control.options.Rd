@@ -240,7 +240,7 @@ A description of the various control options that can be set in an lpSolve linea
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \seealso{\code{\link{lp.control}}}
 

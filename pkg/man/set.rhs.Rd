@@ -18,12 +18,12 @@ set.rhs(lprec, b, constraints = 1:m)
 }
 
 \value{
-a logical vector indicating whether setting each right-hand-side element was successful.
+a \code{NULL} value is invisibly returned.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \examples{
 lps.model <- make.lp(4, 2)

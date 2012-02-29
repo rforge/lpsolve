@@ -22,7 +22,7 @@ Display an lpSolve linear program model object in the console.
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \keyword{programming}
 

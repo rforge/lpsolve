@@ -21,12 +21,12 @@ When the branch and bound algorithm is used (i.e., when there are integer, semi-
 }
 
 \value{
-a single numeric value: the number of optimal solutions.
+a single integer value: the number of optimal solutions.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \keyword{programming}
 

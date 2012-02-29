@@ -28,7 +28,7 @@ an integer vector of length two containing the number of rows and the number of 
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \seealso{\code{\link{resize.lp}}}
 

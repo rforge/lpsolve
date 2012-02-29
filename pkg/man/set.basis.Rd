@@ -19,12 +19,12 @@ set.basis(lprec, basis, nonbasic = FALSE, default = FALSE)
 }
 
 \value{
-a logical value indicating whether the basis was successfully set. If \code{FALSE} then the specified basis was invalid.
+a \code{NULL} value is invisibly returned.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \keyword{programming}
 

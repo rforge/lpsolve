@@ -18,12 +18,12 @@ set.constr.type(lprec, types, constraints = 1:m)
 }
 
 \value{
-a logical vector indicating whether the constraint types were successfully set is invisibly returned.
+a \code{NULL} value is invisibly returned.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \seealso{\code{\link{resize.lp}}}
 

@@ -19,12 +19,12 @@ set.bounds(lprec, lower = NULL, upper = NULL, columns = 1:n)
 }
 
 \value{
-a list of logical values indicating whether the bounds were successfully set.
+a \code{NULL} value is invisibly returned.
 }
 
 \references{\url{http://lpsolve.sourceforge.net/5.5/index.htm}}
 
-\author{Kjell Konis \email{kjell.konis@epfl.ch}}
+\author{Kjell Konis \email{kjell.konis@me.com}}
 
 \examples{
 lps.model <- make.lp(0, 4)
