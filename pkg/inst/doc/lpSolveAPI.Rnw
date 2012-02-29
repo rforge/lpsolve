@@ -43,7 +43,7 @@ The lpSolveAPI package provides an R API for the lp\_solve library, a \textit{mi
 
 Note there is separate package called lpSolve available on CRAN that provides a few high-level functions for solving specific types of linear programs. The lpSolve package is based on an older version of lp\_solve (5.5.0.8) and does not include the API.
 
-The~\texttt{>} shown before each R command is the R prompt. Only the text after~\texttt{>} must be entered.
+The~\texttt{>} shown before each R command is the R prompt. Only the text after~\texttt{>} should be entered.
 
 
 \subsection{Installation}
@@ -252,20 +252,13 @@ get.variables(lprec)
 get.constraints(lprec)
 @
 
-Note that there are some commands that return an answer. For the get accessor functions (the functions with names beginning with the word \textit{get}) the output should be clear. For other functions (e.g., solve), the interpretation of the returned value is described in the documentation. Since solve is generic in R, use the command
+Note that there are some commands that return an answer. For the \emph{get} accessor functions (the functions with names beginning with the word \textit{get}) the output should be clear. For other functions (e.g., solve), the interpretation of the returned value is described in the documentation. Since solve is generic in R, use the command
 
 <<eval=FALSE>>=
 help(solve.lpExtPtr)
 @
 
-to view the appropriate documentation. The set accessor functions (the functions with names beginning with the word \textit{set}) also have a return value - often a logical value indicating whether the command was successful - that is returned invisibly. Invisible values can be assigned but are not echoed to the console. For example,
-
-<<>>=
-status <- add.constraint(lprec, 1:4, ">=", 5)
-status
-@
-
-indicates that the operation was successful. Invisible values can also be used in flow control.
+to view its documentation. The \emph{set} accessor functions (the functions with names beginning with the word \textit{set}) do not have return values.  If the return without error, you may assume that they completed successfully.
 
 \end{document}
 
