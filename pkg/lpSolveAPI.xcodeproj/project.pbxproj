@@ -85,15 +85,6 @@
 		0EB09B08130176A500052750 /* sos4.mps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sos4.mps; path = inst/tests/sos4.mps; sourceTree = SOURCE_ROOT; };
 		0EB09B09130176A500052750 /* sos5.lp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; name = sos5.lp; path = inst/tests/sos5.lp; sourceTree = SOURCE_ROOT; };
 		0EB09B0A130176A500052750 /* sos5.mps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sos5.mps; path = inst/tests/sos5.mps; sourceTree = SOURCE_ROOT; };
-		DA3A89B60E0136BD003FE8A4 /* lp_BFP1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lp_BFP1.c; path = src/lp_BFP1.c; sourceTree = SOURCE_ROOT; };
-		DA3A89B70E0136BD003FE8A4 /* lp_BFP2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lp_BFP2.c; path = src/lp_BFP2.c; sourceTree = SOURCE_ROOT; };
-		DA3A89B80E0136BD003FE8A4 /* lusol1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lusol1.c; path = src/lusol1.c; sourceTree = SOURCE_ROOT; };
-		DA3A89B90E0136BD003FE8A4 /* lusol2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lusol2.c; path = src/lusol2.c; sourceTree = SOURCE_ROOT; };
-		DA3A89BA0E0136BD003FE8A4 /* lusol6a.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lusol6a.c; path = src/lusol6a.c; sourceTree = SOURCE_ROOT; };
-		DA3A89BB0E0136BD003FE8A4 /* lusol6l0.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lusol6l0.c; path = src/lusol6l0.c; sourceTree = SOURCE_ROOT; };
-		DA3A89BC0E0136BD003FE8A4 /* lusol6u.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lusol6u.c; path = src/lusol6u.c; sourceTree = SOURCE_ROOT; };
-		DA3A89BD0E0136BD003FE8A4 /* lusol7a.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lusol7a.c; path = src/lusol7a.c; sourceTree = SOURCE_ROOT; };
-		DA3A89BE0E0136BD003FE8A4 /* lusol8a.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lusol8a.c; path = src/lusol8a.c; sourceTree = SOURCE_ROOT; };
 		DA50DE681303FD5100334FB1 /* lpSolveAPI.Rout.save */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolveAPI.Rout.save; path = tests/lpSolveAPI.Rout.save; sourceTree = SOURCE_ROOT; };
 		DA7F16DC0E01144D00F34E9B /* DESCRIPTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DESCRIPTION; sourceTree = SOURCE_ROOT; };
 		DA7F16E00E01144D00F34E9B /* get.column.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.column.Rd; path = man/get.column.Rd; sourceTree = SOURCE_ROOT; };
@@ -150,36 +141,6 @@
 		DA7F17140E01144E00F34E9B /* get.total.nodes.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.total.nodes.Rd; path = man/get.total.nodes.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F17150E01144E00F34E9B /* get.bounds.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.bounds.Rd; path = man/get.bounds.Rd; sourceTree = SOURCE_ROOT; };
 		DA7F17160E01144E00F34E9B /* set.branch.mode.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = set.branch.mode.Rd; path = man/set.branch.mode.Rd; sourceTree = SOURCE_ROOT; };
-		DA7F17500E01145000F34E9B /* colamd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = colamd.c; sourceTree = "<group>"; };
-		DA7F17510E01145000F34E9B /* lp_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_lib.c; sourceTree = "<group>"; };
-		DA7F17550E01145000F34E9B /* lp_MDO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_MDO.c; sourceTree = "<group>"; };
-		DA7F17570E01145000F34E9B /* ini.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ini.c; sourceTree = "<group>"; };
-		DA7F17590E01145000F34E9B /* lp_scale.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_scale.c; sourceTree = "<group>"; };
-		DA7F175B0E01145000F34E9B /* Makevars.win */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Makevars.win; path = src/Makevars.win; sourceTree = SOURCE_ROOT; };
-		DA7F175F0E01145000F34E9B /* lp_MPS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_MPS.c; sourceTree = "<group>"; };
-		DA7F17600E01145000F34E9B /* lp_matrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_matrix.c; sourceTree = "<group>"; };
-		DA7F17650E01145000F34E9B /* lp_params.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_params.c; sourceTree = "<group>"; };
-		DA7F17670E01145000F34E9B /* lp_rlp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_rlp.c; sourceTree = "<group>"; };
-		DA7F17680E01145000F34E9B /* lp_presolve.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_presolve.c; sourceTree = "<group>"; };
-		DA7F17690E01145000F34E9B /* lp_wlp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_wlp.c; sourceTree = "<group>"; };
-		DA7F176B0E01145000F34E9B /* lusol.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lusol.c; sourceTree = "<group>"; };
-		DA7F176D0E01145000F34E9B /* lp_SOS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_SOS.c; sourceTree = "<group>"; };
-		DA7F176E0E01145000F34E9B /* mmio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mmio.c; sourceTree = "<group>"; };
-		DA7F17730E01145000F34E9B /* yacc_read.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yacc_read.c; sourceTree = "<group>"; };
-		DA7F17770E01145000F34E9B /* lp_mipbb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_mipbb.c; sourceTree = "<group>"; };
-		DA7F17790E01145000F34E9B /* myblas.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = myblas.c; sourceTree = "<group>"; };
-		DA7F177C0E01145000F34E9B /* lp_utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_utils.c; sourceTree = "<group>"; };
-		DA7F177D0E01145000F34E9B /* lp_crash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_crash.c; sourceTree = "<group>"; };
-		DA7F177F0E01145000F34E9B /* lp_price.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_price.c; sourceTree = "<group>"; };
-		DA7F17830E01145000F34E9B /* lp_pricePSE.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_pricePSE.c; sourceTree = "<group>"; };
-		DA7F17840E01145000F34E9B /* lp_report.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_report.c; sourceTree = "<group>"; };
-		DA7F17850E01145000F34E9B /* RlpSolve.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RlpSolve.c; path = src/RlpSolve.c; sourceTree = SOURCE_ROOT; };
-		DA7F17890E01145000F34E9B /* lp_simplex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_simplex.c; sourceTree = "<group>"; };
-		DA7F178A0E01145000F34E9B /* lp_Hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_Hash.c; sourceTree = "<group>"; };
-		DA7F178B0E01145000F34E9B /* commonlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = commonlib.c; sourceTree = "<group>"; };
-		DA7F17900E01145000F34E9B /* RlpSolveLink.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RlpSolveLink.c; path = src/RlpSolveLink.c; sourceTree = SOURCE_ROOT; };
-		DA7F17930E01145000F34E9B /* Makevars */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Makevars; path = src/Makevars; sourceTree = SOURCE_ROOT; };
-		DA7F17950E01145000F34E9B /* lp_LUSOL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lp_LUSOL.c; sourceTree = "<group>"; };
 		DA7F17A10E0115C900F34E9B /* Rpackage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Rpackage.html; path = website/Rpackage.html; sourceTree = SOURCE_ROOT; };
 		DA910CA913E18A000072F1E9 /* NAMESPACE */ = {isa = PBXFileReference; lastKnownFileType = text; path = NAMESPACE; sourceTree = "<group>"; };
 		DA9674FA0E02D2C800989378 /* colamd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = colamd.h; path = inst/include/colamd.h; sourceTree = SOURCE_ROOT; };
@@ -216,6 +177,46 @@
 		DA9F87BF136035D4003828B9 /* lp.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.q; path = inst/lpSolve/lp.q; sourceTree = SOURCE_ROOT; };
 		DA9F87C0136035D4003828B9 /* lp.transport.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lp.transport.q; path = inst/lpSolve/lp.transport.q; sourceTree = SOURCE_ROOT; };
 		DA9F87F2136051D5003828B9 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README; path = inst/lpSolve/README; sourceTree = SOURCE_ROOT; };
+		DAC6750A150A12E200292913 /* colamd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = colamd.c; sourceTree = "<group>"; };
+		DAC6750B150A12E200292913 /* commonlib.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = commonlib.c; sourceTree = "<group>"; };
+		DAC6750C150A12E200292913 /* ini.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ini.c; sourceTree = "<group>"; };
+		DAC6750D150A12E200292913 /* lp_BFP1.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_BFP1.c; sourceTree = "<group>"; };
+		DAC6750E150A12E200292913 /* lp_BFP2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_BFP2.c; sourceTree = "<group>"; };
+		DAC6750F150A12E200292913 /* lp_crash.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_crash.c; sourceTree = "<group>"; };
+		DAC67510150A12E200292913 /* lp_Hash.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_Hash.c; sourceTree = "<group>"; };
+		DAC67511150A12E200292913 /* lp_lib.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_lib.c; sourceTree = "<group>"; };
+		DAC67512150A12E200292913 /* lp_LUSOL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_LUSOL.c; sourceTree = "<group>"; };
+		DAC67513150A12E200292913 /* lp_matrix.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_matrix.c; sourceTree = "<group>"; };
+		DAC67514150A12E200292913 /* lp_MDO.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_MDO.c; sourceTree = "<group>"; };
+		DAC67515150A12E200292913 /* lp_mipbb.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_mipbb.c; sourceTree = "<group>"; };
+		DAC67516150A12E200292913 /* lp_MPS.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_MPS.c; sourceTree = "<group>"; };
+		DAC67517150A12E200292913 /* lp_params.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_params.c; sourceTree = "<group>"; };
+		DAC67518150A12E200292913 /* lp_presolve.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_presolve.c; sourceTree = "<group>"; };
+		DAC67519150A12E200292913 /* lp_price.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_price.c; sourceTree = "<group>"; };
+		DAC6751A150A12E200292913 /* lp_pricePSE.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_pricePSE.c; sourceTree = "<group>"; };
+		DAC6751B150A12E200292913 /* lp_report.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_report.c; sourceTree = "<group>"; };
+		DAC6751C150A12E200292913 /* lp_rlp.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_rlp.c; sourceTree = "<group>"; };
+		DAC6751D150A12E200292913 /* lp_scale.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_scale.c; sourceTree = "<group>"; };
+		DAC6751E150A12E200292913 /* lp_simplex.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_simplex.c; sourceTree = "<group>"; };
+		DAC6751F150A12E200292913 /* lp_SOS.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_SOS.c; sourceTree = "<group>"; };
+		DAC67520150A12E200292913 /* lp_utils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_utils.c; sourceTree = "<group>"; };
+		DAC67521150A12E200292913 /* lp_wlp.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lp_wlp.c; sourceTree = "<group>"; };
+		DAC67522150A12E200292913 /* lusol.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lusol.c; sourceTree = "<group>"; };
+		DAC67523150A12E200292913 /* lusol1.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lusol1.c; sourceTree = "<group>"; };
+		DAC67524150A12E200292913 /* lusol2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lusol2.c; sourceTree = "<group>"; };
+		DAC67525150A12E200292913 /* lusol6a.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lusol6a.c; sourceTree = "<group>"; };
+		DAC67526150A12E200292913 /* lusol6l0.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lusol6l0.c; sourceTree = "<group>"; };
+		DAC67527150A12E200292913 /* lusol6u.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lusol6u.c; sourceTree = "<group>"; };
+		DAC67528150A12E200292913 /* lusol7a.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lusol7a.c; sourceTree = "<group>"; };
+		DAC67529150A12E200292913 /* lusol8a.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lusol8a.c; sourceTree = "<group>"; };
+		DAC6752A150A12E200292913 /* mmio.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mmio.c; sourceTree = "<group>"; };
+		DAC6752B150A12E200292913 /* myblas.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = myblas.c; sourceTree = "<group>"; };
+		DAC6752C150A12E200292913 /* yacc_read.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = yacc_read.c; sourceTree = "<group>"; };
+		DAC6752D150A12E200292913 /* Makevars */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makevars; sourceTree = "<group>"; };
+		DAC6752E150A12E200292913 /* Makevars.win */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makevars.win; sourceTree = "<group>"; };
+		DAC6752F150A12E200292913 /* RlpSolve.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = RlpSolve.c; sourceTree = "<group>"; };
+		DAC67530150A12E200292913 /* RlpSolveLink.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = RlpSolveLink.c; sourceTree = "<group>"; };
+		DAC67532150A1D6E00292913 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -396,11 +397,11 @@
 		DA7F174E0E01145000F34E9B /* src */ = {
 			isa = PBXGroup;
 			children = (
-				DA7F17930E01145000F34E9B /* Makevars */,
-				DA7F175B0E01145000F34E9B /* Makevars.win */,
-				DA7F17850E01145000F34E9B /* RlpSolve.c */,
-				DA7F17900E01145000F34E9B /* RlpSolveLink.c */,
-				DA7F179C0E0114F700F34E9B /* lp_solve */,
+				DAC6752D150A12E200292913 /* Makevars */,
+				DAC6752E150A12E200292913 /* Makevars.win */,
+				DAC6752F150A12E200292913 /* RlpSolve.c */,
+				DAC67530150A12E200292913 /* RlpSolveLink.c */,
+				DAC67509150A12E200292913 /* lp_solve */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -414,48 +415,6 @@
 			);
 			path = tests;
 			sourceTree = SOURCE_ROOT;
-		};
-		DA7F179C0E0114F700F34E9B /* lp_solve */ = {
-			isa = PBXGroup;
-			children = (
-				DA7F17500E01145000F34E9B /* colamd.c */,
-				DA7F17510E01145000F34E9B /* lp_lib.c */,
-				DA7F17550E01145000F34E9B /* lp_MDO.c */,
-				DA7F17570E01145000F34E9B /* ini.c */,
-				DA7F17590E01145000F34E9B /* lp_scale.c */,
-				DA7F175F0E01145000F34E9B /* lp_MPS.c */,
-				DA7F17600E01145000F34E9B /* lp_matrix.c */,
-				DA7F17650E01145000F34E9B /* lp_params.c */,
-				DA7F17670E01145000F34E9B /* lp_rlp.c */,
-				DA7F17680E01145000F34E9B /* lp_presolve.c */,
-				DA7F17690E01145000F34E9B /* lp_wlp.c */,
-				DA7F176B0E01145000F34E9B /* lusol.c */,
-				DA7F176D0E01145000F34E9B /* lp_SOS.c */,
-				DA7F176E0E01145000F34E9B /* mmio.c */,
-				DA7F17730E01145000F34E9B /* yacc_read.c */,
-				DA7F17770E01145000F34E9B /* lp_mipbb.c */,
-				DA7F17790E01145000F34E9B /* myblas.c */,
-				DA7F177C0E01145000F34E9B /* lp_utils.c */,
-				DA7F177D0E01145000F34E9B /* lp_crash.c */,
-				DA7F177F0E01145000F34E9B /* lp_price.c */,
-				DA7F17830E01145000F34E9B /* lp_pricePSE.c */,
-				DA7F17840E01145000F34E9B /* lp_report.c */,
-				DA7F17890E01145000F34E9B /* lp_simplex.c */,
-				DA7F178A0E01145000F34E9B /* lp_Hash.c */,
-				DA7F178B0E01145000F34E9B /* commonlib.c */,
-				DA7F17950E01145000F34E9B /* lp_LUSOL.c */,
-				DA3A89B60E0136BD003FE8A4 /* lp_BFP1.c */,
-				DA3A89B70E0136BD003FE8A4 /* lp_BFP2.c */,
-				DA3A89B80E0136BD003FE8A4 /* lusol1.c */,
-				DA3A89B90E0136BD003FE8A4 /* lusol2.c */,
-				DA3A89BA0E0136BD003FE8A4 /* lusol6a.c */,
-				DA3A89BB0E0136BD003FE8A4 /* lusol6l0.c */,
-				DA3A89BC0E0136BD003FE8A4 /* lusol6u.c */,
-				DA3A89BD0E0136BD003FE8A4 /* lusol7a.c */,
-				DA3A89BE0E0136BD003FE8A4 /* lusol8a.c */,
-			);
-			name = lp_solve;
-			sourceTree = "<group>";
 		};
 		DA7F17A00E0115B300F34E9B /* website */ = {
 			isa = PBXGroup;
@@ -512,6 +471,49 @@
 				DA9F87BE136035D4003828B9 /* lp.assign.q */,
 			);
 			name = lpSolve;
+			sourceTree = "<group>";
+		};
+		DAC67509150A12E200292913 /* lp_solve */ = {
+			isa = PBXGroup;
+			children = (
+				DAC67532150A1D6E00292913 /* Makefile */,
+				DAC6750A150A12E200292913 /* colamd.c */,
+				DAC6750B150A12E200292913 /* commonlib.c */,
+				DAC6750C150A12E200292913 /* ini.c */,
+				DAC6750D150A12E200292913 /* lp_BFP1.c */,
+				DAC6750E150A12E200292913 /* lp_BFP2.c */,
+				DAC6750F150A12E200292913 /* lp_crash.c */,
+				DAC67510150A12E200292913 /* lp_Hash.c */,
+				DAC67511150A12E200292913 /* lp_lib.c */,
+				DAC67512150A12E200292913 /* lp_LUSOL.c */,
+				DAC67513150A12E200292913 /* lp_matrix.c */,
+				DAC67514150A12E200292913 /* lp_MDO.c */,
+				DAC67515150A12E200292913 /* lp_mipbb.c */,
+				DAC67516150A12E200292913 /* lp_MPS.c */,
+				DAC67517150A12E200292913 /* lp_params.c */,
+				DAC67518150A12E200292913 /* lp_presolve.c */,
+				DAC67519150A12E200292913 /* lp_price.c */,
+				DAC6751A150A12E200292913 /* lp_pricePSE.c */,
+				DAC6751B150A12E200292913 /* lp_report.c */,
+				DAC6751C150A12E200292913 /* lp_rlp.c */,
+				DAC6751D150A12E200292913 /* lp_scale.c */,
+				DAC6751E150A12E200292913 /* lp_simplex.c */,
+				DAC6751F150A12E200292913 /* lp_SOS.c */,
+				DAC67520150A12E200292913 /* lp_utils.c */,
+				DAC67521150A12E200292913 /* lp_wlp.c */,
+				DAC67522150A12E200292913 /* lusol.c */,
+				DAC67523150A12E200292913 /* lusol1.c */,
+				DAC67524150A12E200292913 /* lusol2.c */,
+				DAC67525150A12E200292913 /* lusol6a.c */,
+				DAC67526150A12E200292913 /* lusol6l0.c */,
+				DAC67527150A12E200292913 /* lusol6u.c */,
+				DAC67528150A12E200292913 /* lusol7a.c */,
+				DAC67529150A12E200292913 /* lusol8a.c */,
+				DAC6752A150A12E200292913 /* mmio.c */,
+				DAC6752B150A12E200292913 /* myblas.c */,
+				DAC6752C150A12E200292913 /* yacc_read.c */,
+			);
+			path = lp_solve;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
