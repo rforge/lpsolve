@@ -1,6 +1,6 @@
-PKG_CPPFLAGS=$(CPPFLAGS) -I../../inst/include -DYY_NEVER_INTERACTIVE \
-             -DPARSER_LP -DINVERSE_ACTIVE=INVERSE_LUSOL \
-             -DRoleIsExternalInvEngine
+LP_SOLVE_CPPFLAGS=$(CPPFLAGS) -I../../inst/include -DYY_NEVER_INTERACTIVE \
+                  -DPARSER_LP -DINVERSE_ACTIVE=INVERSE_LUSOL \
+                  -DRoleIsExternalInvEngine
 
 LP_SOLVE_SOURCES=colamd.c lp_MDO.c lp_mipbb.c lp_rlp.c mmio.c commonlib.c \
                  lp_MPS.c lp_params.c lp_scale.c myblas.c lp_SOS.c \
@@ -10,16 +10,13 @@ LP_SOLVE_SOURCES=colamd.c lp_MDO.c lp_mipbb.c lp_rlp.c mmio.c commonlib.c \
 
 LP_SOLVE_OBJECTS=$(LP_SOLVE_SOURCES:.c=.o)
 
-all: libmylib.so
-
-libmylib.so: $(LP_SOLVE_OBJECTS)
-	$(SHLIB_LD) $(LDFLAGS) $(LP_SOLVE_OBJECTS) -o libmylib${SHLIB_EXT}
+liblp_solve.a: $(LP_SOLVE_OBJECTS)
+	$(AR) rc liblp_solve.a $(LP_SOLVE_OBJECTS) && $(RANLIB) liblp_solve.a
 
 .c.o:
-	$(CC) $(CFLAGS) $(PKG_CPPFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(CPICFLAGS) $(LP_SOLVE_CPPFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(LP_SOLVE_OBJECTS) libmylib${SHLIB_EXT}
-
+	rm -rf $(LP_SOLVE_OBJECTS) liblp_solve.a
 
 

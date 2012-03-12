@@ -1,16 +1,13 @@
 PKG_CPPFLAGS=-I../inst/include
 OBJECTS=RlpSolve.o RlpSolveLink.o
 
-PKG_LIBS=-L./lp_solve -lmylib
+PKG_LIBS=-Llp_solve -llp_solve
 
-all: $(SHLIB)
-	@(mv lp_solve/libmylib$(SHLIB_EXT) . && install_name_tool -change libmylib$(SHLIB_EXT) @loader_path/libmylib$(SHLIB_EXT) $(SHLIB))
+$(SHLIB): lp_solve/liblp_solve.a
 
-$(SHLIB): lp_solve/libmylib$(SHLIB_EXT)
+lp_solve/liblp_solve.a:
+	@(cd lp_solve && $(MAKE) liblp_solve.a \
+    CC="$(CC)" CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(CFLAGS)" \
+    CPICFLAGS="$(CPICFLAGS)" AR="$(AR)" RANLIB="$(RANLIB)")
 
-lp_solve/libmylib$(SHLIB_EXT):
-	@(cd lp_solve && $(MAKE) libmylib$(SHLIB_EXT) \
-    CC="$(CC)" CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(CFLAGS) $(CPICFLAGS)" \
-    SHLIB_LD="$(SHLIB_LD)" LDFLAGS="$(LDFLAGS) $(SHLIB_LDFLAGS)" \
-    SHLIB_EXT="$(SHLIB_EXT)")
 
