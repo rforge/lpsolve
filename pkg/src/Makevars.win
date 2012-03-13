@@ -1,9 +1,14 @@
-PKG_CPPFLAGS=-I../inst/include -DWIN32 -DYY_NEVER_INTERACTIVE -DPARSER_LP \
-             -DINVERSE_ACTIVE=INVERSE_LUSOL -DRoleIsExternalInvEngine -DUSRDLL \
-             -DINLINE=static
-OBJECTS=lp_MDO.o commonlib.o colamd.o mmio.o myblas.o ini.o lp_rlp.o \
-        lp_crash.o lp_LUSOL.o lusol.o lp_Hash.o lp_lib.o lp_wlp.o lp_matrix.o \
-        lp_mipbb.o lp_MPS.o lp_params.o lp_presolve.o lp_price.o lp_pricePSE.o \
-        lp_report.o lp_scale.o lp_simplex.o lp_SOS.o lp_utils.o yacc_read.o \
-        RlpSolve.o RlpSolveLink.o
+PKG_CPPFLAGS=-I../inst/include
+OBJECTS=RlpSolve.o RlpSolveLink.o
+
+PKG_LIBS=-Llp_solve -llp_solve
+
+$(SHLIB): lp_solve/liblp_solve.a
+
+lp_solve/liblp_solve.a:
+	@(cd lp_solve && $(MAKE) liblp_solve.a \
+    CC="$(CC)" CPPFLAGS="$(CPPFLAGS) -DUSRDLL -DINLINE=static" \
+    CFLAGS="$(CFLAGS)" CPICFLAGS="$(CPICFLAGS)" AR="$(AR)" \
+    RANLIB="$(RANLIB)")
+
 
