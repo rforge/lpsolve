@@ -10,7 +10,6 @@
 		0E221D3613030B3500322C09 /* lpSolveAPI.R */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = lpSolveAPI.R; path = tests/lpSolveAPI.R; sourceTree = SOURCE_ROOT; };
 		0E36ACD610655B7C0070A8A0 /* lp_bit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = lp_bit.h; path = inst/include/lp_bit.h; sourceTree = SOURCE_ROOT; };
 		0EA670410E0D33430075A859 /* plot.lpExtPtr.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = plot.lpExtPtr.Rd; path = man/plot.lpExtPtr.Rd; sourceTree = SOURCE_ROOT; };
-		0EA670440E0D35850075A859 /* lpSolveAPI.Rnw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolveAPI.Rnw; path = inst/doc/lpSolveAPI.Rnw; sourceTree = SOURCE_ROOT; };
 		0EA670620E0D524C0075A859 /* add.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.column.q; path = R/add.column.q; sourceTree = SOURCE_ROOT; };
 		0EA670630E0D524C0075A859 /* add.constraint.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.constraint.q; path = R/add.constraint.q; sourceTree = SOURCE_ROOT; };
 		0EA670640E0D524C0075A859 /* add.SOS.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.SOS.q; path = R/add.SOS.q; sourceTree = SOURCE_ROOT; };
@@ -220,14 +219,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		0EA670420E0D35670075A859 /* doc */ = {
-			isa = PBXGroup;
-			children = (
-				0EA670440E0D35850075A859 /* lpSolveAPI.Rnw */,
-			);
-			name = doc;
-			sourceTree = "<group>";
-		};
 		0EB09AF51301767500052750 /* lp_solve */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,7 +253,6 @@
 				DA910CA913E18A000072F1E9 /* NAMESPACE */,
 				DA7F17170E01144E00F34E9B /* R */,
 				DA7F16DF0E01144D00F34E9B /* man */,
-				0EA670420E0D35670075A859 /* doc */,
 				DA9674F80E02D29D00989378 /* include */,
 				DA9F87BD136035BD003828B9 /* lpSolve */,
 				DA7F174E0E01145000F34E9B /* src */,
