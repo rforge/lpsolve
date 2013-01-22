@@ -84,6 +84,7 @@
 		0EB09B08130176A500052750 /* sos4.mps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sos4.mps; path = inst/tests/sos4.mps; sourceTree = SOURCE_ROOT; };
 		0EB09B09130176A500052750 /* sos5.lp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; name = sos5.lp; path = inst/tests/sos5.lp; sourceTree = SOURCE_ROOT; };
 		0EB09B0A130176A500052750 /* sos5.mps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sos5.mps; path = inst/tests/sos5.mps; sourceTree = SOURCE_ROOT; };
+		0EC0C03716AF5994004A7926 /* .Rbuildignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .Rbuildignore; sourceTree = "<group>"; };
 		DA50DE681303FD5100334FB1 /* lpSolveAPI.Rout.save */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lpSolveAPI.Rout.save; path = tests/lpSolveAPI.Rout.save; sourceTree = SOURCE_ROOT; };
 		DA7F16DC0E01144D00F34E9B /* DESCRIPTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DESCRIPTION; sourceTree = SOURCE_ROOT; };
 		DA7F16E00E01144D00F34E9B /* get.column.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = get.column.Rd; path = man/get.column.Rd; sourceTree = SOURCE_ROOT; };
@@ -251,6 +252,7 @@
 			children = (
 				DA7F16DC0E01144D00F34E9B /* DESCRIPTION */,
 				DA910CA913E18A000072F1E9 /* NAMESPACE */,
+				0EC0C03716AF5994004A7926 /* .Rbuildignore */,
 				DA7F17170E01144E00F34E9B /* R */,
 				DA7F16DF0E01144D00F34E9B /* man */,
 				DA9674F80E02D29D00989378 /* include */,
