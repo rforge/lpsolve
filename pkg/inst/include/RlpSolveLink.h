@@ -9,11 +9,11 @@
 SEXP RlpSolve_make_lp(SEXP Srows, SEXP Scolumns);
 SEXP RlpSolve_copy_lp(SEXP Slp);
 /*read_lp*/
-SEXP RlpSolve_read_LP(SEXP Sfilename);
+SEXP RlpSolve_read_LP(SEXP Sfilename, SEXP Sverbose);
 /*read_mps*/
 /*read_freemps*/
-SEXP RlpSolve_read_MPS(SEXP Sfilename);
-SEXP RlpSolve_read_freeMPS(SEXP Sfilename);
+SEXP RlpSolve_read_MPS(SEXP Sfilename, SEXP Soptions);
+SEXP RlpSolve_read_freeMPS(SEXP Sfilename, SEXP Soptions);
 /*SEXP RlpSolve_read_XLI(SEXP Sxliname, SEXP Smodelname, SEXP Sdataname,
                        SEXP Soptions);*/
 SEXP RlpSolve_delete_lp(SEXP Slp);

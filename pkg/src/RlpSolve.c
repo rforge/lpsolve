@@ -55,9 +55,9 @@ void R_init_lpSolveAPI(DllInfo *info)
   R_CallMethodDef dotCallMethods[] = {
     {"RlpSolve_make_lp", (DL_FUNC) RlpSolve_make_lp, 2},
     {"RlpSolve_copy_lp", (DL_FUNC) RlpSolve_copy_lp, 1},
-    {"RlpSolve_read_LP", (DL_FUNC) RlpSolve_read_LP, 1},
-    {"RlpSolve_read_MPS", (DL_FUNC) RlpSolve_read_MPS, 1},
-    {"RlpSolve_read_freeMPS", (DL_FUNC) RlpSolve_read_freeMPS, 1},
+    {"RlpSolve_read_LP", (DL_FUNC) RlpSolve_read_LP, 2},
+    {"RlpSolve_read_MPS", (DL_FUNC) RlpSolve_read_MPS, 2},
+    {"RlpSolve_read_freeMPS", (DL_FUNC) RlpSolve_read_freeMPS, 2},
     {"RlpSolve_delete_lp", (DL_FUNC) RlpSolve_delete_lp, 1},
     {"RlpSolve_add_columnex", (DL_FUNC) RlpSolve_add_columnex, 3},
     {"RlpSolve_set_columnex", (DL_FUNC) RlpSolve_set_columnex, 4},

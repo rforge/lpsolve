@@ -24,9 +24,10 @@ read.lp <- function(filename, type = c("lp", "mps", "freemps"),
   verbose <- match(verbose, table = ch) - 1
 
   lprec <- switch(type,
-    "lp" = .Call(RlpSolve_read_LP, as.character(filename)),
-    "mps" = .Call(RlpSolve_read_MPS, as.character(filename)),
-    "freemps" = .Call(RlpSolve_read_freeMPS, as.character(filename))
+    "lp" = .Call(RlpSolve_read_LP, as.character(filename), as.integer(4)),
+    "mps" = .Call(RlpSolve_read_MPS, as.character(filename), as.integer(4)),
+    "freemps" = .Call(RlpSolve_read_freeMPS, as.character(filename),
+                      as.integer(4))
   )
 
   if(is.null(lprec))

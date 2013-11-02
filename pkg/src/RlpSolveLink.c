@@ -45,10 +45,17 @@ SEXP RlpSolve_copy_lp(SEXP Slp)
 
 /*read_lp*/
 
-SEXP RlpSolve_read_LP(SEXP Sfilename)
+SEXP RlpSolve_read_LP(SEXP Sfilename, SEXP Sverbose)
 {
   SEXP ret = R_NilValue;
-  lprec* lp = read_LP((char *) CHAR(asChar(Sfilename)), NEUTRAL, NULL);
+  
+  PROTECT(Sfilename = AS_CHARACTER(Sfilename));
+  PROTECT(Sverbose = AS_INTEGER(Sverbose));
+
+  lprec* lp = read_LP((char *) CHAR(asChar(Sfilename)),
+                      INTEGER(Sverbose)[0], NULL);
+
+  UNPROTECT(2);
 
   if(lp) {
     /*put_abortfunc(lp, RlpSolveAbortFunction, NULL);*/
@@ -64,10 +71,16 @@ SEXP RlpSolve_read_LP(SEXP Sfilename)
 /*read_mps*/
 /*read_freemps*/
 
-SEXP RlpSolve_read_MPS(SEXP Sfilename)
+SEXP RlpSolve_read_MPS(SEXP Sfilename, SEXP Soptions)
 {
   SEXP ret = R_NilValue;
-  lprec* lp = read_MPS((char *) CHAR(asChar(Sfilename)), NEUTRAL);
+
+  PROTECT(Sfilename = AS_CHARACTER(Sfilename));
+  PROTECT(Soptions = AS_INTEGER(Soptions));
+  
+  lprec* lp = read_MPS((char *) CHAR(asChar(Sfilename)), INTEGER(Soptions)[0]);
+
+  UNPROTECT(2);
 
   if(lp) {
     /*put_abortfunc(lp, RlpSolveAbortFunction, NULL);*/
@@ -80,10 +93,17 @@ SEXP RlpSolve_read_MPS(SEXP Sfilename)
 }
 
 
-SEXP RlpSolve_read_freeMPS(SEXP Sfilename)
+SEXP RlpSolve_read_freeMPS(SEXP Sfilename, SEXP Soptions)
 {
   SEXP ret = R_NilValue;
-  lprec* lp = read_freeMPS((char *) CHAR(asChar(Sfilename)), NEUTRAL);
+  
+  PROTECT(Sfilename = AS_CHARACTER(Sfilename));
+  PROTECT(Soptions = AS_INTEGER(Soptions));
+
+  lprec* lp = read_freeMPS((char *) CHAR(asChar(Sfilename)),
+                           INTEGER(Soptions)[0]);
+
+  UNPROTECT(2);
 
   if(lp) {
     /*put_abortfunc(lp, RlpSolveAbortFunction, NULL);*/
@@ -753,7 +773,7 @@ SEXP RlpSolve_get_mat(SEXP Slp, SEXP Srow, SEXP Scolumn)
   lprec* lp = lprecPointerFromSEXP(Slp);
 
   PROTECT(ret = allocVector(REALSXP, 1));
-  REAL(ret)[0] = (int) get_mat(lp, INTEGER(Srow)[0], INTEGER(Scolumn)[0]);
+  REAL(ret)[0] = (double) get_mat(lp, INTEGER(Srow)[0], INTEGER(Scolumn)[0]);
   UNPROTECT(1);
 
   return ret;
