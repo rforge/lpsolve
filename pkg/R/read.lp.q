@@ -1,5 +1,5 @@
 read.lp <- function(filename, type = c("lp", "mps", "freemps"),
-                    verbose = "neutral")
+                    verbose = "neutral", options)
 {
   if(!file.exists(filename))
     stop(dQuote(filename), ": no such file")
@@ -18,23 +18,37 @@ read.lp <- function(filename, type = c("lp", "mps", "freemps"),
   else
     type <- match.arg(type)
 
-  ch <- c("neutral", "critical", "severe", "important", "normal", "detailed",
-          "full")
-  verbose <- match.arg(verbose, choices = ch)
-  verbose <- match(verbose, table = ch) - 1
+  verbosities <- c("neutral", "critical", "severe", "important",
+                   "normal", "detailed", "full")
+  verbose <- match.arg(verbose, choices = verbosities)
+  verbose <- match(verbose, table = verbosities) - 1
+
+  if(!missing(options)) {
+    if(type == "lp")
+      warning(sQuote("options"), "argument ignored for type lp files")
+
+    options <- unique(casefold(options))
+    options <- match.arg(options, choices = c("free", "ibm", "negobjconst"),
+                         several.ok = TRUE)
+    mps.options <- c(free = 8, ibm = 16, negobjconst = 32)
+    options <- sum(mps.options[options]) + verbose
+  }
+  
+  else
+    options <- verbose
 
   lprec <- switch(type,
-    "lp" = .Call(RlpSolve_read_LP, as.character(filename), as.integer(4)),
-    "mps" = .Call(RlpSolve_read_MPS, as.character(filename), as.integer(4)),
+    "lp" = .Call(RlpSolve_read_LP, as.character(filename), as.integer(verbose)),
+    "mps" = .Call(RlpSolve_read_MPS, as.character(filename),
+                  as.integer(options)),
     "freemps" = .Call(RlpSolve_read_freeMPS, as.character(filename),
-                      as.integer(4))
+                      as.integer(options))
   )
 
   if(is.null(lprec))
     stop("could not interpret ", basename(filename), " as an ", type, " file")
 
   else {
-    .Call(RlpSolve_set_verbose, lprec, as.integer(verbose))
     reg.finalizer(lprec, delete.lp, TRUE)
     oldClass(lprec) <- "lpExtPtr"
   }
