@@ -8,11 +8,12 @@ Retrieve the values of the primal variables from a successfully solved lpSolve l
 }
 
 \usage{
-get.primal.solution(lprec)
+get.primal.solution(lprec, orig = FALSE)
 }
 
 \arguments{
   \item{lprec}{an lpSolve linear program model object.}
+  \item{orig}{a logical value. When presolve is active, the size of the lp may decrease during solve.  By default, the answer to this reduced problem is returned. Set this argument to \code{TRUE} to retrieve the solution to the original lp.}
 }
 
 \value{

@@ -1961,6 +1961,26 @@ SEXP RlpSolve_get_primal_solution(SEXP Slp)
 
 
 /*get_ptr_primal_solution*/
+
+
+SEXP RlpSolve_get_var_primalresult(SEXP Slp)
+{
+  lprec* lp = lprecPointerFromSEXP(Slp);
+  SEXP ret = R_NilValue;
+  double *v = NULL;
+  int i = 0, mn = get_Norig_rows(lp) + get_Norig_columns(lp);
+
+  PROTECT(ret = allocVector(REALSXP, mn));
+
+  v = REAL(ret);
+  for(i = 0; i < mn; i++)
+    v[i] = get_var_primalresult(lp, i + 1);
+
+  UNPROTECT(1);
+
+  return ret;
+}
+
 /*get_var_primalresult*/
 
 

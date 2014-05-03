@@ -200,7 +200,7 @@ SEXP RlpSolve_get_constraints(SEXP Slp);
 SEXP RlpSolve_get_objective(SEXP Slp);
 SEXP RlpSolve_get_primal_solution(SEXP Slp);
 /*get_ptr_primal_solution*/
-/*get_var_primalresult*/
+SEXP RlpSolve_get_var_primalresult(SEXP Slp);
 SEXP RlpSolve_get_sensitivity_obj(SEXP Slp);
 /*get_ptr_sensitivity_obj*/
 SEXP RlpSolve_get_sensitivity_objex(SEXP Slp);
