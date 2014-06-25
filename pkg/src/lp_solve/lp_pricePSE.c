@@ -140,6 +140,9 @@ STATIC MYBOOL restartPricer(lprec *lp, MYBOOL isdual)
   int    i, j, m;
   MYBOOL isDEVEX, ok = applyPricer(lp);
 
+  if(ok && (lp->edgeVector[0] < 0) && (isdual == AUTOMATIC))
+    ok = FALSE;
+
   if(!ok)
     return( ok );
 
