@@ -7,7 +7,7 @@
 #include "lp_price.h"
 
 #if libBLAS > 0
-  #include "myblas.h"
+  #include "R_ext/BLAS.h"
 #endif
 
 #ifdef FORTIFY

@@ -48,7 +48,7 @@
 #include <float.h>
 #include <math.h>
 #include "lusol.h"
-#include "myblas.h"
+#include "R_ext/BLAS.h"
 #ifdef MATLAB
   #include "mex.h"
 #endif
@@ -280,7 +280,7 @@ LUSOLrec *LUSOL_create(FILE *outstream, int msgfil, int pivotmodel, int updateli
   newLU->luparm[LUSOL_IP_KEEPLU]           = TRUE;
   newLU->luparm[LUSOL_IP_UPDATELIMIT]      = updatelimit;
 
-  init_BLAS();
+  /* init_BLAS(); */
 
   return( newLU );
 }
@@ -618,8 +618,10 @@ void LUSOL_free(LUSOLrec *LUSOL)
     LUSOL_matfree(&(LUSOL->L0));
   if(LUSOL->U != NULL)
     LUSOL_matfree(&(LUSOL->U));
+/*
   if(!is_nativeBLAS())
     unload_BLAS();
+*/
   LUSOL_FREE(LUSOL);
 }
 

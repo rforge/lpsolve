@@ -36,9 +36,10 @@ void LU1DCP(LUSOLrec *LUSOL, LPSREAL DA[], int LDA, int M, int N, LPSREAL SMALL,
             int *NSING, int IPVT[], int IX[])
 {
 
-  int       I, J, K, KP1, L, LAST, LENCOL, IMAX, JMAX, JLAST, JNEW;
+  int       I, J, K, KP1, L, LAST, LENCOL, IMAX, JMAX, JLAST, JNEW, MmK;
+  const int MYONE = 1;
   LPSREAL      AIJMAX, AJMAX;
-  register LPSREAL T;
+  LPSREAL T;
 #ifdef LUSOLFastDenseIndex
   register LPSREAL *DA1, *DA2;
   int IDA1, IDA2;
@@ -62,7 +63,7 @@ void LU1DCP(LUSOLrec *LUSOL, LPSREAL DA[], int LDA, int M, int N, LPSREAL SMALL,
     JLAST = LAST;
     for(J = K; J <= JLAST; J++) {
 x10:
-      L = idamax(LENCOL,DA+DAPOS(K,J)-LUSOL_ARRAYOFFSET,1)+K-1;
+      L = F77_CALL(idamax)(&LENCOL,DA+DAPOS(K,J)-LUSOL_ARRAYOFFSET,&MYONE)+K-1;
       AJMAX = fabs(DA[DAPOS(L,J)]);
       if(AJMAX<=SMALL) {
 /*     ========================================================
@@ -164,7 +165,8 @@ x10:
         Do row elimination with column indexing.
        =========================================================== */
       T = -ONE/DA[DAPOS(K,K)];
-      dscal(M-K,T,DA+DAPOS(KP1,K)-LUSOL_ARRAYOFFSET,1);
+      MmK = M-K;
+      F77_CALL(dscal)(&MmK,&T,DA+DAPOS(KP1,K)-LUSOL_ARRAYOFFSET,&MYONE);
       for(J = KP1; J <= LAST; J++) {
         IDA1 = DAPOS(IMAX,J);
         T = DA[IDA1];
@@ -173,8 +175,9 @@ x10:
           DA[IDA1] = DA[IDA2];
           DA[IDA2] = T;
         }
-        daxpy(M-K,T,DA+DAPOS(KP1,K)-LUSOL_ARRAYOFFSET,1,
-                    DA+DAPOS(KP1,J)-LUSOL_ARRAYOFFSET,1);
+        MmK = M-K;
+        F77_CALL(daxpy)(&MmK,&T,DA+DAPOS(KP1,K)-LUSOL_ARRAYOFFSET,&MYONE,
+                    DA+DAPOS(KP1,J)-LUSOL_ARRAYOFFSET,&MYONE);
       }
     }
     else
@@ -229,8 +232,9 @@ x10:
 void LU1DPP(LUSOLrec *LUSOL, LPSREAL DA[], int LDA, int M, int N, LPSREAL SMALL,
             int *NSING, int IPVT[], int IX[])
 {
-  int            I, J, K, KP1, L, LAST, LENCOL;
-  register LPSREAL T;
+  int            I, J, K, KP1, L, LAST, LENCOL, MmK;
+  const int MYONE = 1;
+  LPSREAL T;
 #ifdef LUSOLFastDenseIndex
   register LPSREAL *DA1, *DA2;
   int IDA1, IDA2;
@@ -248,7 +252,7 @@ x10:
   KP1 = K+1;
   LENCOL = (M-K)+1;
 /*      Find l, the pivot row. */
-  L = (idamax(LENCOL,DA+DAPOS(K,K)-LUSOL_ARRAYOFFSET,1)+K)-1;
+  L = (F77_CALL(idamax)(&LENCOL,DA+DAPOS(K,K)-LUSOL_ARRAYOFFSET,&MYONE)+K)-1;
   IPVT[K] = L;
   if(fabs(DA[DAPOS(L,K)])<=SMALL) {
 /*         ===============================================================
@@ -313,7 +317,8 @@ x10:
            Do row elimination with column indexing.
            =============================================================== */
     T = -ONE/DA[DAPOS(K,K)];
-    dscal(M-K,T,DA+DAPOS(KP1,K)-LUSOL_ARRAYOFFSET,1);
+    MmK = M - K;
+    F77_CALL(dscal)(&MmK,&T,DA+DAPOS(KP1,K)-LUSOL_ARRAYOFFSET,&MYONE);
     for(J = KP1; J <= LAST; J++) {
       IDA1 = DAPOS(L,J);
       T = DA[IDA1];
@@ -322,8 +327,9 @@ x10:
         DA[IDA1] = DA[IDA2];
         DA[IDA2] = T;
       }
-      daxpy(M-K,T,DA+DAPOS(KP1,K)-LUSOL_ARRAYOFFSET,1,
-                  DA+DAPOS(KP1,J)-LUSOL_ARRAYOFFSET,1);
+      MmK = M - K;
+      F77_CALL(daxpy)(&MmK,&T,DA+DAPOS(KP1,K)-LUSOL_ARRAYOFFSET,&MYONE,
+                  DA+DAPOS(KP1,J)-LUSOL_ARRAYOFFSET,&MYONE);
     }
     K++;
     if(K<=LAST)
@@ -1566,7 +1572,8 @@ x900:
    ================================================================== */
 void LU1MXC(LUSOLrec *LUSOL, int K1, int K2, int IX[])
 {
-  int  I, J, K, L, LC, LENJ;
+  int  I, J, K, L, LC, LENJ, MmK;
+  const int MYONE = 1;
   LPSREAL AMAX;
 
   for(K = K1; K <= K2; K++) {
@@ -1577,7 +1584,7 @@ void LU1MXC(LUSOLrec *LUSOL, int K1, int K2, int IX[])
 /*      LUSOL->a[LC] = ZERO;  Removal suggested by Yin Zhang to avoid overwriting next column when current is empty */
       ;
     else {
-      L = idamax(LUSOL->lenc[J], LUSOL->a + LC - LUSOL_ARRAYOFFSET,1) + LC - 1;
+      L = F77_CALL(idamax)(&(LUSOL->lenc[J]), LUSOL->a + LC - LUSOL_ARRAYOFFSET,&MYONE) + LC - 1;
       if(L>LC) {
         AMAX = LUSOL->a[L];
         LUSOL->a[L] = LUSOL->a[LC];

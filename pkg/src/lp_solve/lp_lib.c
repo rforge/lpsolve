@@ -67,7 +67,7 @@
 #endif
 
 #if libBLAS > 0
-  #include "myblas.h"
+  #include "R_ext/BLAS.h"
 #endif
 
 #ifdef __BORLANDC__
@@ -1251,13 +1251,13 @@ MYBOOL __WINAPI get_ptr_sensitivity_objex(lprec *lp, LPSREAL **objfrom, LPSREAL 
   }
 
   if((objfromvalue != NULL) /* || (objtillvalue != NULL) */) {
-    if((lp->objfromvalue == NULL) /* || (lp->objtillvalue == NULL) */) {
+    if(lp->objfromvalue == NULL /* || (lp->objtillvalue == NULL) */) {
       if((MIP_count(lp) > 0) && (lp->bb_totalnodes > 0)) {
         report(lp, CRITICAL, "get_ptr_sensitivity_objex: Sensitivity unknown\n");
         return(FALSE);
       }
       construct_sensitivity_duals(lp);
-      if((lp->objfromvalue == NULL) /* || (lp->objtillvalue == NULL) */)
+      if(lp->objfromvalue == NULL /* || (lp->objtillvalue == NULL) */)
         return(FALSE);
     }
   }
@@ -1397,13 +1397,6 @@ lprec * __WINAPI make_lp(int rows, int columns)
   set_callbacks(lp);
   set_BFP(lp, NULL);
   set_XLI(lp, NULL);
-#if libBLAS > 0
-  init_BLAS();
-#if libBLAS > 1
-  if(is_nativeBLAS() && !load_BLAS(libnameBLAS))
-    /*report(lp, "make_lp: Could not load external BLAS library '%s'.\n", libnameBLAS)*/;
-#endif
-#endif
 
   /* Define the defaults for key user-settable values --------------------------------------- */
   reset_params(lp);
@@ -1631,11 +1624,10 @@ void __WINAPI delete_lp(lprec *lp)
   if(lp->streamowned)
     set_outputstream(lp, NULL);
 
-#if libBLAS > 0
-  if(!is_nativeBLAS())
-    unload_BLAS();
-#endif
-
+  
+  
+  
+  
   FREE(lp);
 
 # if defined FORTIFY
@@ -9370,6 +9362,7 @@ STATIC void free_duals(lprec *lp)
 STATIC void initialize_solution(lprec *lp, MYBOOL shiftbounds)
 {
   int     i, k1, k2, *matRownr, colnr;
+  const int MYONE = 1;
   LREAL   theta;
   LPSREAL    value, *matValue, loB, upB;
   MATrec  *mat = lp->matA;
@@ -9483,7 +9476,7 @@ STATIC void initialize_solution(lprec *lp, MYBOOL shiftbounds)
   }
 
   /* Do final pass to get the maximum value */
-  i = idamax(lp->rows /* +1 */, lp->rhs, 1);
+  i = F77_CALL(idamax)(&(lp->rows) /* +1 */, lp->rhs, &MYONE);
   lp->rhsmax = fabs(lp->rhs[i]);
 
   if(shiftbounds == INITSOL_SHIFTZERO)

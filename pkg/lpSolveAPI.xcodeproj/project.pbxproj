@@ -169,7 +169,6 @@
 		DA9675120E02D2C800989378 /* lpkit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lpkit.h; path = inst/include/lpkit.h; sourceTree = SOURCE_ROOT; };
 		DA9675130E02D2C800989378 /* lusol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lusol.h; path = inst/include/lusol.h; sourceTree = SOURCE_ROOT; };
 		DA9675140E02D2C800989378 /* mmio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mmio.h; path = inst/include/mmio.h; sourceTree = SOURCE_ROOT; };
-		DA9675150E02D2C800989378 /* myblas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myblas.h; path = inst/include/myblas.h; sourceTree = SOURCE_ROOT; };
 		DA9675160E02D2C800989378 /* RlpSolve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolve.h; path = inst/include/RlpSolve.h; sourceTree = SOURCE_ROOT; };
 		DA9675170E02D2C800989378 /* RlpSolveLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RlpSolveLink.h; path = inst/include/RlpSolveLink.h; sourceTree = SOURCE_ROOT; };
 		DA9675180E02D2C800989378 /* yacc_read.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yacc_read.h; path = inst/include/yacc_read.h; sourceTree = SOURCE_ROOT; };
@@ -210,7 +209,6 @@
 		DAC67528150A12E200292913 /* lusol7a.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lusol7a.c; sourceTree = "<group>"; };
 		DAC67529150A12E200292913 /* lusol8a.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lusol8a.c; sourceTree = "<group>"; };
 		DAC6752A150A12E200292913 /* mmio.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mmio.c; sourceTree = "<group>"; };
-		DAC6752B150A12E200292913 /* myblas.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = myblas.c; sourceTree = "<group>"; };
 		DAC6752C150A12E200292913 /* yacc_read.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = yacc_read.c; sourceTree = "<group>"; };
 		DAC6752D150A12E200292913 /* Makevars */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makevars; sourceTree = "<group>"; };
 		DAC6752E150A12E200292913 /* Makevars.win */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makevars.win; sourceTree = "<group>"; };
@@ -446,7 +444,6 @@
 				DA9675120E02D2C800989378 /* lpkit.h */,
 				DA9675130E02D2C800989378 /* lusol.h */,
 				DA9675140E02D2C800989378 /* mmio.h */,
-				DA9675150E02D2C800989378 /* myblas.h */,
 				DA9675160E02D2C800989378 /* RlpSolve.h */,
 				DA9675170E02D2C800989378 /* RlpSolveLink.h */,
 				DA9675180E02D2C800989378 /* yacc_read.h */,
@@ -502,7 +499,6 @@
 				DAC67528150A12E200292913 /* lusol7a.c */,
 				DAC67529150A12E200292913 /* lusol8a.c */,
 				DAC6752A150A12E200292913 /* mmio.c */,
-				DAC6752B150A12E200292913 /* myblas.c */,
 				DAC6752C150A12E200292913 /* yacc_read.c */,
 			);
 			path = lp_solve;
@@ -513,6 +509,8 @@
 /* Begin PBXProject section */
 		DA7F16D00E01140F00F34E9B /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = DA7F16D30E01140F00F34E9B /* Build configuration list for PBXProject "lpSolveAPI" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
