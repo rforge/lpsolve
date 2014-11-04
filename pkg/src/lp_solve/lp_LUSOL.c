@@ -103,8 +103,10 @@ MYBOOL BFP_CALLMODEL bfp_resize(lprec *lp, int newsize)
 
 #ifdef LUSOL_UseBLAS
 /*    if(fileSearchPath("PATH", "myBLAS.DLL", NULL) && load_BLAS("myBLAS")) */
+/*
     if(is_nativeBLAS() && load_BLAS(libnameBLAS))
       lp->report(lp, NORMAL, "Optimized BLAS was successfully loaded for bfp_LUSOL.\n");
+*/
 #endif
 
     /* Try to minimize memory allocation if we have a large number of unit columns */
