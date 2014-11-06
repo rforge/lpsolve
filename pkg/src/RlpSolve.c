@@ -193,7 +193,7 @@ void R_init_lpSolveAPI(DllInfo *info)
     {"RlpSolve_get_constraints", (DL_FUNC) RlpSolve_get_constraints, 1},
     {"RlpSolve_get_objective", (DL_FUNC) RlpSolve_get_objective, 1},
     {"RlpSolve_get_primal_solution", (DL_FUNC) RlpSolve_get_primal_solution, 1},
-    {"RlpSolve_get_var_primalresult", (DL_FUNC) RlpSolve_get_primal_solution, 1},
+    {"RlpSolve_get_var_primalresult", (DL_FUNC) RlpSolve_get_var_primalresult, 1},
     {"RlpSolve_get_sensitivity_obj", (DL_FUNC) RlpSolve_get_sensitivity_obj, 1},
     {"RlpSolve_get_sensitivity_objex", (DL_FUNC) RlpSolve_get_sensitivity_objex, 1},
     {"RlpSolve_get_sensitivity_rhs", (DL_FUNC) RlpSolve_get_sensitivity_rhs, 1},

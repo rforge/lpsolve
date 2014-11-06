@@ -1,5 +1,5 @@
 LP_SOLVE_CPPFLAGS=$(CPPFLAGS) -I../../inst/include \
-                  -I$(R_HOME)/include \
+                  -I$(R_INCLUDE_DIR) \
                   -DYY_NEVER_INTERACTIVE \
                   -DPARSER_LP -DINVERSE_ACTIVE=INVERSE_LUSOL \
                   -DRoleIsExternalInvEngine
