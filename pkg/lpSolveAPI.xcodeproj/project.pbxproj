@@ -9,6 +9,8 @@
 /* Begin PBXFileReference section */
 		0E221D3613030B3500322C09 /* lpSolveAPI.R */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = lpSolveAPI.R; path = tests/lpSolveAPI.R; sourceTree = SOURCE_ROOT; };
 		0E36ACD610655B7C0070A8A0 /* lp_bit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = lp_bit.h; path = inst/include/lp_bit.h; sourceTree = SOURCE_ROOT; };
+		0E5D5C901A12DF8A008719A9 /* myblas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = myblas.h; path = inst/include/myblas.h; sourceTree = "<group>"; };
+		0E5D5C911A12DFB2008719A9 /* myblas.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = myblas.c; sourceTree = "<group>"; };
 		0EA670410E0D33430075A859 /* plot.lpExtPtr.Rd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = plot.lpExtPtr.Rd; path = man/plot.lpExtPtr.Rd; sourceTree = SOURCE_ROOT; };
 		0EA670620E0D524C0075A859 /* add.column.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.column.q; path = R/add.column.q; sourceTree = SOURCE_ROOT; };
 		0EA670630E0D524C0075A859 /* add.constraint.q */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = add.constraint.q; path = R/add.constraint.q; sourceTree = SOURCE_ROOT; };
@@ -444,6 +446,7 @@
 				DA9675120E02D2C800989378 /* lpkit.h */,
 				DA9675130E02D2C800989378 /* lusol.h */,
 				DA9675140E02D2C800989378 /* mmio.h */,
+				0E5D5C901A12DF8A008719A9 /* myblas.h */,
 				DA9675160E02D2C800989378 /* RlpSolve.h */,
 				DA9675170E02D2C800989378 /* RlpSolveLink.h */,
 				DA9675180E02D2C800989378 /* yacc_read.h */,
@@ -499,6 +502,7 @@
 				DAC67528150A12E200292913 /* lusol7a.c */,
 				DAC67529150A12E200292913 /* lusol8a.c */,
 				DAC6752A150A12E200292913 /* mmio.c */,
+				0E5D5C911A12DFB2008719A9 /* myblas.c */,
 				DAC6752C150A12E200292913 /* yacc_read.c */,
 			);
 			path = lp_solve;
