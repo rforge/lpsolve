@@ -431,11 +431,11 @@ lp.control <- function(lprec, ..., reset = FALSE)
 
   sense <- ifelse(.Call(RlpSolve_is_maxim, lprec), "maximize", "minimize")
 
-  simplextype <- switch(as.character(.Call(RlpSolve_get_simplextype, lprec),
+  simplextype <- switch(as.character(.Call(RlpSolve_get_simplextype, lprec)),
                          "5" = c("primal", "primal"),
                          "6" = c("dual", "primal"),
                          "9" = c("primal", "dual"),
-                        "10" = c("dual", "dual"))
+                        "10" = c("dual", "dual")
                        )
 
   timeout <- .Call(RlpSolve_get_timeout, lprec)
