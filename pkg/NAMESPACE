@@ -1,5 +1,14 @@
 useDynLib(lpSolveAPI, .registration = TRUE)
 
+importFrom("grDevices", "chull")
+
+importFrom("graphics", "arrows",
+                       "par",
+                       "plot",
+                       "polygon",
+                       "segments",
+                       "text")
+
 export(
   "add.column",
   "add.constraint",
