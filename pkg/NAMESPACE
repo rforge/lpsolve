@@ -59,10 +59,12 @@ export(
   "write.lp"
 )
 
-S3method(print, lpExtPtr)
-S3method(plot, lpExtPtr)
-S3method(dim, lpExtPtr)
-S3method(dimnames, lpExtPtr)
-S3method(solve, lpExtPtr)
+S3method("print", "lpExtPtr")
+S3method("plot", "lpExtPtr")
+S3method("dim", "lpExtPtr")
+S3method("dim<-", "lpExtPtr")
+S3method("dimnames", "lpExtPtr")
+S3method("dimnames<-", "lpExtPtr")
+S3method("solve", "lpExtPtr")
 
 
